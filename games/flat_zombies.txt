@@ -1,0 +1,601 @@
+v2.0.6-539:
+• Fixed a bug with Thai language;
+v2.0.6-533:
+• Fixed bugs with weapons and doors;
+v2.0.6:
+• Added fast lab monsters (Office & Training mode);
+• Silencer & Ammo balance changes;
+• Silencer & Ammo buying system;
+• Settings: list of default skins for player;
+• Settings: bloodstains quality option;
+• Android 6.0+
+APK: https://drive.google.com/file/d/1S4s_LHKqVP1NR4W9TsbL9FJA3YEYB3MZ/view?usp=drive_link
+
+v2.0.5:
+• Training mode: damage numbers for every bullet hit;
+• Fixed sound bug;
+• Fixed language settings bug;
+• Downgrade game engine to Unity v2022;
+• Main menu: added a frame with people;
+• Changed sounds for AK74U, AK12, RPK16;
+• Changed gun fire texture;
+• 2.0.5-509/Training mode: option to disable damage on the screen;
+APK: https://drive.google.com/file/d/1MboF_gCEJ_OINyszlXwY7TYtjgvGEb-h/view?usp=drive_link
+
+v2.0.4:
+• Fixed zombies in defense game mode;
+• Fixed control buttons and some bugs in the interface.
+• Office/Interface/Bug: the text with weapons has always been displayed in only one language;
+• All weapons are unlocked from ads;
+APK: https://drive.google.com/file/d/14gjNjirUZiojpLd_e4dDrgWSEkCpzV9T/view?usp=drive_link
+
+v2.0.3:
+• Weapons: different types of cartridges for all rifles
+• Weapons: added rifle LR300;
+• Zombies: face animation;
+• Fixed minor bugs;
+• Updated game engine components;
+APK: <Deleted>
+
+v2.0.2:
+• Weapons: Silencers and MP5;
+• Weapons: New shooting sounds;
+• Weapons: Barrett M99 and Barrett M107 have different types of ammunition;
+• Office mode has weapons purchase;
+• Fixed zombie bugs;
+• Zombie: When shooting a rifle/SMG in the head for a long time, his hand movements will stop and thus, with accurate shooting, you can kill a zombie in his head
+APK: <Deleted>
+
+v2.0.1:
+• Weapons: M200 sniper rifle;
+• Zombie/Graphics: Fixed a piece of meat from the head hung in place;
+• Zombies: Changed the sorting of graphics;
+• Zombies: The speed of running zombies has been reduced to 80%;
+• Zombies: Fixed zombie animation bugs;
+• A zombie attacking from glass reacts faster to a kick from the foot;
+• Player: Fixed weapons fired when pressed overhead.
+• Player: Fixed taking damage when a zombie is kicked and is in the process of switching between animations.
+• Player: increased angle for tilting weapons from 45 to 60;
+• Office/Graphics: changed benches on the background;
+• Office: Increased distance for zombies behind benches;
+• The zoom of the game camera has been increased and the overall picture looks larger;
+• Main menu: changed images with red background;
+• Saving the game at the end of a level before launching the menu and if the application crashes, the game must load the completed level;
+APK: <Deleted>
+
+v2.0.0:
+• New "Dark Office" mode with a flashlight;
+• Game modes: some weapons are available from the first level;
+• Corridors: increased the number of fast zombies after 16th corridor;
+• Weapons: separate noise parameter;
+• Weapons: increased damage for SCAR-H;
+• Weapons: new sounds for scarH, scarSSR, AK308 and RemR11 rifles;
+• Highscores: list for the current version of the last 7 days;
+• Zombies: large holes form on the body during prolonged shooting;
+• Zombies: lying on its back will strike if you get close;
+• Fixed bugs with bow arrows;
+• Fixed zombie animation bugs;
+• Fixed graphic bugs;
+APK: <Deleted>
+
+v1.9.9:
+• Fixed zombie movement at low FPS;
+• Highscore lists will be cleared of incorrect results;
+• Bug fixes in control buttons;
+• Armor damage in weapon characteristics;
+• Zombie sometimes crawls back when lying on its back;
+• Zombie's arm breaks when firing any weapon for a long time;
+• Body jerk when shooting a prone zombie;
+• Zombies bug fixes;
+• Removed unnecessary android.permission.RECEIVE_BOOT_COMPLETED;
+• Updated game engine components;
+
+v1.9.8:
+Bug fixes:
+• The buttons in the game results did not work;
+• Armor-piercing rounds couldn't tear off a zombie soldier's arms;
+• Shotgun pellets didn't collide with body armor on zombies;
+• The bow animation did not play;
+• Removed duplicate text line 661365=Cleared rooms
+
+v1.9.7:
+• Shotguns: mixing different cartridges;
+• Settings: added parameter «Shoot dead bodies»;
+• Bow arrow bug fixes;
+• Zombies bug fixes;
+• Minor graphic fixes;
+• Settings: added Chinese language;
+
+v1.9.6:
+• Zombies: added bone layer;
+• Zombies: tear off pieces of meat;
+• Zombies break their legs when shooting for a long time;
+• The player runs faster with pistols;
+• Blood splatters: minor changes in blood animations;
+• Settings: added parameter «Amount of gore»;
+• Settings: added parameter «Maximum FPS»;
+• Settings: added parameter «Tear off meat pieces»;
+• Settings: parameters for zombies in a separate tab;
+• Settings: added Thai language;
+• Minor graphic bug fixes;
+
+v1.9.5-453:
+• Weapons: increased damage of grenade launchers;
+• Weapon bug fixes;
+• Ragdoll physics bug fixes;
+v1.9.5:
+• Now you can shoot dead zombies for a long time;
+• The game result when exit to menu;
+• The Rescue mode: changed zombie interval;
+• Blood splatter when an arrow comes off a body;
+• Zombies bug fixes;
+• Graphics bug fixes;
+
+v1.9.4:
+• Added languages: Portuguese, Italian and Vietnamese;
+• The Rooms mode: changed camera size;
+• The Rescue mode: changed zombie interval;
+• Increased player health from 8 to 10;
+• Increased zombie health to 125%;
+• Updated animations for zombies;
+• Minor zombie physics changes;
+• Graphics bug fixes;
+
+v1.9.3:
+• Zombie: Body deformation from powerful rifles;
+• Zombie: New animation for head hits;
+• Training mode: selection of different types of zombies;
+• Weapon reloading will continue after weapon switch;
+• Weapon bug fixes;
+• Added japanese language support;
+
+v1.9.2:
+• Added language switching in the game settings;
+• Weapon: recoil is reduced if "Camera shake" is activated;
+• Weapon: restart animation with magazine if weapon was switched;
+• Zombie: added foot movement;
+• Weapon bug fixes;
+• Graphic bug fixes;
+
+v1.9.1:
+• Added weapon: AK-308 rifle;
+• Fixed crashes in Rooms mode;
+• Weapon bug fixes;
+
+v1.9.0:
+• Changed intervals between zombies in Rescue people mode;
+• Fixed crashes in Rooms mode;
+• Shaking the camera when shooting;
+• Zombies bug fixes;
+• Fixed minor graphics bugs;
+
+v1.8.9:
+• Fixed bug with scoring in Park mode;
+• More living doctors in rescue mode (x2);
+
+v1.8.8:
+• Player: increased health from 6 to 8;
+• Weapons: rifle Barrett-M99;
+• Shotguns: different types of cartridges have different damage;
+• Weapon prices have been changed;
+• Improved zombie animations;
+• Increased number of living doctors in rescue mode;
+• Zombies bug fixes;
+• Enable/Disable laser in game settings;
+• Zombies take damage through body armor holes;
+• Zombies crawl when their legs are broken and do less damage;
+Other minor changes:
+• Running zombie falls when legs are injured;
+• Crawling zombie stops when shooting in the head;
+• Zombies: updated sounds with screams;
+• Blood spatter scatters more evenly when hit by a large projectile;
+• Zombies: a piece of the head breaks off from a soldier in a helmet;
+• Zombies: the body breaks in half in body armor from a large caliber;
+• Weapons: reloading stops when the weapon switches;
+
+v1.8.7-367:
+• Crawling zombies bug fixes;
+• Control bug fixes;
+
+v1.8.7:
+• Weapon: bolt pull after empty magazine;
+• Changed the scoring system in the modes with corridors;
+• BarrettMRAD as a bolt rifle;
+• Weapon: you can insert one round after reloading an empty shotgun;
+• Bug fixes;
+Other minor changes:
+• Zombie slows down when shooting at the legs;
+• Zombie convulses when hit by bullets when he is alive lying on the ground;
+• All buyed weapons in one list;
+• Redrawn RPK16 and AK12;
+• New sound for MPX, CZ-EVO 3, DEagle and AA12;
+• Weapon: show profit for 1 damage;
+
+v1.8.6:
+• Zombies bug fixes;
+• Added sniper rifles: Remington-R11-RSASS, Barrett-MRAD;
+• IMBEL-IA2 rifle has a 60-round magazine;
+• Sniper rifle damage change;
+• Frequently used weapons will be lost in some modes;
+• Restart the game if it crashes when loading;
+
+v1.8.5:
+• Zombies bug fixes;
+• 50% of zombies die faster and can't get up again;
+• Zombies: changed number of crowd;
+• Zombies: blood under the body when hitting the ground;
+• And minor fixes;
+
+v1.8.4-324:
+• Zombies bug fixes;
+• Weapon: DEagle damage increased;
+v1.8.4:
+• Weapons are saved after death;
+• Zombies: added animations;
+• Zombies: added health;
+• Zombie's number reduced;
+• Bullets hit are used as scores;
+• Weapon: MK18 instead of M4A1;
+• And other minor fixes;
+
+v1.8.3-311:
+• Fixed background in Rooms mode;
+v1.8.3:
+• Fixed a bug in incendiary ammunition;
+• Zombies have increased health by one bullet;
+• Meat when hit in head of a zombie;
+• New sound for Walther-P99 pistols;
+• Changes in blood animations;
+• And other minor fixes;
+
+v1.8.2:
+• Fixed crash bug #2;
+• Updated game engine;
+• Fixed weapon graphic bugs;
+
+v1.8.1:
+• Fixed ammo switching bug;
+• Fixed crash bug;
+
+v1.8.0:
+• Weapons: AT-308, SRM-1212;
+• Ammo switching for shotguns;
+• Player info in highscores;
+• Zombies bug fixes;
+
+v1.7.9:
+• Female zombies;
+• Increased prices for weapons;
+• Weapon: increased damage for a bow;
+• New background in Street mode;
+• Location has been increased in training mode;
+• In the game settings you can set 64 corpses;
+• Fixed quiet sound;
+• Zombies bug fixes;
+
+v1.7.8:
+• Infinite ammo in training mode;
+• Weapons: ShAK-12 penetrates armor;
+• Zombies: increased health;
+• Minimum Android Version: 5.0-Lollipop;
+New zombie animations:
+• Zombies: legs break in hips;
+• Zombies: a sitting zombie will crawl when it is behind others;
+• Zombies react to bullets in a sitting position;
+• A zombie falls on his back when his leg is torn off completely;
+
+v1.7.7:
+• Added zombies with a baseball bat;
+• You can change the interval of zombies in some modes;
+• And minor fixes;
+
+v1.7.6:
+• Fixed bug in zombie legs;
+
+v1.7.5:
+• Zombies: legs break when hit by bullets;
+• Shotguns: FD-12 and Remington-870-DM;
+• New sounds for shotguns;
+• Increased rate of fire of pump-action shotguns;
+• New shotgun prices;
+• And minor fixes;
+
+v1.7.4:
+• Weapons: Walther-P99 and CZ-Scorpion-EVO3;
+• New sounds of 9mm SMG;
+• Shotguns in game mode with a city park;
+• Changed blood spatter;
+
+v1.7.3:
+• Fixed weapon reload bug [#2];
+
+v1.7.2:
+• New game mode with random weapons;
+• New office zombie skin;
+• Fixed player skins switching bug;
+
+v1.7.1:
+• Weapons: ShAK-12, HK-G36C;
+• Weapons bug fixed;
+
+v1.7.0:
+• The game difficulty gradually increases in the mode with rooms;
+• Shotgun Vepr-12;
+• Grenade launcher prices changed;
+• In the room mode, the player moves faster;
+• Settings: option to disable spasms in dead zombies;
+• Zombies bug fixes;
+
+v1.6.9:
+• Fixed another bug in reloading weapons;
+• Added two player skins: cop and survivor;
+• Currently, player skin is switched after death;
+
+v1.6.8:
+• Fixed bug in reloading weapons;
+• Fixed bug when sending a game result;
+
+v1.6.7:
+• A new player skin after death
+• Weapons: SR-3M, AMB-17;
+• Katana was returned to the game;
+
+v1.6.6:
+• Updated weapon animations;
+• Optimize memory usage;
+• Bug fixes;
+
+v1.6.5:
+• New game mode on a bridge;
+• Fixed zombie bugs;
+• New shotgun sounds;
+• And other small changes;
+
+v1.6.4:
+• Fixed saving game bug;
+
+v1.6.3:
+• Fixed zombie bugs;
+• A living doctor dies from a broken leg;
+• The number of blood depends on the number of ragdolls;
+
+v1.6.2:
+• SIX12 shotgun bug fixed;
+• In training mode the maximum number of zombies is 15;
+
+v1.6.1:
+• Fixed low FPS, now the game is faster;
+
+v1.6.0:
+• Fixed ragdoll bugs;
+• Weapons bug fixed;
+
+v1.5.9:
+• New weapons menu in training mode;
+• Changed prices of some weapons;
+• Weapons: CZ Bren2, GalilACE21, SCAR-L, SCAR-SSR, FostechOrigin12;
+• God mode in training mode;
+• Weapons bug fixed;
+• Zombies bug fixes;
+• And minor fixes;
+
+v1.5.8:
+• New simple game mode: rescue people;
+• Sedentary zombies react to the bullet hits;
+• Convulsions of killed zombies;
+• Revolver price reduced to 450;
+• Auto-rotate screen;
+• Other small change;
+APK: http://pavoldev.ru/games/flat_zombies_v1.5.8.apk
+
+v1.5.7:
+• Weapons bug fixed;
+
+v1.5.6:
+• Characteristics of weapons when buying;
+• Added new option in settings for disable small objects;
+• Zombies die only when hit in the head or in the body;
+• Bug fixes;
+
+v1.5.5:
+• Added another room;
+• Weapons: HK69 и Alsetex Cougar MS;
+• The game difficulty increased in a game mode with rooms;
+• Zombies falls and gets up after hit to head;
+• Zombie skin: zombie cops and zombies from prisons;
+• Blood stains under meat chunks;
+• A zombie body can break into two parts;
+• And other minor changes;
+• Fixed notice about new version;
+
+v1.5.4:
+• Added a new game mode with a street;
+• New weapon menu;
+• Weapons: SIG MPX and Shotgun SIX-12;
+• Description of game modes;
+• New sounds for some weapons;
+• Bug fixes;
+
+v1.5.3:
+• Weapons: XTR-12 with incendiary bullets, double-barreled MR27;
+• Random background in the corridors;
+• Changed the cost of shotguns;
+• Bug fixes;
+
+v1.5.2:
+• Weapons: MK48, Ares-16;
+• Now number of zombies will persist and gradually turns off, after unsuccessful attempt to pass corridor;
+• Price of extra lives increased to 2500$;
+• Bug fixes;
+
+v1.5.1:
+• Shotguns: DP12, SRM1216 and Kel-Tec KSG;
+• Weapon PP-19 Bizon;
+• Shotgun AA-12 with drum magazine
+• Added meat chunks;
+• Number of zombies will persist, after unsuccessful attempt to pass corridor;
+• Bug fixes;
+• Brief description of game modes;
+
+v1.5.0:
+• Ax bug fixed;
+• Weapons bug fixed;
+
+v1.4.9:
+• Fixed a bug, because of which the crowd of zombies does not increase;
+• Sniper rifles kill with one shot in body without armor;
+• Scaling of control buttons in settings;
+• Changed background in Defense mode;
+• Changed animation of some weapons;
+• And other minor fixes;
+
+v1.4.8:
+• Fixed a bug, because of which the crowd of zombies does not increase;
+• Sniper rifles kill with one shot in the body without armor;
+• Scaling of control buttons;
+• Changed background in Defense mode;
+• Changed the animation of some weapons;
+• And minor fixes;
+
+v1.4.7:
+• Weapons bug fixed;
+• Zombies can now limp;
+• Added hospital corridor as difficult level with large num zombies;
+• Added assault rifle SCAR-H CQC;
+• Shooting dead zombies will now give extra money;
+
+v1.4.6:
+• Fixed bullet hit detection;
+• Different types of zombies cause different damage to the wall;
+
+v1.4.5:
+• Fixed bow and grenade launcher in defense mode;
+
+v1.4.4
+• Added defense game mode with barricade
+• SWAT zombie is now with an open face;
+• Now the zombie run only after several strokes hands;
+• Improved the characteristics of some shotguns and assault rifles;
+• Slightly improved Ragdoll-physics;
+• If two zombies are walking alongside, the bullets will fall into a zombie that does not have any armor;
+• Weapon: dual pistols;
+• Other small change;
+
+v1.4.3:
+• Fixed bug in the training settings: the number of zombies did not change;
+• In the corridors the number of SWAT zombies has been reduced;
+• Added zombie with armor on hands;
+• Fixed other small bugs;
+
+v1.4.2:
+• Barrett was removed and replaced with RPK-16 in game mode of rooms;
+• Fixed bug in the door of the room;
+
+v1.4.0
+• New game mode: cleanup of rooms
+• Health indicator
+• AK74U is available at the beginning of the game
+• Cleaned list of records
+• Weapon: AUG-A3, shotgun Benelli-M4
+• Other minor changes
+
+v1.3.2
+• In the settings now you can change the position of the control buttons;
+• New weapons: Barrett-M107A1CQ and UMP-45;
+• The power of the grenade launcher is increased;
+• The price of some weapons has been reduced;
+• Small optimization of weapon;
+
+v1.3.1
+• Fixed a bug in the Defense mode, because of which the crowd of zombies does not increase;
+• The highscores will be cleared of the results earned in previous versions in Defense mode;
+• Correction of other small bugs;
+
+v1.3.0:
+• New weapons: revolver, SMG P90;
+• New zombie with a helmet on the head;
+• Changed the characteristics of pistols;
+
+And other small changes:
+• New background in the main menu;
+• New animation of the katana;
+• Changed the settings of training;
+• Fixed minor bugs with weapons;
+
+v1.2.9. 
+• Weapons and money disappears, which were received in previous versions 1.2.7, 1.2.6...;
+• Fixed a bug due to which weapons and money are the same in the different game modes;
+
+v1.2.8:
+• Increasing difficulty of the game;
+• With increasing of level zombies are getting faster;
+• Lowered price of weapons;
+• Now you can move and simultaneously to strike with an ax / katana;
+• Added one more automatic shotgun Saiga-12 and sniper rifle AWP;
+• Bug fixes;
+• Added string "Saving ..." in the corner of the screen after completing a level;
+
+v1.2.7
+• Added training mode;
+• New weapons: light machine gun and a bow with arrows;
+• The sniper rifle is now pierces armor;
+• Shells bullets when firing;
+• Added counter remaining zombies;
+• Added pause of the game by pressing the Menu/Back;
+• Added time and number of killed zombies in the results of the game;
+• b33: Fixed a black screen in the results of training
+• b34: Fixed bug start one and the same level
+
+v1.2.6
+• Changed showing results
+• Added ability to disable the snowfall
+• change in the shot grenade launcher
+• And other small fixes
+
+v1.2.5
+• Small fixes in weapon
+
+
+v 1.2.4:
+• Changed the time interval for adding new zombies on the scene with an increase in the level
+• Changed cost weapons
+• Added assault rifle IMBEL AI2 and katana
+• And small fixes
+
+v 1.2.3:
+• Change counting of scores;
+• Changed the Defence mode.
+• Changed the characteristics of the ax;
+• Increased the price of lives to try again;
+• Added fast zombies;
+• Now the zombies before they pounce strike hands;
+• Added two new pistols;
+
+v 1.2.2
+• Fixed process save game;
+• Fixed a reset of settings when you exit the game.;
+• Added protection of list players;
+• Added one new zombie and other minor bug fixes...
+
+v 1.2.1
+• Animation bugs fixed;
+• Increased distance betwen zombies on scene;
+
+v 1.2.0
+• Added a new weapon: F2000 and new shotgun;
+• Added buttons to move left /right;
+• Fixed a bug of reload weapon;
+• Added list of players last 7 days in list highscores;
+
+v 1.1.2:
+• Fixed an error when counting of killed zombies;
+• Fixed crash if you disable of splashes of blood;
+
+v1.1.1:
+• Fixed incorrect display of the list of highscores;
+• And minor changes, such as new background in the main menu.
+
+v1.0.0:
+• The first playable version;
+APK: https://drive.google.com/file/d/0B6z3aOD8SEmka3p3aTlpdUlLVFE/view?usp=drive_link&resourcekey=0-9eJibb4IUbeiauVD4zoXhA
+Screenshot: https://drive.google.com/file/d/1IzCbTzbs4op_JnuAAFh5US_JOqvJRf9u/view?usp=drive_link
