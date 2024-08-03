@@ -1,4 +1,0 @@
----
-layout: forward
-target: https://pavoldev.github.io/games.html
----
