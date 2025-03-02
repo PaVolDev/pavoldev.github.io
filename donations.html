@@ -1,0 +1,166 @@
+﻿<html>
+
+<head>
+	<script>
+		function showDiv(id, color) {
+			// Получаем все элементы с классом "info"
+			const infoElements = document.querySelectorAll('.info');
+			// Проходим по всем элементам и скрываем их
+			infoElements.forEach(info => {
+				info.style.display = 'none'; // Скрываем все элементы
+			});
+			// Находим элемент с указанным ID и показываем его
+			const selectedElement = document.getElementById(id);
+			if (selectedElement) {
+				selectedElement.style.display = 'block'; // Показываем выбранный элемент
+			}
+			// Дополнительно: добавляем активный класс для кнопок
+			const buttons = document.querySelectorAll('.button');
+			buttons.forEach(button => {
+				button.classList.remove('active'); // Убираем класс "active" со всех кнопок
+				button.style.backgroundColor = '#808080';
+			});
+			// Находим кнопку, которая была нажата, и добавляем ей класс "active"
+			const activeButton = document.querySelector(`.button[onclick*="${id}"]`);
+			if (activeButton) {
+				activeButton.style.backgroundColor = color;
+				activeButton.classList.add('active'); // Добавляем класс "active" к активной кнопке
+			}
+		}
+	</script>
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" type="text/css" href="images/style.css">
+	<style>
+		.addressTitle {
+			text-align: center;
+			margin-top: 1em;
+		}
+
+		.address {
+			background-color: white;
+			text-align: center;
+			padding: 1em;
+			margin-top: 0.1em;
+		}
+
+		.qrcode {
+			width: 260px;
+			height: 260px;
+		}
+	</style>
+	<link rel="icon" href="images/icon16.png">
+	<link rel="favicon" href="images/icon16.ico">
+	<title>PaVolDev donations</title>
+</head>
+
+<body>
+	<div class="page">
+
+
+		<div class="titlePage">
+			<img src="images/avatar.png" class="logo" />
+			<div class="textLogo">
+				<font class="title">Pa<font class="dooble">V</font>ol<font class="dooble">D</font>ev</font>
+				Разработчик Android-игр
+			</div>
+		</div>
+
+
+		<div id="tabs" class="tabs">
+			<a class="tab tabHide" href="/">
+				<img src="images/news.png" class="iconTab">Main</a>
+			<a class="tab tabHide" href="games">
+				<img src="images/android.png" class="iconTab">Games</a>
+			<a class="tab tabActive" href="donations">
+				<img src="images/noodles.png" class="iconTab">Donate</a>
+		</div>
+
+
+		<div class="tabContent">
+			If you, like me, think my projects are brilliant and would like to support me, you can donate to the crypto address listed below:
+
+			<div class="addressTitle">
+				<a class="button" style="background-color: #3BC16D;" onclick="showDiv('USDTTRC20', '#3BC16D');">USDT (TRC20)</a>
+				<a class="button" style="background-color: #3F51B5;" onclick="showDiv('ZEC', '#3F51B5');">ZEC</a>
+				<a class="button" style="background-color: #3BC16D;" onclick="showDiv('USDTBEP20', '#3BC16D');">USDT (BEP20)</a>
+				<a class="button" style="background-color: #3F51B5;" onclick="showDiv('DOGE', '#3F51B5');">DOGE</a>
+				<a class="button" style="background-color: #3BC16D;" onclick="showDiv('USDC', '#3BC16D');">USDC</a>
+				<a class="button" style="background-color: #3F51B5;" onclick="showDiv('DASH', '#3F51B5');">DASH</a>
+
+			</div>
+
+			<span class="info" id="USDTTRC20" style="display: none;">
+				<div class="addressTitle"><b>USDT</b> Address, <b>TRC20</b>:</div>
+				<div class="address">TGFqz1L5NpB6iCDpRJdYxM3xRnfzueVpEN
+					<p>
+						<img class="qrcode" src="images/TGFqz1L5NpB6iCDpRJdYxM3xRnfzueVpEN.png">
+					</p>
+				</div>
+			</span>
+
+			<span class="info" id="USDTBEP20" style="display: none;">
+				<div class="addressTitle"><b>USDT</b> Address, <b>BEP20</b>:</div>
+				<div class="address">0xf461ba1a97b64b0f46b382111ed2daf730805102
+					<p>
+						<img class="qrcode" src="images/0xf461ba1a97b64b0f46b382111ed2daf730805102.png">
+					</p>
+				</div>
+			</span>
+
+			<span class="info" id="USDC" style="display: none;">
+				<div class="addressTitle"><b>USDC</b> Address, <b>SOL</b>:</div>
+				<div class="address">BgTTjguutgCXr7gj1PNNJ665ZQhTyitB7DGss35fiBPQ
+					<p>
+						<img class="qrcode" src="images/BgTTjguutgCXr7gj1PNNJ665ZQhTyitB7DGss35fiBPQ.png">
+					</p>
+				</div>
+			</span>
+
+			<span class="info" id="DOGE" style="display: none;">
+				<div class="addressTitle"><b>DOGE</b> Address:</div>
+				<div class="address">DCaQepZhvZqZXtShjiAKfxXzS16CxV1sGs
+					<p>
+						<img class="qrcode" src="images/DCaQepZhvZqZXtShjiAKfxXzS16CxV1sGs.png">
+					</p>
+				</div>
+			</span>
+
+			<span class="info" id="ZEC" style="display: none;">
+				<div class="addressTitle"><b>ZEC</b> Address:</div>
+				<div class="address">tex10x2xmmvertz8hr5a97hvmhc4yxey3gz5m3v0zu
+					<p>
+						<img class="qrcode" src="images/tex10x2xmmvertz8hr5a97hvmhc4yxey3gz5m3v0zu.png">
+					</p>
+				</div>
+			</span>
+
+
+			<span class="info" id="DASH" style="display: none;">
+				<div class="addressTitle"><b>DASH</b> Address:</div>
+				<div class="address">XhzyfdtSnGa1Aj5GkCeZ74bmFvcGZmjhoW
+					<p>
+						<img class="qrcode" src="images/XhzyfdtSnGa1Aj5GkCeZ74bmFvcGZmjhoW.png">
+					</p>
+				</div>
+			</span>
+
+
+
+			<span class="info" id="noodles">
+				<p>
+					<img src="images/noodles-458.jpg" style="width: -webkit-fill-available;">
+				</p>
+			</span>
+
+		</div>
+
+
+
+		<br /><br />
+	</div>
+</body>
+
+</html>
