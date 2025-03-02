@@ -1,8 +1,7 @@
-#Updated 20th September
+#Updated 21st NOVEMBER
 appodeal.com, 6530, DIRECT
 bidmachine.io, 6530, DIRECT
 google.com, pub-3098449247291928, DIRECT, f08c47fec0942fa0
-#Resellers
 9dotsmedia.com,122262,RESELLER,45ff185b4c4e857d
 acexchange.co.kr,1562884725,RESELLER
 adbility-media.com,187,RESELLER
@@ -270,7 +269,7 @@ xandr.com,8804,RESELLER,f5ab79cb980f11d1
 xapads.com,117219,RESELLER
 yahoo.com,59262,RESELLER,e1a5b5b6e3255540
 yahoo.com,59318,RESELLER,e1a5b5b6e3255540
-yandex.com,63904735,RESELLER
+yandex.com,302446435,direct
 yandex.com,94923424,RESELLER
 yandex.com,97539269,RESELLER
 yeahmobi.com,5135082,RESELLER
@@ -278,5 +277,4 @@ yeahmobi.com,5135195,RESELLER
 yeahmobi.com,5135347,RESELLER
 yieldlab.net,2172218,RESELLER
 bigo.sg,1112518,reseller
-yandex.com,302446435,reseller
 applovin.com,a97e4a2a60836795b8e1433cefd17f30,RESELLER
