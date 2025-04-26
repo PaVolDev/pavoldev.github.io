@@ -1,3 +1,45 @@
+v2.0.7:
+• Weapons: M110 and MK48;
+• New animation system for weapons;
+• Changed prices and reload times for some weapons;
+• Various minor bug fixes;
+Full changes list:
+• Weapons: M110 rifle and MK48 machine gun;
+• Weapons: new animation system;
+• Weapons: adjusted prices and reload times for some weapons;
+• Weapons: bullet price reduced to 80%;
+• Weapons/Rifles: AT308 splits the body in half, M200 and Barrett tear half the body into pieces;
+• Weapons/Shotguns: increased stopping power effect;
+• Weapons/Graphics: blood traces on the axe after multiple hits;
+• Weapons/Graphics: AA12 and FOrigin12 shotguns now have bolt animations (the rest are still in development);
+• Weapons/Graphics/Bug: laser was displayed incorrectly when turning left;
+• Weapons: dual pistols temporarily removed (still in development);
+• Zombies: added a mutant without arms that shakes its head when hit by bullets;
+• Zombies in rooms stand in various poses;
+• Two-headed zombies: increased health for the fake front head;
+• Zombie: added a mutant with a second head with a vertical arrangement and its brain is in the lower head;;
+• Zombies/Training/Bug: zombies didn’t slow down from bullets and kept running due to high aggression;
+• Zombies/Training: Aggression parameter added;
+• Zombies/Animation/Bug: zombies didn’t fall to their knees when shot but kept stepping back;
+• Zombies/Animation/Bug: zombies crawled without arms;
+• Zombies/Animation/Bug: quadruped mutants dealt weak damage — their attack registered as a lying-down strike;
+• Zombies/Animation: zombies fall to their knees 20% of the time when shot in the body or head, then crawl 15% of the time;
+• Zombies/Graphics/Bug: fixed bugs related to splitting bodies into two parts;
+• Zombies/Special Forces/Soldiers: shooting the chest tears the body apart along with arms; shooting below the waist rips the body in half without removing the head;
+• Zombies/Physics/Bug: detached body parts shifted position upon colliding with the player;
+• Zombies/Physics: ragdoll physics parameters adjusted;
+• Player character can shoot while kicking;
+• Player: stamina/fatigue bar — repeated kicks reduce running speed and reload speed;
+• Player/Graphics/Bug: after a kick, the sight was lost and the character looked up;
+• Player/Graphics/Bug: the sight did not turn to the pressed point after reloading;
+• Game loading process updated: added OBB file check, and an error message appears if the file is missing;
+• Interface/Player: Added "Exit to Menu" button during fatalities;
+• Interface/Language: added Korean and Hindi;
+• Game Settings: "Show FPS" option added;
+• Settings: option to hide control buttons;
+• Training/Interface: added zombie characteristics (health and attack power);
+• Modes: after death, 50% of the money will remain;
+
 v2.0.6-539:
 • Fixed a bug with Thai language;
 v2.0.6-533:
