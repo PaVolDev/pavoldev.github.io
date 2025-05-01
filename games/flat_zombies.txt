@@ -39,7 +39,7 @@ Full changes list:
 • Settings: option to hide control buttons;
 • Training/Interface: added zombie characteristics (health and attack power);
 • Modes: after death, 50% of the money will remain;
-APK: https://drive.google.com/file/d/1gzQIVs6GnPr3jrF5tcQ5gp48E_kMQQ0_/view?usp=drive_link
+APK: https://drive.google.com/file/d/1Tf3Y9MDrEJnoQfikz-u4CQpTQLmtEeJT/view
 
 v2.0.6-539:
 • Fixed a bug with Thai language;
