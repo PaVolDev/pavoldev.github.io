@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 4px;
+		}
+
+		.container {
+			background-color: white;
+			padding: 10px;
+			border-radius: 8px;
+			border: 2px rgb(196, 196, 196) solid;
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.controls {
+			display: flex;
+			gap: 1em;
+		}
+
+		button {
+			padding: 8px 15px;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		button:hover {
+			opacity: 0.85;
+		}
+
+		button:disabled {
+			background-color: #cccccc !important;
+			cursor: not-allowed;
+		}
+
+		label {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			margin-bottom: 10px;
+		}
+
+		input[type="range"] {
+			width: 100%;
+		}
+
+		input[type="number"] {
+			width: 4em;
+		}
+
+
+
+		.bg-btn {
+			width: 34px;
+			height: 34px;
+			border: 2px solid #0000002e;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: transform 0.1s;
+		}
+
+		.bg-btn:hover {
+			transform: scale(1.1);
+		}
+
+		.bg-btn.active {
+			border-color: #00000052;
+			transform: scale(1.1);
+		}
+
+		.canvas-bg {
+			display: inline-block;
+			background-color: black;
+			z-index: -1;
+		}
+
+		#dropZone {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			color: white;
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			z-index: 9999;
+			font-size: 34px;
+			padding-top: 20px;
+			padding-left: 20px;
+		}
+	</style>
+	<title>Remove Background</title>
+</head>
+
+<body>
+	<div id="dropZone" style="display: none;">Upload file</div>
+	<div class="container">
+		<h2 style="margin-block-start: 0em;">Remove Background</h2>
+		<p>
+			<input type="file" id="imageInput" accept="image/jpeg,image/jpg,image/png">
+			Background:
+			<select id="mode" name="mode">
+				<option value="white">White</option>
+				<option value="black">Black</option>
+			</select>
+		</p>
+		<div class="controls">
+			<label>
+				Color tolerance:
+				<input type="range" id="thresholdInput" min="0" max="255" value="220" step="1">
+				<span id="thresholdValue">220</span>
+			</label>
+			<label>
+				Contrast:
+				<input type="range" id="alphaContrastInput" min="0" max="255" value="255" step="5">
+				<span id="alphaContrastValue">255</span>
+			</label>
+			<label>
+				Update borders:
+				<input type="number" id="borderInput" min="0" max="40" value="2" step="1">
+			</label>
+			<label>
+				Border color tolerance:
+				<input type="range" id="noiseColorInput" min="0" max="255" value="1" step="5">
+				<span id="noiseColorValue">1</span>
+			</label>
+			<label>
+				Border depth in pixels:
+				<input type="number" id="noiseAreaInput" min="0" max="40" value="1" step="1">
+			</label>
+
+		</div>
+		<div class="preview-bg" style="display: flex; align-items: center; justify-content: space-between;">
+			<div class="bg-btn-group" style="display: flex; align-items: center; gap: 1px;">
+				<div class="bg-btn" data-bg="black" title="Black" style="background: black;"></div>
+				<div class="bg-btn" data-bg="white" title="White" style="background: white;"></div>
+				<div class="bg-btn" data-bg="#808080" title="Grey" style="background: #808080;"></div>
+				<div class="bg-btn" data-bg="#ff0000" title="Red" style="background: #ff0000;"></div>
+				<div class="bg-btn" data-bg="#00ff00" title="Greed" style="background: #00ff00;"></div>
+				<div class="bg-btn" data-bg="#0000ff" title="Blue" style="background: #0000ff;"></div>
+				<div class="bg-btn" data-bg="transparent" title="Chess background" style="background: #c7c7c7;"></div>
+				<button id="scaleReset" style="background-color: #4c82ed;" onmousedown="resetPreviewScale();">100%</button>
+			</div>
+			<button id="downloadBtn" style="background-color: #4ac84e;" disabled>Save PNG</button>
+		</div>
+	</div>
+	<div style="text-align: center;">
+		<div id="canvasParent" class="canvas-bg">
+			<span id="loadingMessage" style="color: white; background: #00000063; position: absolute; z-index: 10; padding: 8px 16px;">Processing...</span>
+			<canvas id="resultCanvas"></canvas>
+		</div>
+	</div>
+	<script>
+		const dropZone = document.getElementById('dropZone');
+		const imageInput = document.getElementById('imageInput');
+
+		// Обработчики для drag and drop
+		document.addEventListener('dragenter', (e) => {
+			e.preventDefault();
+			dropZone.style.display = 'flex';
+		});
+
+		document.addEventListener('dragover', (e) => { e.preventDefault(); });
+
+		document.addEventListener('dragleave', (e) => {
+			if (!e.relatedTarget || e.relatedTarget === document.documentElement) {
+				dropZone.style.display = 'none';
+			}
+		});
+
+		document.addEventListener('drop', (e) => {
+			e.preventDefault();
+			dropZone.style.display = 'none';
+			if (e.dataTransfer.files.length) {
+				const file = e.dataTransfer.files[0];
+				if (file.type.match(/^image\//)) { // Проверка, что файл является изображением
+					imageInput.files = e.dataTransfer.files; // Устанавливаем файл в input
+					imageInput.dispatchEvent(new Event('change')); // Эмулируем изменение
+				} else {
+					console.log('Файл не является изображением (JPEG, JPG или PNG)');
+				}
+			}
+		});
+
+
+
+		//Элементы DOM
+		let image = null; // Здесь будет храниться HTMLImageElement или ImageBitmap
+		let imageData = null; // Здесь будет храниться ваше ImageData
+		const mode = document.getElementById('mode');
+		const thresholdInput = document.getElementById('thresholdInput'); var thresholdMouseInput = false;
+		const alphaContrastInput = document.getElementById('alphaContrastInput');
+		const noiseColorInput = document.getElementById('noiseColorInput');
+		const noiseAreaInput = document.getElementById('noiseAreaInput');
+		const borderInput = document.getElementById('borderInput');
+		const bgButtons = document.querySelectorAll('.bg-btn');
+		const canvasParent = document.getElementById('canvasParent');
+		const canvas = document.getElementById('resultCanvas');
+		const downloadBtn = document.getElementById('downloadBtn');
+		const loadingMessage = document.getElementById('loadingMessage'); loadingMessage.style.display = 'none';
+		// Находим все поля ввода внутри .controls: range и select
+		const allInputs = document.querySelectorAll('.controls input[type="range"], input[type="number"], select');
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// Инициализация: восстановление из localStorage или установка начальных значений
+			allInputs.forEach(input => {
+				const savedValue = localStorage.getItem(input.id);
+				if (savedValue !== null) input.value = savedValue;
+				if (input.type === 'range') { // Если это range — обновляем span
+					const span = input.nextElementSibling;
+					if (span && span.tagName.toLowerCase() == 'span') span.textContent = input.value;
+				}
+				//Добавляем обработчик события
+				input.addEventListener('input', () => { // Функция для обновления отображаемого значения и сохранения
+					if (event.target.type === 'range' && input.nextElementSibling && input.nextElementSibling.tagName.toLowerCase() === 'span') {
+						input.nextElementSibling.textContent = input.value; //Для ползунков обновляем span, если он есть
+					}
+					processImage(); //Обрабатываем изображение
+				});
+
+				thresholdInput.addEventListener('mousedown', () => { thresholdMouseInput = true });
+				thresholdInput.addEventListener('mouseup', () => { thresholdMouseInput = false; processImage(); });
+			});
+			//Загрузка параметров из адреса страницы, из GET-запроса
+			//Перебрать все параметры из URL, извлечь имя параметра, добавить к нему приставку Input, найти этот параметр через getElementById и указать значение
+			const urlParams = new URLSearchParams(window.location.search); //Получаем строку запроса из URL //Преобразуем её в объект URLSearchParams
+			for (const [key, value] of urlParams.entries()) { // Перебираем все параметры из URL
+				const inputId = key + 'Input'; // Добавляем суффикс "Input"
+				const input = document.getElementById(inputId);
+				if (input) { input.value = value; input.dispatchEvent(new Event('input')); } // Устанавливаем значение //Сразу же инициируем событие об изменении
+			}
+		});
+
+		let originalImageData = null;
+		let originalImageName = "";
+		//Загрузка изображения
+		imageInput.addEventListener('change', function (e) {
+			if (e.target.files && e.target.files[0]) {
+				const reader = new FileReader();
+				reader.onload = function (event) {
+					image = new Image();
+					image.src = event.target.result;
+					image.onload = function () {
+						//Устанавливаем размер canvas равным размеру изображения
+						canvas.width = image.naturalWidth;
+						canvas.height = image.naturalHeight;
+						ctx.drawImage(image, 0, 0);//Отрисовываем исходное изображение на canvas
+						originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);//Сохраняем оригинальные данные изображения
+						downloadBtn.disabled = true; //Отключить временно кнопку загрузки
+						//Копируем оригинальные данные
+						imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+						resetPreviewScale();
+					};
+				};
+				reader.readAsDataURL(e.target.files[0]);
+				originalImageName = e.target.files[0].name;
+				originalImageName = originalImageName.substring(0, originalImageName.lastIndexOf('.')) || originalImageName;
+				updateURL();
+			}
+		});
+
+
+
+		// Функция для сохранения значения в URL
+		function updateURL() {
+			allInputs.forEach(input => {
+				const urlParams = new URLSearchParams(window.location.search); //Получаем строку запроса из URL //Преобразуем её в объект URLSearchParams
+				urlParams.set(input.id.slice(0, input.id.indexOf("Input")), input.value); // Убрать суффикс "Input" // Обновляем или удаляем параметр в URL
+				window.history.replaceState({}, '', window.location.pathname + '?' + urlParams.toString());  // Формируем новый URL и обновляем адресную строку
+				localStorage.setItem(input.id, input.value); // Сохранить параметр в localStorage
+			});
+		}
+
+		function processImage() {
+			loadingMessage.style.display = 'block';
+			setTimeout(() => { runProcessImage(); loadingMessage.style.display = 'none'; }, 50); // 50 мс обычно достаточно для отрисовки
+		}
+
+		//Обработка изображения
+		function runProcessImage() {
+			if (!originalImageData) return;
+			loadingMessage.style.display = 'block'; //показать сообщение
+			imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);//Копируем оригинальные данные
+			//Инвертировать цвета
+			if (mode.value == "black") negativeFilter(imageData);
+			//Убрать белый фон
+			removeBackground(imageData, parseInt(thresholdInput.value), parseInt(alphaContrastInput.value)); //Убрать фон
+			//Временно отключить ресурсозатратные функции
+			if (thresholdMouseInput == false) {
+				//Убрать шум
+				removeDeepBorder(imageData, 255 - parseInt(noiseColorInput.value), parseInt(noiseAreaInput.value));
+				//Убрать белую обводку
+				removeWhiteBorder(imageData, parseInt(borderInput.value), 20);
+			}
+			//Инвертировать цвета обратно
+			if (mode.value == "black") negativeFilter(imageData);
+			drawImage(); //Возвращаем обработанные данные на canvas//ctx.putImageData(imageData, 0, 0);
+			downloadBtn.disabled = false; //Активируем кнопку скачивания
+			loadingMessage.style.display = 'none'; //убрать сообщение
+		}
+
+
+
+		//Скачивание результата
+		downloadBtn.addEventListener('click', function () {
+			resetPreviewScale(); //Обрабатываем изображение еще раз перед скачиванием
+			const link = document.createElement('a');
+			link.download = originalImageName + '.png';
+			link.href = canvas.toDataURL('image/png');
+			link.click();
+			updateURL();
+		});
+
+
+		//Более углубленная обработка белой обводки 
+		//Для каждого светлого пикселя проверяем тёмные соседние пиксели и чем сильнее между ними отличие, тем прозрачнее будет светлый пиксель 
+		function removeDeepBorder(imageData, threshold, borderSize) {
+			if (threshold <= 0 || borderSize <= 0) return;
+			const data = imageData.data;
+			const width = imageData.width;
+			const height = imageData.height;
+			var r, g, b, a, noiseBrightness, neighbors;
+			var avgR = 0, avgG = 0, avgB = 0, avgA = 0, avgBrightness = 0;
+			var isBorder = false;
+			var border = new Array();
+			for (let y = 0; y < height; y++) {
+				for (let x = 0; x < width; x++) {
+					const z = (y * width + x) * 4;
+					if (data[z + 3] < 250) continue; //Пропускаем уже прозрачные пиксели
+					r = data[z]; g = data[z + 1]; b = data[z + 2];
+					noiseBrightness = getBrightness(r, g, b);
+					neighbors = 0; //количество непрозрачных соседей
+					isBorder = false;
+					//Анализируем соседей вокруг //Вычисляем средний цвет соседей
+					for (let dy = -borderSize; dy <= borderSize; dy++) {
+						for (let dx = -borderSize; dx <= borderSize; dx++) {
+							if (dx === 0 && dy === 0) continue; //Пропускаем текущий пиксель //if (Math.abs(dx) < borderSize && Math.abs(dy) < borderSize) continue; //Для проверки только границы вокруг пикселя
+							let globalX = x + dx;
+							let globalY = y + dy;
+							if (globalX >= 0 && globalX < width && globalY >= 0 && globalY < height) {
+								const ni = (globalY * width + globalX) * 4;
+								if (data[ni + 3] < 254) {
+									isBorder = true;
+									continue;
+								}
+								neighbors++;
+								avgR += data[ni]; avgG += data[ni + 1]; avgB += data[ni + 2];
+							}
+						}
+					}
+					if (isBorder) {
+						avgR = Math.round(avgR / neighbors); avgG = Math.round(avgG / neighbors); avgB = Math.round(avgB / neighbors);
+						avgBrightness = getBrightness(avgR, avgG, avgB);
+						if (threshold < noiseBrightness - avgBrightness) {
+							avgA = 0; //getAlphaToWhite(data[z], data[z + 1], data[z + 2], avgR, avgG, avgB) / 2;
+							border.push({ index: z, red: avgR, greed: avgG, blue: avgB, alpha: avgA });
+						}
+					}
+				}
+			}
+			for (let z = 0; z < border.length; z++) {
+				data[border[z].index + 0] = border[z].red;
+				data[border[z].index + 1] = border[z].greed;
+				data[border[z].index + 2] = border[z].blue;
+				data[border[z].index + 3] = border[z].alpha;
+			}
+		}
+
+
+		//Вспомогательные функции
+		function median(arr) {
+			if (!arr.length) return 0;
+			const sorted = [...arr].sort((a, b) => a - b);
+			const mid = Math.floor(sorted.length / 2);
+			return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+		}
+		function mathLerp(start, end, t) {
+			return start + t * (end - start);
+		}
+		//Яркость с учётом восприятия: 0.299*R + 0.587*G + 0.114*B
+		function getBrightness(r, g, b) { //r, g, b = [0-255]
+			return Math.round(0.299 * r + 0.587 * g + 0.114 * b); //Яркость цвета (0-255), где 0 - чёрный, 255 - белый.
+		}
+		function getColor(data, index) { //Упаковать цвет пикселя в объект
+			return { 'r': data[index], 'g': data[index + 1], 'b': data[index + 2], 'a': data[index + 3] }
+		}
+		function copyPixel(data, src, next) { //Копирует цвет и альфу из одного пикселя в другой
+			if (data[next + 3] <= 10) { return; }
+			//data[src + 3] = Math.min(data[src + 3], getAlphaToWhite(data[src], data[src + 1], data[src + 2], data[next], data[next + 1], data[next + 2]));
+			data[src + 3] = Math.min(data[src + 3], Math.round((thresholdInput.value - getBrightness(data[src], data[src + 1], data[src + 2])) / (thresholdInput.value - getBrightness(data[next], data[next + 1], data[next + 2])) * 255));
+			data[src] = Math.min(data[next], data[src]); //Копируем Red
+			data[src + 1] = Math.min(data[next + 1], data[src + 1]);//Копируем Green
+			data[src + 2] = Math.min(data[next + 2], data[src + 2]);//Копируем Blue
+		}
+
+		//Эта функция использует HSL-формулу и возвращает насыщенность в диапазоне от 0 до 1. 
+		//Она преобразует RGB в диапазон 0-1, находит максимум и минимум, и возвращает 0, если все три значения одинаковы (то есть, это оттенок серого). 
+		//В противном случае, вычисляет насыщенность на основе яркости (lightness)
+		function getSaturation(r, g, b) { //[0-1]
+			r /= 255; g /= 255; b /= 255;
+			const max = Math.max(r, g, b), min = Math.min(r, g, b);
+			normalized = max === min ? 0 : (max + min > 1 ? (max - min) / (2 - max - min) : (max - min) / (max + min));
+			return (1 - normalized) * 255; //Развернуть значение. При 255 - белый и черный, при 0 - серый
+		}
+
+
+		//Функция для применения негативного фильтра к изображению в JavaScript
+		function negativeFilter(imageData) {
+			const data = imageData.data;
+			for (let i = 0; i < data.length; i += 4) { // Проходим по всем пикселям (каждый пиксель состоит из 4 элементов RGBA)
+				// Инвертируем каждый цветовой канал (R, G, B)
+				data[i] = 255 - data[i];     // Красный
+				data[i + 1] = 255 - data[i + 1]; // Зеленый
+				data[i + 2] = 255 - data[i + 2]; // Синий
+			}
+			return imageData;
+		}
+
+		//Функция для удаления белого фона
+		function removeBackground(imageData, threshold, contrast) {
+			const data = imageData.data;
+			var r, g, b, brightness;
+			for (let z = 0; z < data.length; z += 4) { //Обрабатываем каждый пиксель
+				r = data[z]; g = data[z + 1]; b = data[z + 2];
+				brightness = getBrightness(r, g, b);
+				nextBright = getBrightness(data[z + 4], data[z + 5], data[z + 6]);
+				if (threshold < brightness) { //Проверяем, является ли пиксель белым (или близким к белому)
+					if (contrast < 255) {  //Применяем косинусоидальную интерполяцию
+						//Нормализуем яркость в [0, 1] (0 = порог, 1 = белый)
+						const normalized = (brightness - threshold) / (255 - threshold);
+						const alphaFactor = Math.cos(normalized * Math.PI / 2 * (1 + contrast / 255));//Чем выше contrast, тем круче переход (можно регулировать множитель)
+						data[z + 3] = 255 * alphaFactor;//Переводим в диапазон [0, 255] (0 — прозрачный, 255 — непрозрачный)
+					} else {
+						data[z + 3] = 0;
+					}
+				}
+			}
+		}
+
+		//Удалить белую обводку
+		function removeWhiteBorder(imageData, step, minAlphaColor) { //Функция удаляет белую обводку вокруг изображения с прозрачным фоном
+			if (step <= 0) return;
+			const data = imageData.data; const width = imageData.width; const height = imageData.height;
+			let update = true;
+			const slideStep = step + 1;
+			//Сверху вниз
+			for (let x = 0; x < width; x++) {
+				update = true;
+				for (let y = 0; y < height; y++) {
+					const z = ((y * width) + x) * 4;
+					if (minAlphaColor <= data[z + 3] && update) { //Если текущий пиксель непрозрачный
+						const nextColor = ((y + slideStep) * width + x) * 4; //Копируем R, G, B
+						if (data[nextColor + 3] < minAlphaColor) continue;
+						for (let s = 0; s < step && y + s < height; s++) { //Копируем пиксели вперёд до step
+							const src = ((y + s) * width + x) * 4;
+							if (data[src + 3] <= minAlphaColor) break;
+							copyPixel(data, src, nextColor); //const nextColor = ((y + s - 1) * width + x) * 4;
+						}
+						update = false;  //Завершаем копирование при достижении прозрачного участка
+					} else if (!update && data[z + 3] == 0) { //Ждём следующий прозрачный пиксель
+						update = true;
+					}
+				}
+			}
+
+			//Снизу вверх
+			for (let x = 0; x < width; x++) {
+				update = true;
+				for (let y = height - 1; y >= 0; y--) {
+					const z = ((y * width) + x) * 4;
+					if (minAlphaColor <= data[z + 3] && update) {
+						const nextColor = ((y - slideStep) * width + x) * 4; //Копируем R, G, B
+						if (data[nextColor + 3] < minAlphaColor) continue;
+						for (let s = 0; s < step && y - s >= 0; s++) {
+							const src = ((y - s) * width + x) * 4;
+							if (data[src + 3] <= minAlphaColor) break;
+							copyPixel(data, src, nextColor); //const nextColor = ((y - s + 1) * width + x) * 4;
+						}
+						update = false;
+					} else if (!update && data[z + 3] === 0) {
+						update = true;
+					}
+				}
+			}
+
+			//Слева направо
+			for (let y = 0; y < height; y++) {
+				update = true;
+				for (let x = 0; x < width; x++) {
+					const z = ((y * width) + x) * 4;
+					if (minAlphaColor <= data[z + 3] && update) {
+						const nextColor = ((y * width) + x + slideStep) * 4; //Копируем R, G, B
+						if (data[nextColor + 3] < minAlphaColor) continue;
+						for (let s = 0; s < step && x + s < width; s++) {
+							const src = ((y * width) + x + s) * 4;
+							if (data[src + 3] <= minAlphaColor) break;
+							copyPixel(data, src, nextColor); //nextColor = ((y * width) + x + s - 1) * 4;
+						}
+						update = false;
+					} else if (!update && data[z + 3] === 0) {
+						update = true;
+					}
+				}
+			}
+
+			//Справа налево
+			for (let y = 0; y < height; y++) {
+				update = true;
+				for (let x = width - 1; x >= 0; x--) {
+					const z = ((y * width) + x) * 4;
+					if (minAlphaColor <= data[z + 3] && update) {
+						const nextColor = ((y * width) + x - slideStep) * 4; //Копируем R, G, B
+						if (data[nextColor + 3] < minAlphaColor) continue;
+						for (let s = 0; s < step && x - s >= 0; s++) {
+							const src = ((y * width) + x - s) * 4;
+							if (data[src + 3] <= minAlphaColor) break;
+							copyPixel(data, src, nextColor); //nextColor = ((y * width) + x - s + 1) * 4;
+						}
+						update = false;
+					} else if (!update && data[z + 3] === 0) {
+						update = true;
+					}
+				}
+			}
+			/* 
+			
+				// Диагональ: сверху-слева направо-вниз
+				for (let d = 0; d < width + height - 1; d++) {
+					let xStart = Math.max(0, d - height + 1);
+					let yStart = Math.min(d, height - 1);
+					update = true;
+					for (let i = 0; i < Math.min(d + 1, width, height); i++) {
+						let x = xStart + i;
+						let y = yStart - i;
+						if (x >= width || y >= height) continue;
+						const z = ((y * width) + x) * 4;
+						if (minAlphaColor <= data[z + 3] && update) {
+							const nextColor = ((y * width) + x - slideStep) * 4;
+							if (data[nextColor + 3] < minAlphaColor) continue;
+							for (let s = 0; s < step && x - s >= 0; s++) {
+								const src = ((y * width) + x - s) * 4;
+								if (data[src + 3] <= minAlphaColor) break;
+								copyPixel(data, src, nextColor);
+							}
+							update = false;
+						} else if (!update && data[z + 3] === 0) {
+							update = true;
+						}
+					}
+				}
+	
+	
+				//Диагональ: сверху-справа направо-влево (top-right → bottom-left)
+				for (let d = 0; d < width + height - 1; d++) {
+					let xStart = width - 1 - Math.max(0, d - height + 1);
+					let yStart = Math.min(d, height - 1);
+					update = true;
+					for (let i = 0; i < Math.min(d + 1, width, height); i++) {
+						let x = xStart - i;
+						let y = yStart - i;
+						if (x < 0 || y < 0) continue;
+						const z = ((y * width) + x) * 4;
+						if (minAlphaColor <= data[z + 3] && update) {
+							const nextColor = ((y * width) + x - slideStep) * 4;
+							if (data[nextColor + 3] < minAlphaColor) continue;
+							for (let s = 0; s < step && x - s >= 0; s++) {
+								const src = ((y * width) + x - s) * 4;
+								if (data[src + 3] <= minAlphaColor) break;
+								copyPixel(data, src, nextColor);
+							}
+							update = false;
+						} else if (!update && data[z + 3] === 0) {
+							update = true;
+						}
+					}
+				}
+	
+	
+				//Диагональ: снизу-слева направо-вверх
+				for (let d = 0; d < width + height - 1; d++) {
+					let xStart = Math.max(0, d - height + 1);
+					let yStart = height - 1 - Math.min(d, height - 1);
+					update = true;
+					for (let i = 0; i < Math.min(d + 1, width, height); i++) {
+						let x = xStart + i;
+						let y = yStart + i;
+						if (x >= width || y >= height) continue;
+						const z = ((y * width) + x) * 4;
+						if (minAlphaColor <= data[z + 3] && update) {
+							const nextColor = ((y * width) + x - slideStep) * 4;
+							if (data[nextColor + 3] < minAlphaColor) continue;
+							for (let s = 0; s < step && x - s >= 0; s++) {
+								const src = ((y * width) + x - s) * 4;
+								if (data[src + 3] <= minAlphaColor) break;
+								copyPixel(data, src, nextColor);
+							}
+							update = false;
+						} else if (!update && data[z + 3] == 0) {
+							update = true;
+						}
+					}
+				}
+	
+				//Диагональ: снизу-справа направо-вверх
+				for (let d = 0; d < width + height - 1; d++) {
+					let xStart = width - 1 - Math.max(0, d - height + 1);
+					let yStart = height - 1 - Math.min(d, height - 1);
+					update = true;
+					for (let i = 0; i < Math.min(d + 1, width, height); i++) {
+						let x = xStart - i;
+						let y = yStart + i;
+						if (x < 0 || y >= height) continue;
+						const z = ((y * width) + x) * 4;
+						if (minAlphaColor <= data[z + 3] && update) {
+							const nextColor = ((y * width) + x - slideStep) * 4;
+							if (data[nextColor + 3] < minAlphaColor) continue;
+							for (let s = 0; s < step && x - s >= 0; s++) {
+								const src = ((y * width) + x - s) * 4;
+								if (data[src + 3] <= minAlphaColor) break;
+								copyPixel(data, src, nextColor);
+							}
+							update = false;
+						} else if (!update && data[z + 3] == 0) {
+							update = true;
+						}
+					}
+				} */
+		}
+
+
+		//Чем ближе к белому — тем прозрачнее
+		function getAlphaToWhite(r, g, b, baseR, baseG, baseB) { //Возвращает альфа на основе близости к белому относительно исходного цвета
+			const brightness = Math.max((r - baseR), (g - baseG), (b - baseB)); //Разница яркости относительно исходного цвета
+			if (brightness <= 0) return 255; //Если цвет не ярче исходного — полностью непрозрачный
+			const diffToWhite = 255 - Math.max(r, g, b); //Разница с белым
+			return Math.floor(255 - (brightness / 255) * (255 - diffToWhite)); //Чем ближе к белому — тем прозрачнее
+		}
+
+
+
+		//Переключение фона предпросмотра
+		bgButtons.forEach(btn => {
+			btn.addEventListener('click', function () {
+				bgButtons.forEach(b => b.classList.remove('active'));
+				this.classList.add('active');
+				const bg = this.getAttribute('data-bg');
+				if (bg === 'transparent') {
+					canvasParent.style.background = `
+                        linear-gradient(45deg, #ddd 25%, transparent 25%),
+                        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #ddd 75%),
+                        linear-gradient(-45deg, transparent 75%, #ddd 75%)
+                    `;
+					canvasParent.style.backgroundSize = '20px 20px';
+				} else {
+					canvasParent.style.background = bg;
+					canvasParent.style.backgroundSize = '';
+				}
+			});
+		});
+
+
+		// Параметры изображения и трансформации
+		let offsetX = 0;
+		let offsetY = 0;
+		let scale = 1.0;
+
+		// Переменные для перемещения
+		let isDragging = false;
+		let lastX = 0;
+		let lastY = 0;
+
+		// Размеры контейнера и канваса
+		function updateCanvasSize() {
+			const bgRect = canvasParent.getBoundingClientRect();
+			canvas.width = bgRect.width;
+			canvas.height = bgRect.height;
+			drawImage();
+		}
+
+		// Создаем временный canvas для масштабирования
+		const tempCanvas = document.createElement('canvas');
+		const tempCtx = tempCanvas.getContext('2d'); //создаем временный Canvas для работы с пикселями
+		let displayImage = null; // ImageBitmap для отображения
+		const ctx = canvas.getContext('2d', { willReadFrequently: true }); // Отрисовка изображения с учётом offset и scale
+		// Отрисовка изображения с учётом offset и scale
+		function drawImage() {
+			if (!imageData) return;
+			ctx.imageSmoothingEnabled = (scale < 1); //убрать сглаживание
+			ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистить canvas
+			ctx.save();// Сохранить текущее состояние контекста
+			ctx.translate(offsetX, offsetY);// Переносим начало координат
+			ctx.scale(scale, scale);
+			tempCanvas.width = imageData.width;
+			tempCanvas.height = imageData.height;
+			tempCtx.putImageData(imageData, 0, 0);
+			// Рисуем на основном canvas с нужным масштабированием
+			ctx.drawImage(tempCanvas, 0, 0, imageData.width, imageData.height, 0, 0, imageData.width, imageData.height);
+			ctx.restore();// Восстановить состояние 
+		}
+
+		// Обработчики событий для перемещения
+		canvas.addEventListener('mousedown', (e) => {
+			if (e.button === 0) { // Левая кнопка мыши
+				isDragging = true;
+				lastX = e.clientX;
+				lastY = e.clientY;
+				canvas.style.cursor = 'grabbing';
+			}
+		});
+
+		canvas.addEventListener('mousemove', (e) => {
+			if (isDragging) {
+				const dx = e.clientX - lastX;
+				const dy = e.clientY - lastY;
+				offsetX += dx;
+				offsetY += dy;
+				lastX = e.clientX;
+				lastY = e.clientY;
+				drawImage();
+			}
+		});
+
+		canvas.addEventListener('mouseup', () => { isDragging = false; canvas.style.cursor = 'grab'; });
+		canvas.addEventListener('mouseleave', () => { isDragging = false; canvas.style.cursor = 'default'; });
+		// Обработчик масштабирования колесиком мыши
+		canvas.addEventListener('wheel', (e) => {
+			e.preventDefault();
+			const rect = canvas.getBoundingClientRect();
+			const mouseX = e.clientX - rect.left;
+			const mouseY = e.clientY - rect.top;
+			const zoomIntensity = 0.2;
+			const wheelDelta = e.deltaY < 0 ? 1 : -1;
+			const newScale = Math.max(0.1, Math.min(20, scale * (1 + wheelDelta * zoomIntensity)));
+			const scaleFactor = newScale / scale;
+			offsetX = mouseX - (mouseX - offsetX) * scaleFactor;
+			offsetY = mouseY - (mouseY - offsetY) * scaleFactor;
+			scale = Math.round(newScale * 1000) / 1000;
+			drawImage();
+		});
+		// Инициализация
+		updateCanvasSize();
+		window.addEventListener('resize', updateCanvasSize);
+		// Установка курсора по умолчанию
+		canvas.style.cursor = 'grab';
+		// Пример установки изображения (вызовите эту функцию, когда у вас есть ImageData)
+		function resetPreviewScale() { // Сброс трансформаций при новой загрузке изображения
+			offsetX = (canvas.width - imageData.width) / 2;
+			offsetY = (canvas.height - imageData.height) / 2;
+			scale = 1;
+			runProcessImage(); //Применяем обработку при изменении параметров
+		}
+
+	</script>
+</body>
+
+</html>
