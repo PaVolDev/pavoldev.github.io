@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Редактор оружия</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="container">
+		<!-- Левая панель: Доступные параметры -->
+		<div class="panel" id="leftPanel">
+			<span style="position: relative;">
+				<div class="titlePanel">Доступные параметры</div>
+				<button onclick="showAddNewField()" class="addNewField" data-tooltip="Добавить новый параметр">
+					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 94.49 94.49" style="enable-background:new 0 0 94.49 94.49;" xml:space="preserve">
+						<g>
+							<path d="M92.49,35.284H59.206V2c0-1.104-0.896-2-2-2H37.284c-1.104,0-2,0.896-2,2v33.284H2c-1.104,0-2,0.896-2,2v19.922 c0,1.104,0.896,2,2,2h33.284V92.49c0,1.104,0.896,2,2,2h19.922c1.104,0,2-0.896,2-2V59.206H92.49c1.104,0,2-0.896,2-2V37.284 C94.49,36.18,93.596,35.284,92.49,35.284z" fill="#000000" style="fill: rgb(255, 255, 255);"></path>
+						</g>
+					</svg>
+				</button>
+			</span>
+
+			<span style="position: relative;">
+				<input type="text" id="searchInput" class="panelInput" placeholder="Поиск параметров...">
+				<button class="clearInput" id="clearInput" style="display: none;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor">
+						<path d="M17.06 16l7.97 7.97-1.06 1.06L16 17.06l-7.97 7.97-1.06-1.06L14.94 16 6.97 8.03l1.06-1.06L16 14.94l7.97-7.97 1.06 1.06L17.06 16z" fill="currentColor"></path>
+					</svg>
+				</button>
+			</span>
+			<ul id="availableParamsList"></ul>
+		</div>
+
+		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
+		<div class="panel" id="centerPanel">
+			<div class="titlePanel">Отредактированные параметры</div>
+			<div class="fields">
+				<label for="id">ID:</label>
+				<label for="idTemplate">Шаблон:</label>
+				<input type="text" id="idWeapon" class="panelInput" value="новое_оружие" placeholder="[a-z]">
+				<select id="idTemplate" class="panelInput">
+					<option value="empty">Выберите оружие</option>
+				</select>
+			</div>
+			<ul id="editedParamsList"></ul>
+			<div class="buttonPanel">
+				<button id="importJsonFile" class="resultButton jsonFileButton">Импорт...</button>
+				<button id="exportJsonFile" class="resultButton jsonFileButton">Экспорт...</button>
+				<button id="saveButton" class="resultButton">Сохранить</button>
+				<span id="saveState" style="display: none; float: right;">Сохранение...</span>
+			</div>
+
+		</div>
+
+		<!-- Правая панель: Предпросмотр -->
+		<div class="panel" id="right-panel">
+			<span style="position: relative;">
+				<div class="titlePanel">Предпросмотр</div>
+				<img src="images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра" onclick="alert('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра')">
+			</span>
+			<!-- Рендер объектов -->
+			<canvas id="scene" width="600" height="440"></canvas>
+
+			<!-- Добавляем отображение иерархии и свойств (для отладки и редактирования) -->
+			<div class="hierarchy">
+				<div style="overflow-x: hidden; text-wrap-mode: nowrap;">
+					<span>Объекты:</span>
+					<div id="hierarchy"></div>
+				</div>
+				<div>
+					<span id="propName" style="text-align: right; overflow: hidden; text-wrap-mode: nowrap;"></span>
+					<hr>
+					<div id="properties" style="display: none;">
+						<div>
+							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;" data-tooltip="Позиция объекта внутри родительского объекта">
+								<span style="text-align: center;">X:</span><input type="text" id="propPosX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="text" id="propPosY" step="0.01">
+							</div>
+						</div>
+						<div>
+							<label for="propAngle" data-tooltip="Угол поворота в градусах">Local Angle:</label>
+							<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
+								<input type="range" min="-180" max="180" step="1" id="propAngleSlider">
+								<input type="text" min="-180" max="180" step="0.01" placeholder="float" id="propAngle" data-tooltip="Угол поворота в градусах">
+							</div>
+						</div>
+						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center; justify-content: space-between;">
+							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
+							<input type="text" id="propSortingOrder" step="1">
+							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
+							<input type="text" id="propPixelsPerUnit" step="5">
+						</div>
+						<div>
+							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
+							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;">
+								<span style="text-align: center;">X:</span><input type="text" id="propPivotX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="text" id="propPivotY" step="0.01">
+							</div>
+
+						</div>
+
+						<div>
+							<label for="propTexture">Текстура:</label>
+							<input type="text" id="propTexture">
+							<label class="fileInputLabel">
+								<input type="file" class="fileInput" accept=".png" id="sceneFileInput">
+								<span class="fileInputButton" data-tooltip="Загрузить PNG-файл">Заменить</span>
+							</label>
+						</div>
+
+						<div style="display: flex;align-items: center;margin-top: 10px;">
+							<input type="checkbox" id="propRenderEnabled" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true;">
+							<input type="checkbox" id="propGameObjActive" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true);">
+							Показать
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Всплывающие подсказки
+		const tooltip = Object.assign(document.createElement('div'), {
+			className: 'smart-tooltip',
+			hidden: true
+		});
+		document.body.appendChild(tooltip);
+		const spacing = 8;
+		document.addEventListener('mouseover', e => {
+			const target = e.target.closest('[data-tooltip]');
+			if (!target) return;
+			tooltip.innerHTML = target.getAttribute('data-tooltip').replace(/\n/g, '<br>');
+			tooltip.hidden = false;
+			tooltip.style.opacity = '0';
+			const { width: tW, height: tH } = tooltip.getBoundingClientRect();
+			const { left, right, top, bottom } = target.getBoundingClientRect();
+			let x, y;
+			// Приоритет: top → bottom → right → left
+			if (top >= tH + spacing) {// Сверху: центрируем
+				x = Math.max(spacing, Math.min(left + (right - left) / 2 - tW / 2, window.innerWidth - tW - spacing));
+				y = top - tH - spacing;
+			} else if (bottom + tH + spacing <= window.innerHeight) {// Снизу: центрируем
+				x = Math.max(spacing, Math.min(left + (right - left) / 2 - tW / 2, window.innerWidth - tW - spacing));
+				y = bottom + spacing;
+			} else if (right + tW + spacing <= window.innerWidth) {// Справа: прижат к правому краю элемента
+				x = right + spacing;
+				y = Math.max(spacing, Math.min(top + (bottom - top) / 2 - tH / 2, window.innerHeight - tH - spacing));
+			} else if (left - tW - spacing >= 0) {// Слева: прижат к левому краю элемента
+				x = left - tW - spacing;
+				y = Math.max(spacing, Math.min(top + (bottom - top) / 2 - tH / 2, window.innerHeight - tH - spacing));
+			} else {// Fallback: сверху слева с отступом
+				x = spacing;
+				y = Math.max(spacing, top - tH - spacing);
+			}
+			tooltip.style.left = `${x}px`; tooltip.style.top = `${y}px`;
+			tooltip.style.right = tooltip.style.bottom = '';
+			tooltip.style.opacity = '1';
+		});
+		document.addEventListener('mouseout', () => {
+			tooltip.style.opacity = 0;
+		});
+	</script>
+
+	<!-- Подключаем данные -->
+	<script src="config.js"></script> <!-- sampleParams -->
+	<!-- Подключаем список оружий -->
+	<script src="weapons/aa12.js"></script>
+	<script src="weapons/ak12.js"></script>
+	<script src="weapons/ak308.js"></script>
+	<script src="weapons/ak74u.js"></script>
+	<script src="weapons/amb17.js"></script>
+	<script src="weapons/ares16.js"></script>
+	<script src="weapons/at308.js"></script>
+	<script src="weapons/aug.js"></script>
+	<script src="weapons/axe.js"></script>
+	<script src="weapons/barrettM107A.js"></script>
+	<script src="weapons/barrettM99.js"></script>
+	<script src="weapons/barrettMRAD.js"></script>
+	<script src="weapons/benelli-m4.js"></script>
+	<script src="weapons/bow.js"></script>
+	<script src="weapons/cougarms.js"></script>
+	<script src="weapons/czbren2.js"></script>
+	<script src="weapons/czEvo3A1.js"></script>
+	<script src="weapons/deagle.js"></script>
+	<script src="weapons/dp12.js"></script>
+	<script src="weapons/f2000.js"></script>
+	<script src="weapons/fd12.js"></script>
+	<script src="weapons/forigin12.js"></script>
+	<script src="weapons/g36c.js"></script>
+	<script src="weapons/galilace21.js"></script>
+	<script src="weapons/glock18c.js"></script>
+	<script src="weapons/gm94.js"></script>
+	<script src="weapons/grizzly85.js"></script>
+	<script src="weapons/hk69.js"></script>
+	<script src="weapons/imbelai2.js"></script>
+	<script src="weapons/katana.js"></script>
+	<script src="weapons/ksg.js"></script>
+	<script src="weapons/lopata.js"></script>
+	<script src="weapons/lr300.js"></script>
+	<script src="weapons/m110.js"></script>
+	<script src="weapons/m200.js"></script>
+	<script src="weapons/mk18.js"></script>
+	<script src="weapons/mk46.js"></script>
+	<script src="weapons/mk48.js"></script>
+	<script src="weapons/mk49.js"></script>
+	<script src="weapons/mossberg590.js"></script>
+	<script src="weapons/mp5.js"></script>
+	<script src="weapons/mr27.js"></script>
+	<script src="weapons/p226.js"></script>
+	<script src="weapons/p90.js"></script>
+	<script src="weapons/pp19bizon.js"></script>
+	<script src="weapons/pp90m1.js"></script>
+	<script src="weapons/rem870dm.js"></script>
+	<script src="weapons/remR11rsass.js"></script>
+	<script src="weapons/rpk16.js"></script>
+	<script src="weapons/saiga12.js"></script>
+	<script src="weapons/sako.js"></script>
+	<script src="weapons/scarh.js"></script>
+	<script src="weapons/scarlcqc.js"></script>
+	<script src="weapons/scarssr.js"></script>
+	<script src="weapons/shak12.js"></script>
+	<script src="weapons/sigmpx.js"></script>
+	<script src="weapons/six12.js"></script>
+	<script src="weapons/sr2veresk.js"></script>
+	<script src="weapons/sr3m.js"></script>
+	<script src="weapons/srm1212.js"></script>
+	<script src="weapons/srm1216.js"></script>
+	<script src="weapons/sv98.js"></script>
+	<script src="weapons/sw686.js"></script>
+	<script src="weapons/ump45.js"></script>
+	<script src="weapons/vepr12.js"></script>
+	<script src="weapons/xtr12.js"></script>
+	<!-- Подключаем скрипты -->
+	<script src="sceneData.js"></script> <!-- let sceneObjects = [...] -->
+	<script src="parameters.js"></script> <!-- editedParams + UI -->
+	<script src="preview.js"></script> <!-- renderScene, drag, etc -->
+</body>
+
+</html>
