@@ -358,8 +358,6 @@ function syncSceneObjectToParams(obj) {
 
 
 
-
-
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
 function addParam(fieldPath, addAsFirst = true) {
 	if (editedParams.some(p => p.fieldPath === fieldPath)) return;
@@ -388,6 +386,17 @@ function addParam(fieldPath, addAsFirst = true) {
 	renderAvailableParams(document.getElementById('searchInput').value);
 	renderEditedParams();
 	syncParamsToScene();
+}
+
+// ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
+function createParam() {
+	closeAddNewField();
+	const newFieldPath = document.getElementById('newFieldPath');
+	const newFieldValue = document.getElementById('newFieldValue');
+	if (!newFieldPath.value) return;
+	editedParams.unshift({ "fieldPath": newFieldPath.value, "comment": "", "type": "string", "value": newFieldValue.value });
+	newFieldPath.value = ''; newFieldValue.value = '';
+	renderEditedParams();
 }
 
 // ——— УДАЛЕНИЕ ПАРАМЕТРА ———
@@ -634,9 +643,16 @@ function base64ToFile(base64, filename = 'file.png') {
 
 
 // ——— Кнопки на странице ———
-
 function showAddNewField() {
-	alert("Функция в разработке");
+	document.getElementById('newFieldPanel').style.display = 'block';
+	document.getElementById('closeNewField').style.display = 'block';
+	document.getElementById('addNewField').style.display = 'none';
+}
+
+function closeAddNewField() {
+	document.getElementById('newFieldPanel').style.display = 'none';
+	document.getElementById('closeNewField').style.display = 'none';
+	document.getElementById('addNewField').style.display = 'block';
 }
 
 // ——— ПОИСК ———
