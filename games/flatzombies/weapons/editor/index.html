@@ -14,21 +14,34 @@
 		<div class="panel" id="leftPanel">
 			<span style="position: relative;">
 				<div class="titlePanel">Доступные параметры</div>
-				<button onclick="showAddNewField()" class="addNewField" data-tooltip="Добавить новый параметр">
-					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 94.49 94.49" style="enable-background:new 0 0 94.49 94.49;" xml:space="preserve">
-						<g>
-							<path d="M92.49,35.284H59.206V2c0-1.104-0.896-2-2-2H37.284c-1.104,0-2,0.896-2,2v33.284H2c-1.104,0-2,0.896-2,2v19.922 c0,1.104,0.896,2,2,2h33.284V92.49c0,1.104,0.896,2,2,2h19.922c1.104,0,2-0.896,2-2V59.206H92.49c1.104,0,2-0.896,2-2V37.284 C94.49,36.18,93.596,35.284,92.49,35.284z" fill="#000000" style="fill: rgb(255, 255, 255);"></path>
-						</g>
-					</svg>
-				</button>
+				<div onclick="showAddNewField()" data-tooltip="Добавить новый параметр" class="addNewField" id="addNewField" >
+					<img src="images/add.png" width="100%" height="100%">
+				</div>
+
+				<div onclick="closeAddNewField()" data-tooltip="Закрыть" style="display: none;" class="addNewField" id="closeNewField">
+					<img src="images/close.png" width="100%" height="100%">
+				</div>
+
+
 			</span>
+
+			<div id="newFieldPanel" style="display: none;">
+				<div class="fields">
+					<span data-tooltip="Путь к свойству объекта">Свойство объекта:</span>
+					<span data-tooltip="Значение свойства">Значение:</span>
+					<input type="text" id="newFieldPath" class="panelInput" value="" placeholder="object.MonoBehaviour.field">
+					<input type="text" id="newFieldValue" class="panelInput" value="" placeholder="(0.5, 0.12, 0)">
+					<span></span>
+					<span><br><button onclick="createParam()" class="add">Добавить</button></span>
+				</div>
+
+				<br>
+			</div>
 
 			<span style="position: relative;">
 				<input type="text" id="searchInput" class="panelInput" placeholder="Поиск параметров...">
 				<button class="clearInput" id="clearInput" style="display: none;">
-					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor">
-						<path d="M17.06 16l7.97 7.97-1.06 1.06L16 17.06l-7.97 7.97-1.06-1.06L14.94 16 6.97 8.03l1.06-1.06L16 14.94l7.97-7.97 1.06 1.06L17.06 16z" fill="currentColor"></path>
-					</svg>
+					<img src="images/close.png" width="100%" height="100%">
 				</button>
 			</span>
 			<ul id="availableParamsList"></ul>
@@ -38,7 +51,7 @@
 		<div class="panel" id="centerPanel">
 			<div class="titlePanel">Отредактированные параметры</div>
 			<div class="fields">
-				<label for="id">ID:</label>
+				<label for="idWeapon">ID:</label>
 				<label for="idTemplate">Шаблон:</label>
 				<input type="text" id="idWeapon" class="panelInput" value="новое_оружие" placeholder="[a-z]">
 				<select id="idTemplate" class="panelInput">
