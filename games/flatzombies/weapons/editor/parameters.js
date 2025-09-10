@@ -709,7 +709,7 @@ function importFromJSON(jsonData) {
 	Object.keys(jsonData).forEach(fullKeyPath => { // Преобразуем полный путь к короткому формату (убираем префиксы)
 		let shortPath = fullKeyPath;
 		prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
-		const jsonValue = jsonData[fullKeyPath];
+		let jsonValue = jsonData[fullKeyPath];
 		jsonValue = (jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
 		json.push({ key: shortPath, value: jsonValue });
 	});
