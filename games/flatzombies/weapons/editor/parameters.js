@@ -709,8 +709,11 @@ function importFromJSON(jsonData) {
 	Object.keys(jsonData).forEach(fullKeyPath => { // Преобразуем полный путь к короткому формату (убираем префиксы)
 		let shortPath = fullKeyPath;
 		prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
-		json.push({ key: shortPath, value: jsonData[fullKeyPath] });
+		const jsonValue = jsonData[fullKeyPath];
+		jsonValue = (jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
+		json.push({ key: shortPath, value: jsonValue });
 	});
+
 
 	json.forEach(field => { //Если json имеет параметр, который имеет тип из dependencies, то добавляем такой параметр и вместе с ним будут добавлены все связаные параметры
 		const fieldPath = field.key;
