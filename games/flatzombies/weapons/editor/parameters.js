@@ -801,7 +801,9 @@ document.getElementById('exportJsonFile').addEventListener('click', () => {
 
 // Отправка JSON через POST-запрос
 const saveState = document.getElementById('saveState');
-document.getElementById('saveButton').addEventListener('click', (event) => {
+//document.getElementById('saveButton').addEventListener('click', (event) => {
+document.querySelector('.save').addEventListener('submit', async (event) => {
+	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
