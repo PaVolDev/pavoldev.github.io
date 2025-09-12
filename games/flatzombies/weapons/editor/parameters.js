@@ -817,9 +817,11 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	}).then(response => {
 		if (!response.ok) {
 			event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-			throw new Error('Ошибка сети или сервера');
+			return response.text().then(text => {
+				throw new Error('Ошибка сервера: ' + text);
+			});
 		}
-		return response.text(); // Или response.json(), в зависимости от того, что возвращает PHP
+		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 		alert('Данные успешно сохранены!\nОткройте игру и укажите оружие: ' + json['id']);
@@ -828,9 +830,6 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		alert('Произошла ошибка при сохранении данных:\n' + error.message);
 	});
 });
-
-
-
 
 
 // ——— ИНИЦИАЛИЗАЦИЯ ———
