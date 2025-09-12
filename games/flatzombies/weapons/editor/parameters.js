@@ -28,6 +28,9 @@ function onLoaded() {
 		});
 	});
 
+	document.getElementById("loading").remove();
+	document.getElementById("startFields").classList.remove('hidden');
+	document.getElementById("buttonPanel").classList.remove('hidden');
 	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
 	templateInput.addEventListener('input', onSelectWeapon);
 	// Заполняем <select> новыми опциями из массива weapons
@@ -41,7 +44,7 @@ function onLoaded() {
 
 //ПАНЕЛИ
 const leftPanel = document.getElementById("leftPanel");
-const rightPanel = document.getElementById("rightPanel"); 
+const rightPanel = document.getElementById("rightPanel");
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 function onSelectWeapon(event) {
