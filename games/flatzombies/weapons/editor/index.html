@@ -51,7 +51,7 @@
 		<div class="panel" id="centerPanel">
 			<div class="titlePanel">Отредактированные параметры</div>
 			<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px;" id="loading">
-			<div class="fields hidden"  id="startFields">
+			<div class="fields hidden" id="startFields">
 				<label for="idWeapon">ID:</label>
 				<label for="idTemplate">Шаблон:</label>
 				<input type="text" id="idWeapon" class="panelInput" value="новое_оружие" placeholder="[a-z]">
@@ -63,8 +63,17 @@
 			<div class="buttonPanel hidden" id="buttonPanel">
 				<button id="importJsonFile" class="resultButton jsonFileButton">Импорт...</button>
 				<button id="exportJsonFile" class="resultButton jsonFileButton">Экспорт...</button>
-				<button id="saveButton" class="resultButton">Сохранить</button>
-				<span id="saveState" style="display: none; float: right;">Сохранение...</span>
+				<div class="savePanel">
+					<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
+						<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
+					</div>
+					<form method="POST" class="save">
+						<button type="submit" id="saveButton" class="resultButton">Сохранить</button>
+						<input type="hidden" name="action" value="login">
+						<input type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
+						<input type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
+					</form>
+				</div>
 			</div>
 
 		</div>
@@ -177,7 +186,18 @@
 		document.addEventListener('mouseout', () => {
 			tooltip.style.opacity = 0;
 		});
+
+		//Небольшие функции для кнопки Сохранить
+		function generateRandomString() {
+			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&=+[]<>?';
+			return Array.from({ length: 8 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+		}
+		document.getElementById('login').value = 'user';
+		document.getElementById('password').value = generateRandomString();
+
 	</script>
+
+
 
 	<!-- Подключаем данные -->
 	<script src="config.js"></script> <!-- sampleParams -->
