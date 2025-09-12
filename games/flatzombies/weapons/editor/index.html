@@ -67,7 +67,7 @@
 					<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
 						<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
 					</div>
-					<form method="GET" class="save">
+					<form method="GET" class="save" id="save">
 						<button type="submit" id="saveButton" class="resultButton">Сохранить</button>
 						<input type="hidden" name="action" value="login">
 						<input data-tooltip="Логин и пароль для вашего мода.<br>Пароль нужен, чтобы только вы могли редактировать свои моды, чтобы никакой PROгебатор-228из5Б не мог изменить и сломать ваше творение" type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
@@ -194,7 +194,7 @@
 		}
 		const login = document.getElementById('login');
 		const password = document.getElementById('password');
-		login.addEventListener('mouseenter', function () { // Проверяем, пусты ли поля при загрузке страницы
+		document.getElementById('save').addEventListener('mouseenter', function () { // Проверяем, пусты ли поля при загрузке страницы
 			if (!login.value && !password.value) {// Генерируем автоматические значения только если оба поля пусты
 				login.value = generateRandomString();
 				password.value = generateRandomString();
