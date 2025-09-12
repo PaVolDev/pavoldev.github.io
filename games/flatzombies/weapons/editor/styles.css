@@ -135,7 +135,7 @@ ul {
 	flex-direction: column;
 }
 
-#right-panel {
+#rightPanel {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -147,6 +147,11 @@ h2 {
 	color: var(--accent);
 	padding-bottom: 8px;
 	border-bottom: 1px solid var(--border-color);
+}
+
+.hidden {
+  visibility: hidden;
+  position: absolute;
 }
 
 #availableParamsList,
@@ -363,7 +368,7 @@ h2 {
 
 .addNewField {
 	position: absolute;
-	top: -4px;
+	top: -8px;
 	right: 0;
 	z-index: 10;
 	width: 2em;
@@ -372,7 +377,7 @@ h2 {
 	border: none;
 	color: white;
 	cursor: pointer;
-	padding: 0.4em;
+	padding: 0px;
 	background: transparent;
 }
 
