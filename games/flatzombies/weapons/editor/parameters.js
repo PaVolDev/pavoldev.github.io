@@ -1,10 +1,4 @@
-
-//СКРЫТЬ ПАНЕЛИ во время подготовки данных
-const leftPanel = document.getElementById("leftPanel"); leftPanel.style.display = 'none';
-const rightPanel = document.getElementById("right-panel"); rightPanel.style.display = 'none';
-
 document.addEventListener("DOMContentLoaded", onLoaded);
-
 //Подготовка данных
 let templateInput = null;
 let selectedWeapon = null; //Выбранный шаблон для нового оружия
@@ -44,6 +38,10 @@ function onLoaded() {
 		templateInput.appendChild(option);
 	});
 }
+
+//ПАНЕЛИ
+const leftPanel = document.getElementById("leftPanel");
+const rightPanel = document.getElementById("rightPanel"); 
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 function onSelectWeapon(event) {
