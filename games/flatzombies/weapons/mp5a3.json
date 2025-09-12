@@ -69,5 +69,6 @@
     "weapon.flashlight": "(0.781, 0.128, 0)",
     "weapon.automat": true,
     "weapon.fireRateInMinute": "1800",
-    "superData": "12345"
+    "superData": "12345",
+    "saveMode": "test"
 }
