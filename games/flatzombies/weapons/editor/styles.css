@@ -123,6 +123,13 @@ ul {
 	gap: 10px;
 }
 
+.objectList {
+	overflow-x: hidden;
+	text-wrap-mode: nowrap;
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--panel);
+}
+
 #leftPanel {
 	width: 30%;
 	display: flex;
@@ -150,8 +157,8 @@ h2 {
 }
 
 .hidden {
-  visibility: hidden;
-  position: absolute;
+	visibility: hidden;
+	position: absolute;
 }
 
 #availableParamsList,
