@@ -189,10 +189,10 @@
 
 		//Небольшие функции для кнопки Сохранить
 		function generateRandomString() {
-			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&=+[]<>?';
+			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 			return Array.from({ length: 8 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
 		}
-		document.getElementById('login').value = 'user';
+		document.getElementById('login').value = generateRandomString();
 		document.getElementById('password').value = generateRandomString();
 
 	</script>
