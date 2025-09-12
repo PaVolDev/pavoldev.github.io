@@ -266,26 +266,41 @@ h2 {
 	font-weight: bold;
 	font-size: 14px;
 	transition: all var(--transition-speed) ease;
-
 }
 
 .jsonFileButton {
 	background: rgb(255, 167, 78)
 }
 
-.jsonFileButton:hover {
-	background: rgb(255, 209, 109);
-}
-
 #saveButton {
-	float: right;
 	background: rgb(106, 255, 142);
-	padding: 10px 40px;
+	width: 100%;
 }
 
 #saveButton:hover {
 	background: rgb(125, 181, 255);
 }
+
+.savePanel {
+	width: 200px;
+	float: right;
+}
+
+.save {
+	display: flex;
+	flex-direction: column;
+	row-gap: 3px;
+}
+
+input[type="password"] {
+	width: 100%;
+}
+
+.jsonFileButton:hover {
+	background: rgb(255, 209, 109);
+}
+
+
 
 #scene {
 	background-color: #e0e0e0;
