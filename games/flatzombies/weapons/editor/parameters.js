@@ -820,8 +820,13 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 			throw new Error('Ошибка сети или сервера');
 		}
 		return response.text(); // Или response.json(), в зависимости от того, что возвращает PHP
-	}).then(data => { event.target.style.display = lastDisplayMode; saveState.style.display = 'none'; alert('Данные успешно сохранены!\nОткройте игру и укажите оружие: ' + json['id']); }).catch(
-		error => { event.target.style.display = lastDisplayMode; saveState.style.display = 'none'; alert('Произошла ошибка при сохранении данных.'); });
+	}).then(data => {
+		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
+		alert('Данные успешно сохранены!\nОткройте игру и укажите оружие: ' + json['id']);
+	}).catch(error => {
+		event.target.style.display = lastDisplayMode; saveState.style.display = 'none'; 
+		alert('Произошла ошибка при сохранении данных:\n' + error.message);
+	});
 });
 
 
