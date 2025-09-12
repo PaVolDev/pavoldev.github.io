@@ -54,15 +54,15 @@
 			<div class="fields hidden" id="startFields">
 				<label for="idWeapon">ID:</label>
 				<label for="idTemplate">Шаблон:</label>
-				<input type="text" id="idWeapon" class="panelInput" value="новое_оружие" placeholder="[a-z]">
+				<input type="text" id="idWeapon" class="panelInput" placeholder="[a-z]">
 				<select id="idTemplate" class="panelInput">
 					<option value="">Выберите оружие</option>
 				</select>
 			</div>
 			<ul id="editedParamsList"></ul>
 			<div class="buttonPanel hidden" id="buttonPanel">
-				<button id="importJsonFile" class="resultButton jsonFileButton">Импорт...</button>
-				<button id="exportJsonFile" class="resultButton jsonFileButton">Экспорт...</button>
+				<button id="importJsonFile" class="resultButton jsonFileButton" data-tooltip="Открыть файл с модом">Импорт...</button>
+				<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button>
 				<div class="savePanel">
 					<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
 						<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
