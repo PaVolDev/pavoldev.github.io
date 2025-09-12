@@ -80,8 +80,8 @@ function onSelectWeapon(event) {
 }
 
 sampleParams = baseParams.concat(sampleParams);
-let availableParams = [...sampleParams];
-let editedParams = [];
+let availableParams = new Array();
+let editedParams = new Array();
 
 // ——— UTILS ———
 function parseVector(value) {
@@ -783,6 +783,7 @@ function getResultJSON() {
 
 //Запись JSON в файл - показать окно для загрузки/сохранения файла на компьютер
 document.getElementById('exportJsonFile').addEventListener('click', () => {
+	if (!editedParams || editedParams.length == 0) { return; }
 	const json = getResultJSON();
 	const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
 	const url = URL.createObjectURL(blob);
@@ -796,6 +797,7 @@ document.getElementById('exportJsonFile').addEventListener('click', () => {
 // Отправка JSON через POST-запрос
 const saveState = document.getElementById('saveState');
 document.getElementById('saveButton').addEventListener('click', (event) => {
+	if (!editedParams || editedParams.length == 0) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
