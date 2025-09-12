@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", onLoaded);
 //Подготовка данных
-let templateInput = null;
+let templateInput = null; let lastTemplateIndex = 0;
 let selectedWeapon = null; //Выбранный шаблон для нового оружия
 function onLoaded() {
 	//Вырезать из параметров приставки из массива prefixHide
@@ -27,12 +27,12 @@ function onLoaded() {
 			});
 		});
 	});
-
 	document.getElementById("loading").remove();
 	document.getElementById("startFields").classList.remove('hidden');
 	document.getElementById("buttonPanel").classList.remove('hidden');
 	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
-	templateInput.addEventListener('input', onSelectWeapon);
+	templateInput.addEventListener('change', onSelectWeapon);
+	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
 	// Заполняем <select> новыми опциями из массива weapons
 	weapons.forEach(weapon => {
 		const option = document.createElement("option");
@@ -48,6 +48,10 @@ const rightPanel = document.getElementById("rightPanel");
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 function onSelectWeapon(event) {
+	if (editedParams.find(field => field.value != selectedWeapon[field.fieldPath] && field.type === 'Sprite')) {
+		const confirmed = confirm("Все изменения будут удалены!\nСменить оружие?"); // Показываем диалог подтверждения
+		if (!confirmed) { templateInput.selectedIndex = lastTemplateIndex; return; }// Если пользователь нажал "Отмена", ничего не делаем
+	}
 	lastParentPosition.x = -0.55; lastParentPosition.y = 0;
 	leftPanel.style.display = 'flex';
 	rightPanel.style.display = 'flex';
@@ -78,6 +82,8 @@ function onSelectWeapon(event) {
 	//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
 	editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
 }
+
+
 
 sampleParams = baseParams.concat(sampleParams);
 let availableParams = new Array();
