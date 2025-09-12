@@ -339,7 +339,6 @@ function syncSceneObjectToParams(obj) {
 	const angleParam = getParamByFieldPath(prefix ? `${prefix}.Transform.localEulerAngles.z` : 'Transform.localEulerAngles.z');
 	if (angleParam && angleParam.value != obj.localAngle) angleParam.value = obj.localAngle;
 	const pointAngleParam = getPointField(obj.parameter, 'angle'); //Точка с углом поворота
-	console.log(obj.parameter);
 	if (pointAngleParam) pointAngleParam.value = obj.localAngle;
 	// Синхронизация точки опоры
 	const pivotParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.sprite.pivotPoint` : 'SpriteRenderer.sprite.pivotPoint');
