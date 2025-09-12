@@ -192,7 +192,7 @@
 			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 			return Array.from({ length: 8 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
 		}
-		window.addEventListener('DOMContentLoaded', function () { // Проверяем, пусты ли поля при загрузке страницы
+		window.addEventListener('load', function () { // Проверяем, пусты ли поля при загрузке страницы
 			const login = document.getElementById('login');
 			const password = document.getElementById('password');
 			if (!login.value && !password.value) {// Генерируем автоматические значения только если оба поля пусты
