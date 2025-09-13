@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 34,
@@ -197,4 +197,4 @@ weapons.push({
 "weapon.glock18right.gunFlash2.name": "gunFlash2",
 "weapon.glock18right.name": "glock18right",
 "weapon.name": "glockDouble"
-});
+};
