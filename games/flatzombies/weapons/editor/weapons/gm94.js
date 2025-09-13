@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Shotgun.magazineMax": 3,
 "weapon.Shotgun.addBulletsReload": 1,
 "weapon.Shotgun.magazinePlayStep": 0,
@@ -185,4 +185,4 @@ weapons.push({
 "weapon.cover.SpriteRenderer.enabled": true,
 "weapon.cover.name": "cover",
 "weapon.name": "gm94"
-});
+};
