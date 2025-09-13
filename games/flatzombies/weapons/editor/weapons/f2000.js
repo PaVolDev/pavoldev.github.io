@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 40,
@@ -172,4 +172,4 @@ weapons.push({
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
 "weapon.name": "f2000"
-});
+};
