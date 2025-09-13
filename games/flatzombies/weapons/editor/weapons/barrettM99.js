@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 	"weapon.Musket.recoilSteps": 1,
 	"weapon.Musket.recoilMax": 2.5,
 	"weapon.Musket.recoilDecrease": 5,
@@ -161,4 +161,4 @@ weapons.push({
 	"weapon.boltRender.SpriteRenderer.enabled": true,
 	"weapon.boltRender.name": "boltRender",
 	"weapon.name": "barrettM99"
-});
+};
