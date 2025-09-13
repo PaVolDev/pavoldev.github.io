@@ -39,7 +39,7 @@ async function onSelectWeapon(event) {
 		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) != -1) {
 			selectedWeapon = weapons[cacheIndex];
 		} else {
-			const weaponConfig = await import(`/weapons/${event.target.value}.js`); // Динамический импорт модуля
+			const weaponConfig = await import(`weapons/${event.target.value}.js`); // Динамический импорт модуля
 			selectedWeapon = weaponConfig.default;
 			weapons.push(selectedWeapon);
 		}
