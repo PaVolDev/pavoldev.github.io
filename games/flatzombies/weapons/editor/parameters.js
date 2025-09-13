@@ -47,7 +47,6 @@ async function onSelectWeapon(event) {
 			const url = URL.createObjectURL(blob);
 			const module = await import(url);// 3. Динамически импортируем из Blob URL
 			URL.revokeObjectURL(url); // Очистка
-			console.log('🎉 Успешно импортировано!', module.default);
 			selectedWeapon = module.default;
 			weapons.push(selectedWeapon);
 			hideLoadingNewWeapon();
