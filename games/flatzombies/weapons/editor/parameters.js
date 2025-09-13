@@ -16,30 +16,12 @@ function onLoaded() {
 	});
 
 	sampleParams = sampleParams.filter((obj, index, self) => index === self.findIndex(item => item.fieldPath === obj.fieldPath));
-	weapons.forEach(rifle => {
-		var weaponKeys = Object.keys(rifle);
-		weaponKeys.forEach(fieldPath => {
-			prefixHide.forEach(prefix => { //weapon.RifleWithMagazine.beltFeeder => beltFeeder
-				if (fieldPath.startsWith(prefix)) {
-					Object.defineProperty(rifle, fieldPath.replace(prefix, ""), Object.getOwnPropertyDescriptor(rifle, fieldPath));
-					return;
-				}
-			});
-		});
-	});
 	document.getElementById("loading").remove();
 	document.getElementById("startFields").classList.remove('hidden');
 	document.getElementById("buttonPanel").classList.remove('hidden');
 	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
 	templateInput.addEventListener('change', onSelectWeapon);
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
-	// Заполняем <select> новыми опциями из массива weapons
-	weapons.forEach(weapon => {
-		const option = document.createElement("option");
-		option.value = weapon["name"]; // Используем значение weapon.name как value
-		option.textContent = weaponFullNames.find(rifle => rifle[0] == weapon["name"])?.[1] || weapon["name"]; // Отображаемое имя
-		templateInput.appendChild(option);
-	});
 }
 
 //ПАНЕЛИ
@@ -47,15 +29,37 @@ const leftPanel = document.getElementById("leftPanel");
 const rightPanel = document.getElementById("rightPanel");
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
-function onSelectWeapon(event) {
+async function onSelectWeapon(event) {
 	if (editedParams.find(field => field.value != selectedWeapon[field.fieldPath] && field.type === 'Sprite')) {
 		const confirmed = confirm("Все изменения будут удалены!\nСменить оружие?"); // Показываем диалог подтверждения
 		if (!confirmed) { templateInput.selectedIndex = lastTemplateIndex; return; }// Если пользователь нажал "Отмена", ничего не делаем
 	}
+	try {
+		var cacheIndex = -1;
+		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) != -1) {
+			selectedWeapon = weapons[cacheIndex];
+		} else {
+			const weaponConfig = await import(`weapons/${event.target.value}.js`); // Динамический импорт модуля
+			selectedWeapon = weaponConfig.default;
+			weapons.push(selectedWeapon);
+		}
+	} catch (error) {
+		console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
+		alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
+		return;
+	}
+	const weaponKeys = Object.keys(selectedWeapon);
+	weaponKeys.forEach(fieldPath => {
+		prefixHide.forEach(prefix => { //weapon.RifleWithMagazine.beltFeeder => beltFeeder
+			if (fieldPath.startsWith(prefix)) {
+				Object.defineProperty(selectedWeapon, fieldPath.replace(prefix, ""), Object.getOwnPropertyDescriptor(selectedWeapon, fieldPath));
+				return;
+			}
+		});
+	});
 	lastParentPosition.x = -0.55; lastParentPosition.y = 0;
 	leftPanel.style.display = 'flex';
 	rightPanel.style.display = 'flex';
-	selectedWeapon = weapons.find(item => item["name"] == event.target.value); //event.target == templateInput 
 	availableParams.length = 0;
 	availableParams = availableParams.concat(baseParams);
 	editedParams.length = 0;
@@ -72,8 +76,7 @@ function onSelectWeapon(event) {
 	});
 
 	renderAvailableParams();//Обновить список
-	//Добавить спрайты сразу в список
-	availableParams.forEach(field => {
+	availableParams.forEach(field => {	//Добавить спрайты сразу в список
 		const filter = defaultAddedFields.filter(data => field.fieldPath.endsWith(data[0]));
 		if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
 			addParam(field.fieldPath, false);
