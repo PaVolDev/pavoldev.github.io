@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Shotgun.magazineMax": 8,
 "weapon.Shotgun.addBulletsReload": 2,
 "weapon.Shotgun.magazinePlayStep": 0,
@@ -156,4 +156,4 @@ weapons.push({
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
 "weapon.name": "benelli-m4"
-});
+};
