@@ -95,7 +95,7 @@ async function onSelectWeapon(event) {
 	editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
 }
 
-function showLoadingNewWeapon(){
+function showLoadingNewWeapon() {
 	document.getElementById("loading").classList.remove('hidden');
 	document.getElementById("startFields").classList.add('hidden');
 }
@@ -845,7 +845,12 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert("Данные успешно сохранены!\nОткройте игру и укажите оружие: " + json['id']);
+		if (data == 'added') {
+			alert("Данные успешно сохранены!\nОткройте игру и укажите оружие: " + json['id']);
+		}else{
+			console.warn('data: ', data);
+			alert("Ошибка сервера:\n" + data);
+		}
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 		alert("Ошибка сервера:\n" + error.message);
