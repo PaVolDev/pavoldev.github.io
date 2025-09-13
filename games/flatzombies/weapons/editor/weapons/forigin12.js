@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 10,
@@ -208,4 +208,4 @@ weapons.push({
 "weapon.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "forigin12"
-});
+};
