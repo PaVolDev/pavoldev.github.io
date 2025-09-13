@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 20,
@@ -217,4 +217,4 @@ weapons.push({
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
 "weapon.name": "barrettMRAD"
-});
+};
