@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 	"weapon.WeaponArrowBow.recoilSteps": 0,
 	"weapon.WeaponArrowBow.recoilMax": 0,
 	"weapon.WeaponArrowBow.recoilDecrease": 0,
@@ -196,4 +196,4 @@ weapons.push({
 	"weapon.SpriteRenderer.sortingOrder": 19,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "bow"
-});
+};
