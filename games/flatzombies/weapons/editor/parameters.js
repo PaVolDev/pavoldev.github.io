@@ -39,7 +39,45 @@ async function onSelectWeapon(event) {
 		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) != -1) {
 			selectedWeapon = weapons[cacheIndex];
 		} else {
-			const weaponConfig = await import(`weapons/${event.target.value}.js`); // Динамический импорт модуля
+
+
+			// 🚨 ОТЛАДОЧНЫЙ КОД — ВСЁ, ЧТО НУЖНО ДЛЯ ДИАГНОСТИКИ
+			const name = event.target.value;
+			const url = `weapons/${name}.js`;
+			console.log('🔍 Пытаемся загрузить:', url);
+
+			// 1. Проверяем, доступен ли файл вообще
+			const response = await fetch(url);
+			console.log('✅ HTTP Response:', response.status, response.ok);
+
+			if (!response.ok) {
+				throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+			}
+
+			// 2. Получаем текст файла
+			const text = await response.text();
+			console.log('📄 Содержимое файла:');
+			console.log(text.substring(0, 300) + (text.length > 300 ? '...' : ''));
+
+			// 3. Проверяем, содержит ли файл `export default` (ключевая проверка!)
+			if (!text.includes('export default')) {
+				throw new Error('❌ Файл не содержит "export default" — это не ES6 модуль!');
+			}
+
+			// 4. Проверяем, нет ли BOM (UTF-8 с меткой)
+			if (text.charCodeAt(0) === 0xFEFF) {
+				throw new Error('⚠️ Файл сохранён с BOM (UTF-8 с меткой). Удалите её!');
+			}
+
+			// 5. Теперь пробуем импортировать — если всё выше ок, то должно сработать!
+			console.log('🚀 Пробуем импорт...');
+			const weaponConfig = await import(url);
+			console.log('🎉 Импорт успешен!', weaponConfig.default);
+
+
+
+
+			//const weaponConfig = await import(`weapons/${event.target.value}.js`); // Динамический импорт модуля
 			selectedWeapon = weaponConfig.default;
 			weapons.push(selectedWeapon);
 		}
