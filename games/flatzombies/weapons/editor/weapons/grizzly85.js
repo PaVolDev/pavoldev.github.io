@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 6,
@@ -190,4 +190,4 @@ weapons.push({
 "weapon.boltHandle.fingers.name": "fingers",
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "grizzly85"
-});
+};
