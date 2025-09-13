@@ -819,16 +819,16 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		if (!response.ok) {
 			event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 			return response.text().then(text => {
-				throw new Error('Ошибка сервера: ' + text);
+				throw new Error(text);
 			});
 		}
 		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert('Данные успешно сохранены!\nОткройте игру и укажите оружие: ' + json['id']);
+		alert("Данные успешно сохранены!\nОткройте игру и укажите оружие: " + json['id']);
 	}).catch(error => {
-		event.target.style.display = lastDisplayMode; saveState.style.display = 'none'; 
-		alert('Произошла ошибка при сохранении данных:\n' + error.message);
+		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
+		alert("Ошибка сервера:\n" + error.message);
 	});
 });
 
