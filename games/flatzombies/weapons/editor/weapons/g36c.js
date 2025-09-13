@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 100,
@@ -181,4 +181,4 @@ weapons.push({
 "weapon.lasersight.SpriteRenderer.enabled": true,
 "weapon.lasersight.name": "lasersight",
 "weapon.name": "g36c"
-});
+};
