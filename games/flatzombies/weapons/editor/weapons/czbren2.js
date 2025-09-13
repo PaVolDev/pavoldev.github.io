@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 40,
@@ -181,4 +181,4 @@ weapons.push({
 "weapon.laserSight.SpriteRenderer.enabled": true,
 "weapon.laserSight.name": "laserSight",
 "weapon.name": "czbren2"
-});
+};
