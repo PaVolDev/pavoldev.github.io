@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 8,
@@ -190,4 +190,4 @@ weapons.push({
 "weapon.boltRender.fingers.name": "fingers",
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "rem870dm"
-});
+};

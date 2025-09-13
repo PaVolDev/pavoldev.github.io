@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Musket.recoilSteps": 15,
 "weapon.Musket.recoilMax": 6,
 "weapon.Musket.recoilDecrease": 18,
@@ -177,4 +177,4 @@ weapons.push({
 "weapon.cover.sight.name": "sight",
 "weapon.cover.name": "cover",
 "weapon.name": "ares16"
-});
+};

@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Musket.recoilSteps": 1,
 "weapon.Musket.recoilMax": 3,
 "weapon.Musket.recoilDecrease": 12,
@@ -183,4 +183,4 @@ weapons.push({
 "weapon.barrel.SpriteRenderer.enabled": true,
 "weapon.barrel.name": "barrel",
 "weapon.name": "hk69"
-});
+};

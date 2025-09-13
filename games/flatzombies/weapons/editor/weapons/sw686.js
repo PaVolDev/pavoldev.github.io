@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Musket.recoilSteps": 2,
 "weapon.Musket.recoilMax": 7,
 "weapon.Musket.recoilDecrease": 18,
@@ -141,4 +141,4 @@ weapons.push({
 "weapon.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "sw686"
-});
+};

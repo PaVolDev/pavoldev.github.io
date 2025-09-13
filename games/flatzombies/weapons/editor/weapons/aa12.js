@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 20,
@@ -190,4 +190,4 @@ weapons.push({
 "weapon.boltHandle.SpriteRenderer.enabled": true,
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "aa12"
-});
+};

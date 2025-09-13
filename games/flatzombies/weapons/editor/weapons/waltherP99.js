@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 30,
@@ -197,4 +197,4 @@ weapons.push({
 "weapon.waltherP99-2.gunFlash2.name": "gunFlash2",
 "weapon.waltherP99-2.name": "waltherP99-2",
 "weapon.name": "waltherP99"
-});
+};

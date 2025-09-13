@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Musket.recoilSteps": 14,
 "weapon.Musket.recoilMax": 6,
 "weapon.Musket.recoilDecrease": 18,
@@ -185,4 +185,4 @@ weapons.push({
 "weapon.laserSight.SpriteRenderer.enabled": true,
 "weapon.laserSight.name": "laserSight",
 "weapon.name": "mk48"
-});
+};

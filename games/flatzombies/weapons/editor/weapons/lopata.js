@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 	"weapon.MeleeWeapon.delayBullet": 0.1,
 	"weapon.MeleeWeapon.boltParentName": "weaponParent",
 	"weapon.MeleeWeapon.bloodySkinManager": "Топор в крови (ListDamagesSprites)",
@@ -102,4 +102,4 @@ weapons.push({
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "lopata"
-});
+};

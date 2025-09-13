@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.Musket.recoilSteps": 2,
 "weapon.Musket.recoilMax": 5,
 "weapon.Musket.recoilDecrease": 16,
@@ -161,4 +161,4 @@ weapons.push({
 "weapon.barrel.lasersight.name": "lasersight",
 "weapon.barrel.name": "barrel",
 "weapon.name": "mr27"
-});
+};

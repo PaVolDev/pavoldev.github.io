@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 10,
@@ -208,4 +208,4 @@ weapons.push({
 "weapon.boltHandle.boltRender.name": "boltRender",
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "sako"
-});
+};

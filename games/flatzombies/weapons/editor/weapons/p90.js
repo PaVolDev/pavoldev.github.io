@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 50,
@@ -181,4 +181,4 @@ weapons.push({
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
 "weapon.name": "p90"
-});
+};

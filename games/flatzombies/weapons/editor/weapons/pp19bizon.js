@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 64,
@@ -172,4 +172,4 @@ weapons.push({
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
 "weapon.name": "pp19bizon"
-});
+};

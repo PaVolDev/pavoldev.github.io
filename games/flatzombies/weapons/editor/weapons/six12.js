@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 6,
@@ -181,4 +181,4 @@ weapons.push({
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "six12"
-});
+};
