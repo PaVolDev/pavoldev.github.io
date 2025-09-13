@@ -16,7 +16,7 @@ function onLoaded() {
 	});
 
 	sampleParams = sampleParams.filter((obj, index, self) => index === self.findIndex(item => item.fieldPath === obj.fieldPath));
-	document.getElementById("loading").remove();
+	document.getElementById("loading").classList.add('hidden');
 	document.getElementById("startFields").classList.remove('hidden');
 	document.getElementById("buttonPanel").classList.remove('hidden');
 	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
@@ -39,6 +39,7 @@ async function onSelectWeapon(event) {
 		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) != -1) {
 			selectedWeapon = weapons[cacheIndex];
 		} else {
+			showLoadingNewWeapon();
 			const response = await fetch(`weapons/${event.target.value}.js`);// 1. Получаем содержимое файла через fetch
 			if (!response.ok) throw new Error(`HTTP ${response.status}`);
 			const sourceCode = await response.text();
@@ -47,11 +48,12 @@ async function onSelectWeapon(event) {
 			const module = await import(url);// 3. Динамически импортируем из Blob URL
 			URL.revokeObjectURL(url); // Очистка
 			console.log('🎉 Успешно импортировано!', module.default);
-			updateParameters(module.default);
 			selectedWeapon = module.default;
 			weapons.push(selectedWeapon);
+			hideLoadingNewWeapon();
 		}
 	} catch (error) {
+		hideLoadingNewWeapon();
 		console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
 		alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
 		return;
@@ -94,6 +96,14 @@ async function onSelectWeapon(event) {
 	editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
 }
 
+function showLoadingNewWeapon(){
+	document.getElementById("loading").classList.remove('hidden');
+	document.getElementById("startFields").classList.add('hidden');
+}
+function hideLoadingNewWeapon() {
+	document.getElementById("loading").classList.add('hidden');
+	document.getElementById("startFields").classList.remove('hidden');
+}
 
 
 sampleParams = baseParams.concat(sampleParams);
