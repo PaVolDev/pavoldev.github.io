@@ -58,12 +58,16 @@ class SpriteScreenListener {
 	onInactive(spriteRender) { }
 }
 class MagazineInsertListener extends SpriteScreenListener {
-	constructor() {
+	magazineName;
+	returnLastPosition;
+	constructor(sceneObjName, returnLastPosition) {
 		super(); // Необходимо вызвать конструктор родительского класса
 		this.lastMagazPoint = { x: 0, y: 0, angle: 0 };
+		this.magazineName = sceneObjName;
+		this.returnLastPosition = returnLastPosition;
 	}
 	onSelect(spriteRender) {
-		const magazine = sceneObjects.find(s => s.name == 'magazine');
+		const magazine = sceneObjects.find(s => s.name == this.magazineName) || sceneObjects.find(s => s.name == editedParams.find(f => f.fieldPath == this.magazineName)?.value);
 		if (!magazine) return;
 		if (this.lastMagazPoint.x == 0 && this.lastMagazPoint.y == 0) { this.lastMagazPoint.x = magazine.localPosition.x; this.lastMagazPoint.y = magazine.localPosition.y; this.lastMagazPoint.angle = magazine.localAngle; }
 		magazine.localPosition.x = spriteRender.localPosition.x;
@@ -72,14 +76,23 @@ class MagazineInsertListener extends SpriteScreenListener {
 	}
 	onRender(spriteRender) { this.onSelect(spriteRender); }
 	onInactive(spriteRender) {
-		const magazine = sceneObjects.find(s => s.name == 'magazine');
+		if (!this.returnLastPosition) return;
+		const magazine = sceneObjects.find(s => s.name == this.magazineName) || sceneObjects.find(s => s.name == editedParams.find(f => f.fieldPath == this.magazineName)?.value);
 		if (!magazine) return;
 		magazine.localPosition.x = this.lastMagazPoint.x; magazine.localPosition.y = this.lastMagazPoint.y; magazine.localAngle = this.lastMagazPoint.angle;
 		this.lastMagazPoint = { x: 0, y: 0, angle: 0 };
 	}
 }
+
+//Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
 const spriteScreenListeners = {
-	'magazineInsert': new MagazineInsertListener()
+	'magazineInsert': new MagazineInsertListener('magazine', true),
+	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
+	'boltMove.startPosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
+	'coverMove.movePosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
+	'coverMove.startPosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
+	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
+	'handleMove.startPosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
 };
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
@@ -429,7 +442,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.boltPoint", "comment": "Затвор для задёргивания<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMovePoint", "comment": "Заднее положение затвора при взведении", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltMovePoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove", "comment": "Затвор при стрельбе", "type": "WeaponAnimationDetail", "value": "" },
-	
+
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.move", "comment": "Движение для предпросмотра [0-1]<br>Vector2.Lerp(startPosition, movePosition, move)", "type": "float", "value": 0, "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000 },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.render", "comment": "Рукоятка затвора. Имя объекта для использования в качестве рендера", "type": "SpriteRenderer", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.startPosition", "comment": "Рукоятка затвора в готовом положении.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "handleMove.startPosition" },
@@ -447,7 +460,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.startPosition", "comment": "Затворная рама.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "boltMove.startPosition" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.movePosition", "comment": "Затворная рама в заднем положении.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "boltMove.movePosition" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.sprites", "comment": "Покадровая анимация с помощью спрайтов", "type": "Sprite[]", "value": "" },
-	
+
 	{ "fieldPath": "weapon.WeaponHandPoints.boltStop", "comment": "Остановить затвор в заднем положении для пустого оружия<br>Затвор будет возвращён, когда coverMove будет равен 1 в процессе перезарядки", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.WeaponHandPoints.clipFrameMove", "comment": "Сдвинуть кадры между двуми событиями. Сдвинуть ключевой кадр, находящийся под вторым событием", "type": "WeaponAnimationRange[]", "value": "" },
 	{ "fieldPath": "weapon.magazine.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
