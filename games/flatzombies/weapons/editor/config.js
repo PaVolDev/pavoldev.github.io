@@ -39,10 +39,13 @@ const typeDependencies = { //Для параметров указаного ти
 		"WeaponHandPoints.boltMovePoint",
 		"WeaponHandPoints.handInsertPoint",
 		"WeaponHandPoints.bulletPoint",
+		"WeaponHandPoints.boltMove.render",
 		"WeaponHandPoints.boltMove.startPosition",
 		"WeaponHandPoints.boltMove.movePosition",
+		"WeaponHandPoints.coverMove.render",
 		"WeaponHandPoints.coverMove.startPosition",
 		"WeaponHandPoints.coverMove.movePosition",
+		"WeaponHandPoints.handleMove.render",
 		"WeaponHandPoints.handleMove.startPosition",
 		"WeaponHandPoints.handleMove.movePosition",
 	]
