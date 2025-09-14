@@ -87,11 +87,11 @@ class MagazineInsertListener extends SpriteScreenListener {
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
 const spriteScreenListeners = {
 	'magazineInsert': new MagazineInsertListener('magazine', true),
-	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
+	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', true),
 	'boltMove.startPosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
-	'coverMove.movePosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
+	'coverMove.movePosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', true),
 	'coverMove.startPosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
-	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
+	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', true),
 	'handleMove.startPosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
 };
 
