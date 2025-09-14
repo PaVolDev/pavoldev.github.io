@@ -1,4 +1,4 @@
-export default {
+weapons.push({
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 20,
@@ -109,11 +109,11 @@ export default {
 "weapon.WeaponHandPoints.boltMove.startPosition":"(0.43, 0.24, 0)",
 "weapon.WeaponHandPoints.boltMove.movePosition":"(0.16, 0.24, 0)",
 "weapon.WeaponHandPoints.boltMove.sprites": [],
-"weapon.WeaponHandPoints.coverMove.move": 0,
-"weapon.WeaponHandPoints.coverMove.render":"boltHandle",
-"weapon.WeaponHandPoints.coverMove.startPosition":"(0.55, 0.38, 0)",
-"weapon.WeaponHandPoints.coverMove.movePosition":"(0.27, 0.38, 0)",
-"weapon.WeaponHandPoints.coverMove.sprites": [],
+"weapon.WeaponHandPoints.handleMove.move": 0,
+"weapon.WeaponHandPoints.handleMove.render":"boltHandle",
+"weapon.WeaponHandPoints.handleMove.startPosition":"(0.55, 0.38, 0)",
+"weapon.WeaponHandPoints.handleMove.movePosition":"(0.27, 0.38, 0)",
+"weapon.WeaponHandPoints.handleMove.sprites": [],
 "weapon.WeaponHandPoints.boltStop": true,
 "weapon.WeaponHandPoints.isUseMagazine": true,
 "weapon.WeaponHandPoints.useGUILayout": true,
@@ -190,4 +190,4 @@ export default {
 "weapon.boltHandle.SpriteRenderer.enabled": true,
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "aa12"
-};
+});
