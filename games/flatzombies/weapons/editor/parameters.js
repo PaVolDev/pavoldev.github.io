@@ -784,6 +784,7 @@ function getResultJSON() {
 		let index = -1;
 		if (param.hasOwnProperty("idHTMLInput")) {
 			json[param.fieldPath] = document.getElementById(param.idHTMLInput).value;
+			if (param.lowerCase) { json[param.fieldPath] = json[param.fieldPath].toLowerCase(); }
 		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
 			json[param.fieldPath] = editedParams[index].value;
 		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
