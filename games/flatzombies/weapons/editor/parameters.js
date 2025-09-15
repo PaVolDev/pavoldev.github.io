@@ -548,7 +548,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)">
                         ${ppuIdx >= 0 ? `<span style="font-size:11px;">PPU:</span>
-                                <input type="number" step="10" style="width:4.5em;" value="${editedParams[ppuIdx].value}" min="1" max="200" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
+                                <input type="number" step="10" style="width:4.5em;" value="${editedParams[ppuIdx].value}" min="1" max="300" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
 							</div>
 
 							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder">
