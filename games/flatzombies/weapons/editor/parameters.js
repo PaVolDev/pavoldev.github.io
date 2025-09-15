@@ -548,7 +548,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)">
                         ${ppuIdx >= 0 ? `<span style="font-size:11px;">PPU:</span>
-                                <input type="number" step="10" style="width:4.5em;" value="${editedParams[ppuIdx].value}" onchange="updateParam(${ppuIdx}, this.value)">` : ''}
+                                <input type="number" step="10" style="width:4.5em;" value="${editedParams[ppuIdx].value}" min="1" max="200" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
 							</div>
 
 							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder">
@@ -607,13 +607,14 @@ function forceRenderEditedParams(filter = '') {
 
 
 // ——— РЕДАКТИРОВАНИЕ ———
-function updateParam(index, value) {
+function updateParam(index, value, min = 0, max = 0) {
 	if (index >= 0 && index < editedParams.length) {
-		editedParams[index].value = value;
-		//renderEditedParams();
+		editedParams[index].value = value; //renderEditedParams();
 		syncParamsToScene();
 	}
 }
+
+
 
 function updateVector(index, coordIndex, value) {
 	if (index >= 0 && index < editedParams.length) {
@@ -847,13 +848,13 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 		if (data == 'added') {
 			alert("Данные успешно сохранены!\nОткройте игру и укажите оружие: " + json['id']);
-		}else{
+		} else {
 			console.warn('data: ', data);
 			alert("Ошибка сервера:\n" + data);
 		}
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert("Ошибка сервера:\n" + error.message);
+		alert("Ошибка браузера:\n" + error.message);
 	});
 });
 
