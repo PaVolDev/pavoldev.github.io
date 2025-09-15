@@ -126,7 +126,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 ];
 
 var mainParams = [ //Список важных параметров для записи в итоговый файл
-	{ fieldPath: "id", idHTMLInput: "idWeapon" },
+	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true },
 	{ fieldPath: "idTemplate", idHTMLInput: "idTemplate" },
 	{ fieldPath: "type", value: "weapon" }, //Указать сразу своё значение 
 	{ fieldPath: "weapon.caliber", sourceFieldPath: "caliber" }, //Патрон/калибр оружия
