@@ -52,7 +52,7 @@
 			<div class="titlePanel">Отредактированные параметры</div>
 			<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 			<div class="fields hidden" id="startFields">
-				<label for="idWeapon" >ID:</label>
+				<label for="idWeapon">ID:</label>
 				<label for="idTemplate">Шаблон:</label>
 				<input type="text" id="idWeapon" class="panelInput" placeholder="[a-z-0-9]" data-tooltip="Придумайте и укажите идентификатор своего оружия">
 				<select id="idTemplate" class="panelInput" data-tooltip="Выберите оружие, которое будет использоваться как базовый родительский Prefab">
@@ -183,7 +183,7 @@
 							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
 							<input type="text" id="propSortingOrder" step="1">
 							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
-							<input type="text" id="propPixelsPerUnit" step="5">
+							<input type="text" id="propPixelsPerUnit" step="5" min="1" max="200" oninput="inputMinMax(this)">
 						</div>
 						<div>
 							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
@@ -269,6 +269,19 @@
 				password.value = generateRandomString();
 			}
 		});
+
+
+
+		function inputMinMax(input) {
+			if (input.value != "") {
+				if (parseInt(input.value) < parseInt(input.min)) {
+					input.value = input.min;
+				}
+				if (parseInt(input.value) > parseInt(input.max)) {
+					input.value = input.max;
+				}
+			}
+		}
 	</script>
 
 
