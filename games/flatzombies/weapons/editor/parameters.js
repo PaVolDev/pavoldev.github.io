@@ -826,6 +826,7 @@ const saveState = document.getElementById('saveState');
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
+	if (editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite").value == selectedWeapon["weapon.SpriteRenderer.sprite"]) { alert("Стандартные текстуры не принимаются!"); return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
