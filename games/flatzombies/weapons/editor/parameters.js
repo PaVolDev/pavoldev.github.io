@@ -170,23 +170,23 @@ function getInputForType(param, index = -1) {
 			const v2 = parseVector(param.value);
 			return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 20em;" >
 				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">X:</span>
-                <input type="number" step="0.01" value="${v2[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
+                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v2[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
                 </span>
 				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Y:</span>
-                <input type="number" step="0.01" value="${v2[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
+                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v2[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
                 </span>
 				</div>`;
 		case 'Vector3':
 			const v3 = parseVector(param.value);
 			return `<div style="display: grid; grid-template-columns: 33% 33% 33%; max-width: 20em;" >
 				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">X:</span>
-                <input type="number" step="0.01" value="${v3[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
+                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v3[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
                 </span>
 				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Y:</span>
-                <input type="number" step="0.01" value="${v3[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
+                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v3[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
                 </span>
 				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Z:</span>
-                <input type="number" step="0.01" value="${v3[2]}" onchange="updateVector(${index}, 2, this.value)" style="width: 100%;">
+                <input id="${param.fieldPath}.z" type="number" step="0.01" value="${v3[2]}" onchange="updateVector(${index}, 2, this.value)" style="width: 100%;">
                 </span>
 				</div>`;
 		case 'float':
@@ -289,6 +289,7 @@ function syncParamsToScene() {
 		preloadImages();
 		refreshHierarchy();
 		renderScene();
+		selectObject(selectedObject);
 	}
 }
 
@@ -296,7 +297,22 @@ function getPointField(fieldPath, property) {
 	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
 	if (!reference) return null;
 	fieldPath = fieldPath.replace(reference.name, reference[property]); //shellDrop.position => shellDrop.angle
-	return editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
+	return editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath) || document.getElementById(reference[property]);
+}
+
+//Найти и изменить парамтер
+function setPointField(fieldPath, property, newValue) {
+	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
+	if (!reference || !reference[property]) return null;
+	fieldPath = fieldPath.replace(reference.name, reference[property]); //shellDrop.position => shellDrop.angle
+	const param = editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
+	if (param) { param.value = newValue; return; }
+	fieldPath = reference[property];
+	if (fieldPath.endsWith('.z')) {
+		fieldPath = fieldPath.replace('.z', '');
+		const index = editedParams.findIndex(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
+		updateVector(index, 2, newValue, false);
+	}
 }
 
 
@@ -358,8 +374,6 @@ function syncSceneObjectToParams(obj) {
 	// Синхронизация угла поворота
 	const angleParam = getParamByFieldPath(prefix ? `${prefix}.Transform.localEulerAngles.z` : 'Transform.localEulerAngles.z');
 	if (angleParam && angleParam.value != obj.localAngle) angleParam.value = obj.localAngle;
-	const pointAngleParam = getPointField(obj.parameter, 'angle'); //Точка с углом поворота
-	if (pointAngleParam) pointAngleParam.value = obj.localAngle;
 	// Синхронизация точки опоры
 	const pivotParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.sprite.pivotPoint` : 'SpriteRenderer.sprite.pivotPoint');
 	const newPivotValue = `(${parseFloat(obj.pivotPoint.x).toFixed(3)}, ${parseFloat(obj.pivotPoint.y).toFixed(3)})`;
@@ -375,10 +389,11 @@ function syncSceneObjectToParams(obj) {
 	if (enabledParam && enabledParam.value !== obj.enabled) { enabledParam.value = obj.enabled; }
 	const gameObjectEnabled = getParamByFieldPath(prefix ? `${prefix}.gameObject.SetActive` : 'gameObject.SetActive');
 	if (gameObjectEnabled && gameObjectEnabled.value !== obj.isActive) { gameObjectEnabled.value = obj.isActive; }
+	//Точка с углом
+	setPointField(obj.parameter, 'angle', obj.localAngle);
 	//Показать изменения на странице
 	renderEditedParams();
 }
-
 
 
 
@@ -530,9 +545,9 @@ function forceRenderEditedParams(filter = '') {
                             <span style="font-size:11px;" >Pivot:</span>
                             <span data-tooltip="Точка вращения объекта">
 							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[pivotIdx].value)[0]}"
-                                   onchange="updateVector(${pivotIdx}, 0, this.value)">
+                                   onchange="updateVector(${pivotIdx}, 0, this.value)" id ="${editedParams[pivotIdx].fieldPath}.x">
                             <input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[pivotIdx].value)[1]}" 
-                                   onchange="updateVector(${pivotIdx}, 1, this.value)">
+                                   onchange="updateVector(${pivotIdx}, 1, this.value)" id ="${editedParams[pivotIdx].fieldPath}.y">
 							</span>
                         </div>` : ''}
 
@@ -566,9 +581,9 @@ function forceRenderEditedParams(filter = '') {
                             <span style="font-size:11px;">Position:</span>
                             <span data-tooltip="Позиция объекта внутри родительского объекта - localPosition">
 							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[0]}" 
-                                   onchange="updateVector(${posIdx}, 0, this.value)">
+                                   onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
                             <input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[1]}" 
-                                   onchange="updateVector(${posIdx}, 1, this.value)">
+                                   onchange="updateVector(${posIdx}, 1, this.value)" id ="${editedParams[posIdx].fieldPath}.y">
 							</span>
                         </div>` : ''}
                 </div>`;
@@ -616,13 +631,13 @@ function updateParam(index, value, min = 0, max = 0) {
 
 
 
-function updateVector(index, coordIndex, value) {
+function updateVector(index, coordIndex, value, syncToScene = true) {
 	if (index >= 0 && index < editedParams.length) {
 		const coords = parseVector(editedParams[index].value);
 		coords[coordIndex] = parseFloat(value) || 0;
 		editedParams[index].value = `(${coords.slice(0, coords.length === 2 ? 2 : 3).join(', ')})`;
 		//renderEditedParams();
-		syncParamsToScene();
+		if (syncToScene) syncParamsToScene();
 	}
 }
 
