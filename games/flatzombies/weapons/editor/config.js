@@ -11,7 +11,13 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
 	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
 	{ name: 'laserPosition', angle: null, parent: null },
-	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null }
+	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
+	{ name: 'coverMove.movePosition', angle: 'coverMove.movePosition.z', parent: null },
+	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
+	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
+	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null }
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
