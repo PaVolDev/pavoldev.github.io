@@ -122,6 +122,7 @@ function renderScene() {
 			ctx.restore();
 		}
 	}
+
 	if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onRender(selectedObject);
 
 	// Рисуем точки привязки (pivot) 
