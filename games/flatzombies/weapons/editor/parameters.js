@@ -278,7 +278,7 @@ function syncParamsToScene() {
 
 	// Обработка Vector2/Vector3 (как точки)
 	editedParams.filter(p => (p.type === 'Vector2' || p.type === 'Vector3') && p.spritePreview).forEach(param => {
-		if (availableByField[param.fieldPath] && !editedParams.find(p => p.value === availableByField[param.fieldPath].value && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
+		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
 		sceneObjects.push({
@@ -612,7 +612,7 @@ function forceRenderEditedParams(filter = '') {
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
 					child = editedParams.find(p => p.fieldPath === path); if (!param) { console.warn('editedParams[' + path + '] == NULL'); return; }
-					if (availableByField[child.fieldPath] && !editedParams.find(p => p.value === availableByField[child.fieldPath].value && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
+					if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
 					innerHTML += `<div class="param-group-field">
 					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
 						<div style="text-align: right;"> ${getInputForType(child)} </div>
