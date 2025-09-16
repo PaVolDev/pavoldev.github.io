@@ -109,11 +109,7 @@ export default {
 "weapon.WeaponHandPoints.boltMove.startPosition":"(0, 0, 0)",
 "weapon.WeaponHandPoints.boltMove.movePosition":"(0, 0, 0)",
 "weapon.WeaponHandPoints.boltMove.sprites": [],
-"weapon.WeaponHandPoints.coverMove.move": 0,
-"weapon.WeaponHandPoints.coverMove.render":"magazine",
-"weapon.WeaponHandPoints.coverMove.startPosition":"(0.65, 0.06, 0)",
-"weapon.WeaponHandPoints.coverMove.movePosition":"(0.65, 0.06, 0)",
-"weapon.WeaponHandPoints.coverMove.sprites": [{
+	"weapon.magazine.AnimationSpriteRenderer.sprites": [{
  sprite: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAATCAYAAACJB8MTAAABRElEQVRYCe2Zy22FMBBFTTArhPTCmg0N0AIlJCUkpaSDlJJ0QAmkg+xZ4IiP+IqMlQw4b583LK43MzaLe3WusPl4WZZtCkOSgCHxe9eApuHO0d+YwLZtl2VZHkj2naV1FEXcowoQmOdZNU3zSNJHKGEYCliBJBMYx1G1bWtDebZr67oqnaYpX0cVIGCMUVVVXWgb27cw3XWdgBVIMoFhGLh9osYe+sbL8xxPX4xFoNozhbavXZnumOJun6E5DQGEcpooDiMI5WBxmk4HQXAaMzDyQ0DHcQwWggT6vld1XVsHhg75kmqJbyyCgVxJv3qe90LBKIRyRUZqSm/yb6yNUJiEbP30ff+DLSAUJiFYacva7xJrQ0/TJGgH0vaNnkbhktC/J7+7hv6GBGwo9P2xcCXt9vVnwb2I/v8J0E/GMkmSL1fpG2qOYyXKXEleAAAAAElFTkSuQmCC",
  pivotPoint: "(0.500, 0.500)",
  pixelPerUnit: "100" }
