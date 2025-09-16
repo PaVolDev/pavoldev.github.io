@@ -12,12 +12,14 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
 	{ name: 'laserPosition', angle: null, parent: null },
 	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
-	{ name: 'coverMove.movePosition', angle: 'coverMove.movePosition.z', parent: null },
+	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
 	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
 	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
 	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parent: null },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
-	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null }
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
@@ -45,6 +47,8 @@ const typeDependencies = { //Для параметров указаного ти
 		"WeaponHandPoints.boltMovePoint",
 		"WeaponHandPoints.handInsertPoint",
 		"WeaponHandPoints.bulletPoint",
+		"WeaponHandPoints.closedCoverPoint",
+		"WeaponHandPoints.openCoverPoint",
 		"WeaponHandPoints.boltMove.render",
 		"WeaponHandPoints.boltMove.startPosition",
 		"WeaponHandPoints.boltMove.movePosition",
@@ -56,6 +60,19 @@ const typeDependencies = { //Для параметров указаного ти
 		"WeaponHandPoints.handleMove.movePosition",
 	]
 };
+
+const availableByField = {
+	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'shotgun' },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'shotgun+leftBolt' },
+
+}
+
 
 
 class SpriteScreenListener {
@@ -126,6 +143,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["chamberAnimationStep", 0],
 	["chamberAnimationStep", 1],
 	["AnimationSpriteRenderer.sprites", ""],
+	["magazine.AnimationSpriteRenderer.sprites", ""],
 	["gameObject.SetActive", true],
 	["WeaponHandPoints.coverMove.sprites", ""],
 
@@ -433,7 +451,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponSilencerMod.smoke", "comment": "Дым от выстрела", "type": "WeaponShotEffect", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.doublePistol", "comment": "Второй пистолет", "type": "Transform", "value": "" },
 	//{ "fieldPath": "storeInfo.silencerPosition", "comment": "Координаты глушителя на иконке оружия в интерфейсе от верхнего угла.", "type": "Vector2", "value": "(0, 0)" },
-	{ "fieldPath": "weapon.WeaponHandPoints.weaponType", "comment": "Тип анимации", "type": "string", "value": "", "options": ['', 'rifleAK', 'rifleLeftBolt', 'shotgun', 'shotgun+magazine', 'shotgun+leftBolt', 'sniper', 'heavyRightBoltRifle'] },
+	{ "fieldPath": "weapon.WeaponHandPoints.weaponType", "comment": "Тип анимации", "type": "string", "value": "", "options": ['', 'rifleAK', 'rifleLeftBolt', 'shotgun', 'shotgun+magazine', 'shotgun+leftBolt', 'sniper', 'heavyRightBoltRifle', 'machinegun'] },
 	{ "fieldPath": "weapon.WeaponHandPoints.parentName", "comment": "Куда поместить оружие. Имя дочернего объекта, рядом с которым будет размещено новое оружие. Если оружие имеет свой готовый клип, то следует вручную указать куда поместить оружие", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.weaponClipName", "comment": "Сменить имя объекта для работы анимации, если она была заранее указана в weapon.animationClip", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockPoint", "comment": "Приклад винтовки.<br>По этим координатам оружие будет прижато к плечам персонажа и таким образом размещаем объект в руках.<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockPoint" },
@@ -445,6 +463,8 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.magazineInsertAngle", "comment": "Магазин. Угол наклона при вставке", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.WeaponHandPoints.handInsertPoint", "comment": "Координаты левой ладони при вставке магазина. Координаты указывают в каком месте хватать магазин, в какой части корпуса будет находиться рука<br>По умолчанию для левой руки используется точка вращения магазина", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "handInsertPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.bulletPoint", "comment": "Вставка патрона или другое движение рук<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "bulletPoint" },
+	{ "fieldPath": "weapon.WeaponHandPoints.closedCoverPoint", "comment": "Закрытая крышка пулемёта - в каком месте хватать крышку, когда она ещё находится закрытой", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "closedCoverPoint" },
+	{ "fieldPath": "weapon.WeaponHandPoints.openCoverPoint", "comment": "Открытая крышка пулемёта - в каком месте хватать крышку, когда она открыта", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "openCoverPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltPoint", "comment": "Затвор для задёргивания<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMovePoint", "comment": "Заднее положение затвора при взведении", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltMovePoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove", "comment": "Затвор при стрельбе", "type": "WeaponAnimationDetail", "value": "" },
@@ -478,4 +498,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.magazine.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.AnimationSpriteRenderer.frame", "comment": "Текущий кадр [0-1]", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.AnimationSpriteRenderer.sprites", "comment": "Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
+	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.frame", "comment": "Анимация магазина. Текущий кадр [0-1]", "type": "float", "value": 0 },
+	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.sprites", "comment": "Анимация магазина. Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
 ];
