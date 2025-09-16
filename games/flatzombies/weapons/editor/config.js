@@ -67,10 +67,7 @@ const availableByField = {
 	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
 	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
 	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'shotgun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: 'shotgun+leftBolt' },
-
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt'] },
 }
 
 
