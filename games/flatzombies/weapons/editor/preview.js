@@ -160,6 +160,15 @@ function renderScene() {
 	ctx.moveTo(rulerX + rulerLength, rulerY - 5);
 	ctx.lineTo(rulerX + rulerLength, rulerY + 5);
 	ctx.stroke();
+	// Засечки по 10% от длины (внутри, между концами)
+	const step = rulerLength * 0.1; // 10% от длины
+	ctx.beginPath(); // начинаем новый путь для всех внутренних засечек
+	for (let i = 1; i < 10; i++) { // от 1 до 9 (всего 9 засечек: 10%, 20%, ..., 90%)
+		const x = rulerX + i * step;
+		ctx.moveTo(x, rulerY - 5); // начало засечки
+		ctx.lineTo(x, rulerY + 5); // конец засечки
+	}
+	ctx.stroke(); // рисуем все засечки разом
 	// Подпись
 	ctx.fillStyle = '#000';
 	ctx.font = 'bold 14px Arial';
