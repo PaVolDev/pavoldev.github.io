@@ -30,69 +30,85 @@ const rightPanel = document.getElementById("rightPanel");
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 async function onSelectWeapon(event) {
-	if (editedParams.find(field => field.value != selectedWeapon[field.fieldPath] && field.type === 'Sprite')) {
-		const confirmed = confirm("Все изменения будут удалены!\nСменить оружие?"); // Показываем диалог подтверждения
-		if (!confirmed) { templateInput.selectedIndex = lastTemplateIndex; return; }// Если пользователь нажал "Отмена", ничего не делаем
-	}
-	try {
-		var cacheIndex = -1;
-		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) != -1) {
-			selectedWeapon = weapons[cacheIndex];
-		} else {
-			showLoadingNewWeapon();
-			const response = await fetch(`weapons/${event.target.value}.js`);// 1. Получаем содержимое файла через fetch
-			if (!response.ok) throw new Error(`HTTP ${response.status}`);
-			const sourceCode = await response.text();
-			const blob = new Blob([sourceCode], { type: 'application/javascript' });// 2. Создаём Blob с типом application/javascript
-			const url = URL.createObjectURL(blob);
-			const module = await import(url);// 3. Динамически импортируем из Blob URL
-			URL.revokeObjectURL(url); // Очистка
-			selectedWeapon = module.default;
-			weapons.push(selectedWeapon);
-			hideLoadingNewWeapon();
-		}
-	} catch (error) {
-		hideLoadingNewWeapon();
-		console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
-		alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
-		return;
-	}
-	const weaponKeys = Object.keys(selectedWeapon);
-	weaponKeys.forEach(fieldPath => {
-		prefixHide.forEach(prefix => { //weapon.RifleWithMagazine.beltFeeder => beltFeeder
-			if (fieldPath.startsWith(prefix)) {
-				Object.defineProperty(selectedWeapon, fieldPath.replace(prefix, ""), Object.getOwnPropertyDescriptor(selectedWeapon, fieldPath));
+	return new Promise((resolve, reject) => {
+		if (editedParams.find(field => field.value != selectedWeapon[field.fieldPath] && field.type === 'Sprite')) {
+			const confirmed = confirm("Все изменения будут удалены!\nСменить оружие?");
+			if (!confirmed) {
+				templateInput.selectedIndex = lastTemplateIndex;
+				resolve(); //Успешное завершение — даже если отменили
 				return;
 			}
+		}
+		let cacheIndex = -1;
+		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) !== -1) {
+			selectedWeapon = weapons[cacheIndex];
+			resolve(); //Оружие найдено в списке — завершаем
+			return;
+		}
+		//Нужно загрузить новое оружие через fetch + import — это асинхронно!
+		showLoadingNewWeapon();
+		fetch(`weapons/${event.target.value}.js`).then(response => {
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				return response.text();
+			}).then(sourceCode => {
+				const blob = new Blob([sourceCode], { type: 'application/javascript' });
+				const url = URL.createObjectURL(blob);
+				return import(url).then(module => {
+					URL.revokeObjectURL(url);
+					selectedWeapon = module.default;
+					weapons.push(selectedWeapon);
+					hideLoadingNewWeapon();
+					resolve(); //Успешная загрузка — разрешаем промис
+				});
+			}).catch(error => {
+				hideLoadingNewWeapon();
+				console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
+				alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
+				reject(error); //Отклоняем промис на ошибку
+			});
+	}).then(() => {
+		const weaponKeys = Object.keys(selectedWeapon);
+		weaponKeys.forEach(fieldPath => {
+			prefixHide.forEach(prefix => { //weapon.RifleWithMagazine.beltFeeder => beltFeeder
+				if (fieldPath.startsWith(prefix)) {
+					Object.defineProperty(selectedWeapon, fieldPath.replace(prefix, ""), Object.getOwnPropertyDescriptor(selectedWeapon, fieldPath));
+					return;
+				}
+			});
 		});
-	});
-	lastParentPosition.x = -0.55; lastParentPosition.y = 0;
-	leftPanel.style.display = 'flex';
-	rightPanel.style.display = 'flex';
-	availableParams.length = 0;
-	availableParams = availableParams.concat(baseParams);
-	editedParams.length = 0;
-	sampleParams.forEach(field => { //Добавить параметры, которые есть у оружия
-		if (selectedWeapon.hasOwnProperty(field.fieldPath)) {
-			field.value = selectedWeapon[field.fieldPath];
-			availableParams.push(field);
-		}
-	});
-	sampleParams.forEach(field => { //Добавить параметры, которые являются дочерним к параметру из availableParams
-		if (availableParams.findIndex(param => field.fieldPath.startsWith(param.fieldPath + ".")) != -1) {
-			availableParams.push(field);
-		}
-	});
+		lastParentPosition.x = -0.55; lastParentPosition.y = 0;
+		leftPanel.style.display = 'flex';
+		rightPanel.style.display = 'flex';
+		availableParams.length = 0;
+		availableParams = availableParams.concat(baseParams);
+		editedParams.length = 0;
+		sampleParams.forEach(field => { //Добавить параметры, которые есть у оружия
+			if (selectedWeapon.hasOwnProperty(field.fieldPath)) {
+				field.value = selectedWeapon[field.fieldPath];
+				availableParams.push(field);
+			}
+		});
+		sampleParams.forEach(field => { //Добавить параметры, которые являются дочерним к параметру из availableParams
+			if (availableParams.findIndex(param => field.fieldPath.startsWith(param.fieldPath + ".")) != -1) {
+				availableParams.push(field);
+			}
+		});
 
-	renderAvailableParams();//Обновить список
-	availableParams.forEach(field => {	//Добавить спрайты сразу в список
-		const filter = defaultAddedFields.filter(data => field.fieldPath.endsWith(data[0]));
-		if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
-			addParam(field.fieldPath, false);
-		}
-	});
-	//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
-	editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
+		renderAvailableParams();//Обновить список
+		availableParams.forEach(field => {	//Добавить спрайты сразу в список
+			const filter = defaultAddedFields.filter(data => field.fieldPath.endsWith(data[0]));
+			if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
+				addParam(field.fieldPath, false);
+			}
+		});
+		//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
+		editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
+	})
+		.catch(err => {
+			// Можно логировать или игнорировать — но промис будет отклонён
+			console.error('onSelectWeapon failed:', err);
+			throw err; // Перебрасываем ошибку дальше, если нужно
+		});
 }
 
 function showLoadingNewWeapon() {
@@ -157,7 +173,7 @@ function getInputForType(param, index = -1) {
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateParam(${index}, this.value)">`;
+		let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
 		param.options.forEach(opt => {
 			const isSelected = opt == param.value ? ' selected' : '';
 			selectHTML += `<option value="${opt}"${isSelected}>${opt}</option>`;
@@ -262,6 +278,7 @@ function syncParamsToScene() {
 
 	// Обработка Vector2/Vector3 (как точки)
 	editedParams.filter(p => (p.type === 'Vector2' || p.type === 'Vector3') && p.spritePreview).forEach(param => {
+		if (availableByField[param.fieldPath] && !editedParams.find(p => p.value === availableByField[param.fieldPath].value && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
 		sceneObjects.push({
@@ -595,10 +612,11 @@ function forceRenderEditedParams(filter = '') {
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
 					child = editedParams.find(p => p.fieldPath === path); if (!param) { console.warn('editedParams[' + path + '] == NULL'); return; }
+					if (availableByField[child.fieldPath] && !editedParams.find(p => p.value === availableByField[child.fieldPath].value && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
 					innerHTML += `<div class="param-group-field">
-					 					<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
-										<div style="text-align: right;"> ${getInputForType(child)} </div>
-										</div>`;
+					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
+						<div style="text-align: right;"> ${getInputForType(child)} </div>
+						</div>`;
 				});
 				li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>
                 <strong>${param.fieldPath}</strong><br> <small>${param.comment || ''}</small><br>
@@ -622,9 +640,10 @@ function forceRenderEditedParams(filter = '') {
 
 
 // ——— РЕДАКТИРОВАНИЕ ———
-function updateParam(index, value, min = 0, max = 0) {
+function updateParam(index, value, updateParamList = false) {
 	if (index >= 0 && index < editedParams.length) {
-		editedParams[index].value = value; //renderEditedParams();
+		editedParams[index].value = value;
+		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
 	}
 }
@@ -738,59 +757,70 @@ document.getElementById('importJsonFile').addEventListener('click', () => {
 });
 
 function importFromJSON(jsonData) {
+	if (!jsonData.idTemplate) { alert('Файл не имеет идентификатора idTemplate'); return; }
 	// Очищаем текущие редактируемые параметры
 	editedParams.length = 0;
-	// Если в JSON есть idTemplate, устанавливаем его в select
 	document.getElementById("idWeapon").value = jsonData.id;
-	if (jsonData.idTemplate && templateInput) {
-		templateInput.value = jsonData.idTemplate;
-		onSelectWeapon({ target: templateInput });
-	}
-	// Обрабатываем параметры из JSON
-	const json = new Array();
-	Object.keys(jsonData).forEach(fullKeyPath => { // Преобразуем полный путь к короткому формату (убираем префиксы)
-		let shortPath = fullKeyPath;
-		prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
-		let jsonValue = jsonData[fullKeyPath];
-		jsonValue = (typeof jsonValue === "string" && jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
-		json.push({ key: shortPath, value: jsonValue });
+	templateInput.value = jsonData.idTemplate;
+	onSelectWeapon({ target: templateInput }).then(() => {
+		// Обрабатываем параметры из JSON
+		const json = new Array();
+		Object.keys(jsonData).forEach(fullKeyPath => { // Преобразуем полный путь к короткому формату (убираем префиксы)
+			let shortPath = fullKeyPath;
+			prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
+			let jsonValue = jsonData[fullKeyPath];
+			jsonValue = (typeof jsonValue === "string" && jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
+			json.push({ key: shortPath, value: jsonValue });
+		});
+
+
+		json.forEach(field => { //Если json имеет параметр, который имеет тип из dependencies, то добавляем такой параметр и вместе с ним будут добавлены все связаные параметры
+			const fieldPath = field.key;
+			if (editedParams.find(p => p.fieldPath === fieldPath) || mainParams.find(p => p.fieldPath === fieldPath)) return;
+			const fieldInfo = availableParams.find(p => p.fieldPath === fieldPath);
+			if (!fieldInfo) { return; }
+			const dependencies = typeDependencies[fieldInfo.type];
+			if (dependencies) { addParam(fieldPath); }
+		});
+
+		json.forEach(field => { //Перенос параметров в список отредактированных
+			let index = null;
+			if (defaultAddedFields.find(p => p[0] === field.key && p[1] == field.value) || ignoreImportFields.includes(field.key)) {
+				return; //Проигнорировать некоторые параметры
+			}
+			if ((index = editedParams.findIndex(p => p.fieldPath === field.key)) != -1) {
+				editedParams[index].value = field.value;
+			} else if ((index = availableParams.findIndex(p => p.fieldPath === field.key)) != -1) {
+				availableParams[index].value = field.value;
+				addParam(availableParams[index].fieldPath);
+			} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key)) != -1) {
+				sampleParams[index].value = field.value;
+				addParam(sampleParams[index].fieldPath);
+				console.log(field.key);
+			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
+				editedParams.push({ "fieldPath": field.key, "comment": null, "type": "string", "value": field.value });
+			}
+		});
+
+		// Обновляем UI
+		renderAvailableParams();
+		renderEditedParams();
+		syncParamsToScene();
+	}).catch(error => {
+		console.error('❌ Ошибка при загрузке оружия:', error);
+		alert('Не удалось загрузить оружие. Проверьте консоль: CTRL+SHIFT + i ');
 	});
-
-
-	json.forEach(field => { //Если json имеет параметр, который имеет тип из dependencies, то добавляем такой параметр и вместе с ним будут добавлены все связаные параметры
-		const fieldPath = field.key;
-		if (editedParams.find(p => p.fieldPath === fieldPath) || mainParams.find(p => p.fieldPath === fieldPath)) return;
-		const fieldInfo = availableParams.find(p => p.fieldPath === fieldPath);
-		if (!fieldInfo) { return; }
-		const dependencies = typeDependencies[fieldInfo.type];
-		if (dependencies) { addParam(fieldPath); }
-	});
-
-	json.forEach(field => { //Перенос параметров в список отредактированных
-		let index = null;
-		if (defaultAddedFields.find(p => p[0] === field.key && p[1] == field.value) || ignoreImportFields.includes(field.key)) {
-			return; //Проигнорировать некоторые параметры
-		}
-		if ((index = editedParams.findIndex(p => p.fieldPath === field.key)) != -1) {
-			editedParams[index].value = field.value;
-		} else if ((index = availableParams.findIndex(p => p.fieldPath === field.key)) != -1) {
-			availableParams[index].value = field.value;
-			addParam(availableParams[index].fieldPath);
-		} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key)) != -1) {
-			sampleParams[index].value = field.value;
-			addParam(sampleParams[index].fieldPath);
-			console.log(field.key);
-		} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
-			editedParams.push({ "fieldPath": field.key, "comment": null, "type": "string", "value": field.value });
-		}
-	});
-
-	// Обновляем UI
-	renderAvailableParams();
-	renderEditedParams();
-	syncParamsToScene();
-
 }
+
+
+
+
+
+
+
+
+
+
 
 // ——— СОХРАНЕНИЕ ———
 function getResultJSON() {
