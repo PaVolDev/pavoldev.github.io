@@ -32,9 +32,9 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "51",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.162, 0.429)",
-    "weapon.delayBullet": 0.1,
+    "weapon.delayBullet": "0",
     "weapon.bolt": "(0.284, 0.335, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": "400",
+    "weapon.fireRateInMinute": "600",
     "weapon.chamberSize": "100"
 }
