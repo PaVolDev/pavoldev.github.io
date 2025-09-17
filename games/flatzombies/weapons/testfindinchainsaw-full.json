@@ -37,6 +37,6 @@
     "weapon.delayBullet": 0.1,
     "weapon.bolt": "(0.284, 0.335, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": "200",
+    "weapon.fireRateInMinute": "400",
     "weapon.chamberSize": "100"
 }
