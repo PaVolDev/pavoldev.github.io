@@ -278,15 +278,15 @@ function syncParamsToScene() {
 
 	// Обработка Vector2/Vector3 (как точки)
 	editedParams.filter(p => (p.type === 'Vector2' || p.type === 'Vector3') && p.spritePreview).forEach(param => {
-		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
+		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; } //if (availableByField[param.fieldPath]) console.log(param.fieldPath + ': ' + editedParams.find(p => (p.fieldPath === availableByField[param.fieldPath].parent)).value);
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
 		sceneObjects.push({
 			name: param.spriteName || param.fieldPath, //Пытаемся использовать имя
-			parent: getPointField(param.fieldPath, 'parent')?.value || 'sprite',
+			parent: getPointField(param.fieldPath, 'parent') || 'sprite',
 			texture: param.spritePreview || 'images/point.png',
 			localPosition: { x, y },
-			localAngle: convertTo180(parseFloat(getPointField(param.fieldPath, 'angle')?.value) || 0),
+			localAngle: convertTo180(parseFloat(getPointField(param.fieldPath, 'angle')) || 0),
 			sortingOrder: param.sortingOrder || 1000,  // Чтобы точки были поверх других объектов
 			pixelPerUnit: param.spritePixelPerUnit || 200,
 			pivotPoint: param.spritePivotPoint || { x: 0.5, y: 0.5 }, // Центр круга
@@ -310,11 +310,22 @@ function syncParamsToScene() {
 	}
 }
 
+//Найти угол, который связан с координатами для объекта на сцене
 function getPointField(fieldPath, property) {
 	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
-	if (!reference) return null;
+	if (!reference) { return null; }
+	if (!reference[property]) { return null; } //console.warn('getPointField(' + fieldPath + ', ' + property + '): reference[' + property + '] == NULL - return NULL;'); 
 	fieldPath = fieldPath.replace(reference.name, reference[property]); //shellDrop.position => shellDrop.angle
-	return editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath) || document.getElementById(reference[property]);
+	let param = editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
+	if (param) return param.value;
+	fieldPath = reference[property];
+	if (fieldPath.endsWith('.z')) {
+		fieldPath = fieldPath.replace('.z', '');
+		param = editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
+		if (!param) { console.warn('getPointField(' + fieldPath + ', ' + property + '): editedParams[' + fieldPath + '] == NULL - return; - Параметры не успели загрузиться, но функция уже пытается раньше времени найти связаный параметр?'); return 0; }
+		return parseVector(param.value)[2];
+	}
+	return null;
 }
 
 //Найти и изменить парамтер
@@ -426,8 +437,6 @@ function addParam(fieldPath, addAsFirst = true) {
 	if (addAsFirst) { editedParams.unshift(param); } else { editedParams.push(param); }
 	// Проверяем, есть ли зависимости для типа параметра
 	const dependencies = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
-	const prefix = getPrefix(fieldPath);// Если тип Sprite — добавляем дополнительную зависимость при наличии префикса
-	if (param.type === 'Sprite' && prefix) dependencies.push('Transform.localPosition');
 	editedPoint.forEach(p => {
 		if (fieldPath.endsWith(p.name)) { // "shellDrop.position".endsWith(".position")
 			dependencies.push(fieldPath.replace(p.name, p.angle)); // shellDrop.position => shellDrop.angle
@@ -435,12 +444,12 @@ function addParam(fieldPath, addAsFirst = true) {
 		}
 	});
 	const spliceIndex = (addAsFirst) ? 1 : editedParams.length;
+	const prefix = getPrefix(fieldPath); // Добавляем параметры для спрайта и для объектов с несколькими настройками
 	dependencies.forEach(depFieldPath => {	// Обрабатываем все зависимости
 		const fullPath = (prefix ? prefix + '.' : '') + depFieldPath;
 		let sample = sampleParams.find(p => p.fieldPath === fullPath);
 		if (sample && !editedParams.find(p => p.fieldPath === fullPath)) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
-			//sample.value = availableParams.find(p => p.fieldPath === fieldPath)?.value || sample.value;
-			editedParams.splice(spliceIndex, 0, sample);
+			editedParams.splice(spliceIndex, 0, sample);//console.log(sample.fieldPath + ': ' + sample.value);
 		}
 	});
 	renderAvailableParams(document.getElementById('searchInput').value);
@@ -475,7 +484,7 @@ function removeParam(index) {
 	// Специфичное поведение для типа 'Sprite' — добавляем Transform.localPosition при наличии префикса
 	for (let i = editedParams.length - 1; i >= 0; i--) {// Обходим в обратном порядке, чтобы splice не ломал индексы
 		if (basePaths.has(editedParams[i].fieldPath)) {// Удаляем все параметры, чей fieldPath входит в basePaths
-			console.log("removeParam: " + editedParams[i].fieldPath);
+			console.log("removeParam: " + editedParams[i].fieldPath + '=' + editedParams[i].value);
 			editedParams.splice(i, 1);
 		}
 	}
