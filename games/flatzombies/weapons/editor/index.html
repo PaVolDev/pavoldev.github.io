@@ -159,7 +159,10 @@
 			<!-- Добавляем отображение иерархии и свойств (для отладки и редактирования) -->
 			<div class="hierarchy">
 				<div class="objectList">
-					<span>Объекты:</span>
+					<div style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Объекты:</span>
+						<img data-tooltip="Добавить новый объект со спрайтом" onclick="addNewSprite()" src="images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
+					</div>
 					<div id="hierarchy"></div>
 				</div>
 				<div>
@@ -285,17 +288,18 @@
 	</script>
 
 
-
+	<!-- Подключаем скрипты -->
+	<script src="render.js"></script> <!-- renderScene, drag, etc -->
 	<!-- Подключаем данные -->
 	<script src="config.js"></script> <!-- sampleParams -->
 	<!-- Подключаем список оружий -->
 	<script src="weapons/aa12.js"></script>
 	<script src="weapons/ak12.js"></script>
 	<script src="weapons/ak74u.js"></script>
-	<!-- Подключаем скрипты -->
-	<script src="sceneData.js"></script> <!-- let sceneObjects = [...] -->
+	<script src="weapons/mk46.js"></script>
+	<!-- Редактор -->
 	<script src="parameters.js"></script> <!-- editedParams + UI -->
-	<script src="preview.js"></script> <!-- renderScene, drag, etc -->
+	<script src="functions.js"></script> <!-- набор фукнций для редактирования -->
 </body>
 
 </html>
