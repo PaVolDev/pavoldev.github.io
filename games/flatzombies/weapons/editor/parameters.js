@@ -48,24 +48,24 @@ async function onSelectWeapon(event) {
 		//Нужно загрузить новое оружие через fetch + import — это асинхронно!
 		showLoadingNewWeapon();
 		fetch(`weapons/${event.target.value}.js`).then(response => {
-				if (!response.ok) throw new Error(`HTTP ${response.status}`);
-				return response.text();
-			}).then(sourceCode => {
-				const blob = new Blob([sourceCode], { type: 'application/javascript' });
-				const url = URL.createObjectURL(blob);
-				return import(url).then(module => {
-					URL.revokeObjectURL(url);
-					selectedWeapon = module.default;
-					weapons.push(selectedWeapon);
-					hideLoadingNewWeapon();
-					resolve(); //Успешная загрузка — разрешаем промис
-				});
-			}).catch(error => {
+			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			return response.text();
+		}).then(sourceCode => {
+			const blob = new Blob([sourceCode], { type: 'application/javascript' });
+			const url = URL.createObjectURL(blob);
+			return import(url).then(module => {
+				URL.revokeObjectURL(url);
+				selectedWeapon = module.default;
+				weapons.push(selectedWeapon);
 				hideLoadingNewWeapon();
-				console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
-				alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
-				reject(error); //Отклоняем промис на ошибку
+				resolve(); //Успешная загрузка — разрешаем промис
 			});
+		}).catch(error => {
+			hideLoadingNewWeapon();
+			console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
+			alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
+			reject(error); //Отклоняем промис на ошибку
+		});
 	}).then(() => {
 		const weaponKeys = Object.keys(selectedWeapon);
 		weaponKeys.forEach(fieldPath => {
@@ -419,8 +419,9 @@ function syncSceneObjectToParams(obj) {
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
 function addParam(fieldPath, addAsFirst = true) {
 	if (editedParams.some(p => p.fieldPath === fieldPath)) return;
-	const param = availableParams.find(p => p.fieldPath === fieldPath);
+	let param = availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
 	if (!param) return;
+	param.value = availableParams.find(p => p.fieldPath === fieldPath)?.value || param.value;
 	// Добавляем основной параметр
 	if (addAsFirst) { editedParams.unshift(param); } else { editedParams.push(param); }
 	// Проверяем, есть ли зависимости для типа параметра
@@ -436,9 +437,10 @@ function addParam(fieldPath, addAsFirst = true) {
 	const spliceIndex = (addAsFirst) ? 1 : editedParams.length;
 	dependencies.forEach(depFieldPath => {	// Обрабатываем все зависимости
 		const fullPath = (prefix ? prefix + '.' : '') + depFieldPath;
-		const sample = sampleParams.find(p => p.fieldPath === fullPath);
-		if (!editedParams.find(p => p.fieldPath === fullPath) && sample) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
-			editedParams.splice(spliceIndex, 0, structuredClone(sample));
+		let sample = sampleParams.find(p => p.fieldPath === fullPath);
+		if (sample && !editedParams.find(p => p.fieldPath === fullPath)) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
+			//sample.value = availableParams.find(p => p.fieldPath === fieldPath)?.value || sample.value;
+			editedParams.splice(spliceIndex, 0, sample);
 		}
 	});
 	renderAvailableParams(document.getElementById('searchInput').value);
@@ -463,7 +465,7 @@ function removeParam(index) {
 	const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
 	if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
 	const prefix = getPrefix(param.fieldPath);
-	const typeDeps = typeDependencies[param.type] || [];
+	const typeDeps = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
 	const basePaths = new Set();
 	basePaths.add(param.fieldPath);// Добавляем основной путь
 	typeDeps.forEach(dep => {// Добавляем зависимости с префиксом
@@ -471,7 +473,6 @@ function removeParam(index) {
 		basePaths.add(fullPath);
 	});
 	// Специфичное поведение для типа 'Sprite' — добавляем Transform.localPosition при наличии префикса
-	if (param.type === 'Sprite' && prefix) { basePaths.add(prefix + '.Transform.localPosition'); }
 	for (let i = editedParams.length - 1; i >= 0; i--) {// Обходим в обратном порядке, чтобы splice не ломал индексы
 		if (basePaths.has(editedParams[i].fieldPath)) {// Удаляем все параметры, чей fieldPath входит в basePaths
 			console.log("removeParam: " + editedParams[i].fieldPath);
@@ -522,12 +523,11 @@ function forceRenderEditedParams(filter = '') {
 			if (!matchesSearch) { return; }
 		}
 		if (processed.has(param.fieldPath)) return;
-		if (typeDependencies[param.type]) {
-			const typeDeps = typeDependencies[param.type] || [];
+		if (typeDependencies[param.type] || typeDependencies[param.startFieldPath]) {
+			const typeDeps = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
 			const prefix = getPrefix(param.fieldPath);//const name = prefix || 'sprite';
 			const groupPaths = new Array();
 			typeDeps.forEach(dep => groupPaths.push((prefix ? prefix + '.' : '') + dep));
-			if (prefix) groupPaths.push(prefix + '.Transform.localPosition');
 			groupPaths.push(param.fieldPath);
 			// Помечаем все пути группы как обработанные
 			groupPaths.forEach(fp => processed.add(fp));
@@ -540,7 +540,7 @@ function forceRenderEditedParams(filter = '') {
 				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
 				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
 				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
-				const posIdx = prefix ? editedParams.findIndex(p => p.fieldPath === prefix + '.Transform.localPosition') : -1;
+				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
 				const li = document.createElement('li');
 				li.onmouseenter = () => selectObjectByName(prefix);
 				li.className = 'param-group-block';
@@ -594,7 +594,7 @@ function forceRenderEditedParams(filter = '') {
 							</div>
 
                     </span>
-                    ${posIdx >= 0 ? `<div class="vector-input">
+                    ${prefix ? `<div class="vector-input">
                             <span style="font-size:11px;">Position:</span>
                             <span data-tooltip="Позиция объекта внутри родительского объекта - localPosition">
 							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[0]}" 
@@ -612,7 +612,7 @@ function forceRenderEditedParams(filter = '') {
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
 					child = editedParams.find(p => p.fieldPath === path); if (!param) { console.warn('editedParams[' + path + '] == NULL'); return; }
-					if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; }
+					if (availableByField[child.fieldPath] && !editedParams.find(p => (p.value === availableByField[child.fieldPath].value || Array.isArray(availableByField[child.fieldPath].value) && availableByField[child.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
 					innerHTML += `<div class="param-group-field">
 					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
 						<div style="text-align: right;"> ${getInputForType(child)} </div>
@@ -770,7 +770,7 @@ function importFromJSON(jsonData) {
 			prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
 			let jsonValue = jsonData[fullKeyPath];
 			jsonValue = (typeof jsonValue === "string" && jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
-			json.push({ key: shortPath, value: jsonValue });
+			json.push({ key: shortPath, fullKeyPath: fullKeyPath, value: jsonValue });
 		});
 
 
@@ -796,9 +796,9 @@ function importFromJSON(jsonData) {
 			} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key)) != -1) {
 				sampleParams[index].value = field.value;
 				addParam(sampleParams[index].fieldPath);
-				console.log(field.key);
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
-				editedParams.push({ "fieldPath": field.key, "comment": null, "type": "string", "value": field.value });
+				const pathSuffix = field.key.split('.').slice(-2).join('.') // 'weapon.parent.laserSight.SpriteRenderer.sprite' => 'SpriteRenderer.sprite', получаем суффикс и ищем какой тип данных имеет этот параметр по похожим данным из массива sampleParams
+				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": sampleParams.find(p => p.fieldPath.endsWith(pathSuffix))?.type || "string", "value": field.value });
 			}
 		});
 
@@ -828,14 +828,14 @@ function getResultJSON() {
 	mainParams.forEach(param => {
 		let index = -1;
 		if (param.hasOwnProperty("idHTMLInput")) {
-			json[param.fieldPath] = document.getElementById(param.idHTMLInput).value;
+			json[param.startFieldPath || param.fieldPath] = document.getElementById(param.idHTMLInput).value;
 			if (param.lowerCase) { json[param.fieldPath] = json[param.fieldPath].toLowerCase(); }
 		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
-			json[param.fieldPath] = editedParams[index].value;
+			json[param.startFieldPath || param.fieldPath] = editedParams[index].value;
 		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
-			json[param.fieldPath] = availableParams[index].value;
+			json[param.startFieldPath || param.fieldPath] = availableParams[index].value;
 		} else if (param.hasOwnProperty("value")) {
-			json[param.fieldPath] = param.value;
+			json[param.startFieldPath || param.fieldPath] = param.value;
 		} else {
 			console.warn("Не удалось найти значение для параметра [" + param.fieldPath + "] - параметр пропущен и не записан в json");
 		}
