@@ -4,8 +4,7 @@ const weaponFullNames = [
 	["ksg", "ksg - Дробовик"]
 ];
 
-const drawPoint = [ //Показать точки на экране предпросмотра
-	'bolt'];
+const drawPoint = ['bolt'];//Показать точки на экране предпросмотра
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
 	{ name: '.position', angle: '.angle', parent: null },
 	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
@@ -33,7 +32,8 @@ const typeDependencies = { //Для параметров указаного ти
 		'SpriteRenderer.sortingOrder',
 		'Transform.localEulerAngles.z',
 		'SpriteRenderer.enabled',
-		'gameObject.SetActive'
+		'gameObject.SetActive',
+		'Transform.localPosition'
 	],
 	'WeaponHandPoints': [
 		'WeaponHandPoints.weaponType',
@@ -105,7 +105,7 @@ class MagazineInsertListener extends SpriteScreenListener {
 }
 
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
-const spriteScreenListeners = {
+spriteScreenListeners = {
 	'magazineInsert': new MagazineInsertListener('magazine', true),
 	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', true),
 	'boltMove.startPosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
@@ -176,6 +176,14 @@ var baseParams = [  //Список параметров, доступные дл
 
 
 var sampleParams = [ //Список всех параметров, относящиеся только к оружию в руках
+	{ "fieldPath": "weapon.laserSight.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
+	{ "fieldPath": "weapon.laserSight.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
+	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
+	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.laserSight.SpriteRenderer.enabled", "comment": "Показать спрайт на экране", "type": "bool", "value": true },
+	{ "fieldPath": "weapon.laserSight.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.magazine.SpriteRenderer.sprite", "comment": "Магазин оружия, спрайт/текстура, PNG-файл", "type": "Sprite", "value": "" },
 	{ "fieldPath": "weapon.magazine.bullet.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", "value": "" },
 	{ "fieldPath": "weapon.boltRender.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
@@ -202,14 +210,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.sight.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.sight.SpriteRenderer.enabled", "comment": "Показать спрайт на экране", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.sight.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.laserSight.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
-	{ "fieldPath": "weapon.laserSight.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", "value": "" },
-	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
-	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
-	{ "fieldPath": "weapon.laserSight.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.laserSight.SpriteRenderer.enabled", "comment": "Показать спрайт на экране", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.laserSight.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.boltRender.gameObject.SetActive", "comment": "Показать объект на экране", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.boltRender.SpriteRenderer.sprite", "comment": "Рукоятка, PNG-файл", "type": "Sprite", "value": "" },
 	{ "fieldPath": "weapon.handgrip.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
@@ -497,4 +497,10 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.AnimationSpriteRenderer.sprites", "comment": "Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
 	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.frame", "comment": "Анимация магазина. Текущий кадр [0-1]", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.sprites", "comment": "Анимация магазина. Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
+
+
+	{ "fieldPath": "weapon.addedGameObjects", "comment": "Список добавленных объектов", "type": "string", "value": "" },
+	{ "fieldPath": "weapon.addedComponents", "comment": "Список добавленных компонентов MonoBehaviour", "type": "string", "value": "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
+	{ "fieldPath": "weapon.removedGameObjects", "comment": "Список объектов для удаления", "type": "string", "value": "" },
+	{ "fieldPath": "weapon.removedComponents", "comment": "Список компонентов MonoBehaviour для удаления", "type": "string", "value": "" },
 ];
