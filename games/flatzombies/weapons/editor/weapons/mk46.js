@@ -1,4 +1,4 @@
-export default {
+weapons.push({
 	"weapon.Musket.recoilSteps": 14,
 	"weapon.Musket.recoilMax": 6,
 	"weapon.Musket.recoilDecrease": 18,
@@ -181,4 +181,4 @@ export default {
 	"weapon.laserSight.Transform.localPosition": "(1, 0, 0)",
 	"weapon.laserSight.Transform.localEulerAngles.z": 0,
 	"weapon.name": "mk46"
-};
+});
