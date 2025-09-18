@@ -93,7 +93,7 @@
     "weapon.bolt": "(-0.231, 0.214, 0)",
     "weapon.flashlight": "(0.494, 0.133, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": "620",
+    "weapon.fireRateInMinute": "600",
     "weapon.chamberSize": 200,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0
