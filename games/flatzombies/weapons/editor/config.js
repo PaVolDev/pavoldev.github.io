@@ -11,6 +11,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
 	{ name: 'laserPosition', angle: null, parent: null },
 	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
+	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parent: null },
 	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
 	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
 	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
@@ -19,6 +20,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
@@ -58,6 +60,10 @@ const typeDependencies = { //Для параметров указаного ти
 		"WeaponHandPoints.handleMove.render",
 		"WeaponHandPoints.handleMove.startPosition",
 		"WeaponHandPoints.handleMove.movePosition",
+	],
+	'weapon.WeaponHandPoints.fingerPoint':[
+		'WeaponHandPoints.fingerPoint',
+		'WeaponHandPoints.fingerAngle'
 	]
 };
 
@@ -71,12 +77,66 @@ const availableByField = {
 }
 
 
-
+//Функции для работы с точками в окне предпросмотра
 class SpriteScreenListener {
 	onSelect(spriteRender) { }
 	onRender(spriteRender) { }
 	onInactive(spriteRender) { }
+	onSyncSceneToParams(spriteRender) { }
+	onSyncParamsToScene(spriteRender) { }
 }
+
+//Обновлять fingerPoint при вращении объекта, который используется как точка с рендером пальцев от игрового персонажа
+//Внутрь объекта с пальцами помещаем дочерний объект riflePoint, который будет использоваться для преобразования координат
+//При вращении пальцев получаем глобальную точку от riflePoint и вычисляем разницу между точкой вращения кисти
+class HandRenderListener extends SpriteScreenListener {
+	rifleX; rifleY; //Записать координаты смещения оружия от точки вращения кисти
+	riflePoint;
+	constructor(rifleX, rifleY) {
+		super(); // Необходимо вызвать конструктор родительского класса
+		this.rifleX = rifleX; this.rifleY = rifleY;
+	}
+	onSelect(spriteRender) {
+
+	}
+	onRender(spriteRender) { this.onSyncSceneToParams(spriteRender); }
+
+	//Копирование параметров ИЗ сцены
+	onSyncSceneToParams(spriteRender) {
+		const sceneParent = sceneObjects.find(s => s.parent == '');
+		const point = getWorldPosition('riflePoint');
+		const x = -(this.rifleX - (point.x - sceneParent.localPosition.x));
+		const y = (this.rifleY - (point.y - sceneParent.localPosition.y));
+		const paramId = editedParams.findIndex(p => p.startFieldPath == spriteRender.parameter);
+		if (paramId == -1) { console.warn('HandRenderListener: paramId == -1 - ' + spriteRender.parameter); return; } //Параметр должен быть найден
+		editedParams[paramId].value = '(' + x.toFixed(3) + ', ' + y.toFixed(3) + ')'; //Меняем координаты в парамтерах. Для обновления угла используются настройки из массива editedPoint
+		//sceneObjects.find(s => s.name == 'bolt').localPosition = { x: point.x, y: point.y }; //Тестирование
+	}
+	//Копирование параметров В сцену
+	onSyncParamsToScene(spriteRender) {
+		spriteRender.localPosition.x = 0;
+		spriteRender.localPosition.y = 0;
+		sceneObjects.push({
+			name: 'riflePoint',
+			parent: spriteRender.name,
+			texture: '',
+			localPosition: { x: this.rifleX, y: this.rifleY }, localAngle: 0,
+			sortingOrder: 1000,
+			pixelPerUnit: 100,
+			pivotPoint: { x: 0.5, y: 0.5 },
+			enabled: true, isActive: true,
+			canChangePivot: false, canChangeLocalAngle: false,
+			parameter: ''
+		});
+	}
+	onInactive(spriteRender) {
+		spriteRender.localPosition.x = 0;
+		spriteRender.localPosition.y = 0;
+		renderEditedParams();
+	}
+}
+
+//Объекты для анимации. Меняем и возвращаем координаты спрайтов для предпросмотра
 class MagazineInsertListener extends SpriteScreenListener {
 	magazineName;
 	returnLastPosition;
@@ -113,6 +173,7 @@ spriteScreenListeners = {
 	'coverMove.startPosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
 	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', true),
 	'handleMove.startPosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
+	'fingerPoint': new HandRenderListener(-0.35, 0.13),
 };
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
@@ -143,6 +204,8 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["magazine.AnimationSpriteRenderer.sprites", ""],
 	["gameObject.SetActive", true],
 	["WeaponHandPoints.coverMove.sprites", ""],
+	["WeaponHandPoints.fingerPoint", ""], //(0, 0, 0)
+	["WeaponHandPoints.fingerAngle", ""],
 
 ];
 
@@ -454,6 +517,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockPoint", "comment": "Приклад винтовки.<br>По этим координатам оружие будет прижато к плечам персонажа и таким образом размещаем объект в руках.<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockReload", "comment": "Приклад винтовки при перезарядке", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockReload" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handguardPoint", "comment": "Цевьё. Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "handguardPoint" },
+	{ "fieldPath": "weapon.WeaponHandPoints.fingerPoint", "comment": "Сдвинуть оружие от указательного пальца\nКоординаты оружия относительно пальца", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/fingers.png", "spritePivotPoint": { x: 0.85, y: 0.75 }, "spritePixelPerUnit": 100, "sortingOrder": 100, "spriteName": "fingerPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.fingerAngle", "comment": "Угол наклона для ладони. Если это ружьё, то оно имеет рукоять под наклоном", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.WeaponHandPoints.magazinePoint", "comment": "В каком месте хватать магазин при извлечении<br>Если не указано, взять координаты рендера магазина<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "magazinePoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.magazineInsert", "comment": "Магазин при вставке. Локальные координаты магазина.", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "magazineInsert" },
