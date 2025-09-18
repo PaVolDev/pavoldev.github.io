@@ -134,6 +134,7 @@ function parseVector(value) {
 }
 
 function getParamByFieldPath(fieldPath) {
+	if (!fieldPath) return null;
 	fieldPath = fieldPath.trim();
 	return editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
 }
@@ -296,6 +297,8 @@ function syncParamsToScene() {
 			canChangeLocalAngle: editedPoint.findIndex(p => (param.fieldPath === p.name || param.fieldPath.endsWith(p.name)) && p.angle) != -1,
 			parameter: param.startFieldPath
 		});
+		const newObj = sceneObjects[sceneObjects.length - 1];
+		if (spriteScreenListeners[newObj.name]) spriteScreenListeners[newObj.name].onSyncParamsToScene(newObj);
 	});
 
 
@@ -392,7 +395,7 @@ function syncSceneObjectToParams(obj) {
 		}
 		//Синхронизация отдельной точки
 		const pointParam = getParamByFieldPath(obj.parameter);
-		if (pointParam.spritePreview) {
+		if (pointParam?.spritePreview) {
 			const newPointValue = `(${parseFloat(obj.localPosition.x).toFixed(3)}, ${-parseFloat(obj.localPosition.y).toFixed(3)}, 0)`;  //отразить по оси Y
 			if (pointParam && pointParam.value !== newPointValue) {
 				pointParam.value = newPointValue;
@@ -419,6 +422,8 @@ function syncSceneObjectToParams(obj) {
 	if (gameObjectEnabled && gameObjectEnabled.value !== obj.isActive) { gameObjectEnabled.value = obj.isActive; }
 	//Точка с углом
 	setPointField(obj.parameter, 'angle', obj.localAngle);
+	//Другие данные
+	if (spriteScreenListeners[obj.name]) spriteScreenListeners[obj.name].onSyncSceneToParams(obj);
 	//Показать изменения на странице
 	renderEditedParams();
 }
@@ -788,7 +793,7 @@ function importFromJSON(jsonData) {
 			if (editedParams.find(p => p.fieldPath === fieldPath) || mainParams.find(p => p.fieldPath === fieldPath)) return;
 			const fieldInfo = availableParams.find(p => p.fieldPath === fieldPath);
 			if (!fieldInfo) { return; }
-			const dependencies = typeDependencies[fieldInfo.type];
+			const dependencies = typeDependencies[fieldInfo.type] || typeDependencies[fieldInfo.startFieldPath];
 			if (dependencies) { addParam(fieldPath); }
 		});
 
