@@ -61,7 +61,7 @@ const typeDependencies = { //Для параметров указаного ти
 		"WeaponHandPoints.handleMove.startPosition",
 		"WeaponHandPoints.handleMove.movePosition",
 	],
-	'weapon.WeaponHandPoints.fingerPoint':[
+	'weapon.WeaponHandPoints.fingerPoint': [
 		'WeaponHandPoints.fingerPoint',
 		'WeaponHandPoints.fingerAngle'
 	]
@@ -173,7 +173,7 @@ spriteScreenListeners = {
 	'coverMove.startPosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
 	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', true),
 	'handleMove.startPosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
-	'fingerPoint': new HandRenderListener(-0.35, 0.13),
+	'fingerRender': new HandRenderListener(-0.35, 0.13),
 };
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
@@ -517,10 +517,10 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockPoint", "comment": "Приклад винтовки.<br>По этим координатам оружие будет прижато к плечам персонажа и таким образом размещаем объект в руках.<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockReload", "comment": "Приклад винтовки при перезарядке", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockReload" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handguardPoint", "comment": "Цевьё. Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "handguardPoint" },
-	{ "fieldPath": "weapon.WeaponHandPoints.fingerPoint", "comment": "Сдвинуть оружие от указательного пальца\nКоординаты оружия относительно пальца", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/fingers.png", "spritePivotPoint": { x: 0.85, y: 0.75 }, "spritePixelPerUnit": 100, "sortingOrder": 100, "spriteName": "fingerPoint" },
+	{ "fieldPath": "weapon.WeaponHandPoints.fingerPoint", "comment": "Сдвинуть оружие от указательного пальца\nКоординаты оружия относительно пальца", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/fingers.png", "spritePivotPoint": { x: 0.85, y: 0.75 }, "spritePixelPerUnit": 100, "sortingOrder": 100, "spriteName": "fingerRender" },
 	{ "fieldPath": "weapon.WeaponHandPoints.fingerAngle", "comment": "Угол наклона для ладони. Если это ружьё, то оно имеет рукоять под наклоном", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.WeaponHandPoints.magazinePoint", "comment": "В каком месте хватать магазин при извлечении<br>Если не указано, взять координаты рендера магазина<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "magazinePoint" },
-	{ "fieldPath": "weapon.WeaponHandPoints.magazineInsert", "comment": "Магазин при вставке. Локальные координаты магазина.", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "magazineInsert" },
+	{ "fieldPath": "weapon.WeaponHandPoints.magazineInsert", "comment": "Магазин при вставке. Локальные координаты магазина.", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 2500, "spriteName": "magazineInsert" },
 	{ "fieldPath": "weapon.WeaponHandPoints.magazineInsertAngle", "comment": "Магазин. Угол наклона при вставке", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.WeaponHandPoints.handInsertPoint", "comment": "Координаты левой ладони при вставке магазина. Координаты указывают в каком месте хватать магазин, в какой части корпуса будет находиться рука<br>По умолчанию для левой руки используется точка вращения магазина", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "handInsertPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.bulletPoint", "comment": "Вставка патрона или другое движение рук<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "bulletPoint" },
