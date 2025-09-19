@@ -183,8 +183,10 @@ function getInputForType(param, index = -1) {
 		return selectHTML;
 	}
 	switch (param.type) {
+		case 'SpriteRenderer':
 		case 'Transform':
 			let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
+			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
 			sceneObjects.forEach(obj => {
 				if (editedParams.find(p => p.fieldPath.includes(obj.name) && p.type == 'Sprite')) {
 					selectHTML += `<option value="${obj.name}"${(obj.name == param.value ? ' selected' : '')}>${obj.name}</option>`;
