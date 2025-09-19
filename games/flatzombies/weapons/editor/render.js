@@ -1,44 +1,44 @@
 let sceneObjects = [
-    {
-        name: "body",
-        parent: "",
-        texture: "images/test.png",
-        localPosition: { x: 0.4, y: 0.2 },
-        localAngle: 0,
-        pixelPerUnit: 100,
-        pivotPoint: { x: 0.5, y: 0.5 },
+	{
+		name: "body",
+		parent: "",
+		texture: "images/test.png",
+		localPosition: { x: 0.4, y: 0.2 },
+		localAngle: 0,
+		pixelPerUnit: 100,
+		pivotPoint: { x: 0.5, y: 0.5 },
 		enabled: true, isActive: true
-    },
-    {
-        name: "hand",
-        parent: "body",
-        texture: "images/test.png",
-        localPosition: { x: 0.1, y: 0.2 },
-        localAngle: 0,
-        pixelPerUnit: 100,
-        pivotPoint: { x: 0.5, y: 0.5 },
+	},
+	{
+		name: "hand",
+		parent: "body",
+		texture: "images/test.png",
+		localPosition: { x: 0.1, y: 0.2 },
+		localAngle: 0,
+		pixelPerUnit: 100,
+		pivotPoint: { x: 0.5, y: 0.5 },
 		enabled: true, isActive: true
-    },
-    {
-        name: "leg",
-        parent: "body",
-        texture: "images/test.png",
-        localPosition: { x: 0, y: 0.5 },
-        localAngle: 0,
-        pixelPerUnit: 100,
-        pivotPoint: { x: 0.5, y: 0.9 },
+	},
+	{
+		name: "leg",
+		parent: "body",
+		texture: "images/test.png",
+		localPosition: { x: 0, y: 0.5 },
+		localAngle: 0,
+		pixelPerUnit: 100,
+		pivotPoint: { x: 0.5, y: 0.9 },
 		enabled: true, isActive: true
-    },
-    {
-        name: "fingers",
-        parent: "hand",
-        texture: "images/test.png",
-        localPosition: { x: 0, y: 0.5 },
-        localAngle: 0,
-        pixelPerUnit: 100,
-        pivotPoint: { x: 0.5, y: 0.9 },
+	},
+	{
+		name: "fingers",
+		parent: "hand",
+		texture: "images/test.png",
+		localPosition: { x: 0, y: 0.5 },
+		localAngle: 0,
+		pixelPerUnit: 100,
+		pivotPoint: { x: 0.5, y: 0.9 },
 		enabled: true, isActive: true
-    },
+	},
 ];
 
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
@@ -101,7 +101,7 @@ function getWorldPosition(objName) {
 	let currentName = objName;
 	while (currentName) {
 		const current = byName[currentName];
-		if (!current) {console.log("getWorldPosition: byName[" + currentName + "] == NULL");break;}
+		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL"); break; }
 		chain.push(current);
 		currentName = current.parent;
 	}
@@ -571,7 +571,8 @@ function addObject() {
 }
 
 
-canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener('mousedown', startMove);
+function startMove(e) {
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -631,9 +632,10 @@ canvas.addEventListener('mousedown', (e) => {
 		dragStartMouseWorld = { x: wx, y: wy };
 		dragStartWorldPos = getWorldPosition(hit.name);
 	}
-});
+}
 
-canvas.addEventListener('mousemove', (e) => {
+canvas.addEventListener('mousemove', mouseMove);
+function mouseMove(e) {
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -701,9 +703,11 @@ canvas.addEventListener('mousemove', (e) => {
 		renderScene();
 	}
 
-});
+};
 
-canvas.addEventListener('mouseup', () => {
+
+canvas.addEventListener('mouseup', mouseUp);
+function mouseUp() {
 	if (isDragging) {
 		isDragging = false;
 		dragObject = null;
@@ -718,7 +722,7 @@ canvas.addEventListener('mouseup', () => {
 		}
 		selectObject(selectedObject); // Refresh properties
 	}
-});
+}
 
 canvas.addEventListener('wheel', (e) => {
 	e.preventDefault();
