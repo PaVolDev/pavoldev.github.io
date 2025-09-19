@@ -77,8 +77,8 @@ async function onSelectWeapon(event) {
 			});
 		});
 		lastParentPosition.x = -0.55; lastParentPosition.y = 0;
-		leftPanel.style.display = 'flex';
-		rightPanel.style.display = 'flex';
+		leftPanel.style.visibility = 'visible';
+		rightPanel.style.visibility = 'visible';
 		availableParams.length = 0;
 		availableParams = availableParams.concat(baseParams);
 		editedParams.length = 0;
@@ -183,6 +183,15 @@ function getInputForType(param, index = -1) {
 		return selectHTML;
 	}
 	switch (param.type) {
+		case 'Transform':
+			let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
+			sceneObjects.forEach(obj => {
+				if (editedParams.find(p => p.fieldPath.includes(obj.name) && p.type == 'Sprite')) {
+					selectHTML += `<option value="${obj.name}"${(obj.name == param.value ? ' selected' : '')}>${obj.name}</option>`;
+				}
+			});
+			selectHTML += '</select>';
+			return selectHTML;
 		case 'Vector2':
 			const v2 = parseVector(param.value);
 			return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 20em;" >
