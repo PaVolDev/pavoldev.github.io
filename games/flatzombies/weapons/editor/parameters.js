@@ -608,7 +608,7 @@ function forceRenderEditedParams(filter = '') {
 							</div>
 
                     </span>
-                    ${prefix ? `<div class="vector-input">
+                    ${prefix && posIdx >= 0 ? `<div class="vector-input">
                             <span style="font-size:11px;">Position:</span>
                             <span data-tooltip="Позиция объекта внутри родительского объекта - localPosition">
 							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[0]}" 
