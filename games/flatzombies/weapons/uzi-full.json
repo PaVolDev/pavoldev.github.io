@@ -9,7 +9,7 @@
     "weapon.WeaponHandPoints.boltStop": false,
     "weapon.addedComponents": "boltRenderer.SpriteRenderer",
     "weapon.addedGameObjects": "boltRenderer",
-    "weapon.WeaponSilencerMod.doublePistol": "sprite",
+    "weapon.WeaponSilencerMod.doublePistol": "magazine",
     "weapon.WeaponAnimation": "",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(-0.205, -0.107, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(-0.191, -0.089, 0)",
