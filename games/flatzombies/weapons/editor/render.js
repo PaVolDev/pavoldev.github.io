@@ -93,22 +93,46 @@ function getByName() {
 	return sceneObjects.reduce((acc, o) => ({ ...acc, [o.name]: o }), {});
 }
 
+
 function getWorldPosition(objName) {
 	if (!objName) return { x: 0, y: 0 };
 	const byName = getByName();
-	let pos = { x: 0, y: 0 };
+	let chain = [];// Собираем цепочку от objName до корня
 	let currentName = objName;
 	while (currentName) {
 		const current = byName[currentName];
-		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL"); break; }
-		const parentAngle = getWorldAngle(current.parent);
-		const rotated = rotateVec(current.localPosition, parentAngle);
+		if (!current) {console.log("getWorldPosition: byName[" + currentName + "] == NULL");break;}
+		chain.push(current);
+		currentName = current.parent;
+	}
+	// Теперь идём от корня к objName (в обратном порядке)
+	let pos = { x: 0, y: 0 };
+	let totalAngle = 0; // накопленный угол
+	for (let i = chain.length - 1; i >= 0; i--) {// Цепочка сейчас [obj, parent, grandparent, ..., root] — перевернём
+		const obj = chain[i];
+		const rotated = rotateVec(obj.localPosition, totalAngle);// Вращаем локальную позицию на накопленный угол
 		pos.x += rotated.x;
 		pos.y += rotated.y;
-		currentName = current.parent;
+		totalAngle += obj.localAngle || 0;// Добавляем локальный угол объекта к общему углу для следующих детей
 	}
 	return pos;
 }
+// function getWorldPosition(objName) {
+// 	if (!objName) return { x: 0, y: 0 };
+// 	const byName = getByName();
+// 	let pos = { x: 0, y: 0 };
+// 	let currentName = objName;
+// 	while (currentName) {
+// 		const current = byName[currentName];
+// 		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL"); break; }
+// 		const parentAngle = getWorldAngle(current.parent);
+// 		const rotated = rotateVec(current.localPosition, parentAngle);
+// 		pos.x += rotated.x;
+// 		pos.y += rotated.y;
+// 		currentName = current.parent;
+// 	}
+// 	return pos;
+// }
 
 function getWorldAngle(objName) {
 	if (!objName) return 0;
