@@ -259,6 +259,15 @@ h2 {
 	transition: all var(--transition-speed) ease;
 }
 
+.spriteFields {
+	margin-top: 6px;
+	display: grid;
+	grid-template-columns: 60% 40%;
+	place-items: self-end;
+	row-gap: 10px;
+	grid-column-gap: 2px;
+}
+
 .jsonFileButton {
 	background: rgb(255, 167, 78)
 }
@@ -287,26 +296,31 @@ input[type="password"] {
 	width: 100%;
 }
 
+
+input.num {
+	max-width: 5em;
+	width: 100%;
+}
+
+.vector-fields {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	grid-column-gap: 1px;
+}
+
 .jsonFileButton:hover {
 	background: rgb(255, 209, 109);
 }
 
-
+.titleProperty {
+	display: grid;
+	margin-right: 1px;
+}
 
 #scene {
 	background-color: #e0e0e0;
 }
 
-.vector-inputs input {
-	width: 50px;
-	margin-right: 5px;
-	background: var(--input-bg);
-	border: 1px solid var(--border-color);
-	color: var(--text);
-	padding: 6px;
-	border-radius: 4px;
-	font-size: 13px;
-}
 
 .input-group {
 	display: flex;
