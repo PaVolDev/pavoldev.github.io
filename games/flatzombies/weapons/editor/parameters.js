@@ -575,8 +575,8 @@ function forceRenderEditedParams(filter = '') {
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-                            <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<div class="iconButton" data-tooltip="Сохранить как PNG-файл" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
+                            <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
                                 <input type="file" class="fileInput" accept=".png" onchange="fileToBase64(${idx}, this)">
                                 <div class="fileInputButton" data-tooltip="Выбрать другой PNG-файл">Заменить</div>
