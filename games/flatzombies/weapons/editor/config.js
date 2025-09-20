@@ -502,7 +502,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.cameraSizeScale", "comment": "Размер камеры", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.renderInSpare", "comment": "Оружие за спиной (необязательно)", "type": "SpriteRenderer", "value": "" },
 	{ "fieldPath": "weapon.playerScaleMove", "comment": "Множитель для скорости перемещения у игрока [0-1]", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.noiseVolumeScale", "comment": "Громкость выстрела/шума для умножения на громкость патрона\nОтдельный множитель громкости у оружия", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.automat", "comment": "Автоматическое оружие", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.fireRateInMinute", "comment": "Скорострельность без учёта Time.timeScale<br>Кол-во выстрелов в минуту", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.cartridgesList", "comment": "Порядок патронов в магазине. Если оружие без магазина, то используем список для патронника", "type": "WeaponCartridge[]", "value": "" },
