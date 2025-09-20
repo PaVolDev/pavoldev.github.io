@@ -250,7 +250,6 @@ function renderScene() {
 }
 
 //Показать только спрайты без точек
-
 function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1) {
 	convertedPoint = new Array(); // Сбросим/инициализируем
 	const w = canvas.width * 2;
