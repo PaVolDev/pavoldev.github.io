@@ -572,7 +572,7 @@ function forceRenderEditedParams(filter = '') {
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
                 <small>${param.comment || ''}</small><br>
-                <div style="margin-top:6px;display: grid;grid-template-columns: 65% 35%;place-items: self-end;row-gap: 10px;">
+                <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
@@ -583,17 +583,17 @@ function forceRenderEditedParams(filter = '') {
                             </label>
                         </div>
                     </div>
-                    ${pivotIdx >= 0 ? `<div class="vector-input">
+                    ${pivotIdx >= 0 ? `<div class="titleProperty" data-tooltip="Точка вращения объекта" >
                             <span style="font-size:11px;" >Pivot:</span>
-                            <span data-tooltip="Точка вращения объекта">
-							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[pivotIdx].value)[0]}"
+                            <div class="vector-fields">
+							<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[pivotIdx].value)[0]}"
                                    onchange="updateVector(${pivotIdx}, 0, this.value)" id ="${editedParams[pivotIdx].fieldPath}.x">
-                            <input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[pivotIdx].value)[1]}" 
+                            <input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(editedParams[pivotIdx].value)[1]}" 
                                    onchange="updateVector(${pivotIdx}, 1, this.value)" id ="${editedParams[pivotIdx].fieldPath}.y">
-							</span>
+							</div>
                         </div>` : ''}
 
-                    <span style="display: grid;grid-template-columns: 8% 8% 28% 28% 28%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
+                    <span style="display: grid;grid-template-columns: 10% 10% 26% 27% 27%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
 
 						<div data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
 						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
@@ -603,30 +603,30 @@ function forceRenderEditedParams(filter = '') {
 						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
 						</div>
 
-							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)">
+							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="titleProperty">
                         ${ppuIdx >= 0 ? `<span style="font-size:11px;">PPU:</span>
-                                <input type="number" step="10" style="width:4.5em;" value="${editedParams[ppuIdx].value}" min="1" max="300" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
+                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" min="1" max="300" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
 							</div>
 
-							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder">
+							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="titleProperty">
                         ${sortIdx >= 0 ? `<span style="font-size:11px;">Sort:</span>
-                                <input type="number" style="width:4.5em;" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
+                                <input type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
 						    </div>
 
-							<div data-tooltip="Угол поворота в градусах">
+							<div data-tooltip="Угол поворота в градусах" class="titleProperty">
                         ${angleIdx >= 0 ? `<span style="font-size:11px;">Angle:</span>
-                                <input type="number" step="1" style="width:4.5em;" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
+                                <input type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
 							</div>
 
                     </span>
-                    ${prefix && posIdx >= 0 ? `<div class="vector-input">
+                    ${prefix && posIdx >= 0 ? `<div class="titleProperty" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
                             <span style="font-size:11px;">Position:</span>
-                            <span data-tooltip="Позиция объекта внутри родительского объекта - localPosition">
-							<input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[0]}" 
-                                   onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
-                            <input type="number" step="0.02" style="width:5em;" value="${parseVector(editedParams[posIdx].value)[1]}" 
-                                   onchange="updateVector(${posIdx}, 1, this.value)" id ="${editedParams[posIdx].fieldPath}.y">
-							</span>
+                            <div class="vector-fields">
+								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[0]}"
+									onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
+								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[1]}" 
+									onchange="updateVector(${posIdx}, 1, this.value)" id ="${editedParams[posIdx].fieldPath}.y">
+							</div>
                         </div>` : ''}
                 </div>`;
 				list.appendChild(li);
@@ -685,16 +685,61 @@ function updateVector(index, coordIndex, value, syncToScene = true) {
 	}
 }
 
+
+function trimTransparentEdges(base64, step, padding, callback) {
+	const img = new Image();
+	img.src = base64;
+	img.onload = () => {
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		canvas.width = img.width;
+		canvas.height = img.height;
+		ctx.drawImage(img, 0, 0);
+		const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		const a = (x, y) => data[(y * width + x) * 4 + 3]; // alpha в точке (x,y)
+		const findEdge = (start, end, step, getCoord) => {
+			for (let i = start; i !== end; i += step) {
+				for (let j = 0; j < (getCoord === 'x' ? height : width); j++) {
+					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) !== 0) return i;
+				}
+			}
+			return getCoord === 'x' ? width : height;
+		};
+		let top = findEdge(0, height, step, 'y');
+		let bottom = findEdge(height - 1, -1, -step, 'y') + 1;
+		let left = findEdge(0, width, step, 'x');
+		let right = findEdge(width - 1, -1, -step, 'x') + 1;
+		if (left >= right || top >= bottom) return callback(base64);
+		//ДОБАВЛЯЕМ PADDING
+		top = Math.max(0, top - padding);
+		bottom = Math.min(height, bottom + padding);
+		left = Math.max(0, left - padding);
+		right = Math.min(width, right + padding);
+		// Создаём canvas с учётом padding
+		const trimmed = document.createElement('canvas');
+		const tctx = trimmed.getContext('2d');
+		trimmed.width = right - left;
+		trimmed.height = bottom - top;
+		// Рисуем с отступом: исходное изображение вставляется внутрь нового canvas
+		tctx.drawImage(canvas, left, top, right - left, bottom - top, 0, 0, trimmed.width, trimmed.height);
+		callback(trimmed.toDataURL('image/png'));
+	};
+	img.onerror = () => callback(base64);
+}
+
 function fileToBase64(index, input) {
 	const file = input.files[0];
 	if (!file) return;
 	const reader = new FileReader();
 	reader.onload = e => {
 		const base64 = e.target.result;
-		editedParams[index].value = base64;
-		input.value = '';
-		renderEditedParams();
-		syncParamsToScene();
+		// Обрезаем прозрачные края
+		trimTransparentEdges(base64, 1, 1, trimmedBase64 => {
+			editedParams[index].value = trimmedBase64;
+			input.value = '';
+			renderEditedParams();
+			syncParamsToScene();
+		});
 	};
 	reader.onerror = () => {
 		alert('Failed to read file.');
