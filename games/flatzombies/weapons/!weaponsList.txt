@@ -1,1 +1,1 @@
-makarov;mp5a2;ppshmodst;ak74m;howatype20;spas12;kord-m;autobarretmod;fnfal;suppressor-k22;mosinmod;testfindinchainsaw;glockautomodst;winchester1873;famas;galil;pkpmodst;scout;m16a1;buccha14;uzi;ks23modst;awp;ak47
+makarov;mp5a2;ppshmodst;ak74m;howatype20;spas12;kord-m;autobarretmod;fnfal;suppressor-k22;mosinmod;testfindinchainsaw;glockautomodst;winchester1873;famas;galil;pkpmodst;scout;m16a1;buccha14;uzi;ks23modst;awp;ak47;tec9
