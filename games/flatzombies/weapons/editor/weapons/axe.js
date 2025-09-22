@@ -2,7 +2,7 @@ export default {
 	"weapon.MeleeWeapon.delayBullet": 0.1,
 	"weapon.MeleeWeapon.boltParentName": "weaponParent",
 	"weapon.MeleeWeapon.bloodySkinManager": "Топор в крови (ListDamagesSprites)",
-	"weapon.MeleeWeapon.bolt": "(-2, 0, 0)",
+	"weapon.MeleeWeapon.bolt": "(0, 0, 0)",
 	"weapon.MeleeWeapon.flashlight": "(0, 0, 0)",
 	"weapon.MeleeWeapon.flashlightParent": "",
 	"weapon.MeleeWeapon.flashlightSkin.name": "!СветТопора",
