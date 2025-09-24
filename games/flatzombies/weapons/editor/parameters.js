@@ -47,7 +47,7 @@ async function onSelectWeapon(event) {
 		}
 		//Нужно загрузить новое оружие через fetch + import — это асинхронно!
 		showLoadingNewWeapon();
-		fetch(`weapons/${event.target.value}.js`).then(response => {
+		fetch(templatesDirectory + '/' + event.target.value + '.js').then(response => {
 			if (!response.ok) throw new Error(`HTTP ${response.status}`);
 			return response.text();
 		}).then(sourceCode => {
@@ -188,7 +188,7 @@ function getInputForType(param, index = -1) {
 			let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
 			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
 			sceneObjects.forEach(obj => {
-				if (editedParams.find(p => p.fieldPath.includes(obj.name) && p.type == 'Sprite')) {
+				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
 					selectHTML += `<option value="${obj.name}"${(obj.name == param.value ? ' selected' : '')}>${obj.name}</option>`;
 				}
 			});
@@ -243,7 +243,7 @@ function htmlspecialchars(str) {
 function syncParamsToScene() {
 	sceneObjects.length = 0;
 	const processedNames = new Set();
-	editedParams.filter(p => p.type === 'Sprite').forEach(param => {
+	editedParams.filter(p => typeDependencies[p.type]?.includes('Transform.localPosition')).forEach(param => {
 		const fieldPath = param.fieldPath;
 		const prefix = getPrefix(fieldPath);
 		let parentName = prefix?.includes('.') ? prefix.split('.').slice(0, -1).join('.') : '';
@@ -605,7 +605,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="titleProperty">
                         ${ppuIdx >= 0 ? `<span style="font-size:11px;">PPU:</span>
-                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" min="1" max="300" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
+                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" min="1" max="5000" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
 							</div>
 
 							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="titleProperty">
@@ -630,6 +630,56 @@ function forceRenderEditedParams(filter = '') {
                         </div>` : ''}
                 </div>`;
 				list.appendChild(li);
+
+
+			} else if (param.type === 'Renderer') {
+				// Находим индексы параметров группы
+				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
+				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
+				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
+				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
+				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
+				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
+				const li = document.createElement('li');
+				li.onmouseenter = () => selectObjectByName(prefix);
+				li.className = 'param-group-block';
+				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
+                <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
+                <small>${param.comment || ''}</small><br>
+                <div>
+                    <span style="display: grid;grid-template-columns: 6% 6% 16% 16% 56%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
+						<div data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
+						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
+						</div>
+
+						<div data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
+						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
+						</div>
+
+
+						<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="titleProperty">
+					${sortIdx >= 0 ? `<span style="font-size:11px;">Sort:</span>
+							<input type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
+						</div>
+
+						<div data-tooltip="Угол поворота в градусах" class="titleProperty">
+					${angleIdx >= 0 ? `<span style="font-size:11px;">Angle:</span>
+							<input type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
+						</div>
+
+						<div class="titleProperty" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
+							<span style="font-size:11px;">Position:</span>
+							<div class="vector-fields">
+								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[0]}" onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
+								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[1]}" onchange="updateVector(${posIdx}, 1, this.value)" id ="${editedParams[posIdx].fieldPath}.y">
+							</div>
+                        </div>
+                    </span>
+                   
+                </div>`;
+				list.appendChild(li);
+
 			} else if (param.type === 'WeaponHandPoints') {
 				const li = document.createElement('li');
 				li.className = 'param-group-block';
@@ -686,15 +736,82 @@ function updateVector(index, coordIndex, value, syncToScene = true) {
 }
 
 
-function trimTransparentEdges(base64, step, padding, callback) {
+
+/*
+// Обрабатываем все изображения параллельно
+Promise.all(
+	editedParams.map(item =>
+		item.type === 'Sprite'
+			? compressImage(item.value, maxSize)
+				.then(compressed => ({
+					...item, // копируем все исходные свойства
+					value: compressed.base64, // заменяем value на сжатый base64
+					error: undefined // очищаем ошибку, если была
+				}))
+				.catch(err => ({
+					...item, // оставляем оригинал
+					error: err.message || "Unknown error", // добавляем ошибку
+				}))
+			: Promise.resolve({ ...item }) // не Sprite — возвращаем без изменений
+	)
+).then(results => {
+	const successful = results.filter(r => !r.error);
+	const failed = results.filter(r => r.error);
+	console.log(`Успешно: ${successful.length}, Ошибок: ${failed.length}`);
+	saveAll(results); // ← передаём ВСЕ объекты (и Sprite, и другие)
+}).catch(err => {
+	console.error("Неожиданная ошибка при обработке:", err);
+});
+*/
+
+function compressImage(base64, maxSize) {
+	return new Promise((resolve) => {
+		const img = new Image();
+		img.src = base64;
+		img.onload = () => {
+			// Если изображение не превышает maxSize — ничего не делаем
+			if (img.width <= maxSize && img.height <= maxSize) {
+				return resolve({ base64: base64, scale: 1 });
+			}
+			// Вычисляем масштаб
+			const scale = Math.min(maxSize / img.width, maxSize / img.height);
+			const newWidth = Math.round(img.width * scale);
+			const newHeight = Math.round(img.height * scale);
+			// Создаём canvas для сжатия
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+			canvas.width = newWidth;
+			canvas.height = newHeight;
+			// Улучшаем качество
+			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+			// Рисуем уменьшенное изображение
+			ctx.drawImage(img, 0, 0, newWidth, newHeight);
+			// Возвращаем новый base64 и коэффициент масштабирования
+			resolve({ base64: canvas.toDataURL('image/png'), scale: scale });
+		};
+		img.onerror = () => { resolve({ base64: base64, scale: 1 }); }; // При ошибке — возвращаем оригинал и scale = 1
+	});
+}
+
+function trimTransparentEdges(base64, maxSize, step, padding, callback) {
 	const img = new Image();
 	img.src = base64;
 	img.onload = () => {
 		const canvas = document.createElement('canvas');
 		const ctx = canvas.getContext('2d');
-		canvas.width = img.width;
-		canvas.height = img.height;
-		ctx.drawImage(img, 0, 0);
+		// Проверка на слишком большое изображение
+		if (img.width > maxSize * 2 || img.height > maxSize * 2) { // Рисуем уменьшенное изображение
+			const scale = Math.min(maxSize / img.width, maxSize / img.height);
+			canvas.width = Math.round(img.width * scale);
+			canvas.height = Math.round(img.height * scale);
+			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; // Улучшаем качество масштабирования
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);// Рисуем в canvas
+		} else {
+			// Если уменьшение не нужно — рисуем оригинал
+			canvas.width = img.width;
+			canvas.height = img.height;
+			ctx.drawImage(img, 0, 0);
+		}
 		const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		const a = (x, y) => data[(y * width + x) * 4 + 3]; // alpha в точке (x,y)
 		const findEdge = (start, end, step, getCoord) => {
@@ -734,7 +851,7 @@ function fileToBase64(index, input) {
 	reader.onload = e => {
 		const base64 = e.target.result;
 		// Обрезаем прозрачные края
-		trimTransparentEdges(base64, 1, 1, trimmedBase64 => {
+		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
 			editedParams[index].value = trimmedBase64;
 			input.value = '';
 			renderEditedParams();
@@ -916,12 +1033,19 @@ function getResultJSON() {
 		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
 	}
-	editedParams.forEach(param => { json[param.startFieldPath || param.fieldPath] = param.value; });
+	editedParams.forEach(param => {
+		if (!ignoreExportFields.find(word => param.fieldPath.includes(word))) {
+			json[param.startFieldPath || param.fieldPath] = param.value;
+		}
+	});
 	// const img = document.createElement('img'); //Предпросмотр сгенерированого изображения
 	// img.src = json['storeInfo.iconBase64'];
 	// document.getElementById('centerPanel').appendChild(img);
 	return json;
 }
+
+
+
 
 //Запись JSON в файл - показать окно для загрузки/сохранения файла на компьютер
 document.getElementById('exportJsonFile').addEventListener('click', () => {
