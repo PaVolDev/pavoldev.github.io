@@ -1,10 +1,8 @@
-const weapons = new Array();
-const weaponFullNames = [
-	["ak74u", "ak74u - Автомат с магазином"],
-	["ksg", "ksg - Дробовик"]
-];
 
-const drawPoint = ['bolt'];//Показать точки на экране предпросмотра
+
+const templatesDirectory = 'weapons'; //Папка с шаблонами
+const weapons = new Array();
+
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
 	{ name: '.position', angle: '.angle', parent: null },
 	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
@@ -20,15 +18,24 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
-
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
+const ignoreExportFields = ['gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.'];
 const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
 const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
 
 const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
 	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'Renderer': [ 
 		'SpriteRenderer.sprite.pivotPoint',
 		'SpriteRenderer.sprite.pixelPerUnit',
 		'SpriteRenderer.sortingOrder',
@@ -224,7 +231,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "TextFile", "value": "" },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
-	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "" },
+	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", "type": "Sprite", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
@@ -324,7 +331,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.magazinePlayStep", "comment": "Кол-во патронов из магазина для запуска анимации", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angleScatter", "comment": "Случаное отклонение от основного направления для гильзы", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.laserPosition", "comment": "Позиция лазера от точки вращения оружия", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/laser.png", "spritePivotPoint": { x: 0, y: 0.5 }, "spritePixelPerUnit": 100, "sortingOrder": 1 },
-	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite", "comment": "Огонь от выстрела, спрайт/текстура, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite", "comment": "Огонь от выстрела, спрайт/текстура, PNG-файл", "type": "Renderer", "value": "" },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
@@ -332,44 +339,44 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.gunFlash.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.gunFlash.Transform.localPosition", "comment": "Координаты огня от выстрела", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.gunFlash.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.timeScale", "comment": "Множитель скорости анимаций", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.speed", "comment": "Скорость/Частота кадров в секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.reverse", "comment": "Воспроизвести в обратном порядке", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.loop", "comment": "Проигрывать повторно", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.randomRotate", "comment": "Случайный поворот", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.flipX", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.flipY", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.direction", "comment": "Направление движения", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.directionRange", "comment": "Отклонение по обе стороны от направления ", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.speedMin", "comment": "Скорость, метр/секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.speedMax", "comment": "Макси скорость, метр/секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash.WeaponShotEffect.nextEffectShot", "comment": "Передать событие следующему эффекту ", "type": "WeaponShotEffect", "value": "" },
-	{ "fieldPath": "weapon.gunFlash2.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
-	{ "fieldPath": "weapon.gunFlash2.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.timeScale", "comment": "Множитель скорости анимаций", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.speed", "comment": "Скорость/Частота кадров в секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.reverse", "comment": "Воспроизвести в обратном порядке", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.AnimatorSprite.loop", "comment": "Проигрывать повторно", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.randomRotate", "comment": "Случайный поворот", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.flipX", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.flipY", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.direction", "comment": "Направление движения", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.directionRange", "comment": "Отклонение по обе стороны от направления ", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.speedMin", "comment": "Скорость, метр/секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.speedMax", "comment": "Макси скорость, метр/секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.WeaponShotEffect.nextEffectShot", "comment": "Передать событие следующему эффекту ", "type": "WeaponShotEffect", "value": "" },
-	{ "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite", "comment": "Спрайт/текстура выстрела, PNG-файл", "type": "Sprite", "value": "" },
-	{ "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
-	{ "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
-	{ "fieldPath": "weapon.gunFlash2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.gunFlash2.SpriteRenderer.enabled", "comment": "Показать спрайт на экране", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.gunFlash2.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.timeScale", "comment": "Множитель скорости анимаций", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.speed", "comment": "Скорость/Частота кадров в секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.reverse", "comment": "Воспроизвести в обратном порядке", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.loop", "comment": "Проигрывать повторно", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.randomRotate", "comment": "Случайный поворот", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.flipX", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.flipY", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.direction", "comment": "Направление движения", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.directionRange", "comment": "Отклонение по обе стороны от направления ", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.speedMin", "comment": "Скорость, метр/секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.speedMax", "comment": "Макси скорость, метр/секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash.WeaponShotEffect.nextEffectShot", "comment": "Передать событие следующему эффекту ", "type": "WeaponShotEffect", "value": "" },
+	// { "fieldPath": "weapon.gunFlash2.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
+	// { "fieldPath": "weapon.gunFlash2.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.timeScale", "comment": "Множитель скорости анимаций", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.speed", "comment": "Скорость/Частота кадров в секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.reverse", "comment": "Воспроизвести в обратном порядке", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.AnimatorSprite.loop", "comment": "Проигрывать повторно", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.randomRotate", "comment": "Случайный поворот", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.flipX", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.flipY", "comment": "Отражать случайно по горизонтали/вертикали", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.direction", "comment": "Направление движения", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.directionRange", "comment": "Отклонение по обе стороны от направления ", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.speedMin", "comment": "Скорость, метр/секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.speedMax", "comment": "Макси скорость, метр/секунду", "type": "float", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.WeaponShotEffect.nextEffectShot", "comment": "Передать событие следующему эффекту ", "type": "WeaponShotEffect", "value": "" },
+	// { "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite", "comment": "Спрайт/текстура выстрела, PNG-файл", "type": "Sprite", "value": "" },
+	// { "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	// { "fieldPath": "weapon.gunFlash2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
+	// { "fieldPath": "weapon.gunFlash2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
+	// { "fieldPath": "weapon.gunFlash2.SpriteRenderer.enabled", "comment": "Показать спрайт на экране", "type": "bool", "value": true },
+	// { "fieldPath": "weapon.gunFlash2.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.boltRender.fingers.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.boltRender.fingers.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.boltRender.fingers.SpriteRenderer.sprite", "comment": "Спрайт/текстура пальцев, PNG-файл", "type": "Sprite", "value": "" },
