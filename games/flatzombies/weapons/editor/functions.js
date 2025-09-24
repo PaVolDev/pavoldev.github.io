@@ -32,3 +32,38 @@ function addNewSprite() {
 	renderEditedParams();
 	syncParamsToScene();
 }
+
+
+//ПОКАЗАТЬ ПРАВИЛА
+// Показать модальное окно при загрузке страницы
+var modRulesModal = document.getElementById('modRulesModal');
+document.addEventListener('DOMContentLoaded', function () {
+	if (localStorage.getItem('modderAgreedToRules') !== 'true') {// Показать только если пользователь ещё не соглашался
+		modRulesModal.style.display = 'block';
+		document.getElementById('page').classList.add('hidden');
+	}else{
+		removeRulesWindow();
+	}
+});
+// Включить/выключить кнопку "Согласен" в зависимости от чекбокса
+const checkbox = document.getElementById('agreeCheckbox');
+const agreeButton = document.getElementById('agreeBtn');
+checkbox.addEventListener('change', function () {
+	if (checkbox.checked) {
+		agreeButton.classList.add('enabled');
+		agreeButton.disabled = false;
+	} else {
+		agreeButton.classList.remove('enabled');
+		agreeButton.disabled = true;
+	}
+});
+
+// Закрыть окно при нажатии "Согласен"
+agreeButton.addEventListener('click', removeRulesWindow);
+
+function removeRulesWindow(event = null){
+	modRulesModal.style.display = 'none';
+	modRulesModal.innerHTML = '';
+	localStorage.setItem('modderAgreedToRules', 'true');
+	document.getElementById('page').classList.remove('hidden');
+}
