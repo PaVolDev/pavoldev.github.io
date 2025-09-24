@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="container" id="page">
 		<!-- Левая панель: Доступные параметры -->
 		<div class="panel" id="leftPanel" style="visibility: hidden;">
 			<span style="position: relative;">
@@ -188,7 +188,7 @@
 							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
 							<input type="text" id="propSortingOrder" step="1">
 							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
-							<input type="text" id="propPixelsPerUnit" step="5" min="1" max="300" oninput="inputMinMax(this)">
+							<input type="text" id="propPixelsPerUnit" step="5" min="1" max="5000" oninput="inputMinMax(this)">
 						</div>
 						<div>
 							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
@@ -218,6 +218,38 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+	<div id="modRulesModal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<h2>Правила для мододелов</h2>
+			<p>Ваш мод должен соответствовать тематике шутера про зомби.<br>Список запрещённого контента:</p>
+			<ul>
+				<li>❌ Пиратские или краденые ассеты (текстуры, модели, звуки).</li>
+				<li>❌ Контент, нарушающий законодательство вашей страны или страны разработчика игры.</li>
+				<li>❌ Реклама сторонних сайтов, скам-ссылки, криптовалютные мошенничества.</li>
+				<li>❌ Сексуальный контент: фаллоимитаторы, сексуальные позы, обнажённость, сексуализированные персонажи.</li>
+				<li>❌ Нацистская символика: свастика, эсэсовские знаки, нацистская пропаганда и некоторые числа.</li>
+				<li>❌ Расизм, ксенофобия, ненависть к любой группе людей по расе, религии, полу или ориентации.</li>
+				<li>❌ Экстремистские, террористические или жестокие организации (например, ISIS, Aryan Nation и т.п.).</li>
+				<li>❌ Наркотики, жестокость против детей или животных (в реалистичном виде).</li>
+			</ul>
+			<div class="checkbox-container">
+				<input type="checkbox" id="agreeCheckbox" required>
+				<label for="agreeCheckbox">Я прочитал и полностью согласен с правилами выше. Понимаю, что нарушение влечёт удаление мода и блокировку аккаунта.</label>
+			</div>
+			<p class="footer">Нарушение правил → удаление мода + блокировка аккаунта.</p>
+			<button class="btn" id="agreeBtn" disabled>Согласен</button>
+		</div>
+	</div>
+
+
+
+
+
+
 
 	<script>
 		// Всплывающие подсказки
