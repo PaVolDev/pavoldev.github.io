@@ -185,5 +185,6 @@ export default {
 "weapon.laserSight.SpriteRenderer.sortingOrder": 18,
 "weapon.laserSight.SpriteRenderer.enabled": true,
 "weapon.laserSight.name": "laserSight",
-"weapon.name": "czbren2"
+"weapon.name": "czbren2",
+"storeInfo.silencerGroup": "rifle"
 };

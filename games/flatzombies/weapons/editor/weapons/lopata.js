@@ -101,5 +101,6 @@ export default {
 	"weapon.SpriteRenderer.sprite.pixelPerUnit": "75",
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
-	"weapon.name": "lopata"
+	"weapon.name": "lopata",
+"storeInfo.silencerGroup": ""
 };

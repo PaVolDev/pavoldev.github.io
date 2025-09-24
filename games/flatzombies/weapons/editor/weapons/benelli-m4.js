@@ -160,5 +160,6 @@ export default {
 "weapon.sight.SpriteRenderer.sortingOrder": 18,
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
-"weapon.name": "benelli-m4"
+"weapon.name": "benelli-m4",
+"storeInfo.silencerGroup": "shotgun"
 };

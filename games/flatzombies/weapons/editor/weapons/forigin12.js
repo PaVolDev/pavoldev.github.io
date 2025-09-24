@@ -212,5 +212,6 @@ export default {
 "weapon.boltRender.SpriteRenderer.sortingOrder": 16,
 "weapon.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltRender.name": "boltRender",
-"weapon.name": "forigin12"
+"weapon.name": "forigin12",
+"storeInfo.silencerGroup": "seg12"
 };

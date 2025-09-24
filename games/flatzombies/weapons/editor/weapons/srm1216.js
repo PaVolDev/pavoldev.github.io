@@ -190,5 +190,6 @@ export default {
 "weapon.sight.SpriteRenderer.sortingOrder": 18,
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
-"weapon.name": "srm1216"
+"weapon.name": "srm1216",
+"storeInfo.silencerGroup": "seg12"
 };

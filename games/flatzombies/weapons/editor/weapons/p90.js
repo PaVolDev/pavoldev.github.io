@@ -185,5 +185,6 @@ export default {
 "weapon.sight.SpriteRenderer.sortingOrder": 18,
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
-"weapon.name": "p90"
+"weapon.name": "p90",
+"storeInfo.silencerGroup": "pistol"
 };

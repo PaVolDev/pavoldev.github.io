@@ -160,5 +160,6 @@ export default {
 	"weapon.boltRender.SpriteRenderer.sortingOrder": 18,
 	"weapon.boltRender.SpriteRenderer.enabled": true,
 	"weapon.boltRender.name": "boltRender",
-	"weapon.name": "barrettM99"
+	"weapon.name": "barrettM99",
+"storeInfo.silencerGroup": "sniper"
 };

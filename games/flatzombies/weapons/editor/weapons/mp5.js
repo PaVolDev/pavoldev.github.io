@@ -184,5 +184,6 @@ export default {
 "weapon.gunFlash.SpriteRenderer.sortingOrder": 15,
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
-"weapon.name": "mp5"
+"weapon.name": "mp5",
+"storeInfo.silencerGroup": "pistol"
 };

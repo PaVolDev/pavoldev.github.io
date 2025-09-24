@@ -186,5 +186,6 @@ export default {
 "weapon.laserSight.SpriteRenderer.sortingOrder": 18,
 "weapon.laserSight.SpriteRenderer.enabled": true,
 "weapon.laserSight.name": "laserSight",
-"weapon.name": "mk48"
+"weapon.name": "mk48",
+"storeInfo.silencerGroup": "rifle"
 };

@@ -187,5 +187,6 @@ export default {
 "weapon.barrel.SpriteRenderer.sortingOrder": 16,
 "weapon.barrel.SpriteRenderer.enabled": true,
 "weapon.barrel.name": "barrel",
-"weapon.name": "hk69"
+"weapon.name": "hk69",
+"storeInfo.silencerGroup": ""
 };

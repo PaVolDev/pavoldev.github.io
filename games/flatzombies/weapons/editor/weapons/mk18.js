@@ -185,5 +185,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "mk18"
+"weapon.name": "mk18",
+"storeInfo.silencerGroup": "rifle"
 };

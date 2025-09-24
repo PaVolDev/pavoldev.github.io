@@ -185,5 +185,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "shak12"
+"weapon.name": "shak12",
+"storeInfo.silencerGroup": "sniper"
 };

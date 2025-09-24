@@ -221,5 +221,6 @@ export default {
 "weapon.sight.SpriteRenderer.sortingOrder": 18,
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
-"weapon.name": "barrettMRAD"
+"weapon.name": "barrettMRAD",
+"storeInfo.silencerGroup": "sniper"
 };

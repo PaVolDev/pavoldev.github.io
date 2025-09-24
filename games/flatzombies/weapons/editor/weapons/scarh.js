@@ -185,5 +185,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "scarh"
+"weapon.name": "scarh",
+"storeInfo.silencerGroup": "rifle"
 };

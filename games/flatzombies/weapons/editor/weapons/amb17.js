@@ -173,5 +173,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "amb17"
+"weapon.name": "amb17",
+"storeInfo.silencerGroup": ""
 };

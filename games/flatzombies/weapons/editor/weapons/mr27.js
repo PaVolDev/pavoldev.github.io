@@ -165,5 +165,6 @@ export default {
 "weapon.barrel.lasersight.SpriteRenderer.enabled": true,
 "weapon.barrel.lasersight.name": "lasersight",
 "weapon.barrel.name": "barrel",
-"weapon.name": "mr27"
+"weapon.name": "mr27",
+"storeInfo.silencerGroup": "mr27"
 };

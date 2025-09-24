@@ -184,5 +184,6 @@ export default {
 "weapon.cover.SpriteRenderer.sortingOrder": 16,
 "weapon.cover.SpriteRenderer.enabled": true,
 "weapon.cover.name": "cover",
-"weapon.name": "gm94"
+"weapon.name": "gm94",
+"storeInfo.silencerGroup": ""
 };

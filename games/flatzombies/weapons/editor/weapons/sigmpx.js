@@ -176,5 +176,6 @@ export default {
 "weapon.magazine.SpriteRenderer.sortingOrder": 16,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "sigmpx"
+"weapon.name": "sigmpx",
+"storeInfo.silencerGroup": "pistol"
 };

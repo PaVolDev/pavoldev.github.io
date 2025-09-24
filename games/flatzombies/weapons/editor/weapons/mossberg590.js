@@ -168,5 +168,6 @@ export default {
 "weapon.lasersight.SpriteRenderer.sortingOrder": 18,
 "weapon.lasersight.SpriteRenderer.enabled": true,
 "weapon.lasersight.name": "lasersight",
-"weapon.name": "mossberg590"
+"weapon.name": "mossberg590",
+"storeInfo.silencerGroup": "shotgun"
 };

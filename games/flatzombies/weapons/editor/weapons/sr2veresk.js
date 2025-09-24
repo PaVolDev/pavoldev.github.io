@@ -194,5 +194,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "sr2veresk"
+"weapon.name": "sr2veresk",
+"storeInfo.silencerGroup": "pistol"
 };

@@ -194,5 +194,7 @@ export default {
 "weapon.magazine.SpriteRenderer.sortingOrder": 16,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "glock18c"
+"weapon.name": "glock18c",
+"storeInfo.silencerGroup": "pistol",
+"storeInfo.silencerGroup": "pistol"
 };

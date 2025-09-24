@@ -185,5 +185,6 @@ export default {
 "weapon.magazine.SpriteRenderer.sortingOrder": 16,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "p226"
+"weapon.name": "p226",
+"storeInfo.silencerGroup": "pistol"
 };

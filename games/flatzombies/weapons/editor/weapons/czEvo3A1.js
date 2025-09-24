@@ -176,5 +176,6 @@ export default {
 "weapon.gunFlash.SpriteRenderer.sortingOrder": 15,
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
-"weapon.name": "czEvo3A1"
+"weapon.name": "czEvo3A1",
+"storeInfo.silencerGroup": "pistol"
 };

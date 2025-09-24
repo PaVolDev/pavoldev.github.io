@@ -195,5 +195,6 @@ export default {
 	"weapon.SpriteRenderer.sprite.pixelPerUnit": "100",
 	"weapon.SpriteRenderer.sortingOrder": 19,
 	"weapon.SpriteRenderer.enabled": true,
-	"weapon.name": "bow"
+	"weapon.name": "bow",
+"storeInfo.silencerGroup": ""
 };

@@ -1,4 +1,4 @@
-weapons.push({
+export default {
 "weapon.RifleWithMagazine.reloadBoltStop": true,
 "weapon.RifleWithMagazine.beltFeeder": false,
 "weapon.RifleWithMagazine.magazineMax": 30,
@@ -176,5 +176,6 @@ weapons.push({
 "weapon.magazine.SpriteRenderer.sortingOrder": 16,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "ak74u"
-});
+"weapon.name": "ak74u",
+"storeInfo.silencerGroup": "rifle"
+};

@@ -194,5 +194,6 @@ export default {
 "weapon.boltRender.fingers.SpriteRenderer.enabled": true,
 "weapon.boltRender.fingers.name": "fingers",
 "weapon.boltRender.name": "boltRender",
-"weapon.name": "rem870dm"
+"weapon.name": "rem870dm",
+"storeInfo.silencerGroup": "seg12"
 };

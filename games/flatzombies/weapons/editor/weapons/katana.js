@@ -102,5 +102,6 @@ export default {
 	"weapon.SpriteRenderer.sprite.pixelPerUnit": "100",
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
-	"weapon.name": "katana"
+	"weapon.name": "katana",
+"storeInfo.silencerGroup": ""
 };

@@ -180,5 +180,6 @@ weapons.push({
 	"weapon.magazine.name": "magazine",
 	"weapon.laserSight.Transform.localPosition": "(1, 0, 0)",
 	"weapon.laserSight.Transform.localEulerAngles.z": 0,
-	"weapon.name": "mk46"
+	"weapon.name": "mk46",
+"storeInfo.silencerGroup": "rifle"
 });

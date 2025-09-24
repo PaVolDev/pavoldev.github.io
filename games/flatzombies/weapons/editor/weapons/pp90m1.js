@@ -176,5 +176,6 @@ export default {
 "weapon.magazine.SpriteRenderer.sortingOrder": 18,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "pp90m1"
+"weapon.name": "pp90m1",
+"storeInfo.silencerGroup": "pistol"
 };

@@ -178,5 +178,6 @@ export default {
 "weapon.cover.sight.SpriteRenderer.enabled": true,
 "weapon.cover.sight.name": "sight",
 "weapon.cover.name": "cover",
-"weapon.name": "ares16"
+"weapon.name": "ares16",
+"storeInfo.silencerGroup": "rifle"
 };

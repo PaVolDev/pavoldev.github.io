@@ -176,5 +176,6 @@ export default {
 "weapon.gunFlash.SpriteRenderer.sortingOrder": 15,
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
-"weapon.name": "f2000"
+"weapon.name": "f2000",
+"storeInfo.silencerGroup": "rifle"
 };

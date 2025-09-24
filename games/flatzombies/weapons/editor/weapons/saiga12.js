@@ -185,5 +185,6 @@ export default {
 "weapon.magazine.SpriteRenderer.sortingOrder": 16,
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
-"weapon.name": "saiga12"
+"weapon.name": "saiga12",
+"storeInfo.silencerGroup": "seg12"
 };

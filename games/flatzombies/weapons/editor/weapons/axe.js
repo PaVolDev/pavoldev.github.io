@@ -102,5 +102,6 @@ export default {
 	"weapon.SpriteRenderer.sprite.pixelPerUnit": "90",
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
-	"weapon.name": "axe"
+	"weapon.name": "axe",
+"storeInfo.silencerGroup": ""
 };

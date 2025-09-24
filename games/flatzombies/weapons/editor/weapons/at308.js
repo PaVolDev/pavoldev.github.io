@@ -212,5 +212,6 @@ export default {
 "weapon.boltHandle.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltHandle.boltRender.name": "boltRender",
 "weapon.boltHandle.name": "boltHandle",
-"weapon.name": "at308"
+"weapon.name": "at308",
+"storeInfo.silencerGroup": "sniper"
 };

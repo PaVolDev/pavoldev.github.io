@@ -185,5 +185,6 @@ export default {
 "weapon.lasersight.SpriteRenderer.sortingOrder": 18,
 "weapon.lasersight.SpriteRenderer.enabled": true,
 "weapon.lasersight.name": "lasersight",
-"weapon.name": "g36c"
+"weapon.name": "g36c",
+"storeInfo.silencerGroup": "rifle"
 };

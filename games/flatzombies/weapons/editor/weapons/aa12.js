@@ -189,5 +189,6 @@ weapons.push({
 "weapon.boltHandle.SpriteRenderer.sortingOrder": 16,
 "weapon.boltHandle.SpriteRenderer.enabled": true,
 "weapon.boltHandle.name": "boltHandle",
-"weapon.name": "aa12"
+"weapon.name": "aa12",
+"storeInfo.silencerGroup": "seg12"
 });

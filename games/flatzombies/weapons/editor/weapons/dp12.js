@@ -176,5 +176,6 @@ export default {
 "weapon.sight.SpriteRenderer.sortingOrder": 18,
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
-"weapon.name": "dp12"
+"weapon.name": "dp12",
+"storeInfo.silencerGroup": "shotgun"
 };

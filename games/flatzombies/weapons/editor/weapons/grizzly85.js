@@ -194,5 +194,6 @@ export default {
 "weapon.boltHandle.fingers.SpriteRenderer.enabled": true,
 "weapon.boltHandle.fingers.name": "fingers",
 "weapon.boltHandle.name": "boltHandle",
-"weapon.name": "grizzly85"
+"weapon.name": "grizzly85",
+"storeInfo.silencerGroup": "shotgun"
 };

@@ -203,5 +203,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
-"weapon.name": "m110"
+"weapon.name": "m110",
+"storeInfo.silencerGroup": "rifle"
 };
