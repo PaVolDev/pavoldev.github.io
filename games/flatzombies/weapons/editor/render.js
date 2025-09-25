@@ -1,44 +1,14 @@
 let sceneObjects = [
-	{
-		name: "body",
-		parent: "",
-		texture: "images/test.png",
-		localPosition: { x: 0.4, y: 0.2 },
-		localAngle: 0,
-		pixelPerUnit: 100,
-		pivotPoint: { x: 0.5, y: 0.5 },
-		enabled: true, isActive: true
-	},
-	{
-		name: "hand",
-		parent: "body",
-		texture: "images/test.png",
-		localPosition: { x: 0.1, y: 0.2 },
-		localAngle: 0,
-		pixelPerUnit: 100,
-		pivotPoint: { x: 0.5, y: 0.5 },
-		enabled: true, isActive: true
-	},
-	{
-		name: "leg",
-		parent: "body",
-		texture: "images/test.png",
-		localPosition: { x: 0, y: 0.5 },
-		localAngle: 0,
-		pixelPerUnit: 100,
-		pivotPoint: { x: 0.5, y: 0.9 },
-		enabled: true, isActive: true
-	},
-	{
-		name: "fingers",
-		parent: "hand",
-		texture: "images/test.png",
-		localPosition: { x: 0, y: 0.5 },
-		localAngle: 0,
-		pixelPerUnit: 100,
-		pivotPoint: { x: 0.5, y: 0.9 },
-		enabled: true, isActive: true
-	},
+	// {
+	// 	name: "body",
+	// 	parent: "",
+	// 	texture: "images/test.png",
+	// 	localPosition: { x: 0.4, y: 0.2 },
+	// 	localAngle: 0,
+	// 	pixelPerUnit: 100,
+	// 	pivotPoint: { x: 0.5, y: 0.5 },
+	// 	enabled: true, isActive: true
+	// }
 ];
 
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
@@ -59,7 +29,7 @@ let dragStartSize = { w: 0, h: 0 };
 let lastMouseClickPoint = { x: 0, y: 0 };
 
 const canvas = document.getElementById('scene');
-const ctx = canvas.getContext('2d');
+const ctx = canvas?.getContext('2d') || null;
 let viewPPU = 146.41; // Pixels per world unit for view
 
 const hierarchyDiv = document.getElementById('hierarchy');
@@ -149,6 +119,7 @@ function getWorldAngle(objName) {
 }
 
 function renderScene() {
+	if (ctx == null) return;
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.save();
 	ctx.translate(canvas.width / 2, canvas.height / 2);
