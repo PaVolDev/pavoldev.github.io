@@ -250,80 +250,7 @@
 	</div>
 
 
-
-
-
-
-
-	<script>
-		// Всплывающие подсказки
-		const tooltip = Object.assign(document.createElement('div'), {
-			className: 'smart-tooltip',
-			hidden: true
-		});
-		document.body.appendChild(tooltip);
-		const spacing = 8;
-		document.addEventListener('mouseover', e => {
-			const target = e.target.closest('[data-tooltip]');
-			if (!target) return;
-			tooltip.innerHTML = target.getAttribute('data-tooltip').replace(/\n/g, '<br>');
-			tooltip.hidden = false;
-			tooltip.style.opacity = '0';
-			const { width: tW, height: tH } = tooltip.getBoundingClientRect();
-			const { left, right, top, bottom } = target.getBoundingClientRect();
-			let x, y;
-			// Приоритет: top → bottom → right → left
-			if (top >= tH + spacing) {// Сверху: центрируем
-				x = Math.max(spacing, Math.min(left + (right - left) / 2 - tW / 2, window.innerWidth - tW - spacing));
-				y = top - tH - spacing;
-			} else if (bottom + tH + spacing <= window.innerHeight) {// Снизу: центрируем
-				x = Math.max(spacing, Math.min(left + (right - left) / 2 - tW / 2, window.innerWidth - tW - spacing));
-				y = bottom + spacing;
-			} else if (right + tW + spacing <= window.innerWidth) {// Справа: прижат к правому краю элемента
-				x = right + spacing;
-				y = Math.max(spacing, Math.min(top + (bottom - top) / 2 - tH / 2, window.innerHeight - tH - spacing));
-			} else if (left - tW - spacing >= 0) {// Слева: прижат к левому краю элемента
-				x = left - tW - spacing;
-				y = Math.max(spacing, Math.min(top + (bottom - top) / 2 - tH / 2, window.innerHeight - tH - spacing));
-			} else {// Fallback: сверху слева с отступом
-				x = spacing;
-				y = Math.max(spacing, top - tH - spacing);
-			}
-			tooltip.style.left = `${x}px`; tooltip.style.top = `${y}px`;
-			tooltip.style.right = tooltip.style.bottom = '';
-			tooltip.style.opacity = '1';
-		});
-		document.addEventListener('mouseout', () => {
-			tooltip.style.opacity = 0;
-		});
-
-		//Небольшие функции для кнопки Сохранить
-		function generateRandomString() {
-			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			return Array.from({ length: 8 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
-		}
-		const login = document.getElementById('login');
-		const password = document.getElementById('password');
-		document.getElementById('save').addEventListener('mouseenter', function () { // Проверяем, пусты ли поля при загрузке страницы
-			if (!login.value && !password.value) {// Генерируем автоматические значения только если оба поля пусты
-				login.value = generateRandomString();
-				password.value = generateRandomString();
-			}
-		});
-
-
-
-		function inputMinMax(input) {
-			if (input.value != "") {
-				if (parseInt(input.value) < parseInt(input.min)) {
-					input.value = input.min;
-				}
-				if (parseInt(input.value) > parseInt(input.max)) {
-					input.value = input.max;
-				}
-			}
-		}
-	</script>
+	
 
 
 	<!-- Подключаем скрипты -->
@@ -331,9 +258,9 @@
 	<!-- Подключаем данные -->
 	<script src="config.js"></script> <!-- sampleParams -->
 	<!-- Подключаем список оружий -->
-	<script src="weapons/aa12.js"></script>
-	<script src="weapons/ak12.js"></script>
-	<script src="weapons/mk46.js"></script>
+	<script src="templates/aa12.js"></script>
+	<script src="templates/ak12.js"></script>
+	<script src="templates/mk46.js"></script>
 	<!-- Редактор -->
 	<script src="parameters.js"></script> <!-- editedParams + UI -->
 	<script src="functions.js"></script> <!-- набор фукнций для редактирования -->
