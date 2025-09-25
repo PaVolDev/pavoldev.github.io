@@ -40,14 +40,14 @@ async function onSelectWeapon(event) {
 			}
 		}
 		let cacheIndex = -1;
-		if ((cacheIndex = weapons.findIndex(item => (item["weapon.name"] || item["name"]) == event.target.value)) !== -1) {
+		if ((cacheIndex = weapons.findIndex(item => item["weapon.name"] == event.target.value || item["id"] == event.target.value || item["name"] == event.target.value)) !== -1) {
 			selectedWeapon = weapons[cacheIndex];
 			resolve(); //Оружие найдено в списке — завершаем
 			return;
 		}
 		//Нужно загрузить новое оружие через fetch + import — это асинхронно!
 		showLoadingNewWeapon();
-		fetch(templatesDirectory + '/' + event.target.value + '.js').then(response => {
+		fetch('templates/' + event.target.value + '.js').then(response => {
 			if (!response.ok) throw new Error(`HTTP ${response.status}`);
 			return response.text();
 		}).then(sourceCode => {
@@ -145,6 +145,7 @@ function convertTo180(angle) {
 
 function getPrefix(fieldPath) { //parent.child.SpriteRenderer.sprite => parent.child
 	if (fieldPath === 'SpriteRenderer.sprite') return '';
+	if (!fieldPath.includes('.')) return fieldPath;
 	const match = fieldPath.match(/^(.+)\.SpriteRenderer\.sprite$/);
 	return match ? match[1] : null;
 }
@@ -162,82 +163,6 @@ function isValidBase64Image(data) {
 	return match && match[2].length > 100; // базовая проверка длины
 }
 
-// ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
-const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png";
-function getInputForType(param, index = -1) {
-	if (index = -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
-	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
-		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value)" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;">
-		<div class="iconButton" data-tooltip="Сохранить в файл" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
-				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
-	}
-	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
-		param.options.forEach(opt => {
-			const isSelected = opt == param.value ? ' selected' : '';
-			selectHTML += `<option value="${opt}"${isSelected}>${opt}</option>`;
-		});
-		selectHTML += '</select>';
-		return selectHTML;
-	}
-	switch (param.type) {
-		case 'SpriteRenderer':
-		case 'Transform':
-			let selectHTML = `<select onchange="updateParam(${index}, this.value, true); ">`;
-			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
-			sceneObjects.forEach(obj => {
-				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
-					selectHTML += `<option value="${obj.name}"${(obj.name == param.value ? ' selected' : '')}>${obj.name}</option>`;
-				}
-			});
-			selectHTML += '</select>';
-			return selectHTML;
-		case 'Vector2':
-			const v2 = parseVector(param.value);
-			return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 20em;" >
-				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">X:</span>
-                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v2[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
-                </span>
-				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Y:</span>
-                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v2[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
-                </span>
-				</div>`;
-		case 'Vector3':
-			const v3 = parseVector(param.value);
-			return `<div style="display: grid; grid-template-columns: 33% 33% 33%; max-width: 20em;" >
-				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">X:</span>
-                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v3[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
-                </span>
-				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Y:</span>
-                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v3[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
-                </span>
-				<span style="font-size:12px; display: grid; grid-template-columns: 30% 70%; align-items: center;"><span style="text-align: center;">Z:</span>
-                <input id="${param.fieldPath}.z" type="number" step="0.01" value="${v3[2]}" onchange="updateVector(${index}, 2, this.value)" style="width: 100%;">
-                </span>
-				</div>`;
-		case 'float':
-		case 'number':
-		case 'int':
-			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value)" id="${param.fieldPath}">`;
-		case 'bool':
-			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam(${index}, this.checked ? true : false)">`;
-		case 'WeaponCartridge[]':
-		case 'AudioClip[]':
-		case 'Sprite[]':
-			return `<small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value)" title="${tooltip}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
-		default:
-			return `<input type="text" value="${param.value}" onchange="updateParam(${index}, this.value)">`;
-	}
-}
-
-
-
-function htmlspecialchars(str) {
-	if (typeof str !== 'string') return str; // Если не строка, возвращаем как есть
-	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-}
 
 // ——— СИНХРОНИЗАЦИЯ В СЦЕНУ, из параметров в sceneObjects ———
 function syncParamsToScene() {
@@ -521,7 +446,7 @@ function renderAvailableParams(filter = '') {
 		li.style = "position: relative;";
 		li.innerHTML = `
 				<button onclick="addParam('${param.fieldPath}')" class="add">Добавить</button>
-                <div ><span class="fieldpath">${param.fieldPath}</span> 
+                <div ><span class="fieldpath">${param.displayName || param.fieldPath}</span> 
 				<br>
 				<small class="fieldcomment">${param.comment || ''}</small>
 				<br><small class="fieldtype">${param.type}</small><br>
@@ -566,16 +491,15 @@ function forceRenderEditedParams(filter = '') {
 				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
 				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
 				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
-				const li = document.createElement('li');
+				const li = document.createElement('li'); li.className = 'sprite-block';
 				li.onmouseenter = () => selectObjectByName(prefix);
-				li.className = 'param-group-block';
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
                 <small>${param.comment || ''}</small><br>
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-							<div class="iconButton" data-tooltip="Сохранить как PNG-файл" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
+							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл<br><img src='${param.value || ''}'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
                                 <input type="file" class="fileInput" accept=".png" onchange="fileToBase64(${idx}, this)">
@@ -583,8 +507,8 @@ function forceRenderEditedParams(filter = '') {
                             </label>
                         </div>
                     </div>
-                    ${pivotIdx >= 0 ? `<div class="titleProperty" data-tooltip="Точка вращения объекта" >
-                            <span style="font-size:11px;" >Pivot:</span>
+                    ${pivotIdx >= 0 ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
+                            <span class="title" >Pivot:</span>
                             <div class="vector-fields">
 							<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[pivotIdx].value)[0]}"
                                    onchange="updateVector(${pivotIdx}, 0, this.value)" id ="${editedParams[pivotIdx].fieldPath}.x">
@@ -595,32 +519,32 @@ function forceRenderEditedParams(filter = '') {
 
                     <span style="display: grid;grid-template-columns: 10% 10% 26% 27% 27%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
 
-						<div data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
 						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
 						</div>
 
-						<div data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
 						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
 						</div>
 
-							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="titleProperty">
-                        ${ppuIdx >= 0 ? `<span style="font-size:11px;">PPU:</span>
+							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
+                        ${ppuIdx >= 0 ? `<span class="title">PPU:</span>
                                 <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" min="1" max="5000" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
 							</div>
 
-							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="titleProperty">
-                        ${sortIdx >= 0 ? `<span style="font-size:11px;">Sort:</span>
+							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="propertyBlock">
+                        ${sortIdx >= 0 ? `<span class="title">Sort:</span>
                                 <input type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
 						    </div>
 
-							<div data-tooltip="Угол поворота в градусах" class="titleProperty">
-                        ${angleIdx >= 0 ? `<span style="font-size:11px;">Angle:</span>
+							<div data-tooltip="Угол поворота в градусах" class="propertyBlock">
+                        ${angleIdx >= 0 ? `<span class="title">Angle:</span>
                                 <input type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
 							</div>
 
                     </span>
-                    ${prefix && posIdx >= 0 ? `<div class="titleProperty" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
-                            <span style="font-size:11px;">Position:</span>
+                    ${prefix && posIdx >= 0 ? `<div class="propertyBlock" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
+                            <span class="title">Position:</span>
                             <div class="vector-fields">
 								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[0]}"
 									onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
@@ -634,42 +558,40 @@ function forceRenderEditedParams(filter = '') {
 
 			} else if (param.type === 'Renderer') {
 				// Находим индексы параметров группы
-				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
-				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				//const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
+				//const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
 				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
 				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
 				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
 				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
 				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
-				const li = document.createElement('li');
-				li.onmouseenter = () => selectObjectByName(prefix);
-				li.className = 'param-group-block';
+				const li = document.createElement('li'); li.className = 'sprite-block';
+				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
                 <small>${param.comment || ''}</small><br>
                 <div>
-                    <span style="display: grid;grid-template-columns: 6% 6% 16% 16% 56%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
-						<div data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
+                    <span style="display: grid;grid-template-columns: 6% 6% 15.5% 16% 33.5%;place-items: end;justify-items: right;width:100%;">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
 						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
 						</div>
 
-						<div data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
 						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
 						</div>
 
 
-						<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="titleProperty">
-					${sortIdx >= 0 ? `<span style="font-size:11px;">Sort:</span>
+						<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="propertyBlock">
+					${sortIdx >= 0 ? `<span class="title">Sort:</span>
 							<input type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
 						</div>
 
-						<div data-tooltip="Угол поворота в градусах" class="titleProperty">
-					${angleIdx >= 0 ? `<span style="font-size:11px;">Angle:</span>
+						<div data-tooltip="Угол поворота в градусах" class="propertyBlock">
+					${angleIdx >= 0 ? `<span class="title">Angle:</span>
 							<input type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
 						</div>
-
-						<div class="titleProperty" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
-							<span style="font-size:11px;">Position:</span>
+						<div class="propertyBlock" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
+							<span class="title">Position:</span>
 							<div class="vector-fields">
 								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[0]}" onchange="updateVector(${posIdx}, 0, this.value)" id ="${editedParams[posIdx].fieldPath}.x">
 								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(editedParams[posIdx].value)[1]}" onchange="updateVector(${posIdx}, 1, this.value)" id ="${editedParams[posIdx].fieldPath}.y">
@@ -680,9 +602,40 @@ function forceRenderEditedParams(filter = '') {
                 </div>`;
 				list.appendChild(li);
 
+			} else if (param.type == 'TextureSprite') {
+				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
+				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				const li = document.createElement('li'); li.className = 'param-block';
+				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
+				li.innerHTML = `
+					<div>
+					<strong>${param.fieldPath}</strong><br>
+					<small>${param.comment || ''}</small></div>
+					<div>
+						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
+							${ppuIdx >= 0 ? `<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
+							<span class="title">PPU:</span>
+							<input type="number" step="10" style="width:100%" value="${editedParams[ppuIdx].value}" min="1" max="5000" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">
+							</div>` : ''}
+							
+							${pivotIdx >= 0 ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
+							<span class="title" >Pivot:</span>
+								<div class="vector-fields">
+								<input placeholder="X" type="number" step="0.02" style="width:100%" value="${parseVector(editedParams[pivotIdx].value)[0]}"
+								onchange="updateVector(${pivotIdx}, 0, this.value)" id ="${editedParams[pivotIdx].fieldPath}.x">
+								<input placeholder="Y" type="number" step="0.02" style="width:100%" value="${parseVector(editedParams[pivotIdx].value)[1]}" 
+								onchange="updateVector(${pivotIdx}, 1, this.value)" id ="${editedParams[pivotIdx].fieldPath}.y">
+								</div>
+							</div>` : ''}
+						</div>
+						${getInputForType(param, idx)}
+					</div>
+					</div>
+					<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>`;
+				list.appendChild(li);
+
 			} else if (param.type === 'WeaponHandPoints') {
-				const li = document.createElement('li');
-				li.className = 'param-group-block';
+				const li = document.createElement('li'); //li.className = 'sprite-block';
 				let innerHTML = '';
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
@@ -690,28 +643,115 @@ function forceRenderEditedParams(filter = '') {
 					if (availableByField[child.fieldPath] && !editedParams.find(p => (p.value === availableByField[child.fieldPath].value || Array.isArray(availableByField[child.fieldPath].value) && availableByField[child.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
 					innerHTML += `<div class="param-group-field">
 					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
-						<div style="text-align: right;"> ${getInputForType(child)} </div>
+						<div > ${getInputForType(child)} </div>
 						</div>`;
 				});
 				li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>
-                <strong>${param.fieldPath}</strong><br> <small>${param.comment || ''}</small><br>
+                <strong>${param.displayName}</strong><br> <small>${param.comment || ''}</small><br>
 				<div class="param-group-list">` + innerHTML + `</div>`;
 				list.appendChild(li);
 			}
 		} else {
 			// Обычный параметр
-			const li = document.createElement('li');
-			if (param.type && param.spritePreview) li.onmouseenter = () => selectObjectByName(param.fieldPath);
-			li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>
-                <strong>${param.fieldPath}</strong> <span style="opacity: 0.7;">(${param.type})</span><br>
-                <small>${param.comment || ''}</small><br>
-                ${getInputForType(param, idx)}
-            `;
+			const li = document.createElement('li'); li.className = 'param-block';
+			if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
+			li.innerHTML = `
+					<div>
+					<strong>${param.fieldPath}</strong> <br>
+					<small>${param.comment || ''}</small></div>
+					<div >${getInputForType(param, idx)}</div>
+					<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>`;
 			list.appendChild(li);
 		}
 	});
 }
 
+// ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
+const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
+function getInputForType(param, index = -1) {
+	if (index = -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
+	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
+		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value)" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;">
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='`+param.value+`'>` : '' }</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
+				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
+	}
+	if (param.options) { //Показать список
+		let selectHTML = `<select onchange="updateParam(${index}, this.value, true);" class="field-input">`;
+		param.options.forEach(opt => {
+			const isSelected = opt == param.value ? ' selected' : '';
+			selectHTML += `<option value="${opt}"${isSelected}>${opt}</option>`;
+		});
+		selectHTML += '</select>';
+		return selectHTML;
+	}
+	switch (param.type) {
+		case 'SpriteRenderer':
+		case 'Transform':
+			let selectHTML = `<select onchange="updateParam(${index}, this.value, true);" class="field-input">`;
+			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
+			sceneObjects.forEach(obj => {
+				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
+					selectHTML += `<option value="${obj.name}"${(obj.name == param.value ? ' selected' : '')}>${obj.name}</option>`;
+				}
+			});
+			selectHTML += '</select>';
+			return selectHTML;
+		case 'Vector2':
+			const v2 = parseVector(param.value);
+			return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 10em;" >
+				<div class="propertyBlock">
+				<span class="title">X:</span>
+                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v2[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Y:</span>
+                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v2[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
+                </div>
+				</div>`;
+		case 'Vector3':
+			const v3 = parseVector(param.value);
+			return `<div style="display: grid; grid-template-columns: 33% 33% 33%; max-width: 20em;" >
+				<div class="propertyBlock">
+				<span class="title">X:</span>
+                <input id="${param.fieldPath}.x" type="number" step="0.01" value="${v3[0]}" onchange="updateVector(${index}, 0, this.value)" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Y:</span>
+                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v3[1]}" onchange="updateVector(${index}, 1, this.value)" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Z:</span>
+                <input id="${param.fieldPath}.y" type="number" step="0.01" value="${v3[2]}" onchange="updateVector(${index}, 2, this.value)" style="width: 100%;">
+                </div>
+				</div>`;
+		case 'float':
+		case 'number':
+		case 'int':
+			if ('min' in param && 'max' in param) {
+				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
+					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="propAngleSlider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
+					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${param.fieldPath}" oninput="updateParam(${index}, this.value)" value="${param.value}">
+				</div>`;
+			}
+			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value)" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}">`;
+		case 'bool':
+			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam(${index}, this.checked ? true : false)">`;
+		case 'WeaponCartridge[]':
+		case 'AudioClip[]':
+		case 'Sprite[]':
+			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value)" title="${tooltip}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
+		default:
+			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" onchange="updateParam(${index}, this.value)">`;
+	}
+}
+
+
+function htmlspecialchars(str) {
+	if (typeof str !== 'string') return str; // Если не строка, возвращаем как есть
+	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
 
 
 // ——— РЕДАКТИРОВАНИЕ ———
@@ -720,6 +760,12 @@ function updateParam(index, value, updateParamList = false) {
 		editedParams[index].value = value;
 		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
+	}
+}
+function updateFieldHTML(index, value) {
+	if (index >= 0 && index < editedParams.length) {
+		editedParams[index].value = value;
+		document.getElementById(editedParams[index].fieldPath).value = value;
 	}
 }
 
@@ -1034,7 +1080,7 @@ function getResultJSON() {
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
 	}
 	editedParams.forEach(param => {
-		if (!ignoreExportFields.find(word => param.fieldPath.includes(word))) {
+		if (!ignoreExportFields.find(word => param.fieldPath.includes(word)) && param.fieldPath != param.type) {
 			json[param.startFieldPath || param.fieldPath] = param.value;
 		}
 	});
