@@ -1,13 +1,12 @@
 
 
-const templatesDirectory = 'weapons'; //Папка с шаблонами
 const weapons = new Array();
 
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
-	{ name: '.position', angle: '.angle', parent: null },
 	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
 	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
 	{ name: 'laserPosition', angle: null, parent: null },
+	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parent: null },
 	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
 	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parent: null },
 	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
@@ -18,6 +17,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+	{ name: '.position', angle: '.angle', parent: null },
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
@@ -45,28 +45,28 @@ const typeDependencies = { //Для параметров указаного ти
 		'Transform.localPosition'
 	],
 	'WeaponHandPoints': [
-		'WeaponHandPoints.weaponType',
-		"WeaponHandPoints.buttstockPoint",
-		"WeaponHandPoints.buttstockReload",
-		"WeaponHandPoints.handguardPoint",
-		"WeaponHandPoints.magazinePoint",
-		"WeaponHandPoints.magazineInsert",
-		"WeaponHandPoints.magazineInsertAngle",
-		"WeaponHandPoints.boltPoint",
-		"WeaponHandPoints.boltMovePoint",
-		"WeaponHandPoints.handInsertPoint",
-		"WeaponHandPoints.bulletPoint",
-		"WeaponHandPoints.closedCoverPoint",
-		"WeaponHandPoints.openCoverPoint",
-		"WeaponHandPoints.boltMove.render",
-		"WeaponHandPoints.boltMove.startPosition",
-		"WeaponHandPoints.boltMove.movePosition",
-		"WeaponHandPoints.coverMove.render",
-		"WeaponHandPoints.coverMove.startPosition",
-		"WeaponHandPoints.coverMove.movePosition",
-		"WeaponHandPoints.handleMove.render",
-		"WeaponHandPoints.handleMove.startPosition",
-		"WeaponHandPoints.handleMove.movePosition",
+		'weaponType',
+		"buttstockPoint",
+		"buttstockReload",
+		"handguardPoint",
+		"magazinePoint",
+		"magazineInsert",
+		"magazineInsertAngle",
+		"boltPoint",
+		"boltMovePoint",
+		"handInsertPoint",
+		"bulletPoint",
+		"closedCoverPoint",
+		"openCoverPoint",
+		"boltMove.render",
+		"boltMove.startPosition",
+		"boltMove.movePosition",
+		"coverMove.render",
+		"coverMove.startPosition",
+		"coverMove.movePosition",
+		"handleMove.render",
+		"handleMove.startPosition",
+		"handleMove.movePosition",
 	],
 	'weapon.WeaponHandPoints.fingerPoint': [
 		'WeaponHandPoints.fingerPoint',
@@ -173,6 +173,7 @@ class MagazineInsertListener extends SpriteScreenListener {
 
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
 spriteScreenListeners = {
+	'magazineDrop.position': new MagazineInsertListener('magazine', true),
 	'magazineInsert': new MagazineInsertListener('magazine', true),
 	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', true),
 	'boltMove.startPosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
@@ -225,7 +226,7 @@ var mainParams = [ //Список важных параметров для за�
 ];
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
-	{ "fieldPath": "weapon.WeaponAnimation", "comment": "Список точек для создания анимации перезарядки оружия", "type": "WeaponHandPoints", "value": "" },
+	{ "fieldPath": "weapon.WeaponHandPoints", "comment": "Список точек для создания анимации перезарядки оружия", "type": "WeaponHandPoints", "value": "", displayName:"WeaponAnimation" },
 	{ "fieldPath": "storeInfo.nameFull", "comment": "Название оружия в интерфейсе", "type": "string", "value": "" },
 	//{ "fieldPath": "storeInfo.iconBase64", "comment": "Текстура оружия для интерфейса (необязательно)\nЕсли не указано, то текстура будет сгенерирована автоматически", "type": "Image", "value": "" },
 	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "TextFile", "value": "" },
@@ -510,14 +511,14 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.renderInSpare", "comment": "Оружие за спиной (необязательно)", "type": "SpriteRenderer", "value": "" },
 	{ "fieldPath": "weapon.playerScaleMove", "comment": "Множитель для скорости перемещения у игрока [0-1]", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.automat", "comment": "Автоматическое оружие", "type": "bool", "value": true },
-	{ "fieldPath": "weapon.fireRateInMinute", "comment": "Скорострельность без учёта Time.timeScale<br>Кол-во выстрелов в минуту", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.fireRateInMinute", "comment": "Скорострельность<br>Кол-во выстрелов в минуту", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.cartridgesList", "comment": "Порядок патронов в магазине. Если оружие без магазина, то используем список для патронника", "type": "WeaponCartridge[]", "value": "" },
 	{ "fieldPath": "weapon.chamberSize", "comment": "Кол-во патронов в патроннике внутри оружия", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.WeaponSilencerMod.bolt", "comment": "Родительский объект для глушителя<br>Глушитель будет размещён в этом объекте", "type": "Transform", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.smoke", "comment": "Дым от выстрела", "type": "WeaponShotEffect", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.doublePistol", "comment": "Второй пистолет", "type": "Transform", "value": "" },
 	//{ "fieldPath": "storeInfo.silencerPosition", "comment": "Координаты глушителя на иконке оружия в интерфейсе от верхнего угла.", "type": "Vector2", "value": "(0, 0)" },
-	{ "fieldPath": "weapon.WeaponHandPoints.weaponType", "comment": "Тип анимации", "type": "string", "value": "", "options": ['', 'rifleAK', 'rifleLeftBolt', 'shotgun', 'shotgun+magazine', 'shotgun+leftBolt', 'sniper', 'heavyRightBoltRifle', 'machinegun'] },
+	{ "fieldPath": "weapon.WeaponHandPoints.weaponType", "comment": "Тип анимации", "type": "string", "value": "", "options": ['', 'rifleAK', 'rifleLeftBolt', 'rifleAR15', 'shotgun', 'shotgunBullpupDP12', 'sniper', 'shotgun+magazine', 'shotgun+leftBolt', 'heavyRightBoltRifle', 'machinegun', 'aa12', 'ak12', 'ak74u', 'ak308', 'amb17', 'aug', 'axe', 'barretM107a', 'barrettM99', 'barrettMRAD', 'benelli-m4', 'bow', 'cougarms', 'czbren2', 'czEvo3A1', 'deagle', 'dp12', 'f2000', 'fd12', 'forigin12', 'g36c', 'galilace21', 'gm94', 'grizzly85', 'hk69', 'imbelai2', 'ksg', 'lr300', 'm110', 'm200', 'mossberg590', 'mp5', 'mr27', 'p90', 'pp19bizon', 'pp90m1', 'rem870dm', 'remR11rsass', 'rpk16', 'saiga12', 'scarh', 'scarlcqc', 'scarssr', 'shak12', 'sigmpx', 'six12', 'sr2veresk', 'sr3m', 'srm1212', 'sw686', 'ump45', 'vepr12', 'xtr12'] },
 	{ "fieldPath": "weapon.WeaponHandPoints.parentName", "comment": "Куда поместить оружие. Имя дочернего объекта, рядом с которым будет размещено новое оружие. Если оружие имеет свой готовый клип, то следует вручную указать куда поместить оружие", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.weaponClipName", "comment": "Сменить имя объекта для работы анимации, если она была заранее указана в weapon.animationClip", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.buttstockPoint", "comment": "Приклад винтовки.<br>По этим координатам оружие будет прижато к плечам персонажа и таким образом размещаем объект в руках.<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "buttstockPoint" },
