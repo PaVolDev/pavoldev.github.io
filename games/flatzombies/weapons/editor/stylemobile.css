@@ -5,4 +5,8 @@
 		flex-direction: column-reverse;
 		height: auto;
 	}
+
+	.panelHidden {
+		display: none;
+	}
 }
