@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (localStorage.getItem('modderAgreedToRules') !== 'true') {// Показать только если пользователь ещё не соглашался
 		modRulesModal.style.display = 'block';
 		document.getElementById('page').classList.add('hidden');
-	}else{
+	} else {
 		removeRulesWindow();
 	}
 });
@@ -61,7 +61,7 @@ checkbox.addEventListener('change', function () {
 // Закрыть окно при нажатии "Согласен"
 agreeButton.addEventListener('click', removeRulesWindow);
 
-function removeRulesWindow(event = null){
+function removeRulesWindow(event = null) {
 	modRulesModal.style.display = 'none';
 	modRulesModal.innerHTML = '';
 	localStorage.setItem('modderAgreedToRules', 'true');
@@ -136,3 +136,268 @@ function inputMinMax(input) {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+function renderTextureListEditor(param, paramIndex) {
+	const animations = Array.isArray(param.value) ? param.value : [];
+	let html = `
+		<div>
+			<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
+			<small>${param.comment || ''}</small>
+		</div>
+		<div class="animations-editor" data-param-index="${paramIndex}">
+			<div class="animations-header" style="margin-bottom: 8px;">
+				<strong>Анимации (${animations.length})</strong>
+				<button type="button" class="add-animation-btn" onclick="addAnimation(${paramIndex})" style="font-size: 0.9em; padding: 2px 6px;">➕ Анимацию</button>
+			</div>`;
+
+	animations.forEach((anim, animIdx) => {
+		const name = anim?.name || '';
+		const frames = Array.isArray(anim?.frames) ? anim.frames : [];
+
+		html += `
+			<div class="animation-block" style="border: 1px solid var(--border-color); padding: 6px; margin: 4px 0; border-radius: 4px;">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+					<input type="text" class="text-input" value="${name}" 
+						placeholder="Имя анимации" 
+						onchange="updateAnimationName(${paramIndex}, ${animIdx}, this.value)"
+						style="flex: 1; margin-right: 6px; font-weight: bold;">
+					<div>
+						${animIdx > 0 ? `<button type="button" class="move-anim-btn" onclick="moveAnimation(${paramIndex}, ${animIdx}, -1)" style="width:24px;">↑</button>` : ''}
+						${animIdx < animations.length - 1 ? `<button type="button" class="move-anim-btn" onclick="moveAnimation(${paramIndex}, ${animIdx}, 1)" style="width:24px;">↓</button>` : ''}
+						<button type="button" class="remove-anim-btn" onclick="removeAnimation(${paramIndex}, ${animIdx})" style="width:24px;">✕</button>
+					</div>
+				</div>
+
+				<div class="frames-list" style="margin-top: 6px;">`;
+
+		frames.forEach((frame, frameIdx) => {
+			const isNull = frame === null;
+			const texture = isNull ? '' : (frame.texture || '');
+			// Парсим pivot из строки вида "(0.4, 0.5)"
+			let pivotX = 0.5, pivotY = 0.5;
+			if (!isNull && frame.pivotPoint) {
+				const [px, py] = parseVector(frame.pivotPoint);
+				parseVector(frame.pivotPoint);
+				pivotX = px || 0.5;
+				pivotY = py || 0.5;
+			}
+			const ppu = isNull ? 100 : (frame.pixelPerUnit || 100);
+
+			html += `
+				<div class="frame-item">
+					<!-- Превью -->
+					<div class="animationPreview">
+						${isNull ?
+					`<div style="font-size: 0.8em; color: #888;">null</div>` :
+					`<img src="${texture}" onerror="this.style.opacity='0.3'" style="max-width: 100%; max-height: 60px; object-fit: contain;">`
+				}
+					</div>
+
+					<!-- Поля: PPU и Pivot (в стиле вашего UI) -->
+					<div style="display: grid;grid-template-columns: 50% 50%;align-self: end;">
+						${isNull ? `
+							<button type="button" onclick="convertNullAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="font-size: 0.85em; padding: 2px 6px;">→ Заменить на изображение</button>
+						` : `
+							<!-- Texture input -->
+							<div class="input-group" style="align-items: end;">
+							<input type="text" class="text-input" value="${texture}" onchange="updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'texture', this.value)" placeholder="data:file/type;base64,..." >
+							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG</div>" onclick="base64ToFile('${texture.replace(/'/g, "\\'")}', 'frame-${animIdx}-${frameIdx}.png')"><img src="images/download.png" ></div>
+							<label class="fileInputLabel">
+							<input type="file" class="fileInput" accept=".png" onchange="fileToBase64AnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, this)">
+							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+							</label>
+							</div>
+
+
+
+
+
+							<!-- PPU и Pivot в стиле TextureSprite -->
+							<div style="display: grid; grid-template-columns: 1fr 2fr; margin-left: 2px;">
+								<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
+									<span class="title">PPU:</span>
+									<input type="number" step="10" style="width:100%" value="${ppu}" min="1" max="5000"
+										oninput="inputMinMax(this); updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'pixelPerUnit', parseFloat(this.value))">
+								</div>
+								<div class="propertyBlock" data-tooltip="Точка вращения объекта">
+									<span class="title">Pivot:</span>
+									<div class="vector-fields">
+										<input placeholder="X" type="number" step="0.02" style="width:100%" value="${pivotX}"
+											onchange="updateAnimationFramePivot(${paramIndex}, ${animIdx}, ${frameIdx}, 0, this.value)">
+										<input placeholder="Y" type="number" step="0.02" style="width:100%" value="${pivotY}"
+											onchange="updateAnimationFramePivot(${paramIndex}, ${animIdx}, ${frameIdx}, 1, this.value)">
+									</div>
+								</div>
+							</div>
+						`}
+					</div>
+
+					<!-- Кнопки управления фреймом -->
+					<div style="display: flex; flex-direction: column; gap: 2px;">
+						<button type="button" class="remove-frame-btn" onclick="removeAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="width:20px; height:20px; font-size:12px;">✕</button>
+						${frameIdx > 0 ? `<button type="button" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, -1)" style="width:20px; height:20px; font-size:12px;">↑</button>` : `<div></div>`}
+						${frameIdx < frames.length - 1 ? `<button type="button" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, 1)" style="width:20px; height:20px; font-size:12px;">↓</button>` : `<div></div>`}
+					</div>
+				</div>`;
+		});
+
+		html += `
+				<div style="margin-top: 6px; display: flex; gap: 6px;">
+					<button type="button" onclick="addAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Фрейм</button>
+					<button type="button" onclick="addNullAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Пустой</button>
+				</div>
+			</div>`;
+	});
+
+	html += `
+		</div>
+		<div><button class="remove-btn" onclick="removeParam(${paramIndex})" data-tooltip="Удалить параметр">✕</button></div>`;
+
+	return html;
+}
+
+
+
+
+
+
+
+
+// --- Анимации ---
+function addAnimation(paramIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) param.value = [];
+	param.value.push({ name: 'newAnim', frames: [] });
+	forceRenderEditedParams();
+}
+
+function removeAnimation(paramIndex, animIdx) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value)) {
+		param.value.splice(animIdx, 1);
+		forceRenderEditedParams();
+	}
+}
+
+function moveAnimation(paramIndex, animIdx, offset) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) return;
+	const target = animIdx + offset;
+	if (target < 0 || target >= param.value.length) return;
+	[param.value[animIdx], param.value[target]] = [param.value[target], param.value[animIdx]];
+	forceRenderEditedParams();
+}
+
+function updateAnimationName(paramIndex, animIdx, name) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[animIdx]) {
+		param.value[animIdx].name = name;
+	}
+}
+
+// --- Фреймы ---
+function addAnimationFrame(paramIndex, animIdx) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
+		param.value[animIdx].frames.push({
+			texture: '',
+			pivotPoint: '(0.5, 0.5)',
+			pixelPerUnit: 100
+		});
+		forceRenderEditedParams();
+	}
+}
+
+function addNullAnimationFrame(paramIndex, animIdx) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
+		param.value[animIdx].frames.push(null);
+		forceRenderEditedParams();
+	}
+}
+
+function removeAnimationFrame(paramIndex, animIdx, frameIdx) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
+		param.value[animIdx].frames.splice(frameIdx, 1);
+		forceRenderEditedParams();
+	}
+}
+
+function moveAnimationFrame(paramIndex, animIdx, frameIdx, offset) {
+	const param = editedParams[paramIndex];
+	const frames = param.value?.[animIdx]?.frames;
+	if (!Array.isArray(frames)) return;
+	const target = frameIdx + offset;
+	if (target < 0 || target >= frames.length) return;
+	[frames[frameIdx], frames[target]] = [frames[target], frames[frameIdx]];
+	forceRenderEditedParams();
+}
+
+function convertNullAnimationFrame(paramIndex, animIdx, frameIdx) {
+	const param = editedParams[paramIndex];
+	const frames = param.value?.[animIdx]?.frames;
+	if (Array.isArray(frames) && frames[frameIdx] === null) {
+		frames[frameIdx] = {
+			texture: '',
+			pivotPoint: '(0.5, 0.5)',
+			pixelPerUnit: 100
+		};
+		forceRenderEditedParams();
+	}
+}
+
+function updateAnimationFrameField(paramIndex, animIdx, frameIdx, field, value) {
+	const param = editedParams[paramIndex];
+	const frame = param.value?.[animIdx]?.frames?.[frameIdx];
+	if (frame && frame !== null) {
+		frame[field] = value;
+	}
+}
+
+function fileToBase64AnimationFrame(paramIndex, animIdx, frameIdx, input) {
+	if (!input.files?.length) return;
+	const file = input.files[0];
+	const reader = new FileReader();
+	reader.onload = function (e) {
+		updateAnimationFrameField(paramIndex, animIdx, frameIdx, 'texture', e.target.result);
+		forceRenderEditedParams();
+	};
+	reader.readAsDataURL(file);
+	input.value = '';
+}
+
+// Обновление pivot через X/Y (аналог updateVector)
+function updateAnimationFramePivot(paramIndex, animIdx, frameIdx, axis, value) {
+	const param = editedParams[paramIndex];
+	const frame = param.value?.[animIdx]?.frames?.[frameIdx];
+	if (!frame || frame === null) return;
+
+	const numValue = parseFloat(value);
+	if (isNaN(numValue)) return;
+
+	// Получаем текущий pivot
+	let x = 0.5, y = 0.5;
+	if (frame.pivotPoint) {
+		const match = frame.pivotPoint.match(/\(([^,]+),\s*([^)]+)\)/);
+		if (match) {
+			x = parseFloat(match[1].trim()) || 0.5;
+			y = parseFloat(match[2].trim()) || 0.5;
+		}
+	}
+
+	// Обновляем нужную ось
+	if (axis === 0) x = numValue;
+	else if (axis === 1) y = numValue;
+
+	// Форматируем как строку "(x, y)"
+	frame.pivotPoint = `(${x}, ${y})`;
+}
+
