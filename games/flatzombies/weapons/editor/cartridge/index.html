@@ -8,14 +8,14 @@
 	<link rel="stylesheet" href="../styles.css">
 	<link rel="stylesheet" href="../stylemobile.css">
 	<link rel="stylesheet" href="forms.css">
-	
+
 
 </head>
 
 <body>
 	<div class="container" id="page">
 		<!-- Левая панель: Доступные параметры -->
-		<div class="panel" id="leftPanel" style="visibility: hidden;">
+		<div class="panel panelHidden" id="leftPanel">
 			<span style="position: relative;">
 				<div class="titlePanel">Доступные параметры</div>
 				<div onclick="showAddNewField()" data-tooltip="Добавить новый параметр" class="addNewField" id="addNewField">
@@ -155,7 +155,7 @@
 		</div>
 
 		<!-- Правая панель: Предпросмотр -->
-		<div class="panel" id="rightPanel" style="visibility: hidden;">
+		<div class="panel panelHidden" id="rightPanel">
 			<span style="position: relative;">
 				<div class="titlePanel">Предпросмотр</div>
 				<img src="../images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра" onclick="alert('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра')">
