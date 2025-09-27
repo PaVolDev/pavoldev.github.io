@@ -77,13 +77,17 @@ async function onSelectWeapon(event) {
 			});
 		});
 		lastParentPosition.x = -0.55; lastParentPosition.y = 0;
-		leftPanel.style.visibility = 'visible';
-		rightPanel.style.visibility = 'visible';
+		leftPanel.classList.remove('panelHidden');
+		rightPanel.classList.remove('panelHidden');
 		availableParams.length = 0;
 		availableParams = availableParams.concat(baseParams);
-		editedParams.length = 0;
-		sampleParams.forEach(field => { //Добавить параметры, которые есть у оружия
+		availableParams.forEach((field, idx) => { //Обновить значения, взять из оружия
 			if (selectedWeapon.hasOwnProperty(field.fieldPath)) {
+				availableParams[idx].value = selectedWeapon[field.fieldPath];
+			}
+		});
+		sampleParams.forEach(field => { //Добавить параметры из sampleParams в список доступных в availableParams 
+			if (selectedWeapon.hasOwnProperty(field.fieldPath) && !availableParams.find(p => p.fieldPath == field.fieldPath)) {
 				field.value = selectedWeapon[field.fieldPath];
 				availableParams.push(field);
 			}
@@ -94,6 +98,7 @@ async function onSelectWeapon(event) {
 			}
 		});
 
+		editedParams.length = 0;
 		renderAvailableParams();//Обновить список
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список
 			const filter = defaultAddedFields.filter(data => field.fieldPath.endsWith(data[0]));
@@ -143,16 +148,20 @@ function convertTo180(angle) {
 	return ((angle + 180) % 360 + 360) % 360 - 180;
 }
 
-function getPrefix(fieldPath) { //parent.child.SpriteRenderer.sprite => parent.child
-	if (fieldPath === 'SpriteRenderer.sprite') return '';
-	if (!fieldPath.includes('.')) return fieldPath;
-	const match = fieldPath.match(/^(.+)\.SpriteRenderer\.sprite$/);
-	return match ? match[1] : null;
+function getPrefix(fieldPath, suffix = 'SpriteRenderer.sprite') { //parent.child.SpriteRenderer.sprite => parent.child
+	if (!suffix) return fieldPath;
+	if (fieldPath === suffix) return ''; //const match = fieldPath.match(/^(.+)\.SpriteRenderer\.sprite$/);
+	return fieldPath.replace(suffix, '');
 }
 
-function getObjectNameFromFieldPath(fieldPath) {
-	const prefix = getPrefix(fieldPath.trim());
-	return prefix || 'sprite';
+function getChildDepPath(parentParam, depFieldPath) {
+	const prefix = getPrefix(parentParam.fieldPath, parentParam.suffix);
+	var childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
+	if (availableParams.find(p => p.fieldPath === childPath)) { return childPath; }
+	childPath = parentParam.fieldPath + '.' + depFieldPath;
+	if (availableParams.find(p => p.fieldPath === childPath)) { return childPath; }
+	console.warn("getChildDepPath: не удалось найти параметр [" + depFieldPath + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
+	return childPath;
 }
 
 // ——— ПРОВЕРКА BASE64 ———
@@ -169,8 +178,7 @@ function syncParamsToScene() {
 	sceneObjects.length = 0;
 	const processedNames = new Set();
 	editedParams.filter(p => typeDependencies[p.type]?.includes('Transform.localPosition')).forEach(param => {
-		const fieldPath = param.fieldPath;
-		const prefix = getPrefix(fieldPath);
+		const prefix = getPrefix(param.fieldPath, param.suffix);
 		let parentName = prefix?.includes('.') ? prefix.split('.').slice(0, -1).join('.') : '';
 		let name = prefix || 'sprite';
 		if (prefix?.includes('.')) name = prefix.split('.').pop();
@@ -236,10 +244,12 @@ function syncParamsToScene() {
 		const newObj = sceneObjects[sceneObjects.length - 1];
 		if (spriteScreenListeners[newObj.name]) spriteScreenListeners[newObj.name].onSyncParamsToScene(newObj);
 	});
-
-
-
-
+	//Скрыть панель, если нет объектов
+	if (sceneObjects && sceneObjects.length != 0) {
+		rightPanel.classList.remove('hidden')
+	} else {
+		rightPanel.classList.add('hidden')
+	}
 	// Перезагрузка кэша с изображениями
 	if (typeof preloadImages === 'function') {
 		preloadImages();
@@ -377,17 +387,17 @@ function addParam(fieldPath, addAsFirst = true) {
 	// Добавляем основной параметр
 	if (addAsFirst) { editedParams.unshift(param); } else { editedParams.push(param); }
 	// Проверяем, есть ли зависимости для типа параметра
-	const dependencies = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
+	const dependencies = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
 	editedPoint.forEach(p => {
-		if (fieldPath.endsWith(p.name)) { // "shellDrop.position".endsWith(".position")
+		if (p.angle && fieldPath.endsWith(p.name)) { // "shellDrop.position".endsWith(".position")
 			dependencies.push(fieldPath.replace(p.name, p.angle)); // shellDrop.position => shellDrop.angle
 			return;
 		}
 	});
-	const spliceIndex = (addAsFirst) ? 1 : editedParams.length;
-	const prefix = getPrefix(fieldPath); // Добавляем параметры для спрайта и для объектов с несколькими настройками
+	// Добавляем параметры для спрайта и для объектов с несколькими настройками
+	const spliceIndex = (addAsFirst) ? 1 : editedParams.length; //spliceIndex - индекс, после которого добавить новые парарметры, добавить в начало или в конец списка
 	dependencies.forEach(depFieldPath => {	// Обрабатываем все зависимости
-		const fullPath = (prefix ? prefix + '.' : '') + depFieldPath;
+		const fullPath = getChildDepPath(param, depFieldPath);
 		let sample = sampleParams.find(p => p.fieldPath === fullPath);
 		if (sample && !editedParams.find(p => p.fieldPath === fullPath)) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
 			editedParams.splice(spliceIndex, 0, sample);//console.log(sample.fieldPath + ': ' + sample.value);
@@ -414,15 +424,12 @@ function removeParam(index) {
 	const param = editedParams[index];
 	const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
 	if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
-	const prefix = getPrefix(param.fieldPath);
-	const typeDeps = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
+	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
 	const basePaths = new Set();
 	basePaths.add(param.fieldPath);// Добавляем основной путь
-	typeDeps.forEach(dep => {// Добавляем зависимости с префиксом
-		const fullPath = (prefix ? prefix + '.' : '') + dep;
-		basePaths.add(fullPath);
+	typeDeps.forEach(depPath => {// Добавляем зависимости с префиксом
+		basePaths.add(getChildDepPath(param, depPath));
 	});
-	// Специфичное поведение для типа 'Sprite' — добавляем Transform.localPosition при наличии префикса
 	for (let i = editedParams.length - 1; i >= 0; i--) {// Обходим в обратном порядке, чтобы splice не ломал индексы
 		if (basePaths.has(editedParams[i].fieldPath)) {// Удаляем все параметры, чей fieldPath входит в basePaths
 			console.log("removeParam: " + editedParams[i].fieldPath + '=' + editedParams[i].value);
@@ -473,16 +480,24 @@ function forceRenderEditedParams(filter = '') {
 			if (!matchesSearch) { return; }
 		}
 		if (processed.has(param.fieldPath)) return;
-		if (typeDependencies[param.type] || typeDependencies[param.startFieldPath]) {
-			const typeDeps = typeDependencies[param.type] || typeDependencies[param.startFieldPath] || [];
-			const prefix = getPrefix(param.fieldPath);//const name = prefix || 'sprite';
+		const renderFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];
+
+		if (typeDependencies[param.startFieldPath] || typeDependencies[param.type]) {
+			const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
+			const prefix = getPrefix(param.fieldPath, param.suffix);//const name = prefix || 'sprite';
 			const groupPaths = new Array();
-			typeDeps.forEach(dep => groupPaths.push((prefix ? prefix + '.' : '') + dep));
+			typeDeps.forEach(path => groupPaths.push(getChildDepPath(param, path)));
 			groupPaths.push(param.fieldPath);
 			// Помечаем все пути группы как обработанные
 			groupPaths.forEach(fp => processed.add(fp));
 			groupPaths.forEach(fp => hiddenPaths.add(fp));
-			if (param.type === 'Sprite') {
+
+			if (renderFormByType) {
+				const li = document.createElement('li'); li.className = 'sprite-block';
+				li.innerHTML = renderFormByType(param, idx, groupPaths);
+				list.appendChild(li);
+
+			} else if (param.type === 'Sprite') {
 				// Находим индексы параметров группы
 				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
 				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
@@ -494,7 +509,7 @@ function forceRenderEditedParams(filter = '') {
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
-                <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
+                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
                 <small>${param.comment || ''}</small><br>
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
@@ -568,7 +583,7 @@ function forceRenderEditedParams(filter = '') {
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
-                <strong>${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
+                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
                 <small>${param.comment || ''}</small><br>
                 <div>
                     <span style="display: grid;grid-template-columns: 6% 6% 15.5% 16% 33.5%;place-items: end;justify-items: right;width:100%;">
@@ -609,7 +624,7 @@ function forceRenderEditedParams(filter = '') {
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
 					<div>
-					<strong>${param.fieldPath}</strong><br>
+					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
 					<small>${param.comment || ''}</small></div>
 					<div>
 						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
@@ -651,34 +666,41 @@ function forceRenderEditedParams(filter = '') {
 				<div class="param-group-list">` + innerHTML + `</div>`;
 				list.appendChild(li);
 			}
+
+		} else if (renderFormByType) {
+			const li = document.createElement('li');
+			li.innerHTML = renderFormByType(param, idx, null);
+			list.appendChild(li);
 		} else {
 			// Обычный параметр
 			const li = document.createElement('li'); li.className = 'param-block';
 			if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 			li.innerHTML = `
 					<div>
-					<strong>${param.fieldPath}</strong> <br>
+					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong> <br>
 					<small>${param.comment || ''}</small></div>
 					<div >${getInputForType(param, idx)}</div>
 					<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>`;
 			list.appendChild(li);
 		}
 	});
+
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
 const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
-function getInputForType(param, index = -1) {
-	if (index = -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
+function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
+	if (index == -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
+
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value)" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;">
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='`+param.value+`'>` : '' }</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateParam(${index}, this.value, true);" class="field-input">`;
+		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
 		param.options.forEach(opt => {
 			const isSelected = opt == param.value ? ' selected' : '';
 			selectHTML += `<option value="${opt}"${isSelected}>${opt}</option>`;
@@ -686,10 +708,39 @@ function getInputForType(param, index = -1) {
 		selectHTML += '</select>';
 		return selectHTML;
 	}
+
+	if (param.value !== null && typeof param.value === 'object') {
+		const obj = param.value;
+		var asd = '';
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key) && objMetaData) {
+				childObjParam = objMetaData.find(p => p?.fieldPath === key);
+				if (!childObjParam) { console.warn(`Массив objMetaData должен иметь данные для свойства ${key}`); continue; }
+				childObjParam.value = obj[key];
+				asd += `<div class="param-group-field">
+						<div>
+							<div class="field-label">${key}</div>
+							<small>${childObjParam?.comment || ''}</small>
+						</div>
+						<div class="field-control">
+						${getInputForType(childObjParam, index, key)}
+						</div>
+					</div>`
+			}
+		}
+		return asd;
+	}
+
+	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
+	if (renderFormByType && objKey == null) {
+		return renderFormByType(param, index);
+	}
+
+
 	switch (param.type) {
 		case 'SpriteRenderer':
 		case 'Transform':
-			let selectHTML = `<select onchange="updateParam(${index}, this.value, true);" class="field-input">`;
+			let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input" id="${param.fieldPath}">`;
 			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
 			sceneObjects.forEach(obj => {
 				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
@@ -732,18 +783,18 @@ function getInputForType(param, index = -1) {
 			if ('min' in param && 'max' in param) {
 				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
 					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="propAngleSlider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
-					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${param.fieldPath}" oninput="updateParam(${index}, this.value)" value="${param.value}">
+					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${param.fieldPath}" oninput="updateParam(${index}, this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
-			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value)" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}">`;
+			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}" >`;
 		case 'bool':
-			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam(${index}, this.checked ? true : false)">`;
+			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam(${index}, this.checked ? true : false, false, '${objKey || ''}')" id="${param.fieldPath}">`;
 		case 'WeaponCartridge[]':
 		case 'AudioClip[]':
 		case 'Sprite[]':
-			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value)" title="${tooltip}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
+			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
 		default:
-			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" onchange="updateParam(${index}, this.value)">`;
+			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
 	}
 }
 
@@ -755,9 +806,13 @@ function htmlspecialchars(str) {
 
 
 // ——— РЕДАКТИРОВАНИЕ ———
-function updateParam(index, value, updateParamList = false) {
+function updateParam(index, value, updateParamList = false, objKey = null) {
 	if (index >= 0 && index < editedParams.length) {
-		editedParams[index].value = value;
+		if (objKey && objKey != null && objKey != 'null') {
+			editedParams[index].value[objKey] = value;
+		} else {
+			editedParams[index].value = value;
+		}
 		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
 	}
@@ -912,6 +967,8 @@ function fileToBase64(index, input) {
 
 
 function base64ToFile(base64, filename = 'file.png') {
+	base64 = base64.trim();
+	if (!base64) { alert('Нет данных для сохранения в файл'); return; }
 	const base64Data = base64.split(',')[1] || base64; // Удаляем префикс data:...;base64, если он есть
 	const byteCharacters = atob(base64Data); // Декодируем base64 в бинарные данные
 	const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0))); // Создаём массив байтов
@@ -1058,29 +1115,36 @@ function importFromJSON(jsonData) {
 // ——— СОХРАНЕНИЕ ———
 function getResultJSON() {
 	const json = {};
+	const empty = new Array();
 	mainParams.forEach(param => {
 		let index = -1;
+		let value = "";
 		if (param.hasOwnProperty("idHTMLInput")) {
-			json[param.startFieldPath || param.fieldPath] = document.getElementById(param.idHTMLInput).value;
-			if (param.lowerCase) { json[param.fieldPath] = json[param.fieldPath].toLowerCase(); }
+			value = document.getElementById(param.idHTMLInput)?.value;
+			if (param.lowerCase) { value = value.toLowerCase(); }
 		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
-			json[param.startFieldPath || param.fieldPath] = editedParams[index].value;
+			value = editedParams[index].value;
 		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
-			json[param.startFieldPath || param.fieldPath] = availableParams[index].value;
+			value = availableParams[index].value;
 		} else if (param.hasOwnProperty("value")) {
-			json[param.startFieldPath || param.fieldPath] = param.value;
+			value = param.value;
 		} else {
 			console.warn("Не удалось найти значение для параметра [" + param.fieldPath + "] - параметр пропущен и не записан в json");
 		}
+		if (!value) empty.push(param.fieldPath);
+		json[param.fieldPath] = value;
 	});
-	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64')) {
+	if (empty.length != 0) {
+		alert("Некоторые параметры не указаны.\nМод может работать с ошибками.\nСледует указать параметры:\n" + empty.join("\n"));
+	}
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint']);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
 		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
 	}
 	editedParams.forEach(param => {
-		if (!ignoreExportFields.find(word => param.fieldPath.includes(word)) && param.fieldPath != param.type) {
+		if (!ignoreExportFields.find(word => param.startFieldPath.includes(word)) && param.fieldPath != param.type) {
 			json[param.startFieldPath || param.fieldPath] = param.value;
 		}
 	});
@@ -1112,7 +1176,7 @@ const saveState = document.getElementById('saveState');
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
-	if (editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite").value == selectedWeapon["weapon.SpriteRenderer.sprite"]) { alert("Стандартные текстуры не принимаются!"); return; }
+	if (selectedWeapon["weapon.SpriteRenderer.sprite"] && editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite")?.value == selectedWeapon["weapon.SpriteRenderer.sprite"]) { alert("Стандартные текстуры не принимаются!"); return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
