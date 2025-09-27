@@ -12,6 +12,7 @@
 	--input-bg: #111;
 	--transition-speed: 0.2s;
 	--text-suffix: #3a3a3a;
+	--text: white;
 }
 
 * {
@@ -150,6 +151,10 @@ h2 {
 .hidden {
 	visibility: hidden;
 	position: absolute;
+}
+
+.panelHidden {
+	visibility: hidden;
 }
 
 #availableParamsList,
@@ -384,15 +389,26 @@ input.num {
 	box-shadow: 0 0 0 2px rgba(106, 166, 255, 0.5);
 }
 
-.add {
-	float: right;
-	background: rgb(106, 166, 255);
+.button,
+.add,
+.itemremove {
+	background: var(--accent);
 	color: white;
 	border: none;
 	padding: 6px 8px;
 	border-radius: 4px;
 	cursor: pointer;
 }
+
+.add {
+	float: right;
+	background: rgb(106, 166, 255);
+}
+
+.itemremove {
+	background: var(--danger-color);
+}
+
 
 .fieldpath {
 	font-weight: bold;
@@ -685,4 +701,23 @@ small {
 	margin-top: 20px;
 	font-size: 13px;
 	color: #7f8c8d;
+}
+
+
+.animationPreview {
+	text-align: center;
+	background-color: white;
+	height: 100%;
+	width: 100%;
+}
+
+.frame-item {
+	display: grid;
+	grid-template-columns: 80px 1fr auto;
+	gap: 6px;
+	align-items: start;
+	margin: 4px 0;
+	padding: 4px;
+	background: var(--bg-secondary);
+	border-radius: 3px;
 }
