@@ -51,7 +51,7 @@ const typeLightForm = {
 };
 
 var hitMetaData = [
-	{ fieldPath: "modeHit", comment: "• FIRST - Фиксировать все попадания пули, начиная с первого;<br>• RANDOM_ONCE - выбрать только одно попадание в диапазоне [minDist - maxDist], например для взрыва;<br>• RANDOM_FIRST - случайно выбрать первое попадание, а затем фиксировать все остальные проникающие попадания в триггеры с одинаковым материалом в диапазоне [minDist - maxDist], это подходит для мощных снайперских патронов;", type: "string", value: "FIRST", options: ["FIRST", "RANDOM_ONCE", "RANDOM_FIRST"] },
+	{ fieldPath: "modeHit", comment: "• FIRST - Фиксировать все попадания пули, начиная с первого;<br>• RANDOM_FIRST - случайно выбрать первое попадание, а затем фиксировать все остальные проникающие попадания в триггеры с одинаковым материалом в диапазоне [minDist - maxDist], это подходит для стрельбы дробью;", type: "string", value: "FIRST", options: ["FIRST", "RANDOM_FIRST"] },
 	{ fieldPath: "minHits", comment: "Сколько минимум попаданий фиксировать для одной пули", type: "int", value: 1 },
 	{ fieldPath: "maxHits", comment: "Сколько максимум попаданий фиксировать для одной пули", type: "int", value: 1 },
 	{ fieldPath: "minDist", comment: "Расстояние, на котором фиксировать второе попадание", type: "float", value: 0 },
