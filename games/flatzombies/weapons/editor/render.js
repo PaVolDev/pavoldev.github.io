@@ -125,7 +125,7 @@ function renderScene() {
 	ctx.translate(canvas.width / 2, canvas.height / 2);
 	ctx.scale(viewPPU, viewPPU); // y positive down
 	//Удалить объекты без родителя
-	sceneObjects = sceneObjects.filter(obj => !obj.parent || sceneObjects.some(p => p.name === obj.parent));
+	//sceneObjects = sceneObjects.filter(obj => !obj.parent || sceneObjects.some(p => p.name === obj.parent));
 	if (selectedObject != null && !sceneObjects.find(obj => obj.name == selectedObject.name)) selectedObject = null;
 	//Соритровка для рендера
 	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
