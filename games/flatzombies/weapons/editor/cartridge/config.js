@@ -69,115 +69,10 @@ const typeFullForm = {
 			${getInputForType(param, index, null, hitMetaData)}
 			</div>`;
 	},
-
-
-	'PhysicsMaterialMultiply[]': function (param, index, childFields) {
-		const items = Array.isArray(param.value) ? param.value : [];
-
-		const renderItem = (item, i) => {
-			const materialOptions = [
-				{ value: "armor", label: "Armor" },
-				{ value: "metal", label: "Metal" },
-				{ value: "skin", label: "Skin" }
-			];
-			const selectedMaterial = item?.materialName.toLowerCase().replace('material', '').replace('-', '') || "skin";
-			const optionsHtml = materialOptions.map(opt => `<option value="${opt.value}" ${opt.value === selectedMaterial ? 'selected' : ''}>${opt.label}</option>`).join('');
-
-			return `<div class="array-item" data-index="${i}">
-				<div class="array-item-head">
-					<div class="array-item-title">${param.fieldPath}[${i}]</div>
-					<button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
-				</div>
-				<div class="grid-in-object">
-					<div class="field-row" data-tooltip="Материал тела">
-						<div class="field-label">materialName</div>
-						<div class="field-control">
-							<select onchange="updateMaterialName(${index}, ${i}, this.value)" class="field-input">
-								${optionsHtml}
-							</select>
-						</div>
-					</div>
-					<div class="field-row" data-tooltip="Умножить урон при попадании в материал">
-						<div class="field-label">scaleFirst</div>
-						<div class="field-control">
-							<input type="number" step="0.1" value="${item.scaleFirst || 1}" class="field-input"
-								onchange="updateArrayField(${index}, ${i}, 'scaleFirst', parseFloat(this.value))">
-						</div>
-					</div>
-					<div class="field-row" data-tooltip="Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)">
-						<div class="field-label">scaleThrough</div>
-						<div class="field-control">
-							<input type="number" step="0.1" value="${item.scaleThrough || 0.5}" class="field-input"
-								onchange="updateArrayField(${index}, ${i}, 'scaleThrough', parseFloat(this.value))">
-						</div>
-					</div>
-					<div class="field-row" data-tooltip="Остановить пулю, если урон стал слишком низким после прохождения несольких тел">
-						<div class="field-label">stopBulletDamage</div>
-						<div class="field-control">
-							<input type="number" step="0.1" value="${item.stopBulletDamage || 0}" class="field-input"
-								onchange="updateArrayField(${index}, ${i}, 'stopBulletDamage', parseFloat(this.value))">
-						</div>
-					</div>
-				</div>
-			</div>`;
-		};
-
-		const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
-
-		return `<button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
-			<strong>${param.fieldPath}</strong><br>
-			<small>${param.comment || ''}</small><br>
-			<div class="field-control">
-				<div class="row-actions">
-					<button class="add" onclick="addArrayItem(${index})">Добавить</button>
-				</div>
-				<div class="array-items" id="array-items-physics-${index}">
-					${itemsHtml}
-				</div>
-			</div>`;
-	}
 };
 
 typeFullForm['AnimationSprite[]'] = (param, idx) => { return renderTextureListEditor(param, idx); };
-
-// Добавить новый элемент в массив
-function addArrayItem(paramIndex) {
-	const param = editedParams[paramIndex];
-	if (!Array.isArray(param.value)) param.value = [];
-	param.value.push({
-		materialName: "armor",
-		scaleFirst: 1,
-		scaleThrough: 0.5,
-		stopBulletDamage: 0
-	});
-	updateParam(paramIndex, param.value, true);
-}
-
-// Удалить элемент по индексу
-function removeArrayItem(paramIndex, itemIndex) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value)) {
-		param.value.splice(itemIndex, 1);
-		updateParam(paramIndex, param.value, true);
-	}
-}
-
-// Обновить поле в объекте массива
-function updateArrayField(paramIndex, itemIndex, field, value) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value) && param.value[itemIndex]) {
-		param.value[itemIndex][field] = value;
-	}
-}
-
-// Обновить materialName при выборе из select
-function updateMaterialName(paramIndex, itemIndex, materialName) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value) && param.value[itemIndex]) {
-		param.value[itemIndex].materialName = materialName;
-	}
-}
-
+typeFullForm['PhysicsMaterialMultiply[]'] = (param, idx) => { return renderPhysicsMaterialMultiply(param, idx); };
 
 
 const availableByField = {}
@@ -194,10 +89,11 @@ var mainParams = [ //Список важных параметров для за�
 	{ fieldPath: "type", value: "cartridge" }, //Указать сразу своё значение 
 	{ fieldPath: "iconButtonSprite", idHTMLInput: "iconButtonSprite" },
 	{ fieldPath: "iconListSprite", idHTMLInput: "iconListSprite" },
+	{ fieldPath: "caliberName", idHTMLInput: "caliberName" },
+	{ fieldPath: "uiName", idHTMLInput: "uiName" },
 ];
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
-	{ "fieldPath": "id", "comment": "Идентификатор, отличающиеся от других", "type": "string", "value": "" },
 	{ "fieldPath": "uiName", "comment": "Имя короткое для отображения в интрфейсе", "type": "string", "value": "" },
 	{ "fieldPath": "caliberName", "comment": "Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название.<br>Строка используется как второй идентификатор для связи с оружием", "type": "string", "value": "" },
 	{ "fieldPath": "shellSkin", "comment": "Гильза при стрельбе", "type": "TextureSprite", "value": "" },
