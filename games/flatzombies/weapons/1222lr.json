@@ -1,0 +1,27 @@
+{
+    "id": "1222lr",
+    "idTemplate": "5,7x28",
+    "type": "cartridge",
+    "caliberName": "12x70",
+    "uiName": "12x70 x6 22LR",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "bullets": "6",
+    "angleRandom": "4.21",
+    "angleSpread": "0.39",
+    "damage": "6",
+    "distance": 24,
+    "impulse": "11",
+    "stopPower": "0.2",
+    "noiseVolume": "1.03",
+    "penetration": {
+        "modeHit": "RANDOM_FIRST",
+        "minHits": "2",
+        "maxHits": "2",
+        "minDist": "0.5",
+        "maxDist": "5",
+        "findExitPoint": true
+    },
+    "penetrationDamage": [],
+    "selspriteupd": "update"
+}
