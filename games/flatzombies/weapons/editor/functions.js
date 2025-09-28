@@ -138,12 +138,8 @@ function inputMinMax(input) {
 }
 
 
-
-
-
-
-
-
+//Работа с массивом изображений
+//Показать список анимаций
 function renderTextureListEditor(param, paramIndex) {
 	const animations = Array.isArray(param.value) ? param.value : [];
 	let html = `
@@ -401,3 +397,110 @@ function updateAnimationFramePivot(paramIndex, animIdx, frameIdx, axis, value) {
 	frame.pivotPoint = `(${x}, ${y})`;
 }
 
+
+
+
+
+//Форма для редактирование списка материалов
+function renderPhysicsMaterialMultiply(param, index, childFields) {
+	const items = Array.isArray(param.value) ? param.value : [];
+	const renderItem = (item, i) => {
+		const materialOptions = [
+			{ value: "armor", label: "Armor" },
+			{ value: "metal", label: "Metal" },
+			{ value: "skin", label: "Skin" }
+		];
+		const selectedMaterial = item?.materialName.toLowerCase().replace('material', '').replace('-', '') || "skin";
+		const optionsHtml = materialOptions.map(opt => `<option value="${opt.value}" ${opt.value === selectedMaterial ? 'selected' : ''}>${opt.label}</option>`).join('');
+		return `<div class="array-item" data-index="${i}">
+				<div class="array-item-head">
+					<div class="array-item-title">${param.fieldPath}[${i}]</div>
+					<button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+				</div>
+				<div class="grid-in-object">
+					<div class="field-row" data-tooltip="Материал тела">
+						<div class="field-label">materialName</div>
+						<div class="field-control">
+							<select onchange="updateMaterialName(${index}, ${i}, this.value)" class="field-input">
+								${optionsHtml}
+							</select>
+						</div>
+					</div>
+					<div class="field-row" data-tooltip="Умножить урон при попадании в материал">
+						<div class="field-label">scaleFirst</div>
+						<div class="field-control">
+							<input type="number" step="0.1" value="${item.scaleFirst || 1}" class="field-input"
+								onchange="updateArrayField(${index}, ${i}, 'scaleFirst', parseFloat(this.value))">
+						</div>
+					</div>
+					<div class="field-row" data-tooltip="Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)">
+						<div class="field-label">scaleThrough</div>
+						<div class="field-control">
+							<input type="number" step="0.1" value="${item.scaleThrough || 0.5}" class="field-input"
+								onchange="updateArrayField(${index}, ${i}, 'scaleThrough', parseFloat(this.value))">
+						</div>
+					</div>
+					<div class="field-row" data-tooltip="Остановить пулю, если урон стал слишком низким после прохождения несольких тел">
+						<div class="field-label">stopBulletDamage</div>
+						<div class="field-control">
+							<input type="number" step="0.1" value="${item.stopBulletDamage || 0}" class="field-input"
+								onchange="updateArrayField(${index}, ${i}, 'stopBulletDamage', parseFloat(this.value))">
+						</div>
+					</div>
+				</div>
+			</div>`;
+	};
+	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
+	return `<button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
+			<strong>${param.fieldPath}</strong><br>
+			<small>${param.comment || ''}</small><br>
+			<div class="field-control">
+				<div class="array-items" id="array-items-physics-${index}">
+					${itemsHtml}
+					<div class="row-actions"><button data-tooltip="Добавить ещё один параметр<br>в список ${param.fieldPath}" class="add" onclick="addArrayItem(${index})">Добавить</button></div>
+				</div>
+			</div>`;
+}
+
+
+
+
+
+
+// Добавить новый элемент в массив
+function addArrayItem(paramIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) param.value = [];
+	param.value.push({
+		materialName: "armor",
+		scaleFirst: 1,
+		scaleThrough: 0.5,
+		stopBulletDamage: 0
+	});
+	updateParam(paramIndex, param.value, true);
+}
+
+// Удалить элемент по индексу
+function removeArrayItem(paramIndex, itemIndex) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value)) {
+		param.value.splice(itemIndex, 1);
+		updateParam(paramIndex, param.value, true);
+	}
+}
+
+// Обновить поле в объекте массива
+function updateArrayField(paramIndex, itemIndex, field, value) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[itemIndex]) {
+		param.value[itemIndex][field] = value;
+	}
+}
+
+// Обновить materialName при выборе из select
+function updateMaterialName(paramIndex, itemIndex, materialName) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[itemIndex]) {
+		param.value[itemIndex].materialName = materialName;
+	}
+}
