@@ -1185,7 +1185,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	json['selspriteupd'] = 'update';
 	json['selspriteupd'] = (selectedWeapon["weapon.SpriteRenderer.sprite"] && editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite")?.value == selectedWeapon["weapon.SpriteRenderer.sprite"]) ? 'standrt' : json['selspriteupd'];
 	json['selspriteupd'] = (selectedWeapon["iconButtonSprite"] && editedParams.find(p => p.fieldPath == "iconButtonSprite")?.value == selectedWeapon["iconButtonSprite"]) ? 'standrt' : json['selspriteupd'];
-	
+
 	fetch(atob(data), {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
