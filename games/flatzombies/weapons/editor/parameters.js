@@ -1120,8 +1120,8 @@ function getResultJSON() {
 		let index = -1;
 		let value = "";
 		if (param.hasOwnProperty("idHTMLInput")) {
-			value = document.getElementById(param.idHTMLInput)?.value;
-			if (param.lowerCase) { value = value.toLowerCase(); }
+			value = document.getElementById(param.idHTMLInput)?.value || editedParams.find(field => field.fieldPath == param.idHTMLInput)?.value;
+			if (value && param.lowerCase) { value = value.toLowerCase(); }
 		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
 			value = editedParams[index].value;
 		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
@@ -1176,13 +1176,16 @@ const saveState = document.getElementById('saveState');
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
-	if (selectedWeapon["weapon.SpriteRenderer.sprite"] && editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite")?.value == selectedWeapon["weapon.SpriteRenderer.sprite"]) { alert("Стандартные текстуры не принимаются!"); return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
 	json['login'] = document.getElementById('login').value;
 	json['password'] = document.getElementById('password').value;
 	json['saveMode'] = document.getElementById('saveMode').value;
+	json['selspriteupd'] = 'update';
+	json['selspriteupd'] = (selectedWeapon["weapon.SpriteRenderer.sprite"] && editedParams.find(p => p.fieldPath == "SpriteRenderer.sprite")?.value == selectedWeapon["weapon.SpriteRenderer.sprite"]) ? 'standrt' : json['selspriteupd'];
+	json['selspriteupd'] = (selectedWeapon["iconButtonSprite"] && editedParams.find(p => p.fieldPath == "iconButtonSprite")?.value == selectedWeapon["iconButtonSprite"]) ? 'standrt' : json['selspriteupd'];
+	
 	fetch(atob(data), {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
