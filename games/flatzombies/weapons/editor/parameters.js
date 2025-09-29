@@ -93,8 +93,9 @@ async function onSelectWeapon(event) {
 			}
 		});
 		sampleParams.forEach(field => { //Добавить параметры, которые являются дочерним к параметру из availableParams
-			if (availableParams.findIndex(param => field.fieldPath.startsWith(param.fieldPath + ".")) != -1) {
+			if (availableParams.findIndex(param => field.fieldPath.startsWith(getPrefix(param.fieldPath, param.suffix) + ".")) != -1) {
 				availableParams.push(field);
+
 			}
 		});
 
@@ -157,10 +158,10 @@ function getPrefix(fieldPath, suffix = 'SpriteRenderer.sprite') { //parent.child
 function getChildDepPath(parentParam, depFieldPath) {
 	const prefix = getPrefix(parentParam.fieldPath, parentParam.suffix);
 	var childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
-	if (availableParams.find(p => p.fieldPath === childPath)) { return childPath; }
+	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
 	childPath = parentParam.fieldPath + '.' + depFieldPath;
-	if (availableParams.find(p => p.fieldPath === childPath)) { return childPath; }
-	console.warn("getChildDepPath: не удалось найти параметр [" + depFieldPath + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
+	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
+	console.warn("getChildDepPath: не удалось найти параметр [" + childPath + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
 	return childPath;
 }
 
@@ -486,8 +487,8 @@ function forceRenderEditedParams(filter = '') {
 			const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
 			const prefix = getPrefix(param.fieldPath, param.suffix);//const name = prefix || 'sprite';
 			const groupPaths = new Array();
-			typeDeps.forEach(path => groupPaths.push(getChildDepPath(param, path)));
 			groupPaths.push(param.fieldPath);
+			typeDeps.forEach(path => groupPaths.push(getChildDepPath(param, path)));
 			// Помечаем все пути группы как обработанные
 			groupPaths.forEach(fp => processed.add(fp));
 			groupPaths.forEach(fp => hiddenPaths.add(fp));
@@ -499,13 +500,13 @@ function forceRenderEditedParams(filter = '') {
 
 			} else if (param.type === 'Sprite') {
 				// Находим индексы параметров группы
-				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
-				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
-				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
-				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
-				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
-				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
-				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
+				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
+				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
+				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
+				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
+				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
+				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[7]);
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
@@ -575,11 +576,11 @@ function forceRenderEditedParams(filter = '') {
 				// Находим индексы параметров группы
 				//const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
 				//const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
-				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
-				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
-				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
-				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
-				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
+				const sortIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[3]);
+				const angleIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[4]);
+				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
+				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
+				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[7]);
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
@@ -618,8 +619,8 @@ function forceRenderEditedParams(filter = '') {
 				list.appendChild(li);
 
 			} else if (param.type == 'TextureSprite') {
-				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[0]);
-				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
+				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
 				const li = document.createElement('li'); li.className = 'param-block';
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
@@ -662,7 +663,7 @@ function forceRenderEditedParams(filter = '') {
 						</div>`;
 				});
 				li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>
-                <strong>${param.displayName}</strong><br> <small>${param.comment || ''}</small><br>
+                <strong>${param.displayName}</strong><br><small>${param.comment}</small><br>
 				<div class="param-group-list">` + innerHTML + `</div>`;
 				list.appendChild(li);
 			}
@@ -1080,10 +1081,10 @@ function importFromJSON(jsonData) {
 			}
 			if ((index = editedParams.findIndex(p => p.fieldPath === field.key)) != -1) {
 				editedParams[index].value = field.value;
-			} else if ((index = availableParams.findIndex(p => p.fieldPath === field.key)) != -1) {
+			} else if ((index = availableParams.findIndex(p => p.fieldPath === field.key || p.displayName === field.key)) != -1) {
 				availableParams[index].value = field.value;
 				addParam(availableParams[index].fieldPath);
-			} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key)) != -1) {
+			} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key || p.displayName === field.key)) != -1) {
 				sampleParams[index].value = field.value;
 				addParam(sampleParams[index].fieldPath);
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
