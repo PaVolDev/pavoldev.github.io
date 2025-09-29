@@ -504,3 +504,237 @@ function updateMaterialName(paramIndex, itemIndex, materialName) {
 		param.value[itemIndex].materialName = materialName;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+//Универсальная функция renderObjectArray, которая работает с любым массивом объектов, основываясь на конфигурации objectMetaData
+// Форма для редактирования массива объектов
+function renderObjectArray(param, index, objectMetaData) {
+	param.objectMetaData = objectMetaData; // добавляем метаданные в param
+	const items = Array.isArray(param.value) ? param.value : [];
+	const renderItem = (item, i) => {
+		const fieldsHtml = objectMetaData.map(fieldMeta => {
+			const currentValue = item[fieldMeta.fieldPath] ?? fieldMeta.value;
+			// Определение типа поля
+			if (fieldMeta.type === 'string' && fieldMeta.options) {
+				// Выпадающий список
+				const optionsHtml = fieldMeta.options.map(opt =>
+					`<option value="${opt}" ${opt === currentValue ? 'selected' : ''}>${opt}</option>`
+				).join('');
+				return `
+                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+                        <div class="field-label">${fieldMeta.fieldPath}</div>
+                        <div class="field-control">
+                            <select onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)" class="field-input">
+                                ${optionsHtml}
+                            </select>
+                        </div>
+                    </div>
+                `;
+			} else if (fieldMeta.type === 'int' || fieldMeta.type === 'float') {
+				// Числовое поле
+				const step = fieldMeta.type === 'float' ? '0.1' : '1';
+				return `
+                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+                        <div class="field-label">${fieldMeta.fieldPath}</div>
+                        <div class="field-control">
+                            <input type="${fieldMeta.type === 'int' ? 'number' : 'number'}" step="${step}" value="${currentValue}" class="field-input"
+                                onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', ${fieldMeta.type === 'int' ? 'parseInt' : 'parseFloat'}(this.value))">
+                        </div>
+                    </div>
+                `;
+			} else {
+				// Обычное текстовое поле
+				return `
+                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+                        <div class="field-label">${fieldMeta.fieldPath}</div>
+                        <div class="field-control">
+                            <input type="text" value="${currentValue}" class="field-input"
+                                onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)">
+                        </div>
+                    </div>
+                `;
+			}
+		}).join('');
+
+		return `
+            <div class="array-item" data-index="${i}">
+                <div class="array-item-head">
+                    <div class="array-item-title">${param.fieldPath}[${i}]</div>
+                    <button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+                </div>
+                <div class="grid-in-object">
+                    ${fieldsHtml}
+                </div>
+            </div>
+        `;
+	};
+
+	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
+
+	return `
+        <button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
+        <strong>${param.fieldPath}</strong><br>
+        <small>${param.comment || ''}</small><br>
+        <div class="field-control">
+            <div class="array-items" id="array-items-${index}">
+                ${itemsHtml}
+                <div class="row-actions">
+                    <button data-tooltip="Добавить ещё один параметр<br>в список ${param.fieldPath}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Добавить новый элемент в массив
+function addArrayItemByMeta(paramIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) param.value = [];
+	if (Array.isArray(param.objectMetaData)) {
+		const newItem = {};
+		param.objectMetaData.forEach(field => {
+			newItem[field.fieldPath] = field.value;
+		});
+		param.value.push(newItem);
+	}else{
+		param.value.push(''); //Добавить пустую строку
+	}
+	updateParam(paramIndex, param.value, true);
+}
+
+// Удалить элемент по индексу
+function removeArrayItem(paramIndex, itemIndex) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value)) {
+		param.value.splice(itemIndex, 1);
+		updateParam(paramIndex, param.value, true);
+	}
+}
+
+// Обновить поле в объекте массива
+function updateArrayFieldByMeta(paramIndex, itemIndex, field, value) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[itemIndex]) {
+		param.value[itemIndex][field] = value;
+	}
+}
+
+
+
+
+
+
+
+
+
+//универсальная функция renderJsonArray, которая позволяет редактировать массив объектов, где каждый элемент — JSON-строка:
+// Форма для редактирования массива JSON-объектов
+function renderJsonArray(param, index) {
+	const items = Array.isArray(param.value) ? param.value : [];
+	const renderItem = (item, i) => {
+		// Преобразуем объект в JSON-строку
+		const jsonStr = typeof item === 'object' ? htmlspecialchars(JSON.stringify(item)) : item;
+
+		return `
+            <div class="array-item" data-index="${i}">
+                <div class="array-item-head">
+                    <div class="field-label">${param.fieldPath}[${i}]</div>
+                    <button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+                </div>
+                <div class="grid-in-object">
+					<div class="field-control">
+						<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
+						<div class="iconButton" data-tooltip="Сохранить в файл">
+							<img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})">
+						</div>
+						<label class="fileInputLabel">
+							<input type="file" class="fileInput" accept=".json" onchange="loadJsonFromFile(${index}, ${i}, this)">
+							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+						</label>
+					</div>
+                </div>
+            </div>
+        `;
+	};
+
+	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
+
+	return `
+        <button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
+        <strong>${param.fieldPath}</strong><br>
+        <small>Массив JSON-объектов</small><br>
+        <div class="field-control">
+            <div class="array-items" id="array-items-${index}">
+                ${itemsHtml}
+                <div class="row-actions">
+                    <button class="add" onclick="addJsonItem(${index})">Добавить JSON-объект</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+// Добавить пустой JSON-объект в массив
+function addJsonItem(paramIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) param.value = [];
+	param.value.push({});
+	updateParam(paramIndex, param.value, true);
+}
+
+// Обновить JSON-объект в массиве
+function updateJsonItem(paramIndex, itemIndex, jsonString) {
+	try {
+		const parsed = JSON.parse(jsonString);
+		const param = editedParams[paramIndex];
+		if (Array.isArray(param.value) && param.value[itemIndex] !== undefined) {
+			param.value[itemIndex] = parsed;
+		}
+	} catch (e) {
+		console.error("Неверный JSON:", e);
+		alert("Неверный формат JSON");
+	}
+}
+
+// Загрузить JSON-объект из файла
+function loadJsonFromFile(paramIndex, itemIndex, inputElement) {
+	const file = inputElement.files[0];
+	if (!file) return;
+	const reader = new FileReader();
+	reader.onload = function (e) {
+		try {
+			const parsed = JSON.parse(e.target.result);
+			const param = editedParams[paramIndex];
+			if (Array.isArray(param.value) && param.value[itemIndex] !== undefined) {
+				param.value[itemIndex] = parsed;
+				updateParam(paramIndex, param.value, true);
+			}
+		} catch (e) {
+			console.error("Ошибка парсинга JSON из файла:", e);
+			alert("Файл содержит неверный JSON.");
+		}
+	};
+	reader.readAsText(file);
+}
+
+// Сохранить JSON-объект в файл
+function saveJsonToFile(paramIndex, itemIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value) || !param.value[itemIndex]) return;
+	const dataStr = JSON.stringify(param.value[itemIndex], null, 2);
+	const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+	const exportFileDefaultName = `${param.fieldPath}_${itemIndex}.json`;
+	const linkElement = document.createElement('a');
+	linkElement.setAttribute('href', dataUri);
+	linkElement.setAttribute('download', exportFileDefaultName);
+	linkElement.click();
+}
