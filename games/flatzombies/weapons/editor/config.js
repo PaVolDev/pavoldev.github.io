@@ -254,7 +254,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "weapon.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.caliber", "comment": "Калибр оружия. Основной тип патрона\nВсе настройки для урона находятся в патроне", "type": "WeaponCartridge", "value": "" }, //"options": ["9x19", "45ACP", "9x39", "10.3x77", "10x22", "12.7x99", "12.7x99P", "12.7x55", "12x70", "40mm", "44Mag", "5.56x45", "5.7x28", "7.62x51", "7.62x51Sniper", "7.62x54", "7.62x67", "8.6x70", "arrows", "axe", "katana", "shovel"] 
-	{ "fieldPath": "cartridgeList", "comment": "Список разных видов патронов для этого оружия.", "type": "WeaponCartridge[]", "value": "" },
+	//Временно убран и не рабоатет для v2.0.8-Beta5 { "fieldPath": "cartridgeList", "comment": "Список разных видов патронов для этого оружия.", "type": "WeaponCartridge[]", "value": "" },
 	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "TextFile", "value": "" },
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
