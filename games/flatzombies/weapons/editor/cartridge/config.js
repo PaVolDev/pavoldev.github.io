@@ -72,7 +72,13 @@ const typeFullForm = {
 };
 
 typeFullForm['AnimationSprite[]'] = (param, idx) => { return renderTextureListEditor(param, idx); };
-typeFullForm['PhysicsMaterialMultiply[]'] = (param, idx) => { return renderPhysicsMaterialMultiply(param, idx); };
+typeFullForm['PhysicsMaterialMultiply[]'] = (param, idx) => { return renderObjectArray(param, idx, physicsMaterialMultiplyMetaData); };
+const physicsMaterialMultiplyMetaData = [
+	{ "fieldPath": "materialName", "comment": "Материал тела", "type": "string", "value": "skin", options: ['armor', 'skin', 'metal'] },
+	{ "fieldPath": "scaleFirst", "comment": "Умножить урон при попадании в материал", "type": "float", "value": 1 },
+	{ "fieldPath": "scaleThrough", "comment": "Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)", "type": "float", "value": 0.5 },
+	{ "fieldPath": "stopBulletDamage", "comment": "Остановить пулю, если урон стал слишком низким после прохождения нескольких тел", "type": "float", "value": 0 }
+];
 
 
 const availableByField = {}
@@ -117,6 +123,7 @@ var baseParams = [  //Список параметров, доступные дл
 	//{ "fieldPath": "angularMax", "comment": "Ограничение скорости вращения тела после импульса, чтобы тело не улетало далёко", "type": "float", "value": "0" },
 
 ]
+
 
 var sampleParams = [ //Список всех параметров, относящиеся только к оружию в руках
 	{ "fieldPath": "angleScatter", "comment": "Максмлн отклонение пули в градусах, для создания разброса", "type": "float", "value": "0", min: 0, max: 180 },
