@@ -48,7 +48,7 @@ async function onSelectWeapon(event) {
 		//Нужно загрузить новое оружие через fetch + import — это асинхронно!
 		showLoadingNewWeapon();
 		fetch('templates/' + event.target.value + '.js').then(response => {
-			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			if (!response.ok) throw new Error(`HTTP: ${response.status} - ` + event.target.value);
 			return response.text();
 		}).then(sourceCode => {
 			const blob = new Blob([sourceCode], { type: 'application/javascript' });
@@ -1201,12 +1201,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		if (data == 'added') {
-			alert("Данные успешно сохранены!\nОткройте игру и укажите оружие: " + json['id']);
-		} else {
-			console.warn('data: ', data);
-			alert("Ошибка сервера:\n" + data);
-		}
+		alert(data);
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 		alert("Ошибка браузера:\n" + error.message);
