@@ -670,12 +670,12 @@ function renderJsonArray(param, index) {
 	return `
         <button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
         <strong>${param.fieldPath}</strong><br>
-        <small>Массив JSON-объектов</small><br>
+        <small>${param.comment}</small><br>
         <div class="field-control">
             <div class="array-items" id="array-items-${index}">
                 ${itemsHtml}
                 <div class="row-actions">
-                    <button class="add" onclick="addJsonItem(${index})">Добавить JSON-объект</button>
+                    <button class="add" onclick="addJsonItem(${index})" data-tooltip="Добавить новый файл в список">Добавить</button>
                 </div>
             </div>
         </div>
