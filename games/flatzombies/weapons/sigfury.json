@@ -34,7 +34,7 @@
             "materialName": "armor"
         },
         {
-            "scaleFirst": 0.2,
+            "scaleFirst": 0.1,
             "scaleThrough": 0,
             "stopBulletDamage": 0,
             "editorDamage": 0,
@@ -42,7 +42,7 @@
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": 0.2,
+            "scaleThrough": 0.4,
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "skin"
