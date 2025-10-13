@@ -71,7 +71,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "ares16",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
-"weapon.WeaponHandPoints.weaponType": "",
+"weapon.WeaponHandPoints.weaponType": "machinegun",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
 "weapon.WeaponHandPoints.buttstockPoint":"(-0.9, 0)",
