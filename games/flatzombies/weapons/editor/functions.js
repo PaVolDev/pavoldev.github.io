@@ -141,7 +141,7 @@ function inputMinMax(input) {
 //Работа с массивом изображений
 //Показать список анимаций
 function renderTextureListEditor(param, paramIndex) {
-	const animations = Array.isArray(param.value) ? param.value : [];
+	const animations = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
 	let html = `
 		<div>
 			<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
@@ -401,7 +401,7 @@ function updateAnimationFramePivot(paramIndex, animIdx, frameIdx, axis, value) {
 
 //Форма для редактирование списка материалов
 function renderPhysicsMaterialMultiply(param, index, childFields) {
-	const items = Array.isArray(param.value) ? param.value : [];
+	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
 	const renderItem = (item, i) => {
 		const materialOptions = [
 			{ value: "armor", label: "Armor" },
@@ -515,7 +515,7 @@ function updateMaterialName(paramIndex, itemIndex, materialName) {
 // Форма для редактирования массива объектов
 function renderObjectArray(param, index, objectMetaData) {
 	param.objectMetaData = objectMetaData; // добавляем метаданные в param
-	const items = Array.isArray(param.value) ? param.value : [];
+	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
 	const renderItem = (item, i) => {
 		const fieldsHtml = objectMetaData.map(fieldMeta => {
 			const currentValue = item[fieldMeta.fieldPath] ?? fieldMeta.value;
@@ -631,7 +631,7 @@ function updateArrayFieldByMeta(paramIndex, itemIndex, field, value) {
 
 
 function renderFileArray(param, index, fileType = ".png") {
-	const items = Array.isArray(param.value) ? param.value : [];
+	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
 	const renderItem = (itemValue, i) => {
 
 		return `
@@ -715,7 +715,7 @@ function loadFileToArray(paramIndex, itemIndex, input) {
 //Функция позволяет редактировать массив объектов, где каждый элемент — JSON-строка:
 // Форма для редактирования массива JSON-объектов
 function renderJsonArray(param, index) {
-	const items = Array.isArray(param.value) ? param.value : [];
+	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
 	const renderItem = (item, i) => {
 		// Преобразуем объект в JSON-строку
 		const jsonStr = typeof item === 'object' ? htmlspecialchars(JSON.stringify(item)) : item;
