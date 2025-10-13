@@ -236,6 +236,7 @@ const typeFullForm = { //Полная форма для редактирован
 	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
 	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
 	'Sprite[]': function (param, idx) { return renderFileArray(param, idx, ".png"); },
+	'AnimationSprite[]': function (param, idx) { return renderTextureListEditor(param, idx); }
 }
 const typeLightForm = { //Одно поле для редактирования без заголовка
 	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); }
@@ -357,6 +358,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.gunFlash.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.gunFlash.Transform.localPosition", "comment": "Координаты огня от выстрела", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.gunFlash.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
+	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
