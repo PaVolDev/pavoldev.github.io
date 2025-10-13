@@ -71,7 +71,7 @@ weapons.push({
 	"weapon.WeaponSilencerMod.name": "mk46",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "!AnimationWeaponCache (WeaponAnimationCache)",
-	"weapon.WeaponHandPoints.weaponType": "",
+	"weapon.WeaponHandPoints.weaponType": "machinegun",
 	"weapon.WeaponHandPoints.parentName": "fingers",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-1.08, 0.12)",
