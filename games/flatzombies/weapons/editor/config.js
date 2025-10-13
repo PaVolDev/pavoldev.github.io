@@ -1,4 +1,5 @@
 
+
 const weapons = new Array();
 
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
@@ -67,9 +68,12 @@ const typeDependencies = { //Для параметров указаного ти
 		"handleMove.startPosition",
 		"handleMove.movePosition",
 	],
-	'weapon.WeaponHandPoints.fingerPoint': [
+	'WeaponHandPoints.fingerPoint': [
 		'WeaponHandPoints.fingerPoint',
 		'WeaponHandPoints.fingerAngle'
+	],
+	'caliber': [
+		'cartridgeList',
 	]
 };
 
@@ -80,7 +84,7 @@ const availableByField = {
 	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
 	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
 	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'dp12', 'grizzly85', 'ksg', 'mossberg590',] },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
 }
 
 
@@ -192,6 +196,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["shellDrop.position", "(0, 0)"],
 	["magazineDrop.position", "(0, 0)"],
 	["WeaponSilencerMod.localPoint", "(0, 0)"],
+	["silencerGroup", ""],
 	["recoilSteps", ""],
 	["recoilMax", ""],
 	["recoilDecrease", ""],
@@ -224,19 +229,16 @@ var mainParams = [ //Список важных параметров для за�
 	{ fieldPath: "storeInfo.nameFull", idHTMLInput: "idWeapon" }, //Название оружия в интерфейсе
 ];
 
-const typeFullForm = {
-	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); }
-	// 'HitsBullet': function (param, paramIndex, childFields) {
-	// 	return `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>
-	// 	<strong>${param.fieldPath}</strong><br>
-	// 	 <small>${param.comment || ''}</small><br>
-	// 	`
-	// }
+const audioClipMetaData = [
+	{ "fieldPath": "audio", "comment": "Звук", "type": "string", "value": "" },
+];
+const typeFullForm = { //Полная форма для редактирования набора данных с заголовком и комментарием
+	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
+	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
+	'Sprite[]': function (param, idx) { return renderFileArray(param, idx, ".png"); },
 }
-const typeLightForm = {
-	// 'HitsBullet': function (param, paramIndex) {
-	// 	return `empty HitsBullet`;
-	// }
+const typeLightForm = { //Одно поле для редактирования без заголовка
+	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); }
 }
 
 
@@ -252,10 +254,10 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "weapon.gameObject.SetActive", "comment": "Показать/скрыть объект", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.caliber", "comment": "Калибр оружия. Основной тип патрона\nВсе настройки для урона находятся в патроне", "type": "WeaponCartridge", "value": "" }, //"options": ["9x19", "45ACP", "9x39", "10.3x77", "10x22", "12.7x99", "12.7x99P", "12.7x55", "12x70", "40mm", "44Mag", "5.56x45", "5.7x28", "7.62x51", "7.62x51Sniper", "7.62x54", "7.62x67", "8.6x70", "arrows", "axe", "katana", "shovel"] 
-	//Временно убран и не рабоатет для v2.0.8-Beta5 { "fieldPath": "cartridgeList", "comment": "Список разных видов патронов для этого оружия.", "type": "WeaponCartridge[]", "value": "" },
+	{ "fieldPath": "weapon.caliber", "comment": "Калибр оружия. Основной тип патрона\nВсе настройки для урона находятся в патроне", "type": "WeaponCartridge", "value": "", "options": ["9x19", "45ACP", "9x39", "10.3x77", "10x22", "12.7x99", "12.7x99P", "12.7x55", "12x70", "40mm", "44Mag", "5.56x45", "5.7x28", "7.62x51", "7.62x51Sniper", "7.62x54", "7.62x67", "8.6x70", "arrows", "axe", "katana", "shovel"] }, //
+	{ "fieldPath": "cartridgeList", "comment": "Список разных видов патронов.<br>Создайте патрон в отдельном <a href='cartridge/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a><br>В редакторе нажмите Экспорт файла и загрузите его в список:", "type": "WeaponCartridge[]", "value": "" },
 	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "TextFile", "value": "" },
-	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
+	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["", "pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
 ]
@@ -551,7 +553,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.boltPoint", "comment": "Затвор для задёргивания<br>Локальные координаты относительно точки вращения", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltPoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMovePoint", "comment": "Заднее положение затвора при взведении", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/handpoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 200, "sortingOrder": 1500, "spriteName": "boltMovePoint" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove", "comment": "Затвор при стрельбе", "type": "WeaponAnimationDetail", "value": "" },
-
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.move", "comment": "Движение для предпросмотра [0-1]<br>Vector2.Lerp(startPosition, movePosition, move)", "type": "float", "value": 0, "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000 },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.render", "comment": "Рукоятка затвора. Имя объекта для использования в качестве рендера", "type": "SpriteRenderer", "value": "" },
 	{ "fieldPath": "weapon.WeaponHandPoints.handleMove.startPosition", "comment": "Рукоятка затвора в готовом положении.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "handleMove.startPosition" },
@@ -569,9 +570,9 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.startPosition", "comment": "Затворная рама.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "boltMove.startPosition" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.movePosition", "comment": "Затворная рама в заднем положении.<br>Локальные координаты. Z - угол наклона", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/detailmovepoint.png", "spritePivotPoint": { x: 0.5, y: 0.5 }, "spritePixelPerUnit": 250, "sortingOrder": 3000, "spriteName": "boltMove.movePosition" },
 	{ "fieldPath": "weapon.WeaponHandPoints.boltMove.sprites", "comment": "Покадровая анимация с помощью спрайтов", "type": "Sprite[]", "value": "" },
-
 	{ "fieldPath": "weapon.WeaponHandPoints.boltStop", "comment": "Остановить затвор в заднем положении для пустого оружия<br>Затвор будет возвращён, когда coverMove будет равен 1 в процессе перезарядки", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.WeaponHandPoints.clipFrameMove", "comment": "Сдвинуть кадры между двуми событиями. Сдвинуть ключевой кадр, находящийся под вторым событием", "type": "WeaponAnimationRange[]", "value": "" },
+
 	{ "fieldPath": "weapon.magazine.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.magazine.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.magazine.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
