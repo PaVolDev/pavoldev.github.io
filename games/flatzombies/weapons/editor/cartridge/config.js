@@ -37,14 +37,10 @@ const typeDependencies = { //Для параметров указаного ти
 	'TextureSprite': [
 		'pivotPoint',
 		'pixelPerUnit',
-	],
-	'weapon.WeaponHandPoints.fingerPoint': [
-		'WeaponHandPoints.fingerPoint',
-		'WeaponHandPoints.fingerAngle'
 	]
 };
 
-const typeLightForm = {
+const typeLightForm = { //Одно поле для редактирования без заголовка
 	// 'HitsBullet': function (param, index) {
 	// 	return getInputForType(param, index);
 	// }
@@ -60,10 +56,9 @@ var hitMetaData = [
 ]
 
 
-const typeFullForm = {
-	'HitsBullet': function (param, index, childFields) {
-		return `<button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
-			<strong data-tooltip="${param.startFieldPath}">${param.fieldPath}</strong><br>
+const typeFullForm = { //Форма для редактирования набора данных
+	'HitsBullet': function (param, index) {
+		return `<strong data-tooltip="${param.startFieldPath}">${param.fieldPath}</strong><br>
 			<small>${param.comment || ''}</small><br>
 			<div class="grid-in-object">
 			${getInputForType(param, index, null, hitMetaData)}
