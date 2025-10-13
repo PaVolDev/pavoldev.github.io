@@ -93,9 +93,9 @@ async function onSelectWeapon(event) {
 			}
 		});
 		sampleParams.forEach(field => { //Добавить параметры, которые являются дочерним к параметру из availableParams
-			if (availableParams.findIndex(param => field.fieldPath.startsWith(getPrefix(param.fieldPath, param.suffix) + ".")) != -1) {
+			if (!availableParams.find(a => a.startFieldPath == field.startFieldPath) && availableParams.findIndex(param => field.fieldPath.startsWith(getPrefix(param.startFieldPath, param.suffix) + ".") && field.startFieldPath in selectedWeapon) != -1) {
+				console.log(field.startFieldPath + " : " + getPrefix(field.fieldPath, field.suffix));
 				availableParams.push(field);
-
 			}
 		});
 
@@ -155,12 +155,22 @@ function getPrefix(fieldPath, suffix = 'SpriteRenderer.sprite') { //parent.child
 	return fieldPath.replace(suffix, '');
 }
 
+//Найти дочерний параметр
 function getChildDepPath(parentParam, depFieldPath) {
 	const prefix = getPrefix(parentParam.fieldPath, parentParam.suffix);
-	var childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
+	const childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
 	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
-	childPath = parentParam.fieldPath + '.' + depFieldPath;
-	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
+	let index = null;
+	if ((index = sampleParams.findIndex(p => p.fieldPath === childPath)) != -1) { //Параметр может быть не найден в availableParams, ищем его в sampleParams
+		availableParams.push(sampleParams[index]);
+		return childPath;
+	}
+	const childPath2 = parentParam.fieldPath + '.' + depFieldPath;
+	if (availableParams.find(p => p.fieldPath == childPath2)) { return childPath2; }
+	if ((index = sampleParams.findIndex(p => p.fieldPath === childPath2)) != -1) { //Параметр может быть не найден в availableParams, ищем его в sampleParams
+		availableParams.push(sampleParams[index]);
+		return childPath;
+	}
 	console.warn("getChildDepPath: не удалось найти параметр [" + childPath + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
 	return childPath;
 }
@@ -385,6 +395,15 @@ function addParam(fieldPath, addAsFirst = true) {
 	let param = availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
 	if (!param) return;
 	param.value = availableParams.find(p => p.fieldPath === fieldPath)?.value || param.value;
+	if (addAsFirst) {
+		const depKeys = Object.keys(typeDependencies);
+		depKeys.forEach(type => {
+			if (typeDependencies[type].find(childPath => fieldPath.endsWith(childPath))) {
+				addAsFirst = false;
+				return;
+			}
+		});
+	}
 	// Добавляем основной параметр
 	if (addAsFirst) { editedParams.unshift(param); } else { editedParams.push(param); }
 	// Проверяем, есть ли зависимости для типа параметра
@@ -415,16 +434,18 @@ function createParam() {
 	const newFieldPath = document.getElementById('newFieldPath');
 	const newFieldValue = document.getElementById('newFieldValue');
 	if (!newFieldPath.value) return;
-	editedParams.unshift({ "fieldPath": newFieldPath.value, "comment": "", "type": "string", "value": newFieldValue.value });
+	editedParams.unshift({ fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: "string", value: newFieldValue.value });
 	newFieldPath.value = ''; newFieldValue.value = '';
 	renderEditedParams();
 }
 
 // ——— УДАЛЕНИЕ ПАРАМЕТРА ———
-function removeParam(index) {
+function removeParam(index, showConfirm = true) {
 	const param = editedParams[index];
-	const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
-	if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
+	if (showConfirm) {
+		const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
+		if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
+	}
 	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
 	const basePaths = new Set();
 	basePaths.add(param.fieldPath);// Добавляем основной путь
@@ -481,10 +502,9 @@ function forceRenderEditedParams(filter = '') {
 			if (!matchesSearch) { return; }
 		}
 		if (processed.has(param.fieldPath)) return;
-		const renderFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];
-
-		if (typeDependencies[param.startFieldPath] || typeDependencies[param.type]) {
-			const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
+		const renderFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type] || typeLightForm[param.startFieldPath] || typeLightForm[param.type];
+		const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath];
+		if (typeDeps) {
 			const prefix = getPrefix(param.fieldPath, param.suffix);//const name = prefix || 'sprite';
 			const groupPaths = new Array();
 			groupPaths.push(param.fieldPath);
@@ -495,7 +515,21 @@ function forceRenderEditedParams(filter = '') {
 
 			if (renderFormByType) {
 				const li = document.createElement('li'); li.className = 'sprite-block';
-				li.innerHTML = renderFormByType(param, idx, groupPaths);
+				groupPaths.forEach(path => {
+					child = editedParams.findIndex(p => p.fieldPath === path); if (child == -1) { console.warn('editedParams[' + path + '] == NULL'); return; }
+					childParam = editedParams[child];
+					const renderForm = typeFullForm[childParam.startFieldPath] || typeFullForm[childParam.type] || typeLightForm[childParam.startFieldPath] || typeLightForm[childParam.type];
+					if (renderForm && path == param.fieldPath) {
+						li.innerHTML += `<div class="param-block">
+													<div><strong data-tooltip="${childParam.startFieldPath}">${childParam.displayName || childParam.fieldPath}</strong><br><small>${childParam.comment || ''}</small></div><div>${renderForm(childParam, child)}</div>
+													<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>
+													</div>`;
+					} else if (renderForm) {
+						li.innerHTML += renderForm(childParam, child);
+					} else {
+						alert("Параметр " + childParam.startFieldPath + "не имеет формы для редактирования в массиве typeFullForm");
+					}
+				});
 				list.appendChild(li);
 
 			} else if (param.type === 'Sprite') {
@@ -515,7 +549,7 @@ function forceRenderEditedParams(filter = '') {
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл<br><img src='${param.value || ''}'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
+							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
                                 <input type="file" class="fileInput" accept=".png" onchange="fileToBase64(${idx}, this)">
@@ -655,7 +689,7 @@ function forceRenderEditedParams(filter = '') {
 				let innerHTML = '';
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
-					child = editedParams.find(p => p.fieldPath === path); if (!param) { console.warn('editedParams[' + path + '] == NULL'); return; }
+					child = editedParams.find(p => p.fieldPath === path); if (!child) { console.warn('editedParams[' + path + '] == NULL'); return; }
 					if (availableByField[child.fieldPath] && !editedParams.find(p => (p.value === availableByField[child.fieldPath].value || Array.isArray(availableByField[child.fieldPath].value) && availableByField[child.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
 					innerHTML += `<div class="param-group-field">
 					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
@@ -670,7 +704,8 @@ function forceRenderEditedParams(filter = '') {
 
 		} else if (renderFormByType) {
 			const li = document.createElement('li');
-			li.innerHTML = renderFormByType(param, idx, null);
+			li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>`
+			li.innerHTML += renderFormByType(param, idx, null);
 			list.appendChild(li);
 		} else {
 			// Обычный параметр
@@ -693,6 +728,11 @@ const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; 
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
 
+	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
+	if (renderFormByType && objKey == null) {
+		return renderFormByType(param, index);
+	}
+
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
@@ -704,7 +744,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
 		param.options.forEach(opt => {
 			const isSelected = opt == param.value ? ' selected' : '';
-			selectHTML += `<option value="${opt}"${isSelected}>${opt}</option>`;
+			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt)}</option>`;
 		});
 		selectHTML += '</select>';
 		return selectHTML;
@@ -732,10 +772,6 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		return asd;
 	}
 
-	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
-	if (renderFormByType && objKey == null) {
-		return renderFormByType(param, index);
-	}
 
 
 	switch (param.type) {
