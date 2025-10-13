@@ -33,7 +33,14 @@
 					<span data-tooltip="Значение свойства">Значение:</span>
 					<input type="text" id="newFieldPath" class="panelInput" value="" placeholder="object.MonoBehaviour.field">
 					<input type="text" id="newFieldValue" class="panelInput" value="" placeholder="(0.5, 0.12, 0)">
-					<span></span>
+					<span>
+						<select id="newFieldType" class="panelInput" data-tooltip="Тип данных">
+							<option value="string">Обычная строка</option>
+							<option value="AnimationSprite[]">Анимация</option>
+							<option value="Sprite[]">Список спрайтов</option>
+							<option value="AudioClip[]">Список звуков</option>
+						</select>
+					</span>
 					<span><br><button onclick="createParam()" class="button add">Добавить</button></span>
 				</div>
 
@@ -238,7 +245,7 @@
 				<li>❌ Запрещено использование фотографий</li>
 				<li>❌ Запрещено насилие против детей и животных;</li>
 				<li>❌ Запрещен контент, нарушающий законодательство вашей страны;</li>
-				</ul>
+			</ul>
 			<div class="checkbox-container">
 				<input type="checkbox" id="agreeCheckbox" required>
 				<label for="agreeCheckbox">Я прочитал и согласен с правилами выше.<br>Я согласен на удаление личных файлов со своего устройства в случае нарушения.</label>
@@ -250,7 +257,7 @@
 	</div>
 
 
-	
+
 
 
 	<!-- Подключаем скрипты -->
