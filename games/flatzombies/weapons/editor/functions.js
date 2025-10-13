@@ -252,9 +252,7 @@ function renderTextureListEditor(param, paramIndex) {
 			</div>`;
 	});
 
-	html += `
-		</div>
-		<div><button class="remove-btn" onclick="removeParam(${paramIndex})" data-tooltip="Удалить параметр">✕</button></div>`;
+	html += `</div>`;
 
 	return html;
 }
@@ -415,7 +413,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 		return `<div class="array-item" data-index="${i}">
 				<div class="array-item-head">
 					<div class="array-item-title">${param.fieldPath}[${i}]</div>
-					<button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
 				</div>
 				<div class="grid-in-object">
 					<div class="field-row" data-tooltip="Материал тела">
@@ -451,8 +449,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 			</div>`;
 	};
 	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
-	return `<button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
-			<strong>${param.fieldPath}</strong><br>
+	return `<strong>${param.fieldPath}</strong><br>
 			<small>${param.comment || ''}</small><br>
 			<div class="field-control">
 				<div class="array-items" id="array-items-physics-${index}">
@@ -568,7 +565,7 @@ function renderObjectArray(param, index, objectMetaData) {
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="array-item-title">${param.fieldPath}[${i}]</div>
-                    <button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
                     ${fieldsHtml}
@@ -580,8 +577,7 @@ function renderObjectArray(param, index, objectMetaData) {
 	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
 
 	return `
-        <button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
-        <strong>${param.fieldPath}</strong><br>
+		<strong>${param.fieldPath}</strong><br>
         <small>${param.comment || ''}</small><br>
         <div class="field-control">
             <div class="array-items" id="array-items-${index}">
@@ -604,7 +600,7 @@ function addArrayItemByMeta(paramIndex) {
 			newItem[field.fieldPath] = field.value;
 		});
 		param.value.push(newItem);
-	}else{
+	} else {
 		param.value.push(''); //Добавить пустую строку
 	}
 	updateParam(paramIndex, param.value, true);
@@ -634,8 +630,89 @@ function updateArrayFieldByMeta(paramIndex, itemIndex, field, value) {
 
 
 
+function renderFileArray(param, index, fileType = ".png") {
+	const items = Array.isArray(param.value) ? param.value : [];
+	const renderItem = (itemValue, i) => {
 
-//универсальная функция renderJsonArray, которая позволяет редактировать массив объектов, где каждый элемент — JSON-строка:
+		return `
+            <div class="array-item" data-index="${i}">
+                <div class="array-item-head">
+                    <div class="field-label">${param.fieldPath}[${i}]</div>
+					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
+                </div>
+                <div class="grid-in-object">
+					<div class="field-control">
+						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${itemValue}" id="${param.fieldPath}-input-${i}">
+						<div class="iconButton" data-tooltip="Сохранить в файл">
+							<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
+						</div>
+						<label class="fileInputLabel">
+							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} onchange="loadFileToArray(${index}, ${i}, this)">
+							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+						</label>
+					</div>
+                </div>
+            </div>
+        `;
+	};
+
+	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
+
+	return `
+        <strong>${param.fieldPath}</strong><br>
+        <small>${param.comment}</small><br>
+        <div class="field-control">
+            <div class="array-items" id="array-items-${index}">
+                ${itemsHtml}
+                <div class="row-actions">
+                    <button class="add" onclick="addFileItem(${index})" data-tooltip="Добавить новый файл в список">Добавить</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+
+
+// Добавить новый элемент в массив
+function addFileItem(paramIndex) {
+	const param = editedParams[paramIndex];
+	if (!Array.isArray(param.value)) param.value = [];
+	param.value.push(''); //Добавить пустую строку
+	updateParam(paramIndex, param.value, true);
+}
+
+// Обновить поле в объекте массива
+function updateFileItem(paramIndex, itemIndex, value) {
+	const param = editedParams[paramIndex];
+	if (Array.isArray(param.value) && param.value[itemIndex]) {
+		param.value[itemIndex] = value;
+	}
+}
+// Обновить элемент массива
+function loadFileToArray(paramIndex, itemIndex, input) {
+	const file = input.files[0];
+	if (!file) return;
+	const reader = new FileReader();
+	reader.onload = e => {
+		const base64 = e.target.result;
+		// Обрезаем прозрачные края
+		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
+			const param = editedParams[paramIndex];
+			param.value[itemIndex] = trimmedBase64;
+			updateParam(paramIndex, param.value, true);
+		});
+	};
+	reader.onerror = () => {
+		alert('Failed to read file.');
+	};
+	reader.readAsDataURL(file);
+}
+
+
+
+//Функция позволяет редактировать массив объектов, где каждый элемент — JSON-строка:
 // Форма для редактирования массива JSON-объектов
 function renderJsonArray(param, index) {
 	const items = Array.isArray(param.value) ? param.value : [];
@@ -647,7 +724,7 @@ function renderJsonArray(param, index) {
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="field-label">${param.fieldPath}[${i}]</div>
-                    <button class="itemremove" onclick="removeArrayItem(${index}, ${i})">Удалить</button>
+					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
@@ -666,9 +743,7 @@ function renderJsonArray(param, index) {
 	};
 
 	const itemsHtml = items.map((item, i) => renderItem(item, i)).join('');
-
 	return `
-        <button class="remove-btn" onclick="removeParam(${index})" data-tooltip="Удалить параметр">✕</button>
         <strong>${param.fieldPath}</strong><br>
         <small>${param.comment}</small><br>
         <div class="field-control">
@@ -737,4 +812,56 @@ function saveJsonToFile(paramIndex, itemIndex) {
 	linkElement.setAttribute('href', dataUri);
 	linkElement.setAttribute('download', exportFileDefaultName);
 	linkElement.click();
+}
+
+
+
+
+
+
+
+
+function renderStringList(param, index, objKey = null) {
+	if (param.options) { //Показать список
+		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
+		if (!param.options.includes("< Указать свой >")) { param.options.unshift("< Указать свой >"); }
+		param.options.forEach(opt => {
+			const isSelected = opt == param.value ? ' selected' : '';
+			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt)}</option>`;
+		});
+		selectHTML += '</select>';
+		return selectHTML;
+	}
+	console.warn('renderStringList: параметр не имеет списка значений, param.options == NULL');
+	return '';
+}
+
+
+
+
+
+
+
+let cartridgeListParam = null; //Параметр со списком патронов записываем в отдельную переменную, чтобы убирать с экрана
+const setOwnValueText = "< Указать свой >";
+function renderWeaponCartridge(param, index) {
+	if ('options' in param) {
+		if (!param.options.includes(setOwnValueText)) { param.options.unshift(setOwnValueText); }
+		let selectHTML = renderStringList(param, index);
+		cartridgeListParam = editedParams.find(p => p.fieldPath == "cartridgeList") || availableParams.find(p => p.fieldPath == "cartridgeList") || sampleParams.find(p => p.fieldPath == "cartridgeList");
+		const listIndex = editedParams.findIndex(p => p.fieldPath == "cartridgeList");
+		if (param.options.indexOf(param.value) <= 0) {
+			param.value = param.value.replace(setOwnValueText, '');
+			selectHTML += `<br><input type="text" placeholder="Идентификатор патрона" value="${param.value}" data-tooltip="Укажите идентификатор патрона.<br>При загрузке оружия в игру, будет обнаружено, что оружие нуждается в патроне и игра попытается загрузить этот патрон по идентификатору. Нужно указать не калибр, а именно идентификатора вашего патрона.<br><br>Вам доступен список патронов <b>cartridgeList</b>.<br>Основной патрон можно сразу добавить в список и тогда патроны будут загружаться сразу вместе с оружием." onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}"></input>`;
+			if (listIndex == -1 && cartridgeListParam) {
+				editedParams.push(cartridgeListParam);
+			}
+		} else if (listIndex != -1) {
+			cartridgeListParam = editedParams[listIndex];
+			editedParams.splice(listIndex, 1);
+		}
+		return selectHTML;
+	}
+	alert("renderWeaponCartridge: параметр не имеет списка значений\n" + param.startFieldPath + '.options == NULL');
+	return '';
 }
