@@ -433,8 +433,10 @@ function createParam() {
 	closeAddNewField();
 	const newFieldPath = document.getElementById('newFieldPath');
 	const newFieldValue = document.getElementById('newFieldValue');
+	const newFieldType = document.getElementById('newFieldType');
 	if (!newFieldPath.value) return;
-	editedParams.unshift({ fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: "string", value: newFieldValue.value });
+	editedParams.unshift({ fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: newFieldType.value, value: newFieldValue.value });
+	console.log(newFieldValue.value);
 	newFieldPath.value = ''; newFieldValue.value = '';
 	renderEditedParams();
 }
