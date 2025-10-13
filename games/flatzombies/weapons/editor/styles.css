@@ -33,6 +33,15 @@ body {
 	height: 100vh;
 }
 
+a {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+a:hover {
+	color: #bad4ff;
+}
+
 textarea {
 	width: 100%;
 	height: 8em;
@@ -188,7 +197,7 @@ h2 {
 
 #availableParamsList li,
 #editedParamsList li {
-	margin: 6px 0;
+	margin: 1px 0;
 	padding: 8px;
 	border: 1px solid var(--border-color);
 	background: var(--card-bg);
@@ -541,6 +550,12 @@ small {
 	width: 24px;
 	height: 24px;
 	margin: 0px 4px;
+}
+
+img.tooltip {
+	margin: 8px 0px;
+	padding: 8px;
+	background: white;
 }
 
 
