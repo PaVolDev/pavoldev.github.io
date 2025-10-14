@@ -1,0 +1,116 @@
+{
+    "id": "remington1187",
+    "idTemplate": "benelli-m4",
+    "type": "weapon",
+    "weapon.caliber": "12gauger1187",
+    "storeInfo.nameFull": "Remington 11-87",
+    "storeInfo.iconBase64": "data:image/png;base64,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",
+    "storeInfo.silencerPosition": "(264, 7)",
+    "weapon.gunFlash.AnimatorSprite.animations": [
+        {
+            "name": "asd",
+            "frames": [
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                null
+            ]
+        },
+        {
+            "name": "zxc",
+            "frames": [
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                {
+                    "pivotPoint": "(0, 0.5)",
+                    "pixelPerUnit": 25
+                },
+                null
+            ]
+        }
+    ],
+    "weapon.WeaponHandPoints.WeaponAnimation": "",
+    "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
+    "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
+    "weapon.WeaponHandPoints.handleMove.render": "",
+    "weapon.WeaponHandPoints.coverMove.movePosition": "(0, 0, 0)",
+    "weapon.WeaponHandPoints.coverMove.startPosition": "(0, 0, 0)",
+    "weapon.WeaponHandPoints.coverMove.render": "",
+    "weapon.WeaponHandPoints.boltMove.movePosition": "(0.68, 0.35, 0)",
+    "weapon.WeaponHandPoints.boltMove.startPosition": "(1, 0.35, 0)",
+    "weapon.WeaponHandPoints.boltMove.render": "",
+    "weapon.WeaponHandPoints.openCoverPoint": "(0, 0)",
+    "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
+    "weapon.WeaponHandPoints.bulletPoint": "(0.310, 0, 0)",
+    "weapon.WeaponHandPoints.handInsertPoint": "(0.000, 0, 0)",
+    "weapon.WeaponHandPoints.boltMovePoint": "(0.168, 0.17, 0)",
+    "weapon.WeaponHandPoints.boltPoint": "(0.418, 0.166, 0)",
+    "weapon.WeaponHandPoints.magazineInsertAngle": 0,
+    "weapon.WeaponHandPoints.magazineInsert": "(0.000, 0, 0)",
+    "weapon.WeaponHandPoints.magazinePoint": "(0.000, 0, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.713, 0.044, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.097, -0.214, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.173, 0.036, 0)",
+    "weapon.WeaponHandPoints.weaponType": "shotgun+leftBolt",
+    "weapon.SpriteRenderer.enabled": true,
+    "weapon.SpriteRenderer.sortingOrder": 17,
+    "weapon.SpriteRenderer.sprite.pixelPerUnit": 150,
+    "weapon.SpriteRenderer.sprite.pivotPoint": "(0.360, 0.560)",
+    "storeInfo.silencerGroup": "shotgun",
+    "weapon.sight.Transform.localPosition": "(1.308, 0.043, 0)",
+    "weapon.sight.gameObject.SetActive": true,
+    "weapon.sight.SpriteRenderer.enabled": true,
+    "weapon.sight.Transform.localEulerAngles.z": 0,
+    "weapon.sight.SpriteRenderer.sortingOrder": 18,
+    "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.840)",
+    "weapon.WeaponSilencerMod.localPoint": "(1.500, 0.202, 0)",
+    "weapon.magazineMax": 8,
+    "weapon.laserPosition": "(1.416, -0.039, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(2.006, 0.185, 0)",
+    "weapon.gunFlash.gameObject.SetActive": true,
+    "weapon.gunFlash.Transform.localEulerAngles.z": 0,
+    "weapon.recoilSteps": 5,
+    "weapon.recoilMax": 9,
+    "weapon.recoilDecrease": 16,
+    "weapon.shellDrop.position": "(0.320, 0.185, 0)",
+    "weapon.shellDrop.angle": 100,
+    "weapon.bolt": "(0.056, 0.16, 0)",
+    "weapon.flashlight": "(1.429, -0.033, 0)",
+    "weapon.automat": false,
+    "weapon.fireRateInMinute": "180",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.014, 0.212)",
+    "weapon.WeaponHandPoints.fingerAngle": -33,
+    "cartridgeList": []
+}
