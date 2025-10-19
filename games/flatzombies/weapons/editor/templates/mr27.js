@@ -75,7 +75,7 @@ export default {
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
 "weapon.WeaponHandPoints.buttstockPoint":"(-1.03, -0.02)",
-"weapon.WeaponHandPoints.buttstockReload":"(-1.03, -0.02)",
+"weapon.WeaponHandPoints.buttstockReload":"-0.63, 0.52)",
 "weapon.WeaponHandPoints.handguardPoint":"(0.68, 0.08)",
 "weapon.WeaponHandPoints.fingerPoint":"(0.01, 0.15, 0)",
 "weapon.WeaponHandPoints.fingerAngle": -20,
