@@ -196,8 +196,6 @@ function renderTextureListEditor(param, paramIndex) {
 					`<img src="${texture}" onerror="this.style.opacity='0.3'" style="max-width: 100%; max-height: 60px; object-fit: contain;">`
 				}
 					</div>
-
-					<!-- Поля: PPU и Pivot (в стиле вашего UI) -->
 					<div style="display: grid;grid-template-columns: 50% 50%;align-self: end;">
 						${isNull ? `
 							<button type="button" onclick="convertNullAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="font-size: 0.85em; padding: 2px 6px;">→ Заменить на изображение</button>
@@ -211,12 +209,6 @@ function renderTextureListEditor(param, paramIndex) {
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 							</label>
 							</div>
-
-
-
-
-
-							<!-- PPU и Pivot в стиле TextureSprite -->
 							<div style="display: grid; grid-template-columns: 1fr 2fr; margin-left: 2px;">
 								<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
 									<span class="title">PPU:</span>
@@ -521,47 +513,86 @@ function renderObjectArray(param, index, objectMetaData) {
 	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const renderItem = (item, i) => {
 		const fieldsHtml = objectMetaData.map(fieldMeta => {
-			const currentValue = item[fieldMeta.fieldPath] ?? fieldMeta.value;
-			// Определение типа поля
-			if (fieldMeta.type === 'string' && fieldMeta.options) {
-				// Выпадающий список
-				const optionsHtml = fieldMeta.options.map(opt =>
-					`<option value="${opt}" ${opt === currentValue ? 'selected' : ''}>${opt}</option>`
-				).join('');
-				return `
-                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
-                        <div class="field-label">${fieldMeta.fieldPath}</div>
-                        <div class="field-control">
-                            <select onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)" class="field-input">
-                                ${optionsHtml}
-                            </select>
-                        </div>
-                    </div>
-                `;
-			} else if (fieldMeta.type === 'int' || fieldMeta.type === 'float') {
-				// Числовое поле
-				const step = fieldMeta.type === 'float' ? '0.1' : '1';
-				return `
-                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
-                        <div class="field-label">${fieldMeta.fieldPath}</div>
-                        <div class="field-control">
-                            <input type="${fieldMeta.type === 'int' ? 'number' : 'number'}" step="${step}" value="${currentValue}" class="field-input"
-                                onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', ${fieldMeta.type === 'int' ? 'parseInt' : 'parseFloat'}(this.value))">
-                        </div>
-                    </div>
-                `;
-			} else {
-				// Обычное текстовое поле
-				return `
-                    <div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
-                        <div class="field-label">${fieldMeta.fieldPath}</div>
-                        <div class="field-control">
-                            <input type="text" value="${currentValue}" class="field-input"
-                                onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)">
-                        </div>
-                    </div>
-                `;
-			}
+			return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+							<div class="field-label">${fieldMeta.fieldPath}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, i, fieldMeta.fieldPath])}</div>
+						</div>`;
+
+			/*
+						// Определение типа поля
+						if (fieldMeta.type === 'string' && fieldMeta.options) {
+							// Выпадающий список
+							const optionsHtml = fieldMeta.options.map(opt =>
+								`<option value="${opt}" ${opt === currentValue ? 'selected' : ''}>${opt}</option>`
+							).join('');
+							return `
+								<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+									<div class="field-label">${fieldMeta.fieldPath}</div>
+									<div class="field-control">
+										<select onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)" class="field-input">
+											${optionsHtml}
+										</select>
+									</div>
+								</div>
+							`;
+						} else if (fieldMeta.type === 'int' || fieldMeta.type === 'float') {
+							// Числовое поле
+							const step = fieldMeta.type === 'float' ? '0.1' : '1';
+							return `
+								<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+									<div class="field-label">${fieldMeta.fieldPath}</div>
+									<div class="field-control">
+										<input type="${fieldMeta.type === 'int' ? 'number' : 'number'}" step="${step}" value="${currentValue}" class="field-input"
+											onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', ${fieldMeta.type === 'int' ? 'parseInt' : 'parseFloat'}(this.value))">
+									</div>
+								</div>
+							`;
+			
+						} else if (fieldMeta.type === 'Vector2') {
+							const v2 = parseVector(fieldMeta.value);
+							const path = param.fieldPath + '[' + i + '].' + fieldMeta.fieldPath;
+							return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 10em;" >
+							<div class="propertyBlock">
+							<span class="title">X:</span>
+							<input id="${path}.x" type="number" step="0.01" value="${v2[0]}" onchange="updateValueByPath(this.value, ['${param.fieldPath}',${i},'${fieldMeta.fieldPath}', 'x'])" style="width: 100%;">
+							</div>
+							<div class="propertyBlock">
+							<span class="title">Y:</span>
+							<input id="${path}.y" type="number" step="0.01" value="${v2[1]}" onchange="updateValueByPath(this.value, ['${param.fieldPath}',${i},'${fieldMeta.fieldPath}', 'y'])" style="width: 100%;">
+							</div>
+							</div>`;
+						} else if (fieldMeta.type === 'Vector3') {
+							const v3 = parseVector(fieldMeta.value);
+							const path = param.fieldPath + '[' + i + '].' + fieldMeta.fieldPath;
+							return `<div style="display: grid; grid-template-columns: 33% 33% 33%; max-width: 20em;" >
+							<div class="propertyBlock">
+							<span class="title">X:</span>
+							<input id="${path}.x" type="number" step="0.01" value="${v3[0]}" onchange="updateValueByPath(this.value, ['${param.fieldPath}',${i},'${fieldMeta.fieldPath}', 'x'])" style="width: 100%;">
+							</div>
+							<div class="propertyBlock">
+							<span class="title">Y:</span>
+							<input id="${path}.y" type="number" step="0.01" value="${v3[1]}" onchange="updateValueByPath(this.value, ['${param.fieldPath}',${i},'${fieldMeta.fieldPath}', 'y'])" style="width: 100%;">
+							</div>
+							<div class="propertyBlock">
+							<span class="title">Z:</span>
+							<input id="${path}.y" type="number" step="0.01" value="${v3[2]}" onchange="updateValueByPath(this.value, ['${param.fieldPath}',${i},'${fieldMeta.fieldPath}', 'z'])" style="width: 100%;">
+							</div>
+							</div>`;
+						} else {
+							// Обычное текстовое поле
+							return `
+								<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+									<div class="field-label">${fieldMeta.fieldPath}</div>
+									<div class="field-control">
+										<input type="text" value="${currentValue}" class="field-input"
+											onchange="updateArrayFieldByMeta(${index}, ${i}, '${fieldMeta.fieldPath}', this.value)">
+									</div>
+								</div>
+							`;
+						}
+			
+			*/
+
 		}).join('');
 
 		return `
@@ -593,6 +624,97 @@ function renderObjectArray(param, index, objectMetaData) {
     `;
 }
 
+/**
+ * Устанавливает значение по вложенному пути в объекте или массиве.
+ * @param {*} newValue — новое значение
+ * @param {(string|number)[]} path — путь в виде массива ключей/индексов
+ */
+function updateValueByPath(newValue, path) {
+	let index = null;
+	if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
+		path.shift();
+		editedParams[index].value = updateChildValueByPath(editedParams[index].value, newValue, path);
+	}
+}
+
+/**
+ * Устанавливает значение по вложенному пути в объекте или массиве.
+ * @param {Object|Array} currentObj — целевой объект/массив
+ * @param {*} newValue — новое значение
+ * @param {(string|number)[]} path — путь в виде массива ключей/индексов
+ */
+function updateChildValueByPath(currentObj, newValue, path) {
+	if (path.length === 0) { return newValue; }
+	let lastObject = currentObj;
+	let current = currentObj;
+	let objKey = path[path.length - 1];
+	for (let i = 0; i < path.length; i++) {
+		objKey = path[i];
+		current = lastObject[objKey];
+		if ((objKey == 'x' || objKey == 'y' || objKey == 'z') && i == path.length - 1) {
+			break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
+		}
+		if (current == null) { throw new Error(`Невозможно получить свойство '${objKey}' в объекте: ` + JSON.stringify(currentObj)); }
+		if (typeof current !== 'object' && !Array.isArray(current)) { //throw new Error(`Свойство '${objKey}' должно быть объектом для сохранения изменений в родительском объекте: ` + JSON.stringify(currentObj));
+			break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
+		} else {
+			lastObject = current;
+		}
+	}
+	const lastKey = path[path.length - 1];
+	if (lastKey == 'x') {
+		lastObject[objKey] = updateVectorValue(lastObject[objKey], 0, newValue);
+	} else if (lastKey == 'y') {
+		lastObject[objKey] = updateVectorValue(lastObject[objKey], 1, newValue);
+	} else if (lastKey == 'z') {
+		lastObject[objKey] = updateVectorValue(lastObject[objKey], 2, newValue);
+	} else {
+		lastObject[objKey] = newValue;
+	}
+	//console.log(JSON.stringify(lastObject) + ' [' + objKey + ']');
+	//console.log(JSON.stringify(currentObj));
+	return currentObj;
+}
+
+
+
+function getValueByPath(path) {
+	let index = null;
+	if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
+		if (path.length === 1) {
+			return editedParams[index].value;
+		}
+		let lastObject = editedParams[index].value;
+		let current = editedParams[index].value;
+		let objKey = path[path.length - 1];
+		for (let i = 1; i < path.length; i++) {
+			objKey = path[i];
+			current = lastObject[objKey];
+			if ((objKey == 'x' || objKey == 'y' || objKey == 'z') && i == path.length - 1) {
+				break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
+			}
+			if (current == null) { throw new Error(`Невозможно получить свойство '${objKey}' в объекте: ` + JSON.stringify(currentObj)); }
+			if (typeof current !== 'object' && !Array.isArray(current)) { //throw new Error(`Свойство '${objKey}' должно быть объектом для сохранения изменений в родительском объекте: ` + JSON.stringify(currentObj));
+				break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
+			} else {
+				lastObject = current;
+			}
+		}
+		const lastKey = path[path.length - 1];
+		if (lastKey == 'x') {
+			return parseVector(lastObject[objKey])[0];
+		} else if (lastKey == 'y') {
+			return parseVector(lastObject[objKey])[1];
+		} else if (lastKey == 'z') {
+			return parseVector(lastObject[objKey])[2];
+		} else {
+			return lastObject[objKey];
+		}
+	}
+}
+
+
+
 // Добавить новый элемент в массив
 function addArrayItemByMeta(paramIndex) {
 	const param = editedParams[paramIndex];
@@ -622,7 +744,11 @@ function removeArrayItem(paramIndex, itemIndex) {
 function updateArrayFieldByMeta(paramIndex, itemIndex, field, value) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[itemIndex]) {
-		param.value[itemIndex][field] = value;
+		if (field in param.value[itemIndex]) {
+			param.value[itemIndex][field] = value;
+		} else {
+			console.warn("updateArrayFieldByMeta: свойство '" + field + "' не найдено в объекте ", param.value[itemIndex]);
+		}
 	}
 }
 
@@ -646,7 +772,7 @@ function renderFileArray(param, index, fileType = ".png") {
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
-						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${itemValue}" id="${param.fieldPath}-input-${i}">
+						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
 						<div class="iconButton" data-tooltip="Сохранить в файл">
 							<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
 						</div>
