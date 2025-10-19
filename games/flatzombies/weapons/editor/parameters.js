@@ -730,11 +730,13 @@ const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; 
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.fieldPath == param.fieldPath);
 
+	//Тип параметра имеет свою функцию для построения формы
 	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 	if (renderFormByType && objKey == null) {
 		return renderFormByType(param, index);
 	}
 
+	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
@@ -742,6 +744,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
+
 	if (param.options) { //Показать список
 		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
 		param.options.forEach(opt => {
@@ -752,6 +755,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		return selectHTML;
 	}
 
+	//Объект JavaScript
 	if (param.value !== null && typeof param.value === 'object') {
 		const obj = param.value;
 		var asd = '';
@@ -771,7 +775,11 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 					</div>`
 			}
 		}
-		return asd;
+		if (asd != '') {
+			return asd;
+		}else{
+			return `<textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
+		}
 	}
 
 
@@ -828,12 +836,131 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}" >`;
 		case 'bool':
 			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam(${index}, this.checked ? true : false, false, '${objKey || ''}')" id="${param.fieldPath}">`;
-		case 'WeaponCartridge[]':
 		case 'AudioClip[]':
 		case 'Sprite[]':
 			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
 		default:
 			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
+	}
+}
+
+/**
+ * Возвращаем HTML-форму для редактирования параметра оружия
+ * @param {*} param — параметр
+ * @param {(string|number)[]} parentPath — путь в виде массива ключей/индексов
+ */
+function getInput(param, path) {
+	const pathString = JSON.stringify(path).replaceAll('"', '\'');
+	const currentValue = getValueByPath(path);
+	const idElement = path.join('.');
+
+	//Тип параметра имеет свою функцию для построения формы
+	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
+	if (renderFormByType && objKey == null) {
+		return renderFormByType(param, index);
+	}
+
+	if (param.options) { //Показать список
+		let selectHTML = `<select onchange="updateValueByPath(this.value, ${pathString});" class="field-input">`;
+		param.options.forEach(opt => {
+			const isSelected = opt == currentValue ? ' selected' : '';
+			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt)}</option>`;
+		});
+		selectHTML += '</select>';
+		return selectHTML;
+	}
+
+	//Поле с кнопкой для загрузки файла
+	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
+		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${idElement}, this)">
+				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
+	}
+
+	//Объект JavaScript
+	if (currentValue !== null && typeof currentValue === 'object') {
+		const obj = currentValue;
+		var asd = '';
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key) && objMetaData) {
+				childObjParam = objMetaData.find(p => p?.fieldPath === key);
+				if (!childObjParam) { console.warn(`Массив objMetaData должен иметь данные для свойства ${key}`); continue; }
+				childObjParam.value = obj[key];
+				asd += `<div class="param-group-field">
+						<div>
+							<div class="field-label">${key}</div>
+							<small>${childObjParam?.comment || ''}</small>
+						</div>
+						<div class="field-control">
+						${getInputForType(childObjParam, index, key)}
+						</div>
+					</div>`
+			}
+		}
+		if (asd != '') {
+			return asd;
+		} else {
+			return `<textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
+		}
+	}
+
+
+	switch (param.type) {
+		case 'SpriteRenderer':
+		case 'Transform':
+			let selectHTML = `<select onchange="updateValueByPath(this.value, ${pathString});" class="field-input" id="${idElement}">`;
+			selectHTML += `<option value=""${(!currentValue ? ' selected' : '')}> </option>`;
+			sceneObjects.forEach(obj => {
+				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
+					selectHTML += `<option value="${obj.name}"${(obj.name == currentValue ? ' selected' : '')}>${obj.name}</option>`;
+				}
+			});
+			selectHTML += '</select>';
+			return selectHTML;
+		case 'Vector2':
+			const v2 = parseVector(currentValue);
+			return `<div style="display: grid; grid-template-columns: 50% 50%; max-width: 10em;" >
+				<div class="propertyBlock">
+				<span class="title">X:</span>
+                <input id="${idElement}.x" type="number" step="0.01" value="${v2[0]}" onchange="updateValueByPath(this.value, ${pathString.replace(']', ", 'x']")})" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Y:</span>
+                <input id="${idElement}.y" type="number" step="0.01" value="${v2[1]}" onchange="updateValueByPath(this.value, ${pathString.replace(']', ", 'y']")})" style="width: 100%;">
+                </div>
+				</div>`;
+		case 'Vector3':
+			const v3 = parseVector(currentValue);
+			return `<div style="display: grid; grid-template-columns: 33% 33% 33%; max-width: 20em;" >
+				<div class="propertyBlock">
+				<span class="title">X:</span>
+                <input id="${idElement}.x" type="number" step="0.01" value="${v3[0]}" onchange="updateValueByPath(this.value, ${pathString.replace(']', ", 'x']")})" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Y:</span>
+                <input id="${idElement}.y" type="number" step="0.01" value="${v3[1]}" onchange="updateValueByPath(this.value, ${pathString.replace(']', ", 'y']")})" style="width: 100%;">
+                </div>
+				<div class="propertyBlock">
+				<span class="title">Z:</span>
+                <input id="${idElement}.y" type="number" step="0.01" value="${v3[2]}" onchange="updateValueByPath(this.value, ${pathString.replace(']', ", 'z']")})" style="width: 100%;">
+                </div>
+				</div>`;
+		case 'float':
+		case 'number':
+		case 'int':
+			if ('min' in param && 'max' in param) {
+				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
+					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="propAngleSlider" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}">
+					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${idElement}" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}" >
+				</div>`;
+			}
+			return `<input type="number" value="${currentValue}" onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}" class="field-input" data-tooltip="${param.type}" >`;
+		case 'bool':
+			return `<input type="checkbox" ${(currentValue === 'true' || currentValue) ? 'checked' : ''} onchange="updateValueByPath(this.checked ? true : false, false, ${pathString})" id="${idElement}">`;
+		default:
+			return `<input type="text" value="${currentValue}" data-tooltip="${param.type}" onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}">`;
 	}
 }
 
@@ -867,14 +994,18 @@ function updateFieldHTML(index, value) {
 
 function updateVector(index, coordIndex, value, syncToScene = true) {
 	if (index >= 0 && index < editedParams.length) {
-		const coords = parseVector(editedParams[index].value);
-		coords[coordIndex] = parseFloat(value) || 0;
-		editedParams[index].value = `(${coords.slice(0, coords.length === 2 ? 2 : 3).join(', ')})`;
-		//renderEditedParams();
+		editedParams[index].value = updateVectorValue(editedParams[index].value, coordIndex, value);
 		if (syncToScene) syncParamsToScene();
 	}
 }
 
+
+
+function updateVectorValue(vectorValue, coordIndex, newFloatValue) {
+	const coords = parseVector(vectorValue);
+	coords[coordIndex] = parseFloat(newFloatValue) || 0;
+	return `(${coords.slice(0, coords.length === 2 ? 2 : 3).join(', ')})`;
+}
 
 
 /*
@@ -984,15 +1115,20 @@ function trimTransparentEdges(base64, maxSize, step, padding, callback) {
 	img.onerror = () => callback(base64);
 }
 
-function fileToBase64(index, input) {
+function fileToBase64(idInputElement, input) {
 	const file = input.files[0];
 	if (!file) return;
 	const reader = new FileReader();
 	reader.onload = e => {
 		const base64 = e.target.result;
+		const textInput = Number.isInteger(idInputElement) ? null : document.getElementById(idInputElement);
 		// Обрезаем прозрачные края
 		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
-			editedParams[index].value = trimmedBase64;
+			if (textInput != null) {
+				textInput.value = trimmedBase64;
+			} else {
+				editedParams[idInputElement].value = trimmedBase64;
+			}
 			input.value = '';
 			renderEditedParams();
 			syncParamsToScene();
