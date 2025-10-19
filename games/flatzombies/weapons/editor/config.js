@@ -235,12 +235,18 @@ const audioClipMetaData = [
 const typeFullForm = { //Полная форма для редактирования набора данных с заголовком и комментарием
 	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
 	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
-	'Sprite[]': function (param, idx) { return renderFileArray(param, idx, ".png"); },
+	'Sprite[]': function (param, idx) { return renderObjectArray(param, idx, spriteArrayMetaData); },
 	'AnimationSprite[]': function (param, idx) { return renderTextureListEditor(param, idx); }
 }
 const typeLightForm = { //Одно поле для редактирования без заголовка
 	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); }
 }
+
+const spriteArrayMetaData = [
+	{ "fieldPath": "sprite", "comment": "Спрайт, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	{ "fieldPath": "pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 }
+];
 
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
@@ -261,6 +267,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["", "pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.WeaponHandPoints.clip", "comment": "Анимация оружия", "type": "string", "value": "" },
 ]
 
 
