@@ -777,7 +777,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		}
 		if (asd != '') {
 			return asd;
-		}else{
+		} else {
 			return `<textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
 		}
 	}
@@ -875,7 +875,7 @@ function getInput(param, path) {
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
 		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${idElement}, this)">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64('${idElement}', this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -974,6 +974,9 @@ function htmlspecialchars(str) {
 // ——— РЕДАКТИРОВАНИЕ ———
 function updateParam(index, value, updateParamList = false, objKey = null) {
 	if (index >= 0 && index < editedParams.length) {
+		if (value && 7 <= value.length && value.trim().startsWith("{") && value.trim().endsWith("}")) {
+			value = JSON.parse(value);
+		}
 		if (objKey && objKey != null && objKey != 'null') {
 			editedParams[index].value[objKey] = value;
 		} else {
@@ -1126,6 +1129,7 @@ function fileToBase64(idInputElement, input) {
 		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
 			if (textInput != null) {
 				textInput.value = trimmedBase64;
+				textInput.onchange(new Event('change'));
 			} else {
 				editedParams[idInputElement].value = trimmedBase64;
 			}
