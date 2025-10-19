@@ -190,5 +190,7 @@ weapons.push({
 "weapon.boltHandle.SpriteRenderer.enabled": true,
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "aa12",
-"storeInfo.silencerGroup": "seg12"
+"storeInfo.silencerGroup": "seg12",
+
+
 });
