@@ -21,7 +21,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
-const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive', 'weapon.Transform.'];
+const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive'];
 const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
 const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
 
