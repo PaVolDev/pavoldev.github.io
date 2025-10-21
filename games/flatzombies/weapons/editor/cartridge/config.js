@@ -11,7 +11,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
-const ignoreExportFields = ['storeInfo.iconBase64', 'gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.', 'Transform.'];
+const ignoreExportFields = ['storeInfo.iconBase64', 'gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.'];
 const prefixHide = ['cartridge.'];
 const prefixExport = 'cartridge.'; //Вернуть приставку при экспорте
 
@@ -188,7 +188,8 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "arrowSample.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "arrowSample.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": "100" },
 	{ "fieldPath": "arrowSample.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": "0" },
-	{ "fieldPath": "arrowSample.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", "type": "bool", "value": "true" }
+	{ "fieldPath": "arrowSample.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", "type": "bool", "value": "true" },
+	{ "fieldPath": "arrowSample.WeaponRocket.objectExplode.Transform.localScale", "comment": "Масштабировать размер взрыва", "type": "Vector3", "value": "(1, 1, 1)" }
 
 ];
 
