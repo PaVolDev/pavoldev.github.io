@@ -478,8 +478,7 @@ function renderAvailableParams(filter = '') {
 		li.innerHTML = `
 				<button onclick="addParam('${param.fieldPath}')" class="add">Добавить</button>
                 <div ><span class="fieldpath">${param.displayName || param.fieldPath}</span> 
-				<br>
-				<small class="fieldcomment">${param.comment || ''}</small>
+				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
 				<br><small class="fieldtype">${param.type}</small><br>
 				</div>
 				
@@ -523,7 +522,7 @@ function forceRenderEditedParams(filter = '') {
 					const renderForm = typeFullForm[childParam.startFieldPath] || typeFullForm[childParam.type] || typeLightForm[childParam.startFieldPath] || typeLightForm[childParam.type];
 					if (renderForm && path == param.fieldPath) {
 						li.innerHTML += `<div class="param-block">
-													<div><strong data-tooltip="${childParam.startFieldPath}">${childParam.displayName || childParam.fieldPath}</strong><br><small>${childParam.comment || ''}</small></div><div>${renderForm(childParam, child)}</div>
+													<div><strong data-tooltip="${childParam.startFieldPath}">${childParam.displayName || childParam.fieldPath}</strong>${childParam.comment ? `<br><small class="fieldcomment">${childParam.comment}</small>` : ''}</div><div>${renderForm(childParam, child)}</div>
 													<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>
 													</div>`;
 					} else if (renderForm) {
@@ -546,8 +545,9 @@ function forceRenderEditedParams(filter = '') {
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
-                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
-                <small>${param.comment || ''}</small><br>
+                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong>
+				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
+				<br>
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
@@ -620,8 +620,9 @@ function forceRenderEditedParams(filter = '') {
 				const li = document.createElement('li'); li.className = 'sprite-block';
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
-                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong><br>
-                <small>${param.comment || ''}</small><br>
+                <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong>
+				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
+				<br>
                 <div>
                     <span style="display: grid;grid-template-columns: 6% 6% 15.5% 16% 33.5%;place-items: end;justify-items: right;width:100%;">
 						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
@@ -661,8 +662,9 @@ function forceRenderEditedParams(filter = '') {
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
 					<div>
-					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
-					<small>${param.comment || ''}</small></div>
+					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong>
+					${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
+					</div>
 					<div>
 						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
 							${ppuIdx >= 0 ? `<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
@@ -715,8 +717,9 @@ function forceRenderEditedParams(filter = '') {
 			if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 			li.innerHTML = `
 					<div>
-					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong> <br>
-					<small>${param.comment || ''}</small></div>
+					<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong>
+					${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
+					</div>
 					<div >${getInputForType(param, idx)}</div>
 					<div><button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button></div>`;
 			list.appendChild(li);
@@ -767,7 +770,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 				asd += `<div class="param-group-field">
 						<div>
 							<div class="field-label">${key}</div>
-							<small>${childObjParam?.comment || ''}</small>
+							<small>${childObjParam.comment || ''}</small>
 						</div>
 						<div class="field-control">
 						${getInputForType(childObjParam, index, key)}
@@ -891,7 +894,7 @@ function getInput(param, path) {
 				asd += `<div class="param-group-field">
 						<div>
 							<div class="field-label">${key}</div>
-							<small>${childObjParam?.comment || ''}</small>
+							<small>${childObjParam.comment || ''}</small>
 						</div>
 						<div class="field-control">
 						${getInputForType(childObjParam, index, key)}
@@ -1267,7 +1270,8 @@ function importFromJSON(jsonData) {
 				addParam(sampleParams[index].fieldPath);
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
 				const pathSuffix = field.key.split('.').slice(-2).join('.') // 'weapon.parent.laserSight.SpriteRenderer.sprite' => 'SpriteRenderer.sprite', получаем суффикс и ищем какой тип данных имеет этот параметр по похожим данным из массива sampleParams
-				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": sampleParams.find(p => p.fieldPath.endsWith(pathSuffix))?.type || "string", "value": field.value });
+				const analog = sampleParams.findLast(p => p.fieldPath.endsWith(pathSuffix));
+				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": analog?.type || "string", "value": field.value, "suffix": analog?.suffix });
 			}
 		});
 
