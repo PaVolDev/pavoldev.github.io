@@ -407,7 +407,7 @@ function addParam(fieldPath, addAsFirst = true) {
 	// Добавляем основной параметр
 	if (addAsFirst) { editedParams.unshift(param); } else { editedParams.push(param); }
 	// Проверяем, есть ли зависимости для типа параметра
-	const dependencies = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
+	const dependencies = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	editedPoint.forEach(p => {
 		if (p.angle && fieldPath.endsWith(p.name)) { // "shellDrop.position".endsWith(".position")
 			dependencies.push(fieldPath.replace(p.name, p.angle)); // shellDrop.position => shellDrop.angle
@@ -448,7 +448,7 @@ function removeParam(index, showConfirm = true) {
 		const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
 		if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
 	}
-	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || [];
+	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	const basePaths = new Set();
 	basePaths.add(param.fieldPath);// Добавляем основной путь
 	typeDeps.forEach(depPath => {// Добавляем зависимости с префиксом
