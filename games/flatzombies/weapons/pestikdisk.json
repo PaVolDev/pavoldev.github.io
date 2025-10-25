@@ -39,7 +39,7 @@
     "arrowSample.WeaponArrow.pointFrontTip": "(1.24, 0)",
     "arrowSample.WeaponArrow.pointSpriteCheck": "(0.25, 0)",
     "arrowSample.WeaponArrow.angleTipSpeed": 90,
-    "arrowSample.WeaponArrow.spriteHit": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAAAICAYAAAAr4RfwAAACG0lEQVRYCe1XTWrCUBCe+C+KBvxZ2iwEQdQqHqC9gNAu3HuE3qA9gkfIEdKdC6Hpxo2b9ACi4k4RFRFF/Ok3kic2RYgUrIsMvMy8me/5hnmfkxepUCgQi9frPWjxqFarwowuFouiJEmP+/1egZPHD4HfcLlcU2gdgU8OAk/b7Zba7TaNx2N2OXJjFchkMiKjV5yXgnPW4HgPh8PU6XRIURTa7XYUjUYPuOFwSFIulyMc9i/CMKJSqbDa8+MSAVF0JKBBcwL9RqNxyXIHe8UKZLNZ3u0jGAw+srFaraYgiQrC1DHtp1Kpn4QxO8wrOswbL7CKSRqr2/a81Wo5HcZ2tf4H6PP5KJlMkizL5Pf7j0nM53Mmzxs6jArnTHSYB4D0I+rEwCuGTtrWScS+ORgMaLlc2l/gIP+1Avw6isViFI/HrXloIIzqAVkMRPjV8WRF8D3kr4Th+4tDGGtlb3fudrvJ4/GcTZAjM4xnK8K8qN7B37PGLpmXSqUi8F/NZvOSZQ72ShXgbgK5TyQSLyDLUyAQkMXW+KMbuNvUMdcwmCd0lkq1Wo3jfX7YFVxyp8Aa6Ez6ZrMxIpGIjgQOG9n9DQd3vQqUy2WxmSGM9Xrdw1C73a4KXz+fz4vQQZ8lDH8SmyJBP7ANn4x2VTT9rHq45/TYCIVCvOkMn2Y8PcpkMjnajnE7FTghCyel4dymo9GoDvtL3F/S6fSvhL8BeTy47nXEQMIAAAAASUVORK5CYII=",
+    "arrowSample.WeaponArrow.spriteHit": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAADCAYAAAA6Lue6AAAAIklEQVR4AdzPAQ0AAAzCsAd1twhmQQcsmYBCfLePG2gCEQAAAP//DHWimwAAAAZJREFUAwB5mHlhlx3+QQAAAABJRU5ErkJggg==",
     "arrowSample.WeaponArrow.spriteHit.pixelPerUnit": "50",
     "arrowSample.WeaponArrow.spriteHit.pivotPoint": "(0.5, 0.5)",
     "arrowSample.WeaponArrow.scaleImpulse": 5,
@@ -48,6 +48,6 @@
     "arrowSample.arrowRender.gameObject.SetActive": true,
     "arrowSample.arrowRender.SpriteRenderer.enabled": true,
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
-    "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "201",
+    "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "151",
     "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)"
 }
