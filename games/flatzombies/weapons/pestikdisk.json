@@ -48,6 +48,6 @@
     "arrowSample.arrowRender.gameObject.SetActive": true,
     "arrowSample.arrowRender.SpriteRenderer.enabled": true,
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
-    "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "151",
+    "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "31",
     "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)"
 }
