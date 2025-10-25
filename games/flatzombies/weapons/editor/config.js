@@ -72,7 +72,7 @@ const typeDependencies = { //Для параметров указаного ти
 		'WeaponHandPoints.fingerPoint',
 		'WeaponHandPoints.fingerAngle'
 	],
-	'caliber': [
+	'weapon.caliber': [
 		'cartridgeList',
 	]
 };
