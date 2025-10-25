@@ -357,7 +357,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.magazinePlayStep", "comment": "Кол-во патронов из магазина для запуска анимации", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angleScatter", "comment": "Случаное отклонение от основного направления для гильзы", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.laserPosition", "comment": "Позиция лазера от точки вращения оружия", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/laser.png", "spritePivotPoint": { x: 0, y: 0.5 }, "spritePixelPerUnit": 100, "sortingOrder": 1 },
-	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite", "comment": "Огонь от выстрела, спрайт/текстура, PNG-файл", "type": "Renderer", "value": "", suffix: ".SpriteRenderer.sprite" },
+	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite", "comment": "Огонь от выстрела", "type": "Renderer", "value": "", suffix: ".SpriteRenderer.sprite" },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
