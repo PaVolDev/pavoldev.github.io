@@ -1,0 +1,29 @@
+{
+    "id": "pestikcartridge",
+    "idTemplate": "9x19",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADCklEQVR4AcyZ7XHbMAyGVY/kLuFBevVMThZph2hXcvTwAh1MASBI0U5yeS2SAN4PKsmfnJaJX2+3yz2LibKF6nAQbbwwJj9G5zz6oSCzTczg6w6CqHcrM85H+dNBEAAzzLY40AGtPl1PBWmR/r7++aGhBeq17mNd1/W+pat7m0EiMowATdi7Zh54c5G+ngmDeCQIA010dA0fsHg8H7rXDeINe2Ka9Mja4/f8iJYZxBvyRIRs1tPT8XyhuwviNXvkkDwDnp7nbxfEMuWRWr0zz3p0H4JYaXvIZoYQLkvf8rkFsYoWiQi88mn5qP1uQV5p7BlabhDrFloGuCUQ9VEHUY9Va/kpQUaIa7Fejt7+Wo+95ihBONRopde9rDUh+yx65yJfZpCsEfp6zTCjcXReuE5HiFqz9+X+UyCC1rPFY83ImcwefiNCuCzLtsQ8PwbX69//Avacb02TF2YQUmZgecEs5q0a59StWkaPHmuWMzMIhVFgNppt1aPZqDY1iHfbtYFsXz0X7acGyd52ti8yXtemBqnJX7mfGmT9ZfyXMZ/ty3BJz9QgK+l5ReY725fhKj1mEP7mZ1AYqo/WbXv1jB49ldy2NYNs1bHFGbPvt8u7HmfP+Xo2/W2snMspSklDhGD2fF+WXxgXsF+5zit23wHPrrc+kNnDb0SIaoHPPcYFn0ePj8b8Y3OwM4Ost7heYDBVlUbN9M5FvkqQXsIqR9n2cvT2F5HqQ3OUIFW9bKP0pcH4gBgYpe2IOtgOkouWHzdIkv/btG1BrFtq3cKrUlg+ar9bEEzVRc6+GpkQeHwIwkENi6ju+Q77XRDrrXxVGEvX8sdF7oJwaDVDCqg/G2+3S/l/fa1j+ZIeMwhFb+jZYTx+zw9egRuEojeMGKBnFuADFp/nQ/eGQWiMSBAG9I2CeeDNR/p6phmE5hYZRjSY8aD7WHt9nLd06RGkgtAMKWD9bKADenTSQYS0V0Dmss9R/u4gGEJMwP4ohIvnKNdQEC2GuECft9Yyw7PVm6kfDqJFMJWFnpux/gAAAP//xSPG0wAAAAZJREFUAwCSsg2Dpu7E6AAAAABJRU5ErkJggg==",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAADCAYAAAA6Lue6AAAAIklEQVR4AdzPAQ0AAAzCsAd1twhmQQcsmYBCfLePG2gCEQAAAP//DHWimwAAAAZJREFUAwB5mHlhlx3+QQAAAABJRU5ErkJggg==",
+    "caliberName": "disk",
+    "uiName": "disk",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": "0.1",
+    "distance": 24,
+    "impulse": 15,
+    "stopPower": 0.05,
+    "noiseVolume": "0",
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": []
+}
