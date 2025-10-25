@@ -196,10 +196,10 @@ function renderScene() {
 	ctx.stroke();
 	// Засечки на концах
 	ctx.beginPath();
-	ctx.moveTo(rulerX, rulerY - 5);
-	ctx.lineTo(rulerX, rulerY + 5);
-	ctx.moveTo(rulerX + rulerLength, rulerY - 5);
-	ctx.lineTo(rulerX + rulerLength, rulerY + 5);
+	ctx.moveTo(rulerX, rulerY - 7);
+	ctx.lineTo(rulerX, rulerY + 7);
+	ctx.moveTo(rulerX + rulerLength, rulerY - 7);
+	ctx.lineTo(rulerX + rulerLength, rulerY + 7);
 	ctx.stroke();
 	// Засечки по 10% от длины (внутри, между концами)
 	const step = rulerLength * 0.1; // 10% от длины
@@ -215,7 +215,7 @@ function renderScene() {
 	ctx.font = 'bold 14px Arial';
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'bottom';
-	ctx.fillText('1 метр', rulerX + rulerLength / 2, rulerY - 8);
+	ctx.fillText('1 метр', rulerX + rulerLength, rulerY - 8);
 
 	ctx.restore();
 }
