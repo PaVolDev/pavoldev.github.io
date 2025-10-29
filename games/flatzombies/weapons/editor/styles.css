@@ -267,9 +267,13 @@ h2 {
 	padding: 2px;
 	margin-top: 30px;
 	margin-bottom: 60px;
+	display: grid;
+	grid-template-columns: 48% 50%;
+	grid-column-gap: 2%;
 }
 
 .resultButton {
+	margin-top: 2px;
 	padding: 10px 20px;
 	color: black;
 	border: none;
@@ -283,14 +287,16 @@ h2 {
 .spriteFields {
 	margin-top: 6px;
 	display: grid;
-	grid-template-columns: 60% 40%;
+	grid-template-columns: 30% 30% 30%;
 	place-items: self-end;
 	row-gap: 10px;
 	grid-column-gap: 2px;
 }
 
 .jsonFileButton {
-	background: rgb(255, 167, 78)
+	background: rgb(255, 167, 78);
+	width: 100%;
+	max-width: 10em;
 }
 
 #saveButton {
@@ -303,7 +309,8 @@ h2 {
 }
 
 .savePanel {
-	width: 200px;
+	width: 100%;
+	max-width: 14em;
 	float: right;
 }
 
