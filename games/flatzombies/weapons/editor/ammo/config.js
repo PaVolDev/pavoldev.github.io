@@ -109,7 +109,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "distance", "comment": "Дистанция пули для поиска столкновений", "type": "float", "value": "0" },
 	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределен между всеми пулями", "type": "float", "value": "0" },
 	{ "fieldPath": "stopPower", "comment": "Останавливающий эффект<br>Существо само решает как реагировать на этот параметр", "type": "float", "value": "0", min: 0, max: 1 },
-	{ "fieldPath": "noiseVolume", "comment": "Громкость шума/выстрела", "type": "float", "value": "0", min: 0, max: 6 },
+	//{ "fieldPath": "noiseVolume", "comment": "Громкость шума/выстрела", "type": "float", "value": "0", min: 0, max: 6 },
 	{ "fieldPath": "penetration", "comment": "Параметры проникновения пули.", "type": "HitsBullet", "value": "" },
 	{ "fieldPath": "penetrationDamage", "comment": "Снижение урона после прохождения пули сквозь тела.", "type": "PhysicsMaterialMultiply[]", "value": "" },
 	//{ "fieldPath": "entityTag", "comment": "Тег игровых объектов существ, с которыми искать попадание пуль (необязательно)", "type": "string", "value": "" },
