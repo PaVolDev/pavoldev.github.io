@@ -464,7 +464,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.cartridge.id", "comment": "Идентификатор патрона, чтобы отличать его от всех остальных", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.cartridge.damage", "comment": "Наносимый урон от всех пуль.<br>Будет распределен между всеми пулями", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.cartridge.stopPower", "comment": "Останавливающий эффект [0-1]<br>Зомби сам решает как реагировать на этот параметр", "type": "float", "value": 0, min: 0, max: 1 },
-	{ "fieldPath": "weapon.cartridge.noiseVolume", "comment": "Громкость шума/выстрела от патрона", "type": "float", "value": 0 },
+	//{ "fieldPath": "weapon.cartridge.noiseVolume", "comment": "Громкость шума/выстрела от патрона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.cartridge.impulse", "comment": "Импульс ForceMode2D.Impulse.<br>Будет распределен между всеми пулями", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.cartridge.arrowsPerShot", "comment": "Кол-в во стрел/снарядов при одном выстреле", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.cartridge.angleScatter", "comment": "Максмлн отклонение пули в градусах, для создания разброса", "type": "float", "value": 0 },
