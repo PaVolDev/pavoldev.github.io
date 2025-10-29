@@ -143,25 +143,28 @@
 			</div>
 			<ul id="editedParamsList"></ul>
 			<div class="buttonPanel hidden" id="buttonPanel">
-				<button id="importJsonFile" class="resultButton jsonFileButton" data-tooltip="Открыть файл с модом">Импорт...</button>
-				<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button>
-				<div class="savePanel">
-					<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
-						<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
+				<div>
+					<button id="importJsonFile" class="resultButton jsonFileButton" data-tooltip="Открыть файл с модом">Импорт...</button><br>
+					<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button>
+				</div>
+				<div>
+					<div class="savePanel">
+						<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
+							<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
+						</div>
+						<form method="GET" class="save" id="save">
+							<button type="submit" id="saveButton" class="resultButton" data-tooltip="Сохранить на общий сервер">Отправить</button>
+							<input type="hidden" name="action" value="login">
+							<input data-tooltip="Логин и пароль для вашего мода.<br>Пароль нужен, чтобы только вы могли редактировать свои моды, чтобы никакой PROгебатор-228из5Б не мог изменить и сломать ваше творение" type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
+							<input data-tooltip="Браузер должен будет предложить сохранить пароль.<br>Сохраните пароль и используйте его при повторном запуске страницы" type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
+							<select id="saveMode" data-tooltip="• Закрытый тест - оружие будет доступно только по идентификатору. В режиме Тренировка в списке оружий есть кнопка Добавить, в этом меню укажите идентификатор и загрузите оружие в игру. Можете вносить различные правки в оружие и делать повторную отправку, затем в игре нажать Обновить для перезагрузки мода<br>• Опубликовать - добавить оружие в общий список всем игрокам">
+								<option value="test">Закрытый тест</option>
+								<option value="publish">Опубликовать</option>
+							</select>
+						</form>
 					</div>
-					<form method="GET" class="save" id="save">
-						<button type="submit" id="saveButton" class="resultButton" data-tooltip="Сохранить на общий сервер">Отправить</button>
-						<input type="hidden" name="action" value="login">
-						<input data-tooltip="Логин и пароль для вашего мода.<br>Пароль нужен, чтобы только вы могли редактировать свои моды, чтобы никакой PROгебатор-228из5Б не мог изменить и сломать ваше творение" type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
-						<input data-tooltip="Браузер должен будет предложить сохранить пароль.<br>Сохраните пароль и используйте его при повторном запуске страницы" type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
-						<select id="saveMode" data-tooltip="• Закрытый тест - оружие будет доступно только по идентификатору. В режиме Тренировка в списке оружий есть кнопка Добавить, в этом меню укажите идентификатор и загрузите оружие в игру. Можете вносить различные правки в оружие и делать повторную отправку, затем в игре нажать Обновить для перезагрузки мода<br>• Опубликовать - добавить оружие в общий список всем игрокам">
-							<option value="test">Закрытый тест</option>
-							<option value="publish">Опубликовать</option>
-						</select>
-					</form>
 				</div>
 			</div>
-
 		</div>
 
 		<!-- Правая панель: Предпросмотр -->
