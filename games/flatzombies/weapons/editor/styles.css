@@ -287,7 +287,7 @@ h2 {
 .spriteFields {
 	margin-top: 6px;
 	display: grid;
-	grid-template-columns: 30% 30% 30%;
+	grid-template-columns: 60% 39%;
 	place-items: self-end;
 	row-gap: 10px;
 	grid-column-gap: 2px;
