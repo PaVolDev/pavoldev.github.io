@@ -16,7 +16,6 @@
     "distance": 24,
     "impulse": 35,
     "stopPower": 0.6,
-    "noiseVolume": 2,
     "penetration": {
         "modeHit": "RANDOM_FIRST",
         "minHits": 2,
@@ -25,5 +24,6 @@
         "maxDist": 4,
         "findExitPoint": true
     },
-    "penetrationDamage": []
+    "penetrationDamage": [],
+    "noiseVolume": 2
 }
