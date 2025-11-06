@@ -95,7 +95,7 @@ var mainParams = [ //Список важных параметров для за�
 ];
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
-	{ "fieldPath": "uiName", "comment": "Имя короткое для отображения в интрфейсе", "type": "string", "value": "" },
+	{ "fieldPath": "uiName", "comment": "Имя короткое для отображения в интерфейсе", "type": "string", "value": "" },
 	{ "fieldPath": "caliberName", "comment": "Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название.<br>Строка используется как второй идентификатор для связи с оружием", "type": "string", "value": "" },
 	{ "fieldPath": "shellSkin", "comment": "Гильза при стрельбе", "type": "TextureSprite", "value": "" },
 	{ "fieldPath": "shellSkin.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
@@ -103,11 +103,11 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "iconButtonSprite", "comment": "Изображение для кнопки в интерфейсе<br>Квадратное изображение 100x100 или длинный патрон с большой шириной", "type": "Image", "value": "" },
 	{ "fieldPath": "iconListSprite", "comment": "Изображение патрона для интерфейса в списке заряженных патронов в магазин оружия", "type": "Image", "value": "" },
 	{ "fieldPath": "bullets", "comment": "Кол-в во пуль при одном выстреле", "type": "int", "value": "0" },
-	{ "fieldPath": "angleRandom", "comment": "Максмлн отклонение пули в градусах, для создания разброса", "type": "float", "value": "0", min: 0, max: 180 },
+	{ "fieldPath": "angleRandom", "comment": "Максимальное отклонение пули в градусах, для создания разброса", "type": "float", "value": "0", min: 0, max: 180 },
 	{ "fieldPath": "angleSpread", "comment": "Равномерное распределение пуль", "type": "float", "value": "0", min: 0, max: 1 },
-	{ "fieldPath": "damage", "comment": "Наносимый урон от всех пуль <br>Будет распределен между всеми пулями", "type": "float", "value": "0" },
+	{ "fieldPath": "damage", "comment": "Наносимый урон от всех пуль <br>Будет распределён между всеми пулями", "type": "float", "value": "0" },
 	{ "fieldPath": "distance", "comment": "Дистанция пули для поиска столкновений", "type": "float", "value": "0" },
-	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределен между всеми пулями", "type": "float", "value": "0" },
+	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределён между всеми пулями", "type": "float", "value": "0" },
 	{ "fieldPath": "stopPower", "comment": "Останавливающий эффект<br>Существо само решает как реагировать на этот параметр", "type": "float", "value": "0", min: 0, max: 1 },
 	//{ "fieldPath": "noiseVolume", "comment": "Громкость шума/выстрела", "type": "float", "value": "0", min: 0, max: 6 },
 	{ "fieldPath": "penetration", "comment": "Параметры проникновения пули.", "type": "HitsBullet", "value": "" },
@@ -121,7 +121,7 @@ var baseParams = [  //Список параметров, доступные дл
 
 
 var sampleParams = [ //Список всех параметров, относящиеся только к оружию в руках
-	{ "fieldPath": "angleScatter", "comment": "Максмлн отклонение пули в градусах, для создания разброса", "type": "float", "value": "0", min: 0, max: 180 },
+	{ "fieldPath": "angleScatter", "comment": "Максимальное отклонение пули в градусах, для создания разброса", "type": "float", "value": "0", min: 0, max: 180 },
 	{ "fieldPath": "evenlySpread", "comment": "Равномерное распределение стрел/снарядов при выстреле", "type": "float", "value": "0", min: 0, max: 1 },
 
 	{ "fieldPath": "timeTriggers", "comment": "Время активности триггеров для снаряда. За это время снаряд должен успеть попасть в цель", "type": "float", "value": "0" },
@@ -142,7 +142,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "arrowSample.WeaponArrow.scaleImpulse", "comment": "Множитель импульса, когда стрела ударяется об землю при падении тела", "type": "float", "value": "0", displayName: "arrowSample.scaleImpulse" },
 	{ "fieldPath": "arrowSample.arrowRender.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "arrowSample.arrowRender.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": "0" },
-	{ "fieldPath": "arrowSample.arrowRender.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами", "type": "bool", "value": "true" },
+	{ "fieldPath": "arrowSample.arrowRender.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", "type": "bool", "value": "true" },
 	{ "fieldPath": "arrowSample.arrowRender.SpriteRenderer.sprite", "comment": "Спрайт со стрелой, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" },
 	{ "fieldPath": "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": "100" },
@@ -156,23 +156,23 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "arrowSample.AnimatorSprite.reverse", "comment": "Воспроизвести в обратном порядке", "type": "bool", "value": "true" },
 	{ "fieldPath": "arrowSample.AnimatorSprite.loop", "comment": "Проигрывать повторно", "type": "bool", "value": "true" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.speed", "comment": "Скорость полёта", "type": "float", "value": "0", displayName: "arrowSample.speed" },
-	{ "fieldPath": "arrowSample.WeaponFireRocket.timerLive", "comment": "Время, в течении которого снаряд будет находится на сцене. За это время он дожен успеть попасть и успеть отыграть анимаци взрыва", "type": "float", "value": "0", displayName: "arrowSample.timerLive" },
+	{ "fieldPath": "arrowSample.WeaponFireRocket.timerLive", "comment": "Время, в течении которого снаряд будет находится на сцене. За это время он должен успеть попасть и успеть отыграть анимации взрыва", "type": "float", "value": "0", displayName: "arrowSample.timerLive" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.scaleGravity", "comment": "Множитель для изменения гравитации и скорости падения", "type": "float", "value": "0", displayName: "arrowSample.scaleGravity" },
-	{ "fieldPath": "arrowSample.WeaponFireRocket.distLivedEntity", "comment": "Радиус/Дистанция для попадания в живых существ.\nЕсли в пределах этого расстояния нет живых, то фиксируем попадние в трупы", "type": "float", "value": "0", displayName: "arrowSample.distLivedEntity" },
-	{ "fieldPath": "arrowSample.WeaponFireRocket.slideExplode", "comment": "Сдвиг объекта перед запуском пуль. Сдвиг с учетом угла наклона и относительно точки, в котором произошло пересечение снаряда", "type": "Vector2", "value": "(0, 0)", displayName: "arrowSample.slideExplode" },
+	{ "fieldPath": "arrowSample.WeaponFireRocket.distLivedEntity", "comment": "Радиус/Дистанция для попадания в живых существ.\nЕсли в пределах этого расстояния нет живых, то фиксируем попадание в трупы", "type": "float", "value": "0", displayName: "arrowSample.distLivedEntity" },
+	{ "fieldPath": "arrowSample.WeaponFireRocket.slideExplode", "comment": "Сдвиг объекта перед запуском пуль. Сдвиг с учётом угла наклона и относительно точки, в котором произошло пересечение снаряда", "type": "Vector2", "value": "(0, 0)", displayName: "arrowSample.slideExplode" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.renderMaterialHit", "comment": "Шейдер при попадании", "type": "Material", "value": "", displayName: "arrowSample.renderMaterialHit" },
-	{ "fieldPath": "arrowSample.WeaponFireRocket.floorWall", "comment": "Физ.материал земли. При попадании в него сразу отключаем огонь", "type": "PhysicsMaterial2D", "value": "", displayName: "arrowSample.floorWall" },
+	{ "fieldPath": "arrowSample.WeaponFireRocket.floorWall", "comment": "Материал земли и стен. При попадании в него сразу отключаем огонь", "type": "PhysicsMaterial2D", "value": "", displayName: "arrowSample.floorWall" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.damage", "comment": "Урон один раз в процессе горения", "type": "float", "value": "0", displayName: "arrowSample.damage" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.speedMoveRotate", "comment": "Дистанция/Скорость для наклона на все 90 градусов", "type": "float", "value": "0", displayName: "arrowSample.speedMoveRotate" },
 	{ "fieldPath": "arrowSample.WeaponFireRocket.speedRotateFire", "comment": "Скорость вращения огня для достижения необходимого угла", "type": "float", "value": "0", displayName: "arrowSample.speedRotateFire" },
 	{ "fieldPath": "arrowSample.WeaponRocket.speed", "comment": "Скорость полёта", "type": "float", "value": "0", displayName: "arrowSample.speed" },
-	{ "fieldPath": "arrowSample.WeaponRocket.timerLive", "comment": "Время, в течении которого снаряд будет находится на сцене. За это время он дожен успеть попасть и успеть отыграть анимаци взрыва", "type": "float", "value": "0", displayName: "arrowSample.timerLive" },
+	{ "fieldPath": "arrowSample.WeaponRocket.timerLive", "comment": "Время, в течении которого снаряд будет находится на сцене. За это время он должен успеть попасть и успеть отыграть анимации взрыва", "type": "float", "value": "0", displayName: "arrowSample.timerLive" },
 	{ "fieldPath": "arrowSample.WeaponRocket.scaleGravity", "comment": "Множитель для изменения гравитации и скорости падения", "type": "float", "value": "0", displayName: "arrowSample.scaleGravity" },
 	{ "fieldPath": "arrowSample.WeaponRocket.distanceSnake", "comment": "Дистанция тряски в одну сторону", "type": "float", "value": "0", displayName: "arrowSample.distanceSnake" },
 	{ "fieldPath": "arrowSample.WeaponRocket.timeSnake", "comment": "Длительность тряски", "type": "float", "value": "0", displayName: "arrowSample.timeSnake" },
 	{ "fieldPath": "arrowSample.WeaponRocket.periodSnake", "comment": "Количество колебаний", "type": "int", "value": "0", displayName: "arrowSample.periodSnake" },
 	{ "fieldPath": "arrowSample.WeaponRocket.soundHit", "comment": "Звук взрыва при попадании", "type": "AudioClip", "value": "", displayName: "arrowSample.soundHit" },
-	{ "fieldPath": "arrowSample.WeaponRocket.slideExplode", "comment": "Сдвиг объекта назад, относительно точки, в котором прозишло попадние", "type": "Vector2", "value": "(0, 0)", displayName: "arrowSample.slideExplode" },
+	{ "fieldPath": "arrowSample.WeaponRocket.slideExplode", "comment": "Сдвиг объекта назад, относительно точки, в котором произошло попадание", "type": "Vector2", "value": "(0, 0)", displayName: "arrowSample.slideExplode" },
 	{ "fieldPath": "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "", displayName: "arrowSample.objectExplode.initialAnimation" },
 	{ "fieldPath": "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": "true", displayName: "arrowSample.objectExplode.playStart" },
 	{ "fieldPath": "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.animations", "comment": "Анимация взрыва", "type": "AnimationSprite[]", "value": "", },
@@ -193,7 +193,6 @@ var sampleParams = [ //Список всех параметров, относя�
 
 ];
 
-
 //Добавить основные парамметры WeaponCartridge
 baseParams.forEach(field => {
 	defaultAddedFields.push([field.fieldPath, "NULL"]);
@@ -202,3 +201,6 @@ baseParams.forEach(field => {
 sampleParams.forEach(field => {
 	defaultAddedFields.push([field.fieldPath, "NULL"]);
 });
+
+
+
