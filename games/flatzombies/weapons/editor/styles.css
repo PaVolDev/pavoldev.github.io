@@ -51,6 +51,10 @@ select {
 	padding: 6px;
 }
 
+select::selection {
+	color: var(--accent);
+}
+
 input {
 	padding: 6px;
 	border: none;
@@ -149,13 +153,6 @@ ul {
 	flex-direction: column;
 }
 
-h2 {
-	font-size: 16px;
-	margin: 0 0 12px 0;
-	color: var(--accent);
-	padding-bottom: 8px;
-	border-bottom: 1px solid var(--border-color);
-}
 
 .hidden {
 	visibility: hidden;
@@ -656,7 +653,16 @@ img.tooltip {
 	scrollbar-color: #e74c3c;
 }
 
-.modal h2 {
+.heading {
+	font-size: 16px;
+	margin: 0 0 12px 0;
+	color: var(--accent);
+	padding-bottom: 8px;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.h2 {
+	display: inline;
 	color: #e74c3c;
 	margin-bottom: 20px;
 	font-size: 24px;
