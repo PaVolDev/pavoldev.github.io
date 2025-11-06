@@ -1,6 +1,6 @@
 
 function addNewSprite() {
-	const spriteName = prompt("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite");
+	const spriteName = prompt(tr("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite"));
 	if (!spriteName) { return; }
 	if (sceneObjects.find(o => o.name === spriteName)) {
 		alert('Объект с таким именем уже существует!');
@@ -69,6 +69,9 @@ function removeRulesWindow(event = null) {
 }
 
 
+
+
+
 // Всплывающие подсказки
 const tooltip = Object.assign(document.createElement('div'), {
 	className: 'smart-tooltip',
@@ -110,6 +113,10 @@ document.addEventListener('mouseout', () => {
 	tooltip.style.opacity = 0;
 });
 
+
+
+
+
 //Небольшие функции для кнопки Сохранить
 function generateRandomString() {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -123,6 +130,8 @@ document.getElementById('save').addEventListener('mouseenter', function () { // 
 		password.value = generateRandomString();
 	}
 });
+
+
 
 
 
@@ -151,7 +160,7 @@ function renderTextureListEditor(param, paramIndex) {
 		<div class="animations-editor" data-param-index="${paramIndex}">
 			<div class="animations-header" style="margin-bottom: 8px;">
 				<strong>Анимации (${animations.length})</strong>
-				<button type="button" class="add-animation-btn" onclick="addAnimation(${paramIndex})" style="font-size: 0.9em; padding: 2px 6px;">➕ Анимацию</button>
+				<button type="button" class="add-animation-btn" onclick="addAnimation(${paramIndex})" style="font-size: 0.9em; padding: 2px 6px;">➕ Добавить</button>
 			</div>`;
 
 	animations.forEach((anim, animIdx) => {
@@ -198,12 +207,12 @@ function renderTextureListEditor(param, paramIndex) {
 					</div>
 					<div style="display: grid;grid-template-columns: 50% 50%;align-self: end;">
 						${isNull ? `
-							<button type="button" onclick="convertNullAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="font-size: 0.85em; padding: 2px 6px;">→ Заменить на изображение</button>
+							<button type="button" onclick="convertNullAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="font-size: 0.85em; padding: 2px 6px;">Заменить на спрайт</button>
 						` : `
 							<!-- Texture input -->
 							<div class="input-group" style="align-items: end;">
 							<input type="text" class="text-input" value="${texture}" onchange="updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'texture', this.value)" placeholder="data:file/type;base64,..." >
-							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG</div>" onclick="base64ToFile('${texture.replace(/'/g, "\\'")}', 'frame-${animIdx}-${frameIdx}.png')"><img src="images/download.png" ></div>
+							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл</div>" onclick="base64ToFile('${texture.replace(/'/g, "\\'")}', 'frame-${animIdx}-${frameIdx}.png')"><img src="images/download.png" ></div>
 							<label class="fileInputLabel">
 							<input type="file" class="fileInput" accept=".png" onchange="fileToBase64AnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
@@ -239,7 +248,7 @@ function renderTextureListEditor(param, paramIndex) {
 
 		html += `
 				<div style="margin-top: 6px; display: flex; gap: 6px;">
-					<button type="button" onclick="addAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Фрейм</button>
+					<button type="button" onclick="addAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Кадр</button>
 					<button type="button" onclick="addNullAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Пустой</button>
 				</div>
 			</div>`;
@@ -448,7 +457,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 			<div class="field-control">
 				<div class="array-items" id="array-items-physics-${index}">
 					${itemsHtml}
-					<div class="row-actions"><button data-tooltip="Добавить ещё один параметр<br>в список ${param.fieldPath}" class="add" onclick="addArrayItem(${index})">Добавить</button></div>
+					<div class="row-actions"><button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItem(${index})">Добавить</button></div>
 				</div>
 			</div>`;
 }
@@ -541,7 +550,7 @@ function renderObjectArray(param, index, objectMetaData) {
             <div class="array-items" id="array-items-${index}">
                 ${itemsHtml}
                 <div class="row-actions">
-                    <button data-tooltip="Добавить ещё один параметр<br>в список ${param.fieldPath}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
+                    <button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
                 </div>
             </div>
         </div>
