@@ -24,6 +24,14 @@ function onLoaded() {
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
 }
 
+document.addEventListener("DOMLanguageLoaded", onLanguageLoaded);
+function onLanguageLoaded() {
+	console.log('onLanguageLoaded');
+	sampleParams.forEach(element => {
+		element.comment = tr(element.comment);
+	});
+}
+
 //ПАНЕЛИ
 const leftPanel = document.getElementById("leftPanel");
 const rightPanel = document.getElementById("rightPanel");
@@ -62,8 +70,8 @@ async function onSelectWeapon(event) {
 			});
 		}).catch(error => {
 			hideLoadingNewWeapon();
-			console.error(`Ошибка загрузки оружия ${event.target.value}:`, error);
-			alert(`Ошибка загрузки оружия ${event.target.value}:\n` + error.message);
+			console.error(`Не удалось загрузить оружие ${event.target.value}:`, error);
+			alert(tr(`Не удалось загрузить оружие ${event.target.value}:\n` + error.message));
 			reject(error); //Отклоняем промис на ошибку
 		});
 	}).then(() => {
@@ -445,7 +453,7 @@ function createParam() {
 function removeParam(index, showConfirm = true) {
 	const param = editedParams[index];
 	if (showConfirm) {
-		const confirmed = confirm("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия " + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
+		const confirmed = confirm(tr("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия ") + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
 		if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
 	}
 	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
@@ -484,6 +492,7 @@ function renderAvailableParams(filter = '') {
 				
             `;
 		list.appendChild(li);
+		translateNode(li);
 	});
 }
 
@@ -528,7 +537,7 @@ function forceRenderEditedParams(filter = '') {
 					} else if (renderForm) {
 						li.innerHTML += renderForm(childParam, child);
 					} else {
-						alert("Параметр " + childParam.startFieldPath + "не имеет формы для редактирования в массиве typeFullForm");
+						alert("#1463: " + childParam.startFieldPath + "не имеет формы для редактирования в массиве typeFullForm");
 					}
 				});
 				list.appendChild(li);
@@ -551,7 +560,7 @@ function forceRenderEditedParams(filter = '') {
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
+							<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
                                 <input type="file" class="fileInput" accept=".png" onchange="fileToBase64(${idx}, this)">
@@ -571,11 +580,11 @@ function forceRenderEditedParams(filter = '') {
 
                     <span style="display: grid;grid-template-columns: 10% 10% 26% 27% 27%; ustify-content:end; place-items:end; justify-items:end; width:100%; ">
 
-						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true;">
 						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
 						</div>
 
-						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true);">
 						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
 						</div>
 
@@ -625,11 +634,11 @@ function forceRenderEditedParams(filter = '') {
 				<br>
                 <div>
                     <span style="display: grid;grid-template-columns: 6% 6% 15.5% 16% 33.5%;place-items: end;justify-items: right;width:100%;">
-						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру\nobject.SpriteRenderer.enabled = false/true;">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true;">
 						${enabledIdx != -1 ? getInputForType(editedParams[enabledIdx], enabledIdx) : ''}
 						</div>
 
-						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами\nobject.gameObject.SetActive(false/true);">
+						<div style="justify-self: left;" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true);">
 						${activeIdx != -1 ? getInputForType(editedParams[activeIdx], activeIdx) : ''}
 						</div>
 
@@ -725,7 +734,7 @@ function forceRenderEditedParams(filter = '') {
 			list.appendChild(li);
 		}
 	});
-
+	translateNode(list);
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
@@ -743,7 +752,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
@@ -770,7 +779,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 				asd += `<div class="param-group-field">
 						<div>
 							<div class="field-label">${key}</div>
-							<small>${childObjParam.comment || ''}</small>
+							<small>${tr(childObjParam.comment) || ''}</small>
 						</div>
 						<div class="field-control">
 						${getInputForType(childObjParam, index, key)}
@@ -877,7 +886,7 @@ function getInput(param, path) {
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить в файл<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64('${idElement}', this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
@@ -1150,7 +1159,7 @@ function fileToBase64(idInputElement, input) {
 
 function base64ToFile(base64, filename = 'file.png') {
 	base64 = base64.trim();
-	if (!base64) { alert('Нет данных для сохранения в файл'); return; }
+	if (!base64) { alert(tr('Нет данных для сохранения в файл')); return; }
 	const base64Data = base64.split(',')[1] || base64; // Удаляем префикс data:...;base64, если он есть
 	const byteCharacters = atob(base64Data); // Декодируем base64 в бинарные данные
 	const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0))); // Создаём массив байтов
@@ -1214,11 +1223,11 @@ document.getElementById('importJsonFile').addEventListener('click', () => {
 				importFromJSON(jsonData);
 			} catch (error) {
 				console.error('Ошибка при импорте JSON:', error);
-				alert('Ошибка при чтении JSON-файла: ' + error.message);
+				alert(tr('Ошибка при чтении JSON-файла: ') + error.message);
 			}
 		};
 		reader.onerror = () => {
-			alert('Ошибка при чтении файла');
+			alert(tr('Ошибка при чтении файла'));
 		};
 		reader.readAsText(file);
 	});
@@ -1229,7 +1238,7 @@ document.getElementById('importJsonFile').addEventListener('click', () => {
 });
 
 function importFromJSON(jsonData) {
-	if (!jsonData.idTemplate) { alert('Файл не имеет идентификатора idTemplate'); return; }
+	if (!jsonData.idTemplate) { alert(tr('Файл не имеет идентификатора idTemplate')); return; }
 	// Очищаем текущие редактируемые параметры
 	editedParams.length = 0;
 	document.getElementById("idWeapon").value = jsonData.id;
@@ -1280,8 +1289,8 @@ function importFromJSON(jsonData) {
 		renderEditedParams();
 		syncParamsToScene();
 	}).catch(error => {
-		console.error('❌ Ошибка при загрузке оружия:', error);
-		alert('Не удалось загрузить оружие. Проверьте консоль: CTRL+SHIFT + i ');
+		console.error('#1121/Error:', error);
+		alert(tr('Не удалось загрузить оружие. Проверьте консоль: CTRL+SHIFT + i'));
 	});
 }
 
@@ -1318,7 +1327,7 @@ function getResultJSON() {
 		json[param.fieldPath] = value;
 	});
 	if (empty.length != 0) {
-		alert("Некоторые параметры не указаны.\nМод может работать с ошибками.\nСледует указать параметры:\n" + empty.join("\n"));
+		alert(tr("Некоторые параметры не указаны.\nМод может работать с ошибками.\nСледует указать параметры:\n") + empty.join("\n"));
 	}
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint']);
@@ -1362,6 +1371,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
+	json['lang'] = navigator.language;
 	json['login'] = document.getElementById('login').value;
 	json['password'] = document.getElementById('password').value;
 	json['saveMode'] = document.getElementById('saveMode').value;
@@ -1383,10 +1393,10 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert(data);
+		alert(tr(data));
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert("Ошибка браузера:\n" + error.message);
+		alert(tr("Ошибка браузера:\n") + tr(error.message));
 	});
 });
 
