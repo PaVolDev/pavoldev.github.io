@@ -66,7 +66,7 @@
 				<label for="idWeapon">ID:</label>
 				<label for="idTemplate">Шаблон:</label>
 				<input type="text" id="idWeapon" class="panelInput" placeholder="[a-z-0-9]" data-tooltip="Придумайте и укажите идентификатор своего оружия">
-				<select id="idTemplate" class="panelInput" data-tooltip="Выберите оружие, которое будет использоваться как базовый родительский Prefab">
+				<select id="idTemplate" name="idTemplate" class="panelInput" data-tooltip="Выберите оружие, которое будет использоваться как базовый родительский Prefab">
 					<option value="">Выберите оружие</option>
 					<option value="aa12">AA-12 (id: aa12)</option>
 					<option value="ak12">AK-12 (id: ak12)</option>
@@ -159,14 +159,18 @@
 					</div>
 				</div>
 			</div>
-
+			<select class="selectLanguage panelInput" onchange="switchLanguage(this);" style="max-width: 140px; align-self: end;">
+				<option value="en">English</option>
+				<option value="ru">Русский</option>
+				<option value="cn">简体中文</option>
+			</select>
 		</div>
 
 		<!-- Правая панель: Предпросмотр -->
 		<div class="panel panelHidden" id="rightPanel">
 			<span style="position: relative;">
 				<div class="titlePanel">Предпросмотр</div>
-				<img src="images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра" onclick="alert('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра')">
+				<img src="images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра" onclick="alert(tr('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра'))">
 			</span>
 			<!-- Рендер объектов -->
 			<canvas id="scene" width="600" height="400"></canvas>
@@ -222,8 +226,8 @@
 						</div>
 
 						<div style="display: flex;align-items: center;margin-top: 10px;">
-							<input type="checkbox" id="propRenderEnabled" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true;">
-							<input type="checkbox" id="propGameObjActive" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true);">
+							<input type="checkbox" id="propRenderEnabled" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true">
+							<input type="checkbox" id="propGameObjActive" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)">
 							Показать
 						</div>
 					</div>
@@ -237,20 +241,28 @@
 
 	<div id="modRulesModal" class="modal" style="display: none;">
 		<div class="modal-content">
-			<h2>Правила для мододелов</h2>
+			<div class="heading" style="position: relative;">
+				<div class="h2">Правила для мододелов</div>
+				<select class="selectLanguage" style="position: absolute; right: 0;" onchange="switchLanguage(this);" onvisible="showSelectedLanguage(this);">
+					<option value="en">English</option>
+					<option value="ru">Русский</option>
+					<option value="cn">简体中文</option>
+				</select>
+			</div>
 			<p>Ваш мод должен соответствовать тематике шутера про зомби</p>
 			<ul>
-				<li>❌ Запрещены пиратские и краденые ассеты (текстуры, модели, звуки);</li>
-				<li>❌ Запрещена реклама сторонних сайтов;</li>
+				<li>❌ Запрещены пиратские и краденые ассеты (текстуры, модели, звуки)</li>
+				<li>❌ Запрещена реклама сторонних сайтов</li>
 				<li>❌ Запрещён контент 18+</li>
-				<li>❌ Запрещены нацистская символика и нацистская пропаганда;</li>
-				<li>❌ Запрещены расизм, ксенофобия, ненависть к любой группе людей;</li>
-				<li>❌ Запрещены экстремистские и террористические организации;</li>
-				<li>❌ Запрещена пропаганда наркотиков и веществ, вызывающих зависимость;</li>
-				<li>❌ Запрещен дегроидный тупорылый контент в стиле brainrot;</li>
+				<li>❌ Запрещены нацистская символика и нацистская пропаганда</li>
+				<li>❌ Запрещены расизм, ксенофобия, ненависть к любой группе людей</li>
+				<li>❌ Запрещены экстремистские и террористические организации</li>
+				<li>❌ Запрещена пропаганда наркотиков и веществ, вызывающих зависимость</li>
+				<li>❌ Запрещен дегроидный тупорылый контент в стиле brainrot</li>
 				<li>❌ Запрещено использование фотографий</li>
-				<li>❌ Запрещено насилие против детей и животных;</li>
-				<li>❌ Запрещен контент, нарушающий законодательство вашей страны;</li>
+				<li>❌ Запрещено создание модов с завышенным характеристиками и ломающие баланс игры</li>
+				<li>❌ Запрещено насилие против детей и животных</li>
+				<li>❌ Запрещен контент, нарушающий законодательство вашей страны</li>
 			</ul>
 			<div class="checkbox-container">
 				<input type="checkbox" id="agreeCheckbox" required>
@@ -267,6 +279,9 @@
 
 
 	<!-- Подключаем скрипты -->
+	<meta name="langdirectory" content="lang/" />
+	<script src="translation.js"></script>
+	<script src="lang/ru.js"></script>
 	<script src="render.js"></script> <!-- renderScene, drag, etc -->
 	<!-- Подключаем данные -->
 	<script src="config.js"></script> <!-- sampleParams -->
