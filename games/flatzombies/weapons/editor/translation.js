@@ -18,9 +18,6 @@ window.translate = {
 window.attrsToTranslate = ['data-tooltip', 'placeholder', 'title'];
 //Перевод текста
 function applyTranslation() {
-	window.sourceTextIds = Object.keys(window.sourceText).sort((a, b) => { 
-		return window.sourceText[b].length - window.sourceText[a].length; //отсортировать массив по длине строк из sourceText — от самых длинных к самым коротким
-	});
 	translateNode(document.body);
 }
 function translateNode(node) {
@@ -46,7 +43,7 @@ function translateNode(node) {
 //Перебираем исходные строки в том порядке, в котором они заданы
 window.sourceTextIds = new Array();
 function tr(text) {
-	if (!text) return null;
+	if (!text || window.sourceTextIds.length == 0) return text;
 	//Поиск полного соответствия
 	for (let i = 0; i < window.sourceTextIds.length; i++) { //Перебираем все ключи из sourceText
 		const key = window.sourceTextIds[i];
@@ -57,8 +54,6 @@ function tr(text) {
 		}
 	}
 
-	if (text.match(/^.*[А-ЯЁ].+$/i)) { console.warn("Не найден перевод для текста:\n" + text); }
-
 	//Частичная замена
 	for (let i = 0; i < window.sourceTextIds.length; i++) { //Перебираем все ключи из sourceText
 		const key = window.sourceTextIds[i];
@@ -68,18 +63,29 @@ function tr(text) {
 			return text.replace(from, to); //просто возвращаем перевод
 		}
 	}
+	if (text.match(/^.*[А-ЯЁ].+$/i)) { console.warn("Не найден перевод для текста:\n" + text); }
 	return text;
 }
 
+
 //Функция для динамической загрузки скрипта
-function loadScript(src) {
-	console.log(src);
+//Если не удалось загрузить файл, то пытаемся загрузить defaultFile, если он был указан
+function loadScript(src, defaultFile = undefined) {
 	return new Promise((resolve, reject) => {
-		const script = document.createElement('script');
-		script.src = src;
-		script.onload = () => resolve(src);
-		script.onerror = () => reject(new Error(`Ошибка загрузки скрипта ${src}`));
-		document.head.append(script);
+		const attemptLoad = (url, isFallback = false) => {
+			const script = document.createElement('script');
+			script.src = url;
+			script.onload = () => resolve(url);
+			script.onerror = () => {
+				if (!isFallback && defaultFile) {	
+					attemptLoad(defaultFile, true);	
+				} else {
+					reject(new Error(`Ошибка загрузки скрипта: ${isFallback ? defaultFile : src}`));
+				}
+			};
+			document.head.append(script);
+		};
+		attemptLoad(src);
 	});
 }
 
@@ -89,10 +95,6 @@ async function switchLanguage(input) { //
 	try {
 		localStorage.setItem('selectedLanguage', langIsoId);//Сохраняем выбранный язык в localStorage
 		location.reload(); //Перезагрузить страницу
-		//window.translate = {}; //Очистить переведённый текст
-		//await loadScript(`lang/${langIsoId}.js`); //Загружаем файл перевода
-		//applyTranslation();//Применяем перевод
-		//console.log(`Язык переключен на: ${langIsoId}`);
 	} catch (error) {
 		alert("Ошибка при переключении языка:", error);
 	}
@@ -118,19 +120,22 @@ async function loadTranslation() {
 		//Сохраняем определенный язык
 		localStorage.setItem('selectedLanguage', savedLang);
 	}
-	//Если язык определен (сохранен или определен по браузеру), загружаем соответствующий файл
+	//Если язык определен (был ранее указан или определен по браузеру), то загружаем соответствующий файл
+	//Строки с переводом имеют идентификаторы, записываем их в отдельный массив sourceTextIds
+	//Сортируем массив sourceTextIds по длине исходной строки, чтобы короткие слова не были в конце списка. В процессе обработки текста, сначала берем перевод длинных предложений, а затем перевод коротких фраз
 	if (savedLang && savedLang !== 'ru') { //ru.js уже подключен по умолчанию
 		try {
-			window.translate = {}; //Очистить переведённый текст
-			await loadScript(directory + savedLang + '.js');
+			window.translate = {}; //Очистить имеющийся текст с переводом
+			await loadScript(directory + savedLang + '.js', directory + 'en.js'); //В случае ошибки загрузки, используем английский язык 
+			window.sourceTextIds = Object.keys(window.sourceText).sort((a, b) => {
+				return window.sourceText[b].length - window.sourceText[a].length; //отсортировать массив по длине строк из sourceText — от самых длинных к самым коротким
+			});
 			applyTranslation(); //Применяем перевод
 			document.dispatchEvent(new Event('DOMLanguageLoaded'));
 		} catch (error) {
 			alert(`Не удалось загрузить файл перевода для языка ${directory + savedLang}\n` + error);
-			//В случае ошибки загрузки, используем язык по умолчанию (ru)
 		}
 	}
-
 }
 
 //Показать выбранный язык
