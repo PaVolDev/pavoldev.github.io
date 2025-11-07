@@ -502,6 +502,44 @@ function renderEditedParams(filter = '') { //Задержка перед рен�
 	clearTimeout(renderTimeout);
 	renderTimeout = setTimeout(forceRenderEditedParams, 100, filter);
 }
+
+
+const oneMeterPx = 150;
+const oneMeterPPU = 50; //pixelPerUnit
+function updateInputSpriteMillimetersByPPU(spriteParamIndex, ppuParamIndex, idElement) {
+	const spriteBase64 = editedParams[spriteParamIndex].value;
+	const pixelPerUnit = editedParams[ppuParamIndex].value;
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => {
+			const widthInMillimeters = (img.naturalWidth / pixelPerUnit) * (oneMeterPPU / oneMeterPx) * 1000;
+			document.getElementById(idElement).value = Math.round(widthInMillimeters / 10) * 10;
+			editedParams[spriteParamIndex].naturalWidth = img.naturalWidth;
+			resolve(widthInMillimeters);
+		};
+		img.src = spriteBase64;
+	});
+}
+function updateSpritePPU(spriteParamIndex, ppuParamIndex, millimeters) {
+	const spriteWidthPx = editedParams[spriteParamIndex]?.naturalWidth;
+	if (!spriteWidthPx) { console.warn("updateSpritePPU(): spriteWidthPx == NULL"); return; }
+	if (!millimeters || millimeters <= 0) { console.warn("updateSpritePPU(): millimeters == NULL"); return; }
+	const pixelPerUnit = Math.round((spriteWidthPx * oneMeterPPU * 1000) / (millimeters * oneMeterPx));
+	editedParams[ppuParamIndex].value = pixelPerUnit;
+	document.getElementById(editedParams[ppuParamIndex].fieldPath).value = pixelPerUnit;
+	syncParamsToScene();
+}
+
+/* function getImageWidthFromBase64(base64String) {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => {
+			resolve(img.naturalWidth);
+		};
+		img.src = base64String;
+	});
+} */
+
 function forceRenderEditedParams(filter = '') {
 	const processed = new Set();
 	const hiddenPaths = new Set(); // Чтобы не рендерить повторно параметры из группы
@@ -590,17 +628,17 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
                         ${ppuIdx >= 0 ? `<span class="title">PPU:</span>
-                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" min="1" max="5000" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">` : ''}
+                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" id="${editedParams[ppuIdx].fieldPath}" min="1" max="5000" onfocusout="inputMinMax(this); updateParam(${ppuIdx}, this.value); updateInputSpriteMillimetersByPPU(${idx}, ${ppuIdx}, 'mainlength')">` : ''}
 							</div>
 
-							<div data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" class="propertyBlock">
-                        ${sortIdx >= 0 ? `<span class="title">Sort:</span>
-                                <input type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : ''}
+							<div class="propertyBlock">
+                        ${prefix && sortIdx >= 0 ? `<span class="title">Sort:</span>
+                                <input data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" type="number" class="num" value="${editedParams[sortIdx].value}" onchange="updateParam(${sortIdx}, this.value)">` : `<div class="propertyBlock"><span class="title">Длина, мм:</span><input data-tooltip="Длина оружия. Длина реального прототипа из справочника, в миллиметрах" type="number" step="1" class="num" id="mainlength" onfocusout="updateSpritePPU(${idx}, ${ppuIdx}, this.value)" ></div>`}
 						    </div>
 
-							<div data-tooltip="Угол поворота в градусах" class="propertyBlock">
-                        ${angleIdx >= 0 ? `<span class="title">Angle:</span>
-                                <input type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
+							<div class="propertyBlock">
+                        ${prefix && angleIdx >= 0 ? `<span class="title">Angle:</span>
+                                <input data-tooltip="Угол поворота в градусах" type="number" step="1" class="num" value="${editedParams[angleIdx].value}" onchange="updateParam(${angleIdx}, this.value)">` : ''}
 							</div>
 
                     </span>
@@ -614,6 +652,9 @@ function forceRenderEditedParams(filter = '') {
 							</div>
                         </div>` : ''}
                 </div>`;
+				if (!prefix && ppuIdx >= 0) {
+					updateInputSpriteMillimetersByPPU(idx, ppuIdx, 'mainlength');
+				}
 				list.appendChild(li);
 
 
