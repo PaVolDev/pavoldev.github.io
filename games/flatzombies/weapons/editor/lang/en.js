@@ -121,6 +121,8 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	2019: "Some parameters are missing.\nThe mod may run with errors.\nPlease specify the following parameters:\n",
 	2020: "Browser error:\n",
 	2021: "The name of the new object.\nYou can specify the parent object, for example: parent.newSprite",
+	2022: "Length, mm:",
+	2023: "Weapon length. Total length of the actual prototype from the reference documentation, in millimeters.",
 	
 	3000: "Sprite, PNG file",
 	3001: "Sprite pivot point",
