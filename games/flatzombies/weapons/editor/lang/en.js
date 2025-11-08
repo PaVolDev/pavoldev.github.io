@@ -24,7 +24,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1090: "Saving...",
 	1091: "Submit",
 	1092: "Save to public server",
-	1093: "Login and password for your mod.<br>The password ensures only you can edit your mods—no random troll can break your work.",
+	1093: "Login and password for your mod.<br>The password ensures only you can edit your mods — no random OG-ProHacker from the neighboring elementary school can break your work.",
 	1094: "Login",
 	1095: "Your browser will offer to save the password.<br>Save it and reuse it on next launch.",
 	1096: "Password",
