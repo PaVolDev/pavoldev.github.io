@@ -308,7 +308,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	3780: "Delay before the bullet is launched after pulling the trigger, in seconds.",
 	3781: "Bullet launch parent object",
 	3782: "Blood stains on weapon after successful hits",
-
+	3783: "Author. Nickname for display in the interface",
 	
 	//Редактор патронов
 	1400: "Ammo Editor",
