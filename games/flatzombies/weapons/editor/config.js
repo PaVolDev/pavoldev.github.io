@@ -189,6 +189,8 @@ spriteScreenListeners = {
 };
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
+	["nameFull", 123456],
+	["autor", 123456],
 	["SpriteRenderer.sprite", ""],
 	["bolt", ""],
 	["flashlight", "(0, 0, 0)"],
@@ -250,8 +252,9 @@ const spriteArrayMetaData = [
 
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
-	{ "fieldPath": "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", "comment": "Настройка анимации оружия", "type": "WeaponHandPoints", "value": "", displayName: "WeaponAnimation" },
 	{ "fieldPath": "storeInfo.nameFull", "comment": "Название оружия в интерфейсе", "type": "string", "value": "" },
+	{ "fieldPath": "storeInfo.autor", "comment": "Автор модификации. Никнейм для отображения в интерфейсе", "type": "string", "value": "" },
+	{ "fieldPath": "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", "comment": "Настройка анимации оружия", "type": "WeaponHandPoints", "value": "", displayName: "WeaponAnimation" },
 	//{ "fieldPath": "storeInfo.iconBase64", "comment": "Текстура оружия для интерфейса (необязательно)<br>Если не указано, то текстура будет сгенерирована автоматически", "type": "Image", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", "type": "Sprite", suffix: "SpriteRenderer.sprite", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
