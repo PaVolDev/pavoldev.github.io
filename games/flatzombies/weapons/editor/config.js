@@ -539,7 +539,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.cameraSnake", "comment": "Дистанция для смещения камеры в одну сторону во время тряски при стрельбе", "type": "Vector3", "value": "(0, 0, 0)" },
 	{ "fieldPath": "weapon.cameraShakeTime", "comment": "Длительность тряски (в секундах)", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.cameraSizeScale", "comment": "Размер камеры", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.renderInSpare", "comment": "Оружие за спиной (необязательно)", "type": "SpriteRenderer", "value": "" },
 	{ "fieldPath": "weapon.playerScaleMove", "comment": "Множитель для скорости перемещения у игрока [0-1]", "type": "float", "value": 0, min: 0, max: 1 },
 	{ "fieldPath": "weapon.automat", "comment": "Автоматическое оружие", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.fireRateInMinute", "comment": "Скорострельность<br>Кол-во выстрелов в минуту", "type": "int", "value": 0 },
