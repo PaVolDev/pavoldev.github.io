@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(0.928, 0.095, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.946, 0.067, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.953, 0.062, 0)",
-    "weapon.WeaponHandPoints.weaponType": "rifleAK",
+    "weapon.WeaponHandPoints.weaponType": "barretM107a",
     "storeInfo.autor": "",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
