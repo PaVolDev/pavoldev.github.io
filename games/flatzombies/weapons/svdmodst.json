@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(1.059, 0.132, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.129, 0.228, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.009, 0.079, 0)",
-    "weapon.WeaponHandPoints.weaponType": "heavyRightBoltRifle",
+    "weapon.WeaponHandPoints.weaponType": "ak12",
     "storeInfo.autor": "",
     "storeInfo.autorURL": "",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
