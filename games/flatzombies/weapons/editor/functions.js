@@ -25,10 +25,13 @@ function addNewSprite() {
 
 	typeDependencies['Sprite'].forEach(filed => {
 		sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
-		editedParams.unshift({ "fieldPath": spriteName + '.' + filed, "startFieldPath": 'weapon.' + spriteName + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value });
+		const newSpriteInfo = { "fieldPath": spriteName + '.' + filed, "startFieldPath": 'weapon.' + spriteName + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+		editedParams.unshift(newSpriteInfo);
+		availableParams.unshift(newSpriteInfo);
 	});
-	editedParams.unshift({ "fieldPath": spriteName + ".SpriteRenderer.sprite", "startFieldPath": 'weapon.' + spriteName + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" });
-
+	const newSpriteInfo = { "fieldPath": spriteName + ".SpriteRenderer.sprite", "startFieldPath": 'weapon.' + spriteName + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" };
+	editedParams.unshift(newSpriteInfo);
+	availableParams.unshift(newSpriteInfo);
 	renderEditedParams();
 	syncParamsToScene();
 }
@@ -884,39 +887,43 @@ function saveJsonToFile(paramIndex, itemIndex) {
 
 
 
-
-function renderStringList(param, index, objKey = null) {
+const setOwnValueText = "< Указать свой >";
+function renderStringList(param, index, objKey = null, placeholder = "", tooltip = "") {
 	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
-		if (!param.options.includes("< Указать свой >")) { param.options.unshift("< Указать свой >"); }
+		let selectHTML = `<select onchange="updateOptionParam(${index}, this.value, '${objKey || ''}');" class="field-input">`;
+		if (!param.options.includes(setOwnValueText)) { param.options.unshift(""); param.options.unshift(setOwnValueText); }
 		param.options.forEach(opt => {
 			const isSelected = opt == param.value ? ' selected' : '';
-			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt)}</option>`;
+			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt == setOwnValueText ? tr(opt) : opt)}</option>`; //Показать перевод для setOwnValueText
 		});
 		selectHTML += '</select>';
+		if (param.optionsValue == setOwnValueText) {
+			param.value = param.value.replace(setOwnValueText, '');
+			param.optionsValue = setOwnValueText;
+			selectHTML += `<br><input type="text" value="${param.value}" onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}" placeholder="${placeholder}" data-tooltip="${tooltip}"></input>`;
+		}
 		return selectHTML;
 	}
 	console.warn('renderStringList: параметр не имеет списка значений, param.options == NULL');
 	return '';
 }
 
-
+function updateOptionParam(index, value, objKey) {
+	editedParams[index].optionsValue = value;
+	updateParam(index, value, true, objKey);
+}
 
 
 
 
 
 let cartridgeListParam = null; //Параметр со списком патронов записываем в отдельную переменную, чтобы убирать с экрана
-const setOwnValueText = "< Указать свой >";
 function renderWeaponCartridge(param, index) {
 	if ('options' in param) {
-		if (!param.options.includes(setOwnValueText)) { param.options.unshift(setOwnValueText); }
-		let selectHTML = renderStringList(param, index);
+		let selectHTML = renderStringList(param, index, null, "Идентификатор патрона", "Укажите идентификатор патрона.<br>При загрузке оружия в игру, будет обнаружено, что оружие нуждается в патроне и игра попытается загрузить этот патрон по идентификатору. Нужно указать не калибр, а именно идентификатора вашего патрона.<br><br>Вам доступен список патронов <b>cartridgeList</b>.<br>Основной патрон можно сразу добавить в список и тогда патроны будут загружаться сразу вместе с оружием.");
 		cartridgeListParam = editedParams.find(p => p.fieldPath == "cartridgeList") || availableParams.find(p => p.fieldPath == "cartridgeList") || sampleParams.find(p => p.fieldPath == "cartridgeList");
 		const listIndex = editedParams.findIndex(p => p.fieldPath == "cartridgeList");
-		if (param.options.indexOf(param.value) <= 0) {
-			param.value = param.value.replace(setOwnValueText, '');
-			selectHTML += `<br><input type="text" placeholder="Идентификатор патрона" value="${param.value}" data-tooltip="Укажите идентификатор патрона.<br>При загрузке оружия в игру, будет обнаружено, что оружие нуждается в патроне и игра попытается загрузить этот патрон по идентификатору. Нужно указать не калибр, а именно идентификатора вашего патрона.<br><br>Вам доступен список патронов <b>cartridgeList</b>.<br>Основной патрон можно сразу добавить в список и тогда патроны будут загружаться сразу вместе с оружием." onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}"></input>`;
+		if (param.optionsValue == setOwnValueText) {
 			if (listIndex == -1 && cartridgeListParam) {
 				editedParams.push(cartridgeListParam);
 			}
