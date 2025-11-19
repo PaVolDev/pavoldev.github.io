@@ -214,7 +214,7 @@ function syncParamsToScene() {
 			return (p) ? p.value : defaultValue;
 		};
 		const localPosStr = getValue('Transform.localPosition', '(0,0,0)');
-		const pivotStr = getValue('SpriteRenderer.sprite.pivotPoint', '(0.5,0.5)');
+		const pivotStr = getValue('SpriteRenderer.sprite.pivotPoint', '(0.50123,0.50123)');
 		const ppuStr = getValue('SpriteRenderer.sprite.pixelPerUnit', '100');
 		const angleStr = getValue('Transform.localEulerAngles.z', '0');
 		const sortingOrderStr = getValue('SpriteRenderer.sortingOrder', 0);
@@ -343,16 +343,15 @@ function syncAllSceneObjectsToParams() {
 // ПЕРЕНОС ДАННЫХ ИЗ СЦЕНЫ в список параметров
 // Функция синхронизации одного объекта
 function syncSceneObjectToParams(obj) {
-	if (!obj) return;
+	if (!obj || !obj.parameter) return;
 	const prefix = obj.name === 'sprite' ? '' : obj.parameter.replace('.SpriteRenderer.sprite', '');
 	const spriteParam = getParamByFieldPath(obj.parameter);
 	if (spriteParam && spriteParam.value !== obj.texture) {
 		spriteParam.value = obj.texture;
 	}
 	// Синхронизация позиции
-	console.log("syncSceneObjectToParams: " + prefix);
 	if (prefix) {
-		const posPath = `${prefix}.Transform.localPosition`;
+		const posPath = prefix+'.Transform.localPosition';
 		const posParam = getParamByFieldPath(posPath);
 		const newPosValue = `(${parseFloat(obj.localPosition.x).toFixed(3)}, ${-parseFloat(obj.localPosition.y).toFixed(3)}, 0)`; //отразить по оси Y
 		if (posParam && posParam.value !== newPosValue) {
@@ -368,22 +367,22 @@ function syncSceneObjectToParams(obj) {
 		}
 	}
 	// Синхронизация угла поворота
-	const angleParam = getParamByFieldPath(prefix ? `${prefix}.Transform.localEulerAngles.z` : 'Transform.localEulerAngles.z');
+	const angleParam = getParamByFieldPath(prefix ? prefix+'.Transform.localEulerAngles.z' : 'Transform.localEulerAngles.z');
 	if (angleParam && angleParam.value != obj.localAngle) angleParam.value = obj.localAngle;
-	// Синхронизация точки опоры
-	const pivotParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.sprite.pivotPoint` : 'SpriteRenderer.sprite.pivotPoint');
+	// Синхронизация точки вращения
+	const pivotParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sprite.pivotPoint' : 'SpriteRenderer.sprite.pivotPoint');
 	const newPivotValue = `(${parseFloat(obj.pivotPoint.x).toFixed(3)}, ${parseFloat(obj.pivotPoint.y).toFixed(3)})`;
 	if (pivotParam && pivotParam.value !== newPivotValue) { pivotParam.value = newPivotValue; }
 	// Синхронизация PPU
-	const ppuParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.sprite.pixelPerUnit` : 'SpriteRenderer.sprite.pixelPerUnit');
+	const ppuParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sprite.pixelPerUnit' : 'SpriteRenderer.sprite.pixelPerUnit');
 	if (ppuParam && ppuParam.value != obj.pixelPerUnit) { ppuParam.value = obj.pixelPerUnit; }
 	// Синхронизация порядка отрисовки
-	const sortParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.sortingOrder` : 'SpriteRenderer.sortingOrder');
+	const sortParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sortingOrder' : 'SpriteRenderer.sortingOrder');
 	if (sortParam && sortParam.value != obj.sortingOrder) { sortParam.value = obj.sortingOrder; }
 	// Синхронизация рендера
-	const enabledParam = getParamByFieldPath(prefix ? `${prefix}.SpriteRenderer.enabled` : 'SpriteRenderer.enabled');
+	const enabledParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.enabled' : 'SpriteRenderer.enabled');
 	if (enabledParam && enabledParam.value !== obj.enabled) { enabledParam.value = obj.enabled; }
-	const gameObjectEnabled = getParamByFieldPath(prefix ? `${prefix}.gameObject.SetActive` : 'gameObject.SetActive');
+	const gameObjectEnabled = getParamByFieldPath(prefix ? prefix+'.gameObject.SetActive' : 'gameObject.SetActive');
 	if (gameObjectEnabled && gameObjectEnabled.value !== obj.isActive) { gameObjectEnabled.value = obj.isActive; }
 	//Точка с углом
 	setPointField(obj.parameter, 'angle', obj.localAngle);
@@ -391,6 +390,8 @@ function syncSceneObjectToParams(obj) {
 	if (spriteScreenListeners[obj.name]) spriteScreenListeners[obj.name].onSyncSceneToParams(obj);
 	//Показать изменения на странице
 	renderEditedParams();
+
+
 }
 
 
