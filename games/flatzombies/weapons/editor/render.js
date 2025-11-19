@@ -659,7 +659,7 @@ function mouseMove(e) {
 			y: newWorldPos.y - parentPos.y
 		};
 		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
-		if (dragObject.localAngle == 0) { //Оставлять объекты на месте, только если родительский объект не имеет угла наклона
+		if (dragObject.localAngle == 0 && !e.shiftKey) { //Оставлять объекты на месте, только если родительский объект не имеет угла наклона
 			sceneObjects.forEach(child => { //Двигать дочерние объекты в обратную сторону, когда курсор мыши перемещает точку вращения у родительского объекта
 				if (child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name) { //Таким образом объекты на экране остаются на месте, когда мы двигаем опорную точку
 					child.localPosition.x = Math.round((parseFloat(child.localPosition.x) + parseFloat(dragObject.localPosition.x) - newLocalPos.x) / 0.0001) * 0.0001;
