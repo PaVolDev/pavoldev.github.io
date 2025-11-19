@@ -310,6 +310,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	3782: "Blood stains on weapon after successful hits",
 	3783: "Nickname for display in the interface (optional)",
 	3784: "Link to your social media page (optional)",
+	3790: "Shooting animation",
 
 	//Редактор патронов
 	1400: "Ammo Editor",
