@@ -38,7 +38,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 87,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.507)",
-    "storeInfo.silencerGroup": "shotgun",
+    "storeInfo.silencerGroup": "sniper",
     "weapon.laserSight.Transform.localPosition": "(1.183, 0.028, 0)",
     "weapon.laserSight.gameObject.SetActive": false,
     "weapon.laserSight.SpriteRenderer.enabled": false,
