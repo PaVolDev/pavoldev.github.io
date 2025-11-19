@@ -326,6 +326,7 @@ document.getElementById('propPivotX').addEventListener('input', scheduleSync);
 document.getElementById('propPivotY').addEventListener('input', scheduleSync);
 document.getElementById('propTexture').addEventListener('input', scheduleSync);
 document.getElementById('propRenderEnabled').addEventListener('input', scheduleSync);
+document.getElementById('propGameObjActive').addEventListener('input', scheduleSync);
 document.getElementById('sceneFileInput').addEventListener('input', scheduleSync);
 
 // Подписываемся на события мыши с debounce
@@ -343,14 +344,13 @@ function syncAllSceneObjectsToParams() {
 // Функция синхронизации одного объекта
 function syncSceneObjectToParams(obj) {
 	if (!obj) return;
-	const prefix = obj.name === 'sprite' ? '' : obj.name;
-	// Синхронизация текстуры
-	const spritePath = prefix ? `${prefix}.SpriteRenderer.sprite` : 'SpriteRenderer.sprite';
-	const spriteParam = getParamByFieldPath(spritePath);
+	const prefix = obj.name === 'sprite' ? '' : obj.parameter.replace('.SpriteRenderer.sprite', '');
+	const spriteParam = getParamByFieldPath(obj.parameter);
 	if (spriteParam && spriteParam.value !== obj.texture) {
 		spriteParam.value = obj.texture;
 	}
 	// Синхронизация позиции
+	console.log("syncSceneObjectToParams: " + prefix);
 	if (prefix) {
 		const posPath = `${prefix}.Transform.localPosition`;
 		const posParam = getParamByFieldPath(posPath);
@@ -799,13 +799,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	}
 
 	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateParam(${index}, this.value, true, '${objKey || ''}');" class="field-input">`;
-		param.options.forEach(opt => {
-			const isSelected = opt == param.value ? ' selected' : '';
-			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt)}</option>`;
-		});
-		selectHTML += '</select>';
-		return selectHTML;
+		return renderStringList(param, index, objKey);
 	}
 
 	//Объект JavaScript
