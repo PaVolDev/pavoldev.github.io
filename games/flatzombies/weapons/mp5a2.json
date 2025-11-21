@@ -29,6 +29,8 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-1.022, -0.002, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.022, 0.006, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
+    "storeInfo.autor": "",
+    "storeInfo.autorURL": "",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.Transform.localEulerAngles.z": 0,
@@ -78,7 +80,7 @@
     "weapon.bolt": "(0.921, 0.242, 0)",
     "weapon.flashlight": "(0.781, 0.128, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": "800",
+    "weapon.fireRateInMinute": "820",
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "autor": "PaVolDev"
