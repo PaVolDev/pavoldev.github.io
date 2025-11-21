@@ -80,7 +80,7 @@
     "weapon.bolt": "(0.921, 0.242, 0)",
     "weapon.flashlight": "(0.781, 0.128, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": "820",
+    "weapon.fireRateInMinute": "800",
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "autor": "PaVolDev"
