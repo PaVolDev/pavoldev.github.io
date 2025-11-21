@@ -71,7 +71,7 @@
     "weapon.flashlight": "(0.213, 0.008, 0)",
     "weapon.automat": false,
     "weapon.fireRateInMinute": 800,
-    "weapon.chamberSize": 2,
+    "weapon.chamberSize": "1",
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20
