@@ -62,7 +62,7 @@
     "weapon.recoilSteps": "5",
     "weapon.recoilMax": "10",
     "weapon.recoilDecrease": 12,
-    "weapon.shellDrop.position": "(0.476, 0.038, 0)",
+    "weapon.shellDrop.position": "(0.415, 0.198, 0)",
     "weapon.shellDrop.angle": -92,
     "weapon.bolt": "(1.344, 0.217, 0)",
     "weapon.flashlight": "(0.651, 0.091, 0)",
