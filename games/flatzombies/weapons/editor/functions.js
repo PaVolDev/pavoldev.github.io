@@ -897,7 +897,7 @@ function renderStringList(param, index, objKey = null, placeholder = "", tooltip
 			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt == setOwnValueText ? tr(opt) : opt)}</option>`; //Показать перевод для setOwnValueText
 		});
 		selectHTML += '</select>';
-		if (param.optionsValue == setOwnValueText) {
+		if (param.optionsValue == setOwnValueText || (param.value && param.options.includes(param.value)) == false) {
 			param.value = param.value.replace(setOwnValueText, '');
 			param.optionsValue = setOwnValueText;
 			selectHTML += `<br><input type="text" value="${param.value}" onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}" placeholder="${placeholder}" data-tooltip="${tooltip}"></input>`;
