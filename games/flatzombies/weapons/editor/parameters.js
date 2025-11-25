@@ -351,7 +351,7 @@ function syncSceneObjectToParams(obj) {
 	}
 	// Синхронизация позиции
 	if (prefix) {
-		const posPath = prefix+'.Transform.localPosition';
+		const posPath = prefix + '.Transform.localPosition';
 		const posParam = getParamByFieldPath(posPath);
 		const newPosValue = `(${parseFloat(obj.localPosition.x).toFixed(3)}, ${-parseFloat(obj.localPosition.y).toFixed(3)}, 0)`; //отразить по оси Y
 		if (posParam && posParam.value !== newPosValue) {
@@ -367,22 +367,22 @@ function syncSceneObjectToParams(obj) {
 		}
 	}
 	// Синхронизация угла поворота
-	const angleParam = getParamByFieldPath(prefix ? prefix+'.Transform.localEulerAngles.z' : 'Transform.localEulerAngles.z');
+	const angleParam = getParamByFieldPath(prefix ? prefix + '.Transform.localEulerAngles.z' : 'Transform.localEulerAngles.z');
 	if (angleParam && angleParam.value != obj.localAngle) angleParam.value = obj.localAngle;
 	// Синхронизация точки вращения
-	const pivotParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sprite.pivotPoint' : 'SpriteRenderer.sprite.pivotPoint');
+	const pivotParam = getParamByFieldPath(prefix ? prefix + '.SpriteRenderer.sprite.pivotPoint' : 'SpriteRenderer.sprite.pivotPoint');
 	const newPivotValue = `(${parseFloat(obj.pivotPoint.x).toFixed(3)}, ${parseFloat(obj.pivotPoint.y).toFixed(3)})`;
 	if (pivotParam && pivotParam.value !== newPivotValue) { pivotParam.value = newPivotValue; }
 	// Синхронизация PPU
-	const ppuParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sprite.pixelPerUnit' : 'SpriteRenderer.sprite.pixelPerUnit');
+	const ppuParam = getParamByFieldPath(prefix ? prefix + '.SpriteRenderer.sprite.pixelPerUnit' : 'SpriteRenderer.sprite.pixelPerUnit');
 	if (ppuParam && ppuParam.value != obj.pixelPerUnit) { ppuParam.value = obj.pixelPerUnit; }
 	// Синхронизация порядка отрисовки
-	const sortParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.sortingOrder' : 'SpriteRenderer.sortingOrder');
+	const sortParam = getParamByFieldPath(prefix ? prefix + '.SpriteRenderer.sortingOrder' : 'SpriteRenderer.sortingOrder');
 	if (sortParam && sortParam.value != obj.sortingOrder) { sortParam.value = obj.sortingOrder; }
 	// Синхронизация рендера
-	const enabledParam = getParamByFieldPath(prefix ? prefix+'.SpriteRenderer.enabled' : 'SpriteRenderer.enabled');
+	const enabledParam = getParamByFieldPath(prefix ? prefix + '.SpriteRenderer.enabled' : 'SpriteRenderer.enabled');
 	if (enabledParam && enabledParam.value !== obj.enabled) { enabledParam.value = obj.enabled; }
-	const gameObjectEnabled = getParamByFieldPath(prefix ? prefix+'.gameObject.SetActive' : 'gameObject.SetActive');
+	const gameObjectEnabled = getParamByFieldPath(prefix ? prefix + '.gameObject.SetActive' : 'gameObject.SetActive');
 	if (gameObjectEnabled && gameObjectEnabled.value !== obj.isActive) { gameObjectEnabled.value = obj.isActive; }
 	//Точка с углом
 	setPointField(obj.parameter, 'angle', obj.localAngle);
@@ -878,7 +878,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 			if ('min' in param && 'max' in param) {
 				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
 					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="propAngleSlider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
-					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${param.fieldPath}" oninput="updateParam(${index}, this.value, false, '${objKey || ''}')" value="${param.value}" >
+					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.fieldPath}" oninput="updateParam(${index}, this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
 			return `<input type="number" value="${param.value}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}" >`;
@@ -888,7 +888,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		case 'Sprite[]':
 			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
 		default:
-			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
+			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" placeholder="${param.placeholder || ''}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
 	}
 }
 
