@@ -88,6 +88,7 @@ document.addEventListener('mouseover', e => {
 	tooltip.innerHTML = target.getAttribute('data-tooltip').replace(/\n/g, '<br>');
 	tooltip.hidden = false;
 	tooltip.style.opacity = '0';
+	if (!tooltip.innerHTML) return;
 	const { width: tW, height: tH } = tooltip.getBoundingClientRect();
 	const { left, right, top, bottom } = target.getBoundingClientRect();
 	let x, y;
@@ -897,9 +898,11 @@ function renderStringList(param, index, objKey = null, placeholder = "", tooltip
 			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt == setOwnValueText ? tr(opt) : opt)}</option>`; //Показать перевод для setOwnValueText
 		});
 		selectHTML += '</select>';
-		if (param.optionsValue == setOwnValueText || (param.value && param.options.includes(param.value)) == false) {
+		if (param.optionsValue == setOwnValueText || (param.value != "" && param.options.includes(param.value) == false)) {
 			param.value = param.value.replace(setOwnValueText, '');
 			param.optionsValue = setOwnValueText;
+			placeholder = placeholder || param.placeholder || param.type;
+			tooltip = tooltip || param.tooltip || "";
 			selectHTML += `<br><input type="text" value="${param.value}" onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}" placeholder="${placeholder}" data-tooltip="${tooltip}"></input>`;
 		}
 		return selectHTML;
