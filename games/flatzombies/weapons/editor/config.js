@@ -255,8 +255,9 @@ const spriteArrayMetaData = [
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
 	{ "fieldPath": "storeInfo.nameFull", "comment": "Название оружия в интерфейсе", "type": "string", "value": "" },
-	{ "fieldPath": "storeInfo.autor", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", "type": "string", "value": "" },
-	{ "fieldPath": "storeInfo.autorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "" },
+	{ "fieldPath": "storeInfo.autor", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", "type": "string", "value": "", placeholder: "pavoldev" },
+	{ "fieldPath": "storeInfo.autorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "https://", placeholder: "https://youtube.com/@pavoldev" },
+	{ "fieldPath": "storeInfo.donateURL", "comment": "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", "type": "string", "value": "https://", placeholder: "https://" },
 	{ "fieldPath": "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", "comment": "Настройка анимации оружия", "type": "WeaponHandPoints", "value": "", displayName: "WeaponAnimation" },
 	//{ "fieldPath": "storeInfo.iconBase64", "comment": "Текстура оружия для интерфейса (необязательно)<br>Если не указано, то текстура будет сгенерирована автоматически", "type": "Image", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", "type": "Sprite", suffix: "SpriteRenderer.sprite", "value": "" },
@@ -273,7 +274,6 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
-	{ "fieldPath": "storeInfo.donateURL", "comment": "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", "type": "string", "value": "https://" },
 ]
 
 
