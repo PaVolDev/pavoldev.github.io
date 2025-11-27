@@ -181,5 +181,6 @@ export default {
 	"weapon.lasersight.SpriteRenderer.enabled": true,
 	"weapon.lasersight.name": "lasersight",
 	"weapon.name": "barrettM107A",
-"storeInfo.silencerGroup": "sniper"
+"storeInfo.silencerGroup": "sniper",
+"shotAnimations[0].animation": "fire",
 };
