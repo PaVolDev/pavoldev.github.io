@@ -177,5 +177,6 @@ export default {
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
 "weapon.name": "imbelai2",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
