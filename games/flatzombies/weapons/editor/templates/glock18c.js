@@ -196,5 +196,6 @@ export default {
 "weapon.magazine.name": "magazine",
 "weapon.name": "glock18c",
 "storeInfo.silencerGroup": "pistol",
-"storeInfo.silencerGroup": "pistol"
+"storeInfo.silencerGroup": "pistol",
+"shotAnimations[0].animation": "LabelShotFire",
 };
