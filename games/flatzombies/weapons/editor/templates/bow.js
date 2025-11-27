@@ -196,5 +196,6 @@ export default {
 	"weapon.SpriteRenderer.sortingOrder": 19,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "bow",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"shotAnimations[0].animation": "fire",
 };
