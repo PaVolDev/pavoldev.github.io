@@ -204,5 +204,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "m110",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
