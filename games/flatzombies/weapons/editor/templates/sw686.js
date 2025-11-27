@@ -146,5 +146,6 @@ export default {
 "weapon.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "sw686",
-"storeInfo.silencerGroup": "pistol"
+"storeInfo.silencerGroup": "pistol",
+"shotAnimations[0].animation": "LabelShotFire",
 };
