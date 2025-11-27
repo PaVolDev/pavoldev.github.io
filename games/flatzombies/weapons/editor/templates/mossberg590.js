@@ -170,4 +170,5 @@ export default {
 	"weapon.lasersight.name": "lasersight",
 	"weapon.name": "mossberg590",
 	"storeInfo.silencerGroup": "shotgun",
+"shotAnimations[0].animation": "LabelShotFire",
 };
