@@ -103,5 +103,6 @@ export default {
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "axe",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"strikeAnimations[0]": "LabelShotFire",
 };
