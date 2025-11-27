@@ -191,6 +191,7 @@ weapons.push({
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "aa12",
 "storeInfo.silencerGroup": "seg12",
+"shotAnimations[0].animation": "LabelShotFire",
 
 
 });
