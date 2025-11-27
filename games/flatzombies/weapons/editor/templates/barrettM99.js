@@ -161,5 +161,6 @@ export default {
 	"weapon.boltRender.SpriteRenderer.enabled": true,
 	"weapon.boltRender.name": "boltRender",
 	"weapon.name": "barrettM99",
-"storeInfo.silencerGroup": "sniper"
+"storeInfo.silencerGroup": "sniper",
+"shotAnimations[0].animation": "LabelShotFire",
 };
