@@ -177,5 +177,6 @@ export default {
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
 "weapon.name": "f2000",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
