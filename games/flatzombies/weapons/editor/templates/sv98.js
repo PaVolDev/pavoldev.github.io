@@ -204,5 +204,6 @@ export default {
 "weapon.boltHandle.boltRender.name": "boltRender",
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "sv98",
-"storeInfo.silencerGroup": "sniper"
+"storeInfo.silencerGroup": "sniper",
+"shotAnimations[0].animation": "LabelShotFire",
 };
