@@ -166,5 +166,6 @@ export default {
 "weapon.barrel.lasersight.name": "lasersight",
 "weapon.barrel.name": "barrel",
 "weapon.name": "mr27",
-"storeInfo.silencerGroup": "mr27"
+"storeInfo.silencerGroup": "mr27",
+"shotAnimations[0].animation": "fire",
 };
