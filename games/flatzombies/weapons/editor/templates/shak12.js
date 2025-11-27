@@ -186,5 +186,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "shak12",
-"storeInfo.silencerGroup": "sniper"
+"storeInfo.silencerGroup": "sniper",
+"shotAnimations[0].animation": "fire",
 };
