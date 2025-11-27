@@ -213,5 +213,6 @@ export default {
 "weapon.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "forigin12",
-"storeInfo.silencerGroup": "seg12"
+"storeInfo.silencerGroup": "seg12",
+"shotAnimations[0].animation": "LabelShotFire",
 };
