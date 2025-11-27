@@ -222,5 +222,6 @@ export default {
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
 "weapon.name": "barrettMRAD",
-"storeInfo.silencerGroup": "sniper"
+"storeInfo.silencerGroup": "sniper",
+"shotAnimations[0].animation": "LabelShotFire",
 };
