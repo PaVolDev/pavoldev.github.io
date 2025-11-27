@@ -186,5 +186,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "rpk16",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
