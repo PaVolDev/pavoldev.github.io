@@ -240,5 +240,6 @@ export default {
 			]
 		}
 	],
+"shotAnimations[0].animation": "fire",
 
 };
