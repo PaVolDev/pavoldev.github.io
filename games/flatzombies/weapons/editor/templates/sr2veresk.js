@@ -195,5 +195,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "sr2veresk",
-"storeInfo.silencerGroup": "pistol"
+"storeInfo.silencerGroup": "pistol",
+"shotAnimations[0].animation": "fire",
 };
