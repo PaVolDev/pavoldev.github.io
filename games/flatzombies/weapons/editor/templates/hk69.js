@@ -188,5 +188,6 @@ export default {
 "weapon.barrel.SpriteRenderer.enabled": true,
 "weapon.barrel.name": "barrel",
 "weapon.name": "hk69",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"shotAnimations[0].animation": "fire",
 };
