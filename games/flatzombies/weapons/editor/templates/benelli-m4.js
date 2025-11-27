@@ -161,5 +161,6 @@ export default {
 "weapon.sight.SpriteRenderer.enabled": true,
 "weapon.sight.name": "sight",
 "weapon.name": "benelli-m4",
-"storeInfo.silencerGroup": "shotgun"
+"storeInfo.silencerGroup": "shotgun",
+"shotAnimations[0].animation": "fire",
 };
