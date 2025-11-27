@@ -209,5 +209,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "cougarms",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"shotAnimations[0].animation": "fire",
 };
