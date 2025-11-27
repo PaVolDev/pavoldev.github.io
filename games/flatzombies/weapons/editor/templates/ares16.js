@@ -179,5 +179,6 @@ export default {
 "weapon.cover.sight.name": "sight",
 "weapon.cover.name": "cover",
 "weapon.name": "ares16",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
