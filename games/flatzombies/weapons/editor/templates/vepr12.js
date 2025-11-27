@@ -186,5 +186,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "vepr12",
-"storeInfo.silencerGroup": "seg12"
+"storeInfo.silencerGroup": "seg12",
+"shotAnimations[0].animation": "fire",
 };
