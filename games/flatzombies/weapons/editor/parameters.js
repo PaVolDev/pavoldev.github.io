@@ -888,7 +888,10 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		case 'Sprite[]':
 			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
 		default:
-			return `<input type="text" value="${param.value}" data-tooltip="${param.type}" placeholder="${param.placeholder || ''}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
+			if (stringIsObject(param.value)) { //Объект JavaScript
+				return `<textarea onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(param.value)}</textarea>`;
+			}
+			return `<input type="text" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" placeholder="${param.placeholder || ''}" onchange="updateParam(${index}, this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
 	}
 }
 
@@ -1014,15 +1017,20 @@ function getInput(param, path) {
 
 
 function htmlspecialchars(str) {
-	if (typeof str !== 'string') return str; // Если не строка, возвращаем как есть
+	if (!str || typeof str !== 'string') return str; // Если не строка, возвращаем как есть
 	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
+function stringIsObject(value) {
+	if (!value || typeof value !== 'string') return false; // Если не строка, возвращаем как есть
+	value = value.trim();
+	return (7 <= value.length && ((value.startsWith("{") && value.endsWith("}")) || (value.startsWith("[") && value.endsWith("]"))));
+}
 
 // ——— РЕДАКТИРОВАНИЕ ———
 function updateParam(index, value, updateParamList = false, objKey = null) {
 	if (index >= 0 && index < editedParams.length) {
-		if (value && 7 <= value.length && value.trim().startsWith("{") && value.trim().endsWith("}")) {
+		if (stringIsObject(value)) {
 			value = JSON.parse(value);
 		}
 		if (objKey && objKey != null && objKey != 'null') {
@@ -1057,6 +1065,8 @@ function updateVectorValue(vectorValue, coordIndex, newFloatValue) {
 	coords[coordIndex] = parseFloat(newFloatValue) || 0;
 	return `(${coords.slice(0, coords.length === 2 ? 2 : 3).join(', ')})`;
 }
+
+
 
 
 /*
@@ -1341,7 +1351,7 @@ function importFromJSON(jsonData) {
 
 
 // ——— СОХРАНЕНИЕ ———
-function getResultJSON() {
+function getExportResultJSON() {
 	const json = {};
 	const empty = new Array();
 	mainParams.forEach(param => {
@@ -1373,7 +1383,7 @@ function getResultJSON() {
 	}
 	editedParams.forEach(param => {
 		if (!ignoreExportFields.find(word => param.startFieldPath.includes(word)) && param.fieldPath != param.type) {
-			json[param.startFieldPath || param.fieldPath] = param.value;
+			json[param.startFieldPath || param.fieldPath] = convertTextValueToJsonFile(param.value);
 		}
 	});
 	// const img = document.createElement('img'); //Предпросмотр сгенерированого изображения
@@ -1382,13 +1392,19 @@ function getResultJSON() {
 	return json;
 }
 
+function convertTextValueToJsonFile(value) {
+	if (stringIsObject(value)) {
+		value = JSON.parse(value);
+	}
+	return value;
+}
 
 
 
 //Запись JSON в файл - показать окно для загрузки/сохранения файла на компьютер
 document.getElementById('exportJsonFile').addEventListener('click', () => {
 	if (!editedParams || editedParams.length == 0) { return; }
-	const json = getResultJSON();
+	const json = getExportResultJSON();
 	const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
@@ -1405,7 +1421,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
-	const json = getResultJSON();
+	const json = getExportResultJSON();
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
 	json['lang'] = navigator.language;
 	json['login'] = document.getElementById('login').value;
