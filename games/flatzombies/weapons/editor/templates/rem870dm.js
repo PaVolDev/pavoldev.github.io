@@ -195,5 +195,6 @@ export default {
 "weapon.boltRender.fingers.name": "fingers",
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "rem870dm",
-"storeInfo.silencerGroup": "seg12"
+"storeInfo.silencerGroup": "seg12",
+"shotAnimations[0].animation": "LabelShotgunShot",
 };
