@@ -186,5 +186,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": false,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "ump45",
-"storeInfo.silencerGroup": "pistol"
+"storeInfo.silencerGroup": "pistol",
+"shotAnimations[0].animation": "fire",
 };
