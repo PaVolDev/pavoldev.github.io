@@ -103,5 +103,6 @@ export default {
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "katana",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"strikeAnimations[0]": "LabelShotFire",
 };
