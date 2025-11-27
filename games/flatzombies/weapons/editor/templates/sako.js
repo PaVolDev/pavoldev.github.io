@@ -212,5 +212,6 @@ export default {
 "weapon.boltHandle.boltRender.SpriteRenderer.enabled": true,
 "weapon.boltHandle.boltRender.name": "boltRender",
 "weapon.boltHandle.name": "boltHandle",
-"weapon.name": "sako"
+"weapon.name": "sako",
+"shotAnimations[0].animation": "LabelShotFire",
 };
