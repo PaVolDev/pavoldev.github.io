@@ -186,5 +186,6 @@ export default {
 "weapon.lasersight.SpriteRenderer.enabled": true,
 "weapon.lasersight.name": "lasersight",
 "weapon.name": "g36c",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
