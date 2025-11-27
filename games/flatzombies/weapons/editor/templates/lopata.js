@@ -102,5 +102,6 @@ export default {
 	"weapon.SpriteRenderer.sortingOrder": 17,
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "lopata",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"strikeAnimations[0]": "LabelShotFire",
 };
