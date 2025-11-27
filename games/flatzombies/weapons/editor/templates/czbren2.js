@@ -186,5 +186,6 @@ export default {
 "weapon.laserSight.SpriteRenderer.enabled": true,
 "weapon.laserSight.name": "laserSight",
 "weapon.name": "czbren2",
-"storeInfo.silencerGroup": "rifle"
+"storeInfo.silencerGroup": "rifle",
+"shotAnimations[0].animation": "fire",
 };
