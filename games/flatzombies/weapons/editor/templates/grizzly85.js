@@ -195,5 +195,6 @@ export default {
 "weapon.boltHandle.fingers.name": "fingers",
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "grizzly85",
-"storeInfo.silencerGroup": "shotgun"
+"storeInfo.silencerGroup": "shotgun",
+"shotAnimations[0].animation": "LabelShotgunShot",
 };
