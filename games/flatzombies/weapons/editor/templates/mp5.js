@@ -185,5 +185,6 @@ export default {
 "weapon.gunFlash.SpriteRenderer.enabled": true,
 "weapon.gunFlash.name": "gunFlash",
 "weapon.name": "mp5",
-"storeInfo.silencerGroup": "pistol"
+"storeInfo.silencerGroup": "pistol",
+"shotAnimations[0].animation": "fire",
 };
