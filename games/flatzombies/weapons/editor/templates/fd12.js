@@ -186,5 +186,6 @@ export default {
 "weapon.handgrip.SpriteRenderer.enabled": true,
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "fd12",
-"storeInfo.silencerGroup": "shotgun"
+"storeInfo.silencerGroup": "shotgun",
+"shotAnimations[0].animation": "fire",
 };
