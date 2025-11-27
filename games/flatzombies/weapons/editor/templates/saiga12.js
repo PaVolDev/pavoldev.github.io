@@ -186,5 +186,6 @@ export default {
 "weapon.magazine.SpriteRenderer.enabled": true,
 "weapon.magazine.name": "magazine",
 "weapon.name": "saiga12",
-"storeInfo.silencerGroup": "seg12"
+"storeInfo.silencerGroup": "seg12",
+"shotAnimations[0].animation": "fire",
 };
