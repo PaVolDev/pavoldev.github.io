@@ -185,5 +185,6 @@ export default {
 "weapon.cover.SpriteRenderer.enabled": true,
 "weapon.cover.name": "cover",
 "weapon.name": "gm94",
-"storeInfo.silencerGroup": ""
+"storeInfo.silencerGroup": "",
+"shotAnimations[0].animation": "LabelShotFire",
 };
