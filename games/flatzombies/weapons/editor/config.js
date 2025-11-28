@@ -20,7 +20,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'position', angle: 'angle', parent: null },
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
+const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize'];
 const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive'];
 const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
 const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
@@ -206,8 +206,9 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["audioShot", 123456],
 	["shotAudioList", ""],
 	["fireRateInMinute", ""],
-	["chamberSize", 1],
-	["chamberSize", 0],
+	["Musket.chamberSize", 0],
+	["weapon.chamberSize", 1],
+	["weapon.chamberSize", 0],
 	["magazineMax", ""],
 	["delayBullet", 0],
 	["automat", 123456],
@@ -231,6 +232,8 @@ var mainParams = [ //Список важных параметров для за�
 	{ fieldPath: "type", value: "weapon" }, //Указать сразу своё значение 
 	{ fieldPath: "weapon.caliber", sourceFieldPath: "caliber" }, //Патрон/калибр оружия
 	{ fieldPath: "storeInfo.nameFull", idHTMLInput: "idWeapon" }, //Название оружия в интерфейсе
+	{ fieldPath: "storeInfo.magazineSize", sourceFieldPath: "magazineMax" },
+	{ fieldPath: "storeInfo.magazineSize", sourceFieldPath: "chamberSize" },
 ];
 
 const audioClipMetaData = [
@@ -358,10 +361,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.sight.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.audioShot", "comment": "Звук выстрела, PCM 16-bit 44100Hz", "type": "AudioClip", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.localPoint", "comment": "Координаты глушителя на стволе", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/silencer.png", "spritePivotPoint": { x: 0, y: 0.5 }, "spritePixelPerUnit": 100 },
-	{ "fieldPath": "weapon.magazineMax", "comment": "Кол-во патронов в магазине", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.addBulletsReload", "comment": "Добавление патронов в магазин после анимации перезарядки", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.magazinePlayStep", "comment": "Кол-во патронов из магазина для запуска анимации", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.shellDrop.angleScatter", "comment": "Случаное отклонение от основного направления для гильзы", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.laserPosition", "comment": "Позиция лазера от точки вращения оружия", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/laser.png", "spritePivotPoint": { x: 0, y: 0.5 }, "spritePixelPerUnit": 100, "sortingOrder": 1 },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite", "comment": "Огонь от выстрела", "type": "Renderer", "value": "", suffix: ".SpriteRenderer.sprite" },
 	{ "fieldPath": "weapon.gunFlash.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
@@ -500,6 +499,10 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.cartridge.hitEffects", "comment": "Эффекты попадания", "type": "WeaponEffectsHits", "value": "" },
 	{ "fieldPath": "weapon.reloadBoltStop", "comment": "Винтовка имеет затворную задержку. При перезарядке использовать две анимации reloadEmpty и reload", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.beltFeeder", "comment": "Оружие устроено как пулемёт с лентой патронов.<br>Сбрасывать патронник при перезарядке и использовать только одну анимацию reloadEmpty", "type": "bool", "value": true },
+
+	{ "fieldPath": "weapon.addBulletsReload", "comment": "Добавление патронов в магазин после анимации перезарядки", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.magazinePlayStep", "comment": "Кол-во патронов из магазина для запуска анимации", "type": "int", "value": 0 },
+	{ "fieldPath": "storeInfo.magazineSize", "comment": "Кол-во патронов в магазине", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.magazineMax", "comment": "Кол-во патронов в одном магазине", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.magazineStep", "comment": "Кол-во патронов из магазина для запуска анимации", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.magazineEmptyStep", "comment": "Запустить анимацию после полного опустошения одного отсека магазина", "type": "bool", "value": true },
@@ -512,10 +515,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.magazineDrop.angleSpeed.min", "comment": "Скорость вращения в секунду", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.magazineDrop.angleSpeed.max", "comment": "Скорость вращения в секунду", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.magazineDrop.quantity", "comment": "Сколько гильз выбросить одновеременно", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.recoilSteps", "comment": "Скорость увеличения отдачи. Количесво шагов для достижения угла, указанного в recoilMax", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.recoilMax", "comment": "Максимальный угол отдачи, в градусах", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.recoilDecrease", "comment": "Скорость снижения отдачи до нуля, в градусы/секунду", "type": "float", "value": 0 },
-	{ "fieldPath": "weapon.shotDirection", "comment": "Угол отклонения после выстрела", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.chamberAnimationStep", "comment": "Число выстрелов для анимации", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.timeFreezeShot", "comment": "Дополнительная задержка/заморозка оружия после выстрела на основе magazinePlayStep или chamberAnimationStep", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.playEmptyBoltAnimation", "comment": "Показать анимацию затвора перед запуском перезарядки. Например для помповых дробовиков лучше отключить параметр", "type": "bool", "value": true },
@@ -524,13 +523,18 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.shellDrop.position", "comment": "Гильза. Локальные координаты", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/shell.png", "spritePivotPoint": { x: 0.08, y: 0.5 }, "spritePixelPerUnit": 100 },
 	{ "fieldPath": "weapon.shellDrop.angleRotation", "comment": "Наклон объекта в локальных координатах", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angle", "comment": "Направление выброса в локальных координатах", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.shellDrop.angleScatter", "comment": "Случаное отклонение от основного направления", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.shellDrop.angleScatter", "comment": "Случаное отклонение от основного направления для гильзы", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.impulse.min", "comment": "Скорость выбрасывания гильзы", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.impulse.max", "comment": "Скорость выбрасывания гильзы", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angleSpeed.min", "comment": "Скорость вращения в секунду", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angleSpeed.max", "comment": "Скорость вращения в секунду", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.quantity", "comment": "Сколько гильз выбросить одновеременно", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.recoilDecrease", "comment": "Скорость уменьшения отдачи, в градусы/секунду", "type": "float", "value": 0 },
+
+	{ "fieldPath": "weapon.recoilSteps", "comment": "Скорость увеличения отдачи. Количесво шагов для достижения угла, указанного в recoilMax", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.recoilMax", "comment": "Максимальный угол отдачи, в градусах", "type": "float", "value": 0 },
+	{ "fieldPath": "weapon.recoilDecrease", "comment": "Скорость снижения отдачи до нуля, в градусы/секунду", "type": "float", "value": 0 },
+	{ "fieldPath": "weapon.shotDirection", "comment": "Угол отклонения после выстрела", "type": "float", "value": 0 },
+
 	{ "fieldPath": "weapon.bolt", "comment": "Ствол. Точка где начинается ствол оружия.<br>Точка, где будет появляться пуля и откуда начинается поиск столкновений", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/point.png" },
 	{ "fieldPath": "weapon.flashlight", "comment": "Локальные координаты фонарика", "type": "Vector3", "value": "(0, 0, 0)", "spritePreview": "images/flashlight.png", "spritePivotPoint": { x: 0, y: 0.5 }, "spritePixelPerUnit": 100 },
 	{ "fieldPath": "weapon.flashlightParent", "comment": "Родительский объект для фонарика<br>Для холодного оружия использовать плечо для фонарика, т.к. возникает баг, когда оружие вращается и движется во время анимации, фонарик будет вертеться вместе с оружием", "type": "Transform", "value": "" },
@@ -545,8 +549,8 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.playerScaleMove", "comment": "Множитель для скорости перемещения у игрока [0-1]", "type": "float", "value": 0, min: 0, max: 1 },
 	{ "fieldPath": "weapon.automat", "comment": "Автоматическое оружие", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.fireRateInMinute", "comment": "Скорострельность<br>Кол-во выстрелов в минуту", "type": "int", "value": 0 },
-	{ "fieldPath": "weapon.cartridgesList", "comment": "Порядок патронов в магазине. Если оружие без магазина, то используем список для патронника", "type": "WeaponCartridge[]", "value": "" },
 	{ "fieldPath": "weapon.chamberSize", "comment": "Кол-во патронов в патроннике внутри оружия", "type": "int", "value": 0 },
+	{ "fieldPath": "weapon.Musket.chamberSize", "comment": "Кол-во патронов в патроннике внутри оружия", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.WeaponSilencerMod.bolt", "comment": "Родительский объект для глушителя<br>Глушитель будет размещён в этом объекте", "type": "Transform", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.smoke", "comment": "Дым от выстрела", "type": "WeaponShotEffect", "value": "" },
 	{ "fieldPath": "weapon.WeaponSilencerMod.doublePistol", "comment": "Второй пистолет", "type": "Transform", "value": "" },
