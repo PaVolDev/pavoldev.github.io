@@ -542,7 +542,7 @@ function addObject() {
 
 
 canvas.addEventListener('mousedown', startMove);
-canvas.addEventListener('touchstart', startMove);
+canvas.addEventListener('touchstart', startMove, { passive: false });
 function startMove(e) {
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -606,8 +606,9 @@ function startMove(e) {
 }
 
 canvas.addEventListener('mousemove', mouseMove);
-canvas.addEventListener('touchmove ', mouseMove);
+canvas.addEventListener('touchmove ', mouseMove, { passive: false });
 function mouseMove(e) {
+	e.preventDefault();
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -679,8 +680,8 @@ function mouseMove(e) {
 
 
 canvas.addEventListener('mouseup', mouseUp);
-canvas.addEventListener('touchcancel', mouseUp);
-canvas.addEventListener('touchend', mouseUp);
+canvas.addEventListener('touchcancel', mouseUp, { passive: false });
+canvas.addEventListener('touchend', mouseUp, { passive: false });
 function mouseUp() {
 	if (isDragging) {
 		isDragging = false;
