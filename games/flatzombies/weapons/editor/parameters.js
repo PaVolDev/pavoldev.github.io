@@ -110,9 +110,10 @@ async function onSelectWeapon(event) {
 		editedParams.length = 0;
 		renderAvailableParams();//Обновить список
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список
-			const filter = defaultAddedFields.filter(data => field.fieldPath.endsWith(data[0]));
+			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
 			if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
 				addParam(field.fieldPath, false);
+				console.log(field.startFieldPath + ":" + field.value);
 			}
 		});
 		//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
@@ -1300,7 +1301,6 @@ function importFromJSON(jsonData) {
 			json.push({ key: shortPath, fullKeyPath: fullKeyPath, value: jsonValue });
 		});
 
-
 		json.forEach(field => { //Если json имеет параметр, который имеет тип из dependencies, то добавляем такой параметр и вместе с ним будут добавлены все связаные параметры
 			const fieldPath = field.key;
 			if (editedParams.find(p => p.fieldPath === fieldPath) || mainParams.find(p => p.fieldPath === fieldPath)) return;
@@ -1360,17 +1360,21 @@ function getExportResultJSON() {
 		if (param.hasOwnProperty("idHTMLInput")) {
 			value = document.getElementById(param.idHTMLInput)?.value || editedParams.find(field => field.fieldPath == param.idHTMLInput)?.value;
 			if (value && param.lowerCase) { value = value.toLowerCase(); }
-		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
+		} else if ((index = editedParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath || field.startFieldPath == param.sourceFieldPath)) != -1) {
 			value = editedParams[index].value;
-		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath)) != -1) {
+		} else if ((index = availableParams.findIndex(field => field.fieldPath == param.sourceFieldPath || field.fieldPath == param.fieldPath || field.startFieldPath == param.fieldPath || field.startFieldPath == param.sourceFieldPath)) != -1) {
 			value = availableParams[index].value;
 		} else if (param.hasOwnProperty("value")) {
 			value = param.value;
 		} else {
 			console.warn("Не удалось найти значение для параметра [" + param.fieldPath + "] - параметр пропущен и не записан в json");
 		}
-		if (!value) empty.push(param.fieldPath);
-		json[param.fieldPath] = value;
+		if (value != "" && !json[param.fieldPath]) json[param.fieldPath] = value;
+	});
+	mainParams.forEach(param => {
+		if (!json[param.fieldPath]) {
+			empty.push(param.fieldPath);
+		}
 	});
 	if (empty.length != 0) {
 		alert(tr("Некоторые параметры не указаны.\nМод может работать с ошибками.\nСледует указать параметры:\n") + empty.join("\n"));
