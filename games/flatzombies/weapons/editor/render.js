@@ -542,6 +542,7 @@ function addObject() {
 
 
 canvas.addEventListener('mousedown', startMove);
+canvas.addEventListener('touchstart', startMove);
 function startMove(e) {
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -605,6 +606,7 @@ function startMove(e) {
 }
 
 canvas.addEventListener('mousemove', mouseMove);
+canvas.addEventListener('touchmove ', mouseMove);
 function mouseMove(e) {
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
@@ -677,6 +679,8 @@ function mouseMove(e) {
 
 
 canvas.addEventListener('mouseup', mouseUp);
+canvas.addEventListener('touchcancel', mouseUp);
+canvas.addEventListener('touchend', mouseUp);
 function mouseUp() {
 	if (isDragging) {
 		isDragging = false;
@@ -694,17 +698,18 @@ function mouseUp() {
 	}
 }
 
-canvas.addEventListener('wheel', (e) => {
-	e.preventDefault();
+canvas.addEventListener('wheel', cameraZoom);
+function cameraZoom(event) {
+	event.preventDefault();
 	const zoomFactor = 1.1;
-	if (e.deltaY < 0) {
+	if (event.deltaY < 0) {
 		viewPPU *= zoomFactor;
 	} else {
 		viewPPU /= zoomFactor;
 	}
 	viewPPU = Math.max(10, Math.min(500, viewPPU)); // Clamp to reasonable range
 	renderScene();
-});
+};
 
 // Initialize
 preloadImages();
