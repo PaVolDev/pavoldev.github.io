@@ -541,12 +541,19 @@ function addObject() {
 }
 
 
-canvas.addEventListener('mousedown', startMove);
-canvas.addEventListener('touchstart', startMove, { passive: false });
-function startMove(e) {
+canvas.addEventListener('mousedown', (e) => {
+	startMove(e.clientX, e.clientY, e.button == 1);
+});
+canvas.addEventListener('touchstart', (e) => {
+	e.preventDefault();
+	const touch = e.touches[0];
+	startMove(touch.clientX, touch.clientY, 2 <= e.touches.length);
+}, { passive: false });
+
+function startMove(mouseX, mouseY, parentMove) {
 	const rect = canvas.getBoundingClientRect();
-	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
-	const mouseSy = (e.clientY - rect.top) * (canvas.height / rect.height);
+	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
+	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
 	const wx = (mouseSx - canvas.width / 2) / viewPPU;
 	const wy = (mouseSy - canvas.height / 2) / viewPPU;
 	let pivotHitObject = null;// Check for pivot hit on any object
@@ -568,8 +575,6 @@ function startMove(e) {
 			pivotHitObject = selectedObject;
 		}
 	}
-
-
 	if (pivotHitObject) {
 		if (pivotHitObject !== selectedObject) selectObject(pivotHitObject);
 		isDraggingPivot = true;
@@ -593,7 +598,7 @@ function startMove(e) {
 	}
 
 	// If no pivot hit, check for object body hit
-	const hit = (e.button == 1) ? getObjectAtPoint(999, 999) : getObjectAtPoint(wx, wy); //При нажатии на колесо мыши выбрать родительский объект
+	const hit = (parentMove) ? getObjectAtPoint(999, 999) : getObjectAtPoint(wx, wy); //При нажатии на колесо мыши выбрать родительский объект
 	if (hit) {
 		if (hit !== selectedObject) {
 			selectObject(hit);
@@ -605,13 +610,19 @@ function startMove(e) {
 	}
 }
 
-canvas.addEventListener('mousemove', mouseMove);
-canvas.addEventListener('touchmove ', mouseMove, { passive: false });
-function mouseMove(e) {
+canvas.addEventListener('mousemove', (e) => {
+	mouseMove(e.clientX, e.clientY, e.shiftKey);
+});
+canvas.addEventListener('touchmove', (e) => {
 	e.preventDefault();
+	const touch = e.touches[0];
+	mouseMove(touch.clientX, touch.clientY);
+}, { passive: false });
+
+function mouseMove(mouseX, mouseY, shiftKey) {
 	const rect = canvas.getBoundingClientRect();
-	const mouseSx = (e.clientX - rect.left) * (canvas.width / rect.width);
-	const mouseSy = (e.clientY - rect.top) * (canvas.height / rect.height);
+	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
+	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
 	const wx = (mouseSx - canvas.width / 2) / viewPPU;
 	const wy = (mouseSy - canvas.height / 2) / viewPPU;
 
@@ -662,7 +673,7 @@ function mouseMove(e) {
 			y: newWorldPos.y - parentPos.y
 		};
 		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
-		if (dragObject.localAngle == 0 && !e.shiftKey) { //Оставлять объекты на месте, только если родительский объект не имеет угла наклона
+		if (dragObject.localAngle == 0 && !shiftKey) { //Оставлять объекты на месте, только если родительский объект не имеет угла наклона
 			sceneObjects.forEach(child => { //Двигать дочерние объекты в обратную сторону, когда курсор мыши перемещает точку вращения у родительского объекта
 				if (child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name) { //Таким образом объекты на экране остаются на месте, когда мы двигаем опорную точку
 					child.localPosition.x = Math.round((parseFloat(child.localPosition.x) + parseFloat(dragObject.localPosition.x) - newLocalPos.x) / 0.0001) * 0.0001;
@@ -703,14 +714,49 @@ canvas.addEventListener('wheel', cameraZoom);
 function cameraZoom(event) {
 	event.preventDefault();
 	const zoomFactor = 1.1;
-	if (event.deltaY < 0) {
-		viewPPU *= zoomFactor;
-	} else {
-		viewPPU /= zoomFactor;
-	}
+	viewPPU = (event.deltaY < 0) ? viewPPU * zoomFactor : viewPPU / zoomFactor;
 	viewPPU = Math.max(10, Math.min(500, viewPPU)); // Clamp to reasonable range
 	renderScene();
 };
+
+let initialPinchDistance = null;
+let isPinching = false;
+canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+canvas.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+function getPinchDistance(touches) {
+	if (touches.length < 2) return null;
+	const dx = touches[0].clientX - touches[1].clientX;
+	const dy = touches[0].clientY - touches[1].clientY;
+	return Math.sqrt(dx * dx + dy * dy);
+}
+function handleTouchStart(e) {
+	if (e.touches.length === 2) {
+		isPinching = true;
+		initialPinchDistance = getPinchDistance(e.touches);
+		e.preventDefault();
+	}
+}
+function handleTouchMove(e) {
+	if (isPinching && e.touches.length === 2) {
+		e.preventDefault();
+		const currentDistance = getPinchDistance(e.touches);
+		if (initialPinchDistance && currentDistance) {
+			const scale = currentDistance / initialPinchDistance;// Вычисляем коэффициент масштабирования
+			const newViewPPU = viewPPU * scale;// Применяем как мультипликативный zoom (аналог wheel)
+			viewPPU = Math.max(10, Math.min(500, newViewPPU));// Ограничиваем диапазон
+			initialPinchDistance = currentDistance;// Обновляем начальное расстояние для плавного следования
+			renderScene();
+		}
+	}
+}
+function handleTouchEnd(e) {
+	if (isPinching) {
+		isPinching = false;
+		initialPinchDistance = null;
+	}
+}
 
 // Initialize
 preloadImages();
