@@ -32,9 +32,6 @@ function onLanguageLoaded() {
 	});
 }
 
-//ПАНЕЛИ
-const leftPanel = document.getElementById("leftPanel");
-const rightPanel = document.getElementById("rightPanel");
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 async function onSelectWeapon(event) {
@@ -85,8 +82,10 @@ async function onSelectWeapon(event) {
 			});
 		});
 		lastParentPosition.x = -0.55; lastParentPosition.y = 0;
-		leftPanel.classList.remove('panelHidden');
-		rightPanel.classList.remove('panelHidden');
+		document.getElementById("leftPanel").classList.remove('panelHidden');
+		document.getElementById("rightPanel").classList.remove('panelHidden');
+		document.getElementById("startCenterTitle").classList.add('hidden');
+		document.getElementById("centerTitle").classList.remove('hidden');
 		availableParams.length = 0;
 		availableParams = availableParams.concat(baseParams);
 		availableParams.forEach((field, idx) => { //Обновить значения, взять из оружия
@@ -112,8 +111,7 @@ async function onSelectWeapon(event) {
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список
 			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
 			if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
-				addParam(field.fieldPath, false);
-				console.log(field.startFieldPath + ":" + field.value);
+				addParam(field.fieldPath, false); //console.log(field.startFieldPath + ":" + field.value);
 			}
 		});
 		//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
@@ -266,9 +264,9 @@ function syncParamsToScene() {
 	});
 	//Скрыть панель, если нет объектов
 	if (sceneObjects && sceneObjects.length != 0) {
-		rightPanel.classList.remove('hidden')
+		document.getElementById("rightPanel").classList.remove('hidden')
 	} else {
-		rightPanel.classList.add('hidden')
+		document.getElementById("rightPanel").classList.add('hidden')
 	}
 	// Перезагрузка кэша с изображениями
 	if (typeof preloadImages === 'function') {
