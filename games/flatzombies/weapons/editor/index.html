@@ -60,7 +60,8 @@
 
 		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
 		<div class="panel" id="centerPanel">
-			<div class="titlePanel">Отредактированные параметры</div>
+			<div class="titlePanel hidden" id="centerTitle">Отредактированные параметры</div>
+			<div class="titlePanel " id="startCenterTitle">Новое оружие</div>
 			<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 			<div class="fields hidden" id="startFields">
 				<label for="idWeapon">ID:</label>
@@ -159,11 +160,13 @@
 					</div>
 				</div>
 			</div>
-			<select class="selectLanguage panelInput" onchange="switchLanguage(this);" style="max-width: 140px; align-self: end;">
-				<option value="en">English</option>
-				<option value="ru">Русский</option>
-				<option value="cn">简体中文</option>
-			</select>
+			<span style="position: relative; width: 100%; height: 100%;">
+				<select id="lang" class="selectLanguage panelInput" onchange="switchLanguage(this);" style="position: absolute; bottom: 0px; max-width: 144px;">
+					<option value="en">English</option>
+					<option value="ru">Русский</option>
+					<option value="cn">简体中文</option>
+				</select>
+			</span>
 		</div>
 
 		<!-- Правая панель: Предпросмотр -->
