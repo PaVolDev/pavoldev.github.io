@@ -709,7 +709,7 @@ function mouseUp() {
 		selectObject(selectedObject); // Refresh properties
 	}
 }
-
+//Увеличение колесом мыши
 canvas.addEventListener('wheel', cameraZoom);
 function cameraZoom(event) {
 	event.preventDefault();
@@ -719,6 +719,7 @@ function cameraZoom(event) {
 	renderScene();
 };
 
+//Увеличение пальцами
 let initialPinchDistance = null;
 let isPinching = false;
 canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
