@@ -11,6 +11,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1011: "Add",
 	1012: "Search...",
 	1013: "Available parameters",
+	1618: "Create new weapon",
 	1014: "Edited parameters",
 	1015: "ID:",
 	1016: "Template:",
@@ -90,6 +91,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	//Редактор патронов
 	1400: "Ammo Editor",
 	1419: "Ammo",
+	1420: "Create new ammo",
 	1423: "Enter a unique identifier for your cartridge",
 	1424: "Select a cartridge to use as the base parent Prefab",
 	1425: "Select cartridge",
