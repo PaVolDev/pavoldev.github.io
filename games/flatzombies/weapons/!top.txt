@@ -1,1 +1,1 @@
-ak47;toz106modst;ak50;ks23modst;pkpmodst;awp;svch;autobarretmod;sksmodst;coltmodst;usas12;krissvector;remingtonnewmodst;m60;ppshmodst;mr18modst;sw500;fnfal;svdmodst;mp40;remington1187;pestiknewmodst;dpmodst;makarov;m60e6;scout;mp5a2;uzi;m16a1;izh35m;galil;winchester1873;spas12;tec9;buccha14;howatype20;famas
+toz106modst;svch;m60;ak50;usas12;sksmodst;dpmodst;mr18modst;coltmodst;sw500;autobarretmod;svdmodst;mp40;krissvector;m60e6;ppshmodst;remingtonnewmodst;pestiknewmodst;remington1187;m16a1;scout;galil;spas12;uzi;howatype20;mp5a2;makarov;izh35m;tec9;buccha14;famas;rfb
