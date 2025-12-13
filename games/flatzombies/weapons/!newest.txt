@@ -1,1 +1,1 @@
-rfb;dpmodst;pestiknewmodst;svdmodst;usas12;mp5a2;krissvector;sksmodst;howatype20;mp40;m60;buccha14;m60e6;remington1187;izh35m;mr18modst;svch;sw500;coltmodst;toz106modst;remingtonnewmodst;ak50;tec9;uzi;m16a1;scout;galil;famas;spas12;ppshmodst;autobarretmod;makarov
+staccatop;rfb;dpmodst;pestiknewmodst;svdmodst;sksmodst;howatype20;mp40;buccha14;remington1187;izh35m;remingtonnewmodst;tec9;uzi;m16a1;galil;famas;spas12;autobarretmod
