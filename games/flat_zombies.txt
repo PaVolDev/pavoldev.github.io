@@ -1,3 +1,16 @@
+v2.0.8:
+• Mod support with new weapons;
+• Settings: option to increase brightness;
+• Mode/Rooms: difficulty increased by ≈ 2 times;
+• Zombies are slower/weaker with low aggression on first levels; 
+• UI/Player: stamina indicator is now displayed on the leg button;
+• Modes/Bug: bullet hits were not awarding any money;
+• Graphics/HK69: fixed an animation bug;
+• Graphics/Mode/Street: slightly adjusted the background;
+• Shotgun: immediately begin reloading when the weapon is empty after firing;
+• Player/Audio/Bug: weapon sounds sometimes failed to play while walking;
+• Weapons: current ammo lists will be reset;
+
 v2.0.7:
 • Weapons: M110 and MK48;
 • New animation system for weapons;
