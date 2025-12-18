@@ -10,6 +10,7 @@ v2.0.8:
 • Shotgun: immediately begin reloading when the weapon is empty after firing;
 • Player/Audio/Bug: weapon sounds sometimes failed to play while walking;
 • Weapons: current ammo lists will be reset;
+APK: https://drive.google.com/file/d/1CB-XMcUXSHFEmn1qu67RHmQLzv7JUA1B/view
 
 v2.0.7:
 • Weapons: M110 and MK48;
