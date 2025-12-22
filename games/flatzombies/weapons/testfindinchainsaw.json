@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-0.778, 0.215, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.737, 0.56, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
-    "weapon.strikeAnimations[0]": "fire",
+    "weapon.strikeAnimations[0]": "LabelShotFire",
     "storeInfo.autor": "",
     "storeInfo.autorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
