@@ -573,7 +573,7 @@ function renderSpriteArray(param, index, objectMetaData) {
 				${param.value.length != 0 ?
 			`<input type="range" min="0" max="${items.length - 1}" step="1" oninput="changePreviewFrame(${index}, this.value)" value="${param.frame}" id="${param.fieldPath}Timeline">
 				<div style="display: flex;align-items: center;justify-content: right; column-gap: 1em">
-					<div><span id="${param.fieldPath}Current">1</span>/<span id="${param.fieldPath}Total">${param.value.length}</span></div>
+					<div><span id="${param.fieldPath}Current">${param.frame+1}</span>/<span id="${param.fieldPath}Total">${param.value.length}</span></div>
 					<div>
 						<button class="add" onclick="nextFrameInSpriteList(${index})">⏭</button>
 						<button class="add" onclick="backFrameInSpriteList(${index})">⏮</button>
