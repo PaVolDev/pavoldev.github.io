@@ -481,7 +481,7 @@ function renderAvailableParams(filter = '') {
 		const isAdded = !!getParamByFieldPath(param.fieldPath);// Проверяем, добавлен ли параметр
 		return matchesSearch && !isAdded;// Исключаем ВСЕ добавленные параметры из списка
 	}).forEach(param => {
-		const li = document.createElement('li');
+		const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
 		li.style = "position: relative;";
 		li.innerHTML = `
 				<button onclick="addParam('${param.fieldPath}')" class="add">Добавить</button>
@@ -562,7 +562,7 @@ function forceRenderEditedParams(filter = '') {
 			groupPaths.forEach(fp => hiddenPaths.add(fp));
 
 			if (renderFormByType) {
-				const li = document.createElement('li'); li.className = 'sprite-block';
+				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				groupPaths.forEach(path => {
 					child = editedParams.findIndex(p => p.fieldPath === path); if (child == -1) { console.warn('editedParams[' + path + '] == NULL'); return; }
 					childParam = editedParams[child];
@@ -589,8 +589,9 @@ function forceRenderEditedParams(filter = '') {
 				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
 				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
 				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[7]);
-				const li = document.createElement('li'); li.className = 'sprite-block';
+				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				li.onmouseenter = () => selectObjectByName(prefix);
+				//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong>
 				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
@@ -598,7 +599,6 @@ function forceRenderEditedParams(filter = '') {
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-							<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
                                 <input type="file" class="fileInput" accept=".png" oninput="fileToBase64(${idx}, this)">
@@ -667,7 +667,7 @@ function forceRenderEditedParams(filter = '') {
 				const enabledIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[5]);
 				const activeIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[6]);
 				const posIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[7]);
-				const li = document.createElement('li'); li.className = 'sprite-block';
+				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong>
@@ -708,7 +708,7 @@ function forceRenderEditedParams(filter = '') {
 			} else if (param.type == 'TextureSprite') {
 				const pivotIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[1]);
 				const ppuIdx = editedParams.findIndex(p => p.fieldPath === groupPaths[2]);
-				const li = document.createElement('li'); li.className = 'param-block';
+				const li = document.createElement('li'); li.className = 'param-block'; li.setAttribute('id', param.fieldPath + "List");
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
 					<div>
@@ -739,7 +739,7 @@ function forceRenderEditedParams(filter = '') {
 				list.appendChild(li);
 
 			} else if (param.type === 'WeaponHandPoints') {
-				const li = document.createElement('li'); //li.className = 'sprite-block';
+				const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); //li.className = 'sprite-block';
 				let innerHTML = '';
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
@@ -757,13 +757,13 @@ function forceRenderEditedParams(filter = '') {
 			}
 
 		} else if (renderFormByType) {
-			const li = document.createElement('li');
+			const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
 			li.innerHTML = `<button class="remove-btn" onclick="removeParam(${idx})" data-tooltip="Удалить параметр">✕</button>`
 			li.innerHTML += renderFormByType(param, idx, null);
 			list.appendChild(li);
 		} else {
 			// Обычный параметр
-			const li = document.createElement('li'); li.className = 'param-block';
+			const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); li.className = 'param-block';
 			if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 			li.innerHTML = `
 					<div>
@@ -792,8 +792,8 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+		//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
@@ -923,8 +923,8 @@ function getInput(param, path) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+		// <div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
 		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64('${idElement}', this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
