@@ -218,7 +218,7 @@ function renderTextureListEditor(param, paramIndex) {
 							<input type="text" class="text-input" value="${texture}" onchange="updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'texture', this.value)" placeholder="data:file/type;base64,..." >
 							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл</div>" onclick="base64ToFile('${texture.replace(/'/g, "\\'")}', 'frame-${animIdx}-${frameIdx}.png')"><img src="images/download.png" ></div>
 							<label class="fileInputLabel">
-							<input type="file" class="fileInput" accept=".png" onchange="fileToBase64AnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, this)">
+							<input type="file" class="fileInput" accept=".png" oninput="fileToBase64AnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 							</label>
 							</div>
@@ -714,7 +714,7 @@ function renderFileArray(param, index, fileType = ".png") {
 							<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
 						</div>
 						<label class="fileInputLabel">
-							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} onchange="loadFileToArray(${index}, ${i}, this)">
+							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 						</label>
 					</div>
@@ -801,7 +801,7 @@ function renderJsonArray(param, index) {
 							<img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})">
 						</div>
 						<label class="fileInputLabel">
-							<input type="file" class="fileInput" accept=".json" onchange="loadJsonFromFile(${index}, ${i}, this)">
+							<input type="file" class="fileInput" accept=".json" oninput="loadJsonFromFile(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 						</label>
 					</div>
