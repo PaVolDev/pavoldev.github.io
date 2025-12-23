@@ -1,93 +1,3 @@
-
-
-const weapons = new Array();
-
-const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
-	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
-	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
-	{ name: 'laserPosition', angle: null, parent: null },
-	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parent: null },
-	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
-	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parent: null },
-	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
-	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
-	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
-	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parent: null },
-	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
-	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
-	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
-	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
-	{ name: 'position', angle: 'angle', parent: null },
-]
-const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize'];
-const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive'];
-const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
-const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
-
-const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
-	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
-		'SpriteRenderer.sprite.pivotPoint',
-		'SpriteRenderer.sprite.pixelPerUnit',
-		'SpriteRenderer.sortingOrder',
-		'Transform.localEulerAngles.z',
-		'SpriteRenderer.enabled',
-		'gameObject.SetActive',
-		'Transform.localPosition'
-	],
-	'Renderer': [
-		'SpriteRenderer.sprite.pivotPoint',
-		'SpriteRenderer.sprite.pixelPerUnit',
-		'SpriteRenderer.sortingOrder',
-		'Transform.localEulerAngles.z',
-		'SpriteRenderer.enabled',
-		'gameObject.SetActive',
-		'Transform.localPosition'
-	],
-	'WeaponHandPoints': [
-		'weaponType',
-		"buttstockPoint",
-		"buttstockReload",
-		"handguardPoint",
-		"magazinePoint",
-		"magazineInsert",
-		"magazineInsertAngle",
-		"boltPoint",
-		"boltMovePoint",
-		"handInsertPoint",
-		"bulletPoint",
-		"closedCoverPoint",
-		"openCoverPoint",
-		"boltMove.render",
-		"boltMove.startPosition",
-		"boltMove.movePosition",
-		"coverMove.render",
-		"coverMove.startPosition",
-		"coverMove.movePosition",
-		"handleMove.render",
-		"handleMove.startPosition",
-		"handleMove.movePosition",
-	],
-	'WeaponHandPoints.fingerPoint': [
-		'WeaponHandPoints.fingerPoint',
-		'WeaponHandPoints.fingerAngle'
-	],
-	'weapon.caliber': [
-		'cartridgeList',
-	]
-};
-
-
-const availableByField = {
-	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
-}
-
-
 //Функции для работы с точками в окне предпросмотра
 class SpriteScreenListener {
 	onSelect(spriteRender) { }
@@ -175,6 +85,95 @@ class MagazineInsertListener extends SpriteScreenListener {
 	}
 }
 
+
+
+
+const weapons = new Array();
+
+const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
+	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
+	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
+	{ name: 'laserPosition', angle: null, parent: null },
+	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parent: null },
+	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
+	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parent: null },
+	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
+	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
+	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
+	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+	{ name: 'position', angle: 'angle', parent: null },
+]
+const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
+const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize'];
+const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive'];
+const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
+const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
+
+const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
+	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'Renderer': [
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'WeaponHandPoints': [
+		'weaponType',
+		"buttstockPoint",
+		"buttstockReload",
+		"handguardPoint",
+		"magazinePoint",
+		"magazineInsert",
+		"magazineInsertAngle",
+		"boltPoint",
+		"boltMovePoint",
+		"handInsertPoint",
+		"bulletPoint",
+		"closedCoverPoint",
+		"openCoverPoint",
+		"boltMove.render",
+		"boltMove.startPosition",
+		"boltMove.movePosition",
+		"coverMove.render",
+		"coverMove.startPosition",
+		"coverMove.movePosition",
+		"handleMove.render",
+		"handleMove.startPosition",
+		"handleMove.movePosition",
+	],
+	'WeaponHandPoints.fingerPoint': [
+		'WeaponHandPoints.fingerPoint',
+		'WeaponHandPoints.fingerAngle'
+	],
+	'weapon.caliber': [
+		'cartridgeList',
+	]
+};
+
+const availableByField = {
+	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
+}
+
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
 spriteScreenListeners = {
 	'magazineDrop.position': new MagazineInsertListener('magazine', true),
@@ -190,8 +189,8 @@ spriteScreenListeners = {
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
 	["nameFull", 123456],
-	["autor", 123456],
-	["autorURL", 123456],
+	["author", 123456],
+	["authorURL", 123456],
 	["SpriteRenderer.sprite", ""],
 	["bolt", ""],
 	["flashlight", "(0, 0, 0)"],
@@ -236,6 +235,11 @@ var mainParams = [ //Список важных параметров для за�
 	{ fieldPath: "storeInfo.magazineSize", sourceFieldPath: "chamberSize" },
 ];
 
+const importReplace = [
+	{ fieldPath: "storeInfo.autor", newPath: "storeInfo.author" },
+	{ fieldPath: "storeInfo.autorURL", newPath: "storeInfo.authorURL" },
+];
+
 const audioClipMetaData = [
 	{ "fieldPath": "audio", "comment": "Звук", "type": "string", "value": "" },
 ];
@@ -258,8 +262,8 @@ const spriteArrayMetaData = [
 
 var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
 	{ "fieldPath": "storeInfo.nameFull", "comment": "Название оружия в интерфейсе", "type": "string", "value": "" },
-	{ "fieldPath": "storeInfo.autor", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", "type": "string", "value": "", placeholder: "pavoldev" },
-	{ "fieldPath": "storeInfo.autorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "https://", placeholder: "https://youtube.com/@pavoldev" },
+	{ "fieldPath": "storeInfo.author", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", "type": "string", "value": "", placeholder: "pavoldev" },
+	{ "fieldPath": "storeInfo.authorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "https://", placeholder: "https://youtube.com/@pavoldev" },
 	{ "fieldPath": "storeInfo.donateURL", "comment": "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", "type": "string", "value": "https://", placeholder: "https://" },
 	{ "fieldPath": "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", "comment": "Настройка анимации оружия", "type": "WeaponHandPoints", "value": "", displayName: "WeaponAnimation" },
 	//{ "fieldPath": "storeInfo.iconBase64", "comment": "Текстура оружия для интерфейса (необязательно)<br>Если не указано, то текстура будет сгенерирована автоматически", "type": "Image", "value": "" },
@@ -371,8 +375,8 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.gunFlash.Transform.localPosition", "comment": "Координаты огня от выстрела", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.gunFlash.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
-	{ "fieldPath": "weapon.shotAnimations[0].animation", "comment": "Анимация выстрела (v2.0.8.b7)", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
-	{ "fieldPath": "weapon.strikeAnimations[0]", "comment": "Анимация выстрела (v2.0.8.b7)", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
+	{ "fieldPath": "weapon.shotAnimations[0].animation", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
+	{ "fieldPath": "weapon.strikeAnimations[0]", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.playStart", "comment": "Воспроизвести при старте", "type": "bool", "value": true },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
@@ -659,6 +663,8 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.removedGameObjects", "comment": "Список объектов для удаления", "type": "string", "value": "" },
 	{ "fieldPath": "weapon.removedComponents", "comment": "Список компонентов MonoBehaviour для удаления", "type": "string", "value": "" },
 ];
+
+
 
 
 
