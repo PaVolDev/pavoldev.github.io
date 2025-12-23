@@ -515,9 +515,6 @@ function updateMaterialName(paramIndex, itemIndex, materialName) {
 
 
 
-
-
-
 //Универсальная функция renderObjectArray, которая работает с любым массивом объектов, основываясь на конфигурации objectMetaData
 // Форма для редактирования массива объектов
 function renderObjectArray(param, index, objectMetaData) {
@@ -560,6 +557,82 @@ function renderObjectArray(param, index, objectMetaData) {
         </div>
     `;
 }
+
+//Универсальная функция renderSpriteArray, которая работает с любым массивом объектов, основываясь на конфигурации objectMetaData
+// Форма для редактирования массива объектов
+function renderSpriteArray(param, index, objectMetaData) {
+	param.objectMetaData = objectMetaData; // добавляем метаданные в param
+	param.frame = param.frame || 0;
+	param.index = index;
+	param.value = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
+	const items = param.value;
+	return `<strong>${param.fieldPath}</strong><br>
+        <small>${param.comment || ''}</small><br>
+        <div class="field-control">
+            <div class="array-items" id="array-items-${index}">
+				${param.value.length != 0 ?
+			`<input type="range" min="0" max="${items.length - 1}" step="1" oninput="changePreviewFrame(${index}, this.value)" value="${param.frame}" id="${param.fieldPath}Timeline">
+				<div style="display: flex;align-items: center;justify-content: right; column-gap: 1em">
+					<div><span id="${param.fieldPath}Current">1</span>/<span id="${param.fieldPath}Total">${param.value.length}</span></div>
+					<div>
+						<button class="add" onclick="nextFrameInSpriteList(${index})">⏭</button>
+						<button class="add" onclick="backFrameInSpriteList(${index})">⏮</button>
+					</div>
+				 </div>`
+			: ''}
+                <span id="${param.fieldPath}Frame">${showSelectedFrame(param)}</span>
+                <div class="row-actions">
+                    <button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showSelectedFrame(param) {
+	if (param.value.length == 0) { return ''; }
+	const frame = Math.min(Math.max(param.frame, 0), param.value.length - 1);
+	const fieldsHtml = param.objectMetaData.map(fieldMeta => {
+		if (fieldMeta.type == "Sprite") {
+			return `<img src="${param.value[frame][fieldMeta.fieldPath]}" style="width: 180px; height: 180px; object-fit: contain; margin: auto;"><br>${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}`;
+		}
+		return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+							<div class="field-label">${fieldMeta.fieldPath}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}</div>
+						</div>`;
+	}).join('');
+	return `
+            <div class="array-item" data-index="${frame}">
+                <div class="array-item-head">
+                    <div class="array-item-title">${param.fieldPath}[${frame}]</div>
+					<button class="remove-btn" onclick="removeArrayItem(${param.index}, ${frame})" data-tooltip="Удалить из списка">✕</button>
+                </div>
+                <div class="grid-in-object">
+                    ${fieldsHtml}
+                </div>
+            </div>
+        `;
+};
+
+function nextFrameInSpriteList(paramIndex) {
+	const param = editedParams[paramIndex];
+	changePreviewFrame(paramIndex, param.frame + 1);
+}
+function backFrameInSpriteList(paramIndex) {
+	const param = editedParams[paramIndex];
+	changePreviewFrame(paramIndex, param.frame - 1);
+}
+
+function changePreviewFrame(paramIndex, frame) {
+	const param = editedParams[paramIndex];
+	param.frame = Math.min(Math.max(frame, 0), param.value.length - 1);
+	document.getElementById(param.fieldPath + "Frame").innerHTML = showSelectedFrame(param); //renderEditedParams(); //Показать изменения на странице
+	document.getElementById(param.fieldPath + "Timeline").value = param.frame;
+	document.getElementById(param.fieldPath + "Current").innerHTML = param.frame + 1;
+	document.getElementById(param.fieldPath + "Total").innerHTML = param.value.length;
+}
+
+
 
 /**
  * Устанавливает значение по вложенному пути в объекте или массиве.
@@ -710,7 +783,6 @@ function renderFileArray(param, index, fileType = ".png") {
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
-						<div class="iconButton" data-tooltip="Сохранить в файл">
 							<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
 						</div>
 						<label class="fileInputLabel">
@@ -797,7 +869,6 @@ function renderJsonArray(param, index) {
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
-						<div class="iconButton" data-tooltip="Сохранить в файл">
 							<img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})">
 						</div>
 						<label class="fileInputLabel">
