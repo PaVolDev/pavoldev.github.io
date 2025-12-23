@@ -246,7 +246,7 @@ const audioClipMetaData = [
 const typeFullForm = { //Полная форма для редактирования набора данных с заголовком и комментарием
 	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
 	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
-	'Sprite[]': function (param, idx) { return renderObjectArray(param, idx, spriteArrayMetaData); },
+	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
 	'AnimationSprite[]': function (param, idx) { return renderTextureListEditor(param, idx); }
 }
 const typeLightForm = { //Одно поле для редактирования без заголовка
@@ -606,9 +606,9 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.magazine.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.magazine.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.AnimationSpriteRenderer.frame", "comment": "Текущий кадр [0-1]", "type": "float", "value": 0, min: 0, max: 1 },
-	{ "fieldPath": "weapon.AnimationSpriteRenderer.sprites", "comment": "Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
+	{ "fieldPath": "weapon.AnimationSpriteRenderer.sprites", "comment": "Покадровая анимация с использованием спрайтов.", "type": "Sprite[]", "value": "" },
 	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.frame", "comment": "Анимация магазина. Текущий кадр [0-1]", "type": "float", "value": 0, min: 0, max: 1 },
-	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.sprites", "comment": "Анимация магазина. Покадровая анимация с использованием спрайтов.<br>Интерфейс для работы с анимацей ещё не доделан, поэтому данные пока отображаются в виде JSON.<br>Данный текст должен быть в формате JSON.<br>Используйте отдельный текстовый редактор и затем скопируйте текст обратно сюда:", "type": "Sprite[]", "value": "" },
+	{ "fieldPath": "weapon.magazine.AnimationSpriteRenderer.sprites", "comment": "Анимация магазина. Покадровая анимация с использованием спрайтов.", "type": "Sprite[]", "value": "" },
 
 	{ "fieldPath": "weapon.cartridge.arrowSample.angleTipSpeed", "comment": "Скорость вращения стрелы внутри тела, когда кончик упирает в землю.<br>Скорость за 1 секунду", "type": "float", "value": "0" },
 	{ "fieldPath": "weapon.cartridge.arrowSample.damage", "comment": "Урон один раз в процессе горения", "type": "float", "value": "0" },
