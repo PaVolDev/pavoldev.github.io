@@ -601,7 +601,7 @@ function forceRenderEditedParams(filter = '') {
 							<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
-                                <input type="file" class="fileInput" accept=".png" onchange="fileToBase64(${idx}, this)">
+                                <input type="file" class="fileInput" accept=".png" oninput="fileToBase64(${idx}, this)">
                                 <div class="fileInputButton" data-tooltip="Выбрать другой PNG-файл">Заменить</div>
                             </label>
                         </div>
@@ -794,7 +794,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
 		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64(${index}, this)">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -925,7 +925,7 @@ function getInput(param, path) {
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
 		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick="base64ToFile('${currentValue}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} onchange="fileToBase64('${idElement}', this)">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64('${idElement}', this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -1291,10 +1291,12 @@ function importFromJSON(jsonData) {
 	onSelectWeapon({ target: templateInput }).then(() => {
 		// Обрабатываем параметры из JSON
 		const json = new Array();
-		Object.keys(jsonData).forEach(fullKeyPath => { // Преобразуем полный путь к короткому формату (убираем префиксы)
+		Object.keys(jsonData).forEach(jsonKey => { // Преобразуем полный путь к короткому формату (убираем префиксы)
+			let fullKeyPath = jsonKey;
+			importReplace.forEach(field => { if (fullKeyPath.includes(field.fieldPath)) { fullKeyPath = fullKeyPath.replace(field.fieldPath, field.newPath); } });   //Заменить имена параметров
 			let shortPath = fullKeyPath;
 			prefixHide.forEach(prefix => { if (shortPath.startsWith(prefix)) { shortPath = shortPath.replace(prefix, ""); } });
-			let jsonValue = jsonData[fullKeyPath];
+			let jsonValue = jsonData[jsonKey];
 			jsonValue = (typeof jsonValue === "string" && jsonValue.includes(';base64') && !jsonValue.startsWith('data:')) ? 'data:' + jsonValue : jsonValue; //проверка текстур, они должны иметь приставку data:
 			json.push({ key: shortPath, fullKeyPath: fullKeyPath, value: jsonValue });
 		});
@@ -1307,6 +1309,7 @@ function importFromJSON(jsonData) {
 			const dependencies = typeDependencies[fieldInfo.type] || typeDependencies[fieldInfo.startFieldPath];
 			if (dependencies) { addParam(fieldPath); }
 		});
+
 
 		json.forEach(field => { //Перенос параметров в список отредактированных
 			let index = null;
