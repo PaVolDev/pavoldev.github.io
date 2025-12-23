@@ -159,6 +159,7 @@ ul {
 	position: absolute;
 }
 
+
 .panelHidden {
 	visibility: hidden;
 }
@@ -416,6 +417,8 @@ input.num {
 .add {
 	float: right;
 	background: rgb(106, 166, 255);
+	margin-left: 2px;
+	min-width: 3em;
 }
 
 .itemremove {
