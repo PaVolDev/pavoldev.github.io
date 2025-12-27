@@ -41,7 +41,7 @@ function addNewSprite() {
 // Показать модальное окно при загрузке страницы
 var modRulesModal = document.getElementById('modRulesModal');
 document.addEventListener('DOMContentLoaded', function () {
-	if (localStorage.getItem('modderAgreedToRules') !== 'true') {// Показать только если пользователь ещё не соглашался
+	if (localStorage.getItem('agreedToRulesV2') !== 'true') {// Показать только если пользователь ещё не соглашался
 		modRulesModal.style.display = 'block';
 		document.getElementById('page').classList.add('hidden');
 	} else {
@@ -67,7 +67,7 @@ agreeButton.addEventListener('click', removeRulesWindow);
 function removeRulesWindow(event = null) {
 	modRulesModal.style.display = 'none';
 	modRulesModal.innerHTML = '';
-	localStorage.setItem('modderAgreedToRules', 'true');
+	localStorage.setItem('agreedToRulesV2', 'true');
 	document.getElementById('page').classList.remove('hidden');
 }
 
