@@ -9,6 +9,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1007: "Sprite list",
 	1008: "Audio clip list",
 	1011: "Add",
+	9011: "Change",
 	1012: "Search...",
 	1013: "Available parameters",
 	1618: "Create new weapon",
