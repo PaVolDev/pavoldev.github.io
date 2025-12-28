@@ -4,9 +4,23 @@
 		display: flex;
 		flex-direction: column-reverse;
 		height: auto;
+		padding: 0.2em;
 	}
 
 	.panelHidden {
 		display: none;
+	}
+
+	.titlePanel {
+		text-align: center;
+	}
+
+	.panel {
+		padding: 1em 0.1em;
+	}
+
+	.modal-content {
+		padding: 30px 4px;
+		width: 97%;
 	}
 }
