@@ -63,12 +63,12 @@ checkbox.addEventListener('change', function () {
 
 // Закрыть окно при нажатии "Согласен"
 agreeButton.addEventListener('click', removeRulesWindow);
-
 function removeRulesWindow(event = null) {
 	modRulesModal.style.display = 'none';
 	modRulesModal.innerHTML = '';
 	localStorage.setItem('agreedToRulesV2', 'true');
 	document.getElementById('page').classList.remove('hidden');
+	window.scrollTo(0, 0);
 }
 
 
