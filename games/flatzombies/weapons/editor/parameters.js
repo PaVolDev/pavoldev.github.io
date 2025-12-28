@@ -484,7 +484,7 @@ function renderAvailableParams(filter = '') {
 		const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
 		li.style = "position: relative;";
 		li.innerHTML = `
-				<button onclick="addParam('${param.fieldPath}')" class="add">Добавить</button>
+				<button onclick="addParam('${param.fieldPath}')" class="add">Изменить</button>
                 <div ><span class="fieldpath">${param.displayName || param.fieldPath}</span> 
 				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
 				<br><small class="fieldtype">${param.type}</small><br>
