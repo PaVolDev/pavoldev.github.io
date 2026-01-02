@@ -196,5 +196,6 @@ export default {
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "grizzly85",
 "storeInfo.silencerGroup": "shotgun",
+"weapon.addBulletsReload": 2,
 "shotAnimations[0].animation": "LabelShotgunShot",
 };
