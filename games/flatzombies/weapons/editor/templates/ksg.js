@@ -178,5 +178,6 @@ export default {
 	"weapon.sight.name": "sight",
 	"weapon.name": "ksg",
 	"storeInfo.silencerGroup": "shotgun",
+"weapon.addBulletsReload": 2,
 "shotAnimations[0].animation": "LabelShotFire",
 };
