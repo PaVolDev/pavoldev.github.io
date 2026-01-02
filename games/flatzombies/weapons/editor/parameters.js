@@ -477,7 +477,8 @@ function removeParam(index, showConfirm = true) {
 function renderAvailableParams(filter = '') {
 	const list = document.getElementById('availableParamsList'); list.innerHTML = '';
 	availableParams.filter(param => {// Фильтр по поиску
-		const matchesSearch = (filter != '') ? param.fieldPath.toLowerCase().includes(filter.toLowerCase()) || (param.comment || '').toLowerCase().includes(filter.toLowerCase()) || param.type.toLowerCase().includes(filter.toLowerCase()) : true;
+		filter = filter.toLowerCase();
+		const matchesSearch = (filter != '') ? param.value == filter || param.fieldPath.toLowerCase().includes(filter) || (param.comment || '').toLowerCase().includes(filter) || param.type.toLowerCase().includes(filter) : true;
 		const isAdded = !!getParamByFieldPath(param.fieldPath);// Проверяем, добавлен ли параметр
 		return matchesSearch && !isAdded;// Исключаем ВСЕ добавленные параметры из списка
 	}).forEach(param => {
@@ -546,7 +547,8 @@ function forceRenderEditedParams(filter = '') {
 	const list = document.getElementById('editedParamsList'); list.innerHTML = '';
 	editedParams.forEach((param, idx) => {
 		if (filter != '') { //Поиск среди параметров
-			const matchesSearch = param.fieldPath.toLowerCase().includes(filter.toLowerCase()) || (param.comment || '').toLowerCase().includes(filter.toLowerCase()) || param.type.toLowerCase().includes(filter.toLowerCase());
+			filter = filter.toLowerCase();
+			const matchesSearch = param.value == filter || param.fieldPath.toLowerCase().includes(filter) || (param.comment || '').toLowerCase().includes(filter) || param.type.toLowerCase().includes(filter);
 			if (!matchesSearch) { return; }
 		}
 		if (processed.has(param.fieldPath)) return;
