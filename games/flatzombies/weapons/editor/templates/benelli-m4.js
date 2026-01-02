@@ -162,5 +162,6 @@ export default {
 "weapon.sight.name": "sight",
 "weapon.name": "benelli-m4",
 "storeInfo.silencerGroup": "shotgun",
+"weapon.addBulletsReload": 2,
 "shotAnimations[0].animation": "fire",
 };
