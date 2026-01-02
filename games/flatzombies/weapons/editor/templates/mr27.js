@@ -44,7 +44,7 @@ export default {
 	"weapon.Musket.playerScaleMove": 0.5,
 	"weapon.Musket.noiseVolumeScale": 1,
 	"weapon.Musket.automat": false,
-	"weapon.Musket.fireRateInMinute": 800,
+	"weapon.Musket.fireRateInMinute": 3600,
 	"weapon.Musket.chamberSize": 2,
 	"weapon.Musket.magazineSize": 2,
 	"weapon.Musket.laserPosition": "(1.85, 0.04)",
