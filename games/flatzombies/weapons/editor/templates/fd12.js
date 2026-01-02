@@ -18,7 +18,7 @@ export default {
 "weapon.RifleWithMagazine.recoilMax": 9,
 "weapon.RifleWithMagazine.recoilDecrease": 12,
 "weapon.RifleWithMagazine.shotDirection": 2,
-"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 "weapon.RifleWithMagazine.timeFreezeShot": 0,
 "weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 "weapon.RifleWithMagazine.shotAudioList": [],
@@ -187,5 +187,6 @@ export default {
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "fd12",
 "storeInfo.silencerGroup": "shotgun",
+"weapon.addBulletsReload": 2,
 "shotAnimations[0].animation": "fire",
 };
