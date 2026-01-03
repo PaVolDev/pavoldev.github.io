@@ -228,7 +228,7 @@ function renderTextureListEditor(param, paramIndex) {
 							<div style="display: grid; grid-template-columns: 1fr 2fr; margin-left: 2px;">
 								<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
 									<span class="title">PPU:</span>
-									<input type="number" step="10" style="width:100%" value="${ppu}" min="50" max="200"
+									<input type="number" step="10" style="width:100%" value="${ppu}" min="50" max="300"
 										oninput="inputMinMax(this); updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'pixelPerUnit', parseFloat(this.value))">
 								</div>
 								<div class="propertyBlock" data-tooltip="Точка вращения объекта">
