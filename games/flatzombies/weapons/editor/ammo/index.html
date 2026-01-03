@@ -213,7 +213,7 @@
 							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
 							<input type="text" id="propSortingOrder" step="1">
 							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
-							<input type="text" id="propPixelsPerUnit" step="5" min="50" max="300" oninput="inputMinMax(this)">
+							<input type="text" id="propPixelsPerUnit" step="5" min="10" max="300">
 						</div>
 						<div>
 							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
@@ -228,7 +228,7 @@
 							<label for="propTexture">Текстура:</label>
 							<input type="text" id="propTexture">
 							<label class="fileInputLabel">
-								<input type="file" class="fileInput" accept=".png" id="sceneFileInput">
+								<input type="file" class="fileInput" id="sceneFileInput" accept=".png">
 								<span class="fileInputButton" data-tooltip="Загрузить PNG-файл">Заменить</span>
 							</label>
 						</div>
