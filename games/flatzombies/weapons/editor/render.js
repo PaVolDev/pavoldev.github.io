@@ -435,6 +435,8 @@ function buildTree() {
 	return tree;
 }
 
+
+
 // === ВНЕ ФУНКЦИИ: создаём шаблон и кэшируем элементы ===
 // Глобальные переменные для кэширования
 // Кэшируем ссылки на элементы один раз
@@ -459,7 +461,7 @@ propertyInputs.posY.addEventListener('input', () => { if (selectedObject) { scen
 propertyInputs.angle.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = parseFloat(propertyInputs.angle.value); propertyInputs.angleSlider.value = sceneObjects[objectId].localAngle; renderScene(); } });
 propertyInputs.angleSlider.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = Math.round(parseFloat(propertyInputs.angleSlider.value)); propertyInputs.angle.value = sceneObjects[objectId].localAngle; renderScene(); } });
 propertyInputs.sortingOrder.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].sortingOrder = parseInt(propertyInputs.sortingOrder.value); renderScene(); } });
-propertyInputs.pixelsPerUnit.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pixelPerUnit = parseFloat(propertyInputs.pixelsPerUnit.value); renderScene(); } });
+propertyInputs.pixelsPerUnit.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(300, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
 propertyInputs.pivotX.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.x = parseFloat(propertyInputs.pivotX.value); renderScene(); } });
 propertyInputs.pivotY.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.y = parseFloat(propertyInputs.pivotY.value); renderScene(); } });
 propertyInputs.texture.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].texture = propertyInputs.texture.value; renderScene(); } });
@@ -472,15 +474,74 @@ document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) 
 	const reader = new FileReader();
 	reader.onload = e => {
 		const base64 = e.target.result;
-		propertyInputs.texture.value = base64;
-		propertyInputs.texture.dispatchEvent(fileEvent);
 		sceneObjects[objectId].texture = base64;
-		preloadImages(); //Перезагрузка кэша с изображениями
-		renderScene();
+		// Обрезаем прозрачные края
+		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
+			propertyInputs.texture.value = trimmedBase64;
+			propertyInputs.texture.dispatchEvent(fileEvent);
+			console.log("fileEvent: " + fileEvent.type);
+			preloadImages(); //Перезагрузка кэша с изображениями
+			renderScene();
+		});
 	};
 	reader.onerror = () => { alert('Failed to read file.'); };
 	reader.readAsDataURL(file);
 });
+
+
+function trimTransparentEdges(base64, maxSize, step, padding, callback) {
+	const img = new Image();
+	img.src = base64;
+	img.onload = () => {
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		// Проверка на слишком большое изображение
+		if (img.width > maxSize * 2 || img.height > maxSize * 2) { // Рисуем уменьшенное изображение
+			const scale = Math.min(maxSize / img.width, maxSize / img.height);
+			canvas.width = Math.round(img.width * scale);
+			canvas.height = Math.round(img.height * scale);
+			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; // Улучшаем качество масштабирования
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);// Рисуем в canvas
+		} else {
+			// Если уменьшение не нужно — рисуем оригинал
+			canvas.width = img.width;
+			canvas.height = img.height;
+			ctx.drawImage(img, 0, 0);
+		}
+		const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		const a = (x, y) => data[(y * width + x) * 4 + 3]; // alpha в точке (x,y)
+		const findEdge = (start, end, step, getCoord) => {
+			for (let i = start; i !== end; i += step) {
+				for (let j = 0; j < (getCoord === 'x' ? height : width); j++) {
+					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) !== 0) return i;
+				}
+			}
+			return getCoord === 'x' ? width : height;
+		};
+		let top = findEdge(0, height, step, 'y');
+		let bottom = findEdge(height - 1, -1, -step, 'y') + 1;
+		let left = findEdge(0, width, step, 'x');
+		let right = findEdge(width - 1, -1, -step, 'x') + 1;
+		if (left >= right || top >= bottom) return callback(base64);
+		//ДОБАВЛЯЕМ PADDING
+		top = Math.max(0, top - padding);
+		bottom = Math.min(height, bottom + padding);
+		left = Math.max(0, left - padding);
+		right = Math.min(width, right + padding);
+		// Создаём canvas с учётом padding
+		const trimmed = document.createElement('canvas');
+		const tctx = trimmed.getContext('2d');
+		trimmed.width = right - left;
+		trimmed.height = bottom - top;
+		// Рисуем с отступом: исходное изображение вставляется внутрь нового canvas
+		tctx.drawImage(canvas, left, top, right - left, bottom - top, 0, 0, trimmed.width, trimmed.height);
+		callback(trimmed.toDataURL('image/png'));
+	};
+	img.onerror = () => callback(base64);
+}
+
+
+
 
 //ВЫБРАТЬ ОБЪЕКТ 
 function selectObject(obj) {
