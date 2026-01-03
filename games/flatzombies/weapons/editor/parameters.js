@@ -630,7 +630,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
                         ${ppuIdx >= 0 ? `<span class="title">PPU:</span>
-                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" id="${editedParams[ppuIdx].fieldPath}" min="50" max="200" onfocusout="inputMinMax(this); updateParam(${ppuIdx}, this.value); updateInputSpriteMillimetersByPPU(${idx}, ${ppuIdx}, 'mainlength')">` : ''}
+                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" id="${editedParams[ppuIdx].fieldPath}" min="50" max="300" onfocusout="inputMinMax(this); updateParam(${ppuIdx}, this.value); updateInputSpriteMillimetersByPPU(${idx}, ${ppuIdx}, 'mainlength')">` : ''}
 							</div>
 
 							<div class="propertyBlock">
