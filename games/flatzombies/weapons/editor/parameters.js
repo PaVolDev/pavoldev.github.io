@@ -603,7 +603,7 @@ function forceRenderEditedParams(filter = '') {
                         <div class="input-group">
                             <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${idx}, this.value)" placeholder="image/png;base64,...">
 							<label class="fileInputLabel">
-                                <input type="file" class="fileInput" accept=".png" oninput="fileToBase64(${idx}, this)">
+                                <input type="file" class="fileInput" accept=".png" oninput="updateSprite(${idx}, this);">
                                 <div class="fileInputButton" data-tooltip="Выбрать другой PNG-файл">Заменить</div>
                             </label>
                         </div>
@@ -630,7 +630,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
                         ${ppuIdx >= 0 ? `<span class="title">PPU:</span>
-                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" id="${editedParams[ppuIdx].fieldPath}" min="50" max="300" onfocusout="inputMinMax(this); updateParam(${ppuIdx}, this.value); updateInputSpriteMillimetersByPPU(${idx}, ${ppuIdx}, 'mainlength')">` : ''}
+                                <input type="number" step="10" class="num" value="${editedParams[ppuIdx].value}" id="${editedParams[ppuIdx].fieldPath}" min="10" max="300" onfocusout="inputMinMax(this); updateParam(${ppuIdx}, this.value); updateInputSpriteMillimetersByPPU(${idx}, ${ppuIdx}, 'mainlength')">` : ''}
 							</div>
 
 							<div class="propertyBlock">
@@ -721,7 +721,7 @@ function forceRenderEditedParams(filter = '') {
 						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
 							${ppuIdx >= 0 ? `<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
 							<span class="title">PPU:</span>
-							<input type="number" step="10" style="width:100%" value="${editedParams[ppuIdx].value}" min="1" max="5000" oninput="inputMinMax(this); updateParam(${ppuIdx}, this.value)">
+							<input type="number" step="10" style="width:100%" value="${editedParams[ppuIdx].value}" min="10" max="300" oninput="updateParam(${ppuIdx}, this.value)" onfocusout="inputMinMax(this)">
 							</div>` : ''}
 							
 							${pivotIdx >= 0 ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
@@ -796,7 +796,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam(${index}, this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64(${index}, this)">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -927,7 +927,7 @@ function getInput(param, path) {
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		// <div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
 		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="fileToBase64('${idElement}', this)">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -1068,7 +1068,29 @@ function updateVectorValue(vectorValue, coordIndex, newFloatValue) {
 }
 
 
-
+function updateSprite(idInputElement, input) {
+	const file = input.files[0];
+	if (!file) return;
+	const reader = new FileReader();
+	reader.onload = e => {
+		const base64 = e.target.result;
+		const textInput = Number.isInteger(idInputElement) ? null : document.getElementById(idInputElement);
+		// Обрезаем прозрачные края
+		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
+			if (textInput != null) {
+				textInput.value = trimmedBase64;
+				textInput.dispatchEvent(new Event('change'));
+			} else {
+				editedParams[idInputElement].value = trimmedBase64;
+			}
+			input.value = '';
+			renderEditedParams();
+			syncParamsToScene();
+		});
+	};
+	reader.onerror = () => { alert('Failed to read file.'); };
+	reader.readAsDataURL(file);
+}
 
 /*
 // Обрабатываем все изображения параллельно
@@ -1126,82 +1148,6 @@ function compressImage(base64, maxSize) {
 	});
 }
 
-function trimTransparentEdges(base64, maxSize, step, padding, callback) {
-	const img = new Image();
-	img.src = base64;
-	img.onload = () => {
-		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
-		// Проверка на слишком большое изображение
-		if (img.width > maxSize * 2 || img.height > maxSize * 2) { // Рисуем уменьшенное изображение
-			const scale = Math.min(maxSize / img.width, maxSize / img.height);
-			canvas.width = Math.round(img.width * scale);
-			canvas.height = Math.round(img.height * scale);
-			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; // Улучшаем качество масштабирования
-			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);// Рисуем в canvas
-		} else {
-			// Если уменьшение не нужно — рисуем оригинал
-			canvas.width = img.width;
-			canvas.height = img.height;
-			ctx.drawImage(img, 0, 0);
-		}
-		const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		const a = (x, y) => data[(y * width + x) * 4 + 3]; // alpha в точке (x,y)
-		const findEdge = (start, end, step, getCoord) => {
-			for (let i = start; i !== end; i += step) {
-				for (let j = 0; j < (getCoord === 'x' ? height : width); j++) {
-					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) !== 0) return i;
-				}
-			}
-			return getCoord === 'x' ? width : height;
-		};
-		let top = findEdge(0, height, step, 'y');
-		let bottom = findEdge(height - 1, -1, -step, 'y') + 1;
-		let left = findEdge(0, width, step, 'x');
-		let right = findEdge(width - 1, -1, -step, 'x') + 1;
-		if (left >= right || top >= bottom) return callback(base64);
-		//ДОБАВЛЯЕМ PADDING
-		top = Math.max(0, top - padding);
-		bottom = Math.min(height, bottom + padding);
-		left = Math.max(0, left - padding);
-		right = Math.min(width, right + padding);
-		// Создаём canvas с учётом padding
-		const trimmed = document.createElement('canvas');
-		const tctx = trimmed.getContext('2d');
-		trimmed.width = right - left;
-		trimmed.height = bottom - top;
-		// Рисуем с отступом: исходное изображение вставляется внутрь нового canvas
-		tctx.drawImage(canvas, left, top, right - left, bottom - top, 0, 0, trimmed.width, trimmed.height);
-		callback(trimmed.toDataURL('image/png'));
-	};
-	img.onerror = () => callback(base64);
-}
-
-function fileToBase64(idInputElement, input) {
-	const file = input.files[0];
-	if (!file) return;
-	const reader = new FileReader();
-	reader.onload = e => {
-		const base64 = e.target.result;
-		const textInput = Number.isInteger(idInputElement) ? null : document.getElementById(idInputElement);
-		// Обрезаем прозрачные края
-		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
-			if (textInput != null) {
-				textInput.value = trimmedBase64;
-				textInput.onchange(new Event('change'));
-			} else {
-				editedParams[idInputElement].value = trimmedBase64;
-			}
-			input.value = '';
-			renderEditedParams();
-			syncParamsToScene();
-		});
-	};
-	reader.onerror = () => {
-		alert('Failed to read file.');
-	};
-	reader.readAsDataURL(file);
-}
 
 
 function base64ToFile(base64, filename = 'file.png') {
