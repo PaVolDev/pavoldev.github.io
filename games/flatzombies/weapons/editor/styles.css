@@ -816,12 +816,10 @@ img.tooltip {
 .bg-btn {
 	width: 34px;
 	height: 28px;
-	border: 2px solid #0000002e;
 	border-radius: 4px;
 	cursor: pointer;
 	transition: transform 0.1s;
 }
-
 .bg-btn.active {
 	border-color: #00000052;
 	transform: scale(1.1);
