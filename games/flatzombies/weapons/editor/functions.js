@@ -155,9 +155,6 @@ let background = 'white';
 //Переключение фона предпросмотра
 function backgroundPreview(color, element) {
 	background = color;
-	const bgButtons = document.querySelectorAll('.bg-btn');
-	bgButtons.forEach(b => b.classList.remove('active'));
-	element.classList.add('active');
 	forceRenderEditedParams();
 }
 
@@ -281,7 +278,7 @@ function renderAnimationSprite(param, paramIndex, spriteMetaData) {
 				<div style="display: flex;align-items: center;justify-content: right; column-gap: 1em">
 					<div class="bg-btn-group" style="display: flex; align-items: center; gap: 1px;">
 						<div class="bg-btn" data-bg="black" style="background: black;" onclick="backgroundPreview('black', this);"></div>
-						<div class="bg-btn active" data-bg="white" style="background: white;" onclick="backgroundPreview('white', this);"></div>
+						<div class="bg-btn" data-bg="white" style="background: white;" onclick="backgroundPreview('white', this);"></div>
 					</div>
 					<div><span id="${param.fieldPath}Current">${param.frame + 1}</span>/<span id="${param.fieldPath}Total">${frames.length}</span></div>
 					<div>
