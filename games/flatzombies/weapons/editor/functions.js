@@ -151,116 +151,155 @@ function inputMinMax(input) {
 	}
 }
 
+let background = 'white';
+//Переключение фона предпросмотра
+function backgroundPreview(color, element) {
+	background = color;
+	const bgButtons = document.querySelectorAll('.bg-btn');
+	bgButtons.forEach(b => b.classList.remove('active'));
+	element.classList.add('active');
+	forceRenderEditedParams();
+}
+
+
+function setPreviewAnimation(paramPath, animayionName) {
+	param = findByPath(paramPath);
+	param.previewAnimation = animayionName;
+	forceRenderEditedParams();
+}
+
+function nextFrameInFrameList(paramPath) {
+	const param = findByPath(paramPath);
+	changeAnimationPreviewFrame(paramPath, param.frame + 1);
+}
+function backFrameInFrameList(paramPath) {
+	const param = findByPath(paramPath);
+	changeAnimationPreviewFrame(paramPath, param.frame - 1);
+}
+function lastFrameInFrameList(paramPath) {
+	const param = findByPath(paramPath);
+	changeAnimationPreviewFrame(paramPath, param.value.length);
+}
+
+function changeAnimationPreviewFrame(paramPath, frame) {
+	const param = findByPath(paramPath);
+	const animation = param.value.find(a => a.name == param.previewAnimation) ?? param.value[0];
+	param.frame = Math.min(Math.max(frame, 0), animation.frames.length - 1);
+	document.getElementById(param.fieldPath + "Frame").innerHTML = showAnimationFrame(param); //renderEditedParams(); //Показать изменения на странице
+	document.getElementById(param.fieldPath + "Timeline").value = param.frame;
+	document.getElementById(param.fieldPath + "Current").innerHTML = param.frame + 1;
+}
+
+
+function showAnimationFrame(param) {
+	if (param.value.length == 0) return '';
+	const animationIndex = Math.max(0, param.value.findIndex(a => a.name == param.previewAnimation));
+	const animation = param.value[animationIndex];
+	if (!animation) return '';
+	const frames = animation.frames;
+	if (frames.length == 0) return 'Нет кадров';
+	const frame = Math.min(Math.max(param.frame, 0), frames.length - 1);
+	if (!frames[frame]) return 'Пустой кадр';
+	const fieldsHtml = param.spriteMetaData.map(fieldMeta => {
+		const fieldMetaValue = frames[frame][fieldMeta.fieldPath];
+		if (fieldMeta.type == "Sprite") {
+			return `<img src="${fieldMetaValue}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.fieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}`;
+		}
+		return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
+							<div class="field-label">${fieldMeta.fieldPath}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}</div>
+						</div>`;
+	}).join('');
+	return `
+            <div class="array-item" data-animation="${animation.name}" data-frame="${frame}">
+                <div class="array-item-head">
+                    <div class="array-item-title">[${animationIndex}][${frame}]</div>
+					<button class="remove-btn" onclick="removeArrayItem(['${param.startFieldPath}', ${animationIndex}], ${frame})" data-tooltip="Удалить из списка">✕</button>
+                </div>
+                <div class="grid-in-object">
+                    ${fieldsHtml}
+                </div>
+            </div>
+        `;
+};
 
 
 //Работа с массивом изображений
 //Показать список анимаций
-function renderTextureListEditor(param, paramIndex) {
+function renderAnimationSprite(param, paramIndex, spriteMetaData) {
 	param.value = param.value || [];
-	const animations = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
+	param.frame = param.frame || 0;
+	param.index = paramIndex;
+	param.spriteMetaData = spriteMetaData;
+	param.value = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
+	param.previewAnimation = param.previewAnimation ?? '';
+
+	const animations = param.value;
 	let html = `
 		<div>
 			<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
 			<small>${param.comment || ''}</small>
-		</div>
-		<div class="animations-editor" data-param-index="${paramIndex}">
-			<div class="animations-header" style="margin-bottom: 8px;">
-				<strong>Анимации (${animations.length})</strong>
-				<button type="button" class="add-animation-btn" onclick="addAnimation(${paramIndex})" style="font-size: 0.9em; padding: 2px 6px;">➕ Добавить</button>
-			</div>`;
+		</div>`;
 
-	animations.forEach((anim, animIdx) => {
-		const name = anim?.name || '';
-		const frames = Array.isArray(anim?.frames) ? anim.frames : [];
 
-		html += `
-			<div class="animation-block" style="border: 1px solid var(--border-color); padding: 6px; margin: 4px 0; border-radius: 4px;">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-					<input type="text" class="text-input" value="${name}" 
-						placeholder="Имя анимации" 
-						onchange="updateAnimationName(${paramIndex}, ${animIdx}, this.value)"
-						style="flex: 1; margin-right: 6px; font-weight: bold;">
-					<div>
-						${animIdx > 0 ? `<button type="button" class="move-anim-btn" onclick="moveAnimation(${paramIndex}, ${animIdx}, -1)" style="width:24px;">↑</button>` : ''}
-						${animIdx < animations.length - 1 ? `<button type="button" class="move-anim-btn" onclick="moveAnimation(${paramIndex}, ${animIdx}, 1)" style="width:24px;">↓</button>` : ''}
-						<button type="button" class="remove-anim-btn" onclick="removeAnimation(${paramIndex}, ${animIdx})" style="width:24px;">✕</button>
-					</div>
-				</div>
+	let animIdx = animations.findIndex(a => a.name == param.previewAnimation);
+	animIdx = (animIdx == -1) ? 0 : animIdx;
+	const anim = animations[animIdx];
+	const name = anim?.name || '';
+	anim.frames = Array.isArray(anim?.frames) ? anim.frames : [];
+	const frames = anim.frames;
 
-				<div class="frames-list" style="margin-top: 6px;">`;
-
-		frames.forEach((frame, frameIdx) => {
-			const isNull = frame === null;
-			const texture = isNull ? '' : (frame.texture || '');
-			// Парсим pivot из строки вида "(0.4, 0.5)"
-			let pivotX = 0.5, pivotY = 0.5;
-			if (!isNull && frame.pivotPoint) {
-				const [px, py] = parseVector(frame.pivotPoint);
-				parseVector(frame.pivotPoint);
-				pivotX = px || 0.5;
-				pivotY = py || 0.5;
-			}
-			const ppu = isNull ? 100 : (frame.pixelPerUnit || 100);
-
-			html += `
-				<div class="frame-item">
-					<!-- Превью -->
-					<div class="animationPreview">
-						${isNull ?
-					`<div style="font-size: 0.8em; color: #888;">null</div>` :
-					`<img src="${texture}" onerror="this.style.opacity='0.3'" style="max-width: 100%; max-height: 60px; object-fit: contain;">`
-				}
-					</div>
-					<div style="display: grid;grid-template-columns: 50% 50%;align-self: end;">
-						${isNull ? `
-							<button type="button" onclick="convertNullAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="font-size: 0.85em; padding: 2px 6px;">Заменить на спрайт</button>
-						` : `
-							<!-- Texture input -->
-							<div class="input-group" style="align-items: end;">
-							<input type="text" class="text-input" value="${texture}" onchange="updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'texture', this.value)" placeholder="data:file/type;base64,..." >
-							<div class="iconButton" data-tooltip="<div style='text-align: center;'>Сохранить как PNG-файл</div>" onclick="base64ToFile('${texture.replace(/'/g, "\\'")}', 'frame-${animIdx}-${frameIdx}.png')"><img src="images/download.png" ></div>
-							<label class="fileInputLabel">
-							<input type="file" class="fileInput" accept=".png" oninput="fileToBase64AnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, this)">
-							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
-							</label>
-							</div>
-							<div style="display: grid; grid-template-columns: 1fr 2fr; margin-left: 2px;">
-								<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
-									<span class="title">PPU:</span>
-									<input type="number" step="10" style="width:100%" value="${ppu}" min="10" max="300" onfocusout="inputMinMax(this)"
-										oninput="updateAnimationFrameField(${paramIndex}, ${animIdx}, ${frameIdx}, 'pixelPerUnit', parseFloat(this.value))">
-								</div>
-								<div class="propertyBlock" data-tooltip="Точка вращения объекта">
-									<span class="title">Pivot:</span>
-									<div class="vector-fields">
-										<input placeholder="X" type="number" step="0.02" style="width:100%" value="${pivotX}"
-											onchange="updateAnimationFramePivot(${paramIndex}, ${animIdx}, ${frameIdx}, 0, this.value)">
-										<input placeholder="Y" type="number" step="0.02" style="width:100%" value="${pivotY}"
-											onchange="updateAnimationFramePivot(${paramIndex}, ${animIdx}, ${frameIdx}, 1, this.value)">
-									</div>
-								</div>
-							</div>
-						`}
-					</div>
-
-					<!-- Кнопки управления фреймом -->
-					<div style="display: flex; flex-direction: column; gap: 2px;">
-						<button type="button" class="remove-frame-btn" onclick="removeAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx})" style="width:20px; height:20px; font-size:12px;">✕</button>
-						${frameIdx > 0 ? `<button type="button" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, -1)" style="width:20px; height:20px; font-size:12px;">↑</button>` : `<div></div>`}
-						${frameIdx < frames.length - 1 ? `<button type="button" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${frameIdx}, 1)" style="width:20px; height:20px; font-size:12px;">↓</button>` : `<div></div>`}
-					</div>
-				</div>`;
-		});
-
-		html += `
-				<div style="margin-top: 6px; display: flex; gap: 6px;">
-					<button type="button" onclick="addAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Кадр</button>
-					<button type="button" onclick="addNullAnimationFrame(${paramIndex}, ${animIdx})" style="font-size: 0.85em; padding: 2px 6px;">➕ Пустой</button>
-				</div>
-			</div>`;
+	frames.forEach((frame, frameIndex) => {
+		if (!frame) {
+			frames[frameIndex] = newObjectByMetaData(spriteMetaData);
+		}
 	});
 
-	html += `</div>`;
+	let selectHTML = `<select onchange="setPreviewAnimation('${param.startFieldPath}', this.value);" value="${param.previewAnimation}" id="${param.startFieldPath}">`;
+	animations.forEach((anim, animIdx) => {
+		selectHTML += `<option value="${anim.name}"${(anim.name == param.previewAnimation ? ' selected' : '')}>${anim.name}</option>`;
+	});
+	selectHTML += '</select>';
+
+	html += `
+			<div style="display: grid; grid-template-columns: 2fr 1fr">
+				<div style="display: grid;grid-template-columns: 1fr 1fr;gap: 0.5em; align-items: start;">
+					${selectHTML}
+					<input type="text" value="${name}" placeholder="Имя анимации" onchange="updateAnimationName(${paramIndex}, ${animIdx}, this.value)" >
+				</div>
+				<div style="text-align: right;">
+					<button type="button" class="add animation-btn" onclick="addAnimation(${paramIndex})" data-tooltip="Добавить новую анимацию">Добавить</button>
+					<button type="button" class="itemremove" onclick="removeAnimation(${paramIndex}, ${animIdx})" data-tooltip="Удалить анимацию ${name}">Удалить</button>
+				</div>
+			</div>
+			<div class="animation-block" style="border: 1px solid var(--border-color); padding: 6px; margin: 4px 0; border-radius: 4px;">
+				<div class="frames-list" style="margin-top: 6px;">
+				<div class="field-control">
+					<div class="array-items" id="array-items-${param.frame}">
+						${frames.length != 0 ?
+			`<input type="range" min="0" max="${frames.length - 1}" step="1" oninput="changeAnimationPreviewFrame('${param.startFieldPath}', this.value)" onmouseup="forceRenderEditedParams();" value="${param.frame}" id="${param.fieldPath}Timeline">
+				<div style="display: flex;align-items: center;justify-content: right; column-gap: 1em">
+					<div class="bg-btn-group" style="display: flex; align-items: center; gap: 1px;">
+						<div class="bg-btn" data-bg="black" style="background: black;" onclick="backgroundPreview('black', this);"></div>
+						<div class="bg-btn active" data-bg="white" style="background: white;" onclick="backgroundPreview('white', this);"></div>
+					</div>
+					<div><span id="${param.fieldPath}Current">${param.frame + 1}</span>/<span id="${param.fieldPath}Total">${frames.length}</span></div>
+					<div>
+						<button class="add" onclick="nextFrameInFrameList('${param.startFieldPath}')">⏭</button>
+						<button class="add" onclick="backFrameInFrameList('${param.startFieldPath}')">⏮</button>
+					</div>
+				</div>`
+			: ''}
+						<span id="${param.fieldPath}Frame">${showAnimationFrame(param)}</span>
+						<div class="row-actions">
+							${param.frame > 0 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, -1)" data-tooltip="Поменять местами текущий кадр">⬅</button>` : `<div></div>`}
+							${param.frame < frames.length - 1 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, 1)" data-tooltip="Поменять местами текущий кадр">➡</button>` : `<div></div>`}
+							<button class="add" onclick="addAnimationFrame(${paramIndex}, ${animIdx}); nextFrameInFrameList('${param.startFieldPath}');">Добавить</button>
+						</div>
+					</div>
+				</div>
+			</div>
+    `;
 
 	return html;
 }
@@ -317,21 +356,6 @@ function addAnimationFrame(paramIndex, animIdx) {
 	}
 }
 
-function addNullAnimationFrame(paramIndex, animIdx) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
-		param.value[animIdx].frames.push(null);
-		forceRenderEditedParams();
-	}
-}
-
-function removeAnimationFrame(paramIndex, animIdx, frameIdx) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
-		param.value[animIdx].frames.splice(frameIdx, 1);
-		forceRenderEditedParams();
-	}
-}
 
 function moveAnimationFrame(paramIndex, animIdx, frameIdx, offset) {
 	const param = editedParams[paramIndex];
@@ -376,33 +400,6 @@ function fileToBase64AnimationFrame(paramIndex, animIdx, frameIdx, input) {
 	input.value = '';
 }
 
-// Обновление pivot через X/Y (аналог updateVector)
-function updateAnimationFramePivot(paramIndex, animIdx, frameIdx, axis, value) {
-	const param = editedParams[paramIndex];
-	const frame = param.value?.[animIdx]?.frames?.[frameIdx];
-	if (!frame || frame === null) return;
-
-	const numValue = parseFloat(value);
-	if (isNaN(numValue)) return;
-
-	// Получаем текущий pivot
-	let x = 0.5, y = 0.5;
-	if (frame.pivotPoint) {
-		const match = frame.pivotPoint.match(/\(([^,]+),\s*([^)]+)\)/);
-		if (match) {
-			x = parseFloat(match[1].trim()) || 0.5;
-			y = parseFloat(match[2].trim()) || 0.5;
-		}
-	}
-
-	// Обновляем нужную ось
-	if (axis === 0) x = numValue;
-	else if (axis === 1) y = numValue;
-
-	// Форматируем как строку "(x, y)"
-	frame.pivotPoint = `(${x}, ${y})`;
-}
-
 
 
 
@@ -422,7 +419,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 		return `<div class="array-item" data-index="${i}">
 				<div class="array-item-head">
 					<div class="array-item-title">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
 				</div>
 				<div class="grid-in-object">
 					<div class="field-row" data-tooltip="Материал тела">
@@ -487,11 +484,11 @@ function addArrayItem(paramIndex) {
 }
 
 // Удалить элемент по индексу
-function removeArrayItem(paramIndex, itemIndex) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value)) {
-		param.value.splice(itemIndex, 1);
-		updateParam(paramIndex, param.value, true);
+function removeArrayItem(path, itemIndex) {
+	const paramArray = findValueByPath(path);
+	if (Array.isArray(paramArray)) {
+		paramArray.splice(itemIndex, 1);
+		renderEditedParams();
 	}
 }
 
@@ -525,17 +522,19 @@ function renderObjectArray(param, index, objectMetaData) {
 	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const renderItem = (item, i) => {
 		const fieldsHtml = objectMetaData.map(fieldMeta => {
+			fieldMeta.value = item[fieldMeta.fieldPath];
 			return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
 							<div class="field-label">${fieldMeta.fieldPath}</div>
 							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, i, fieldMeta.fieldPath])}</div>
 						</div>`;
 		}).join('');
 
+
 		return `
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="array-item-title">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem('${param.startFieldPath}', ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
                     ${fieldsHtml}
@@ -553,7 +552,7 @@ function renderObjectArray(param, index, objectMetaData) {
             <div class="array-items" id="array-items-${index}">
                 ${itemsHtml}
                 <div class="row-actions">
-                    <button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
+                    <button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItemByMeta('${param.startFieldPath}')">Добавить</button>
                 </div>
             </div>
         </div>
@@ -573,18 +572,18 @@ function renderSpriteArray(param, index, objectMetaData) {
         <div class="field-control">
             <div class="array-items" id="array-items-${index}">
 				${param.value.length != 0 ?
-			`<input type="range" min="0" max="${items.length - 1}" step="1" oninput="changePreviewFrame(${index}, this.value)" value="${param.frame}" id="${param.fieldPath}Timeline">
+			`<input type="range" min="0" max="${items.length - 1}" step="1" oninput="changePreviewFrame('${param.startFieldPath}', this.value)" value="${param.frame}" id="${param.fieldPath}Timeline">
 				<div style="display: flex;align-items: center;justify-content: right; column-gap: 1em">
 					<div><span id="${param.fieldPath}Current">${param.frame + 1}</span>/<span id="${param.fieldPath}Total">${param.value.length}</span></div>
 					<div>
-						<button class="add" onclick="nextFrameInSpriteList(${index})">⏭</button>
-						<button class="add" onclick="backFrameInSpriteList(${index})">⏮</button>
+						<button class="add" onclick="nextFrameInSpriteList('${param.startFieldPath}')">⏭</button>
+						<button class="add" onclick="backFrameInSpriteList('${param.startFieldPath}')">⏮</button>
 					</div>
 				 </div>`
 			: ''}
                 <span id="${param.fieldPath}Frame">${showSelectedFrame(param)}</span>
                 <div class="row-actions">
-                    <button data-tooltip="${tr("Добавить ещё один параметр")}" class="add" onclick="addArrayItemByMeta(${index})">Добавить</button>
+                    <button class="add" onclick="addArrayItemByMeta('${param.startFieldPath}', ${param.frame ?? -1}); nextFrameInSpriteList('${param.startFieldPath}');">Добавить</button>
                 </div>
             </div>
         </div>
@@ -595,8 +594,9 @@ function showSelectedFrame(param) {
 	if (param.value.length == 0) { return ''; }
 	const frame = Math.min(Math.max(param.frame, 0), param.value.length - 1);
 	const fieldsHtml = param.objectMetaData.map(fieldMeta => {
+		fieldMeta.value = param.value[frame][fieldMeta.fieldPath];
 		if (fieldMeta.type == "Sprite") {
-			return `<img src="${param.value[frame][fieldMeta.fieldPath]}" style="width: 180px; height: 180px; object-fit: contain; margin: auto;"><br>${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}`;
+			return `<img src="${fieldMeta.value}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}`;
 		}
 		return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
 							<div class="field-label">${fieldMeta.fieldPath}</div>
@@ -607,7 +607,7 @@ function showSelectedFrame(param) {
             <div class="array-item" data-index="${frame}">
                 <div class="array-item-head">
                     <div class="array-item-title">${param.fieldPath}[${frame}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${param.index}, ${frame})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${frame})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
                     ${fieldsHtml}
@@ -616,17 +616,21 @@ function showSelectedFrame(param) {
         `;
 };
 
-function nextFrameInSpriteList(paramIndex) {
-	const param = editedParams[paramIndex];
-	changePreviewFrame(paramIndex, param.frame + 1);
+function nextFrameInSpriteList(paramPath) {
+	const param = findByPath(paramPath);
+	changePreviewFrame(paramPath, param.frame + 1);
 }
-function backFrameInSpriteList(paramIndex) {
-	const param = editedParams[paramIndex];
-	changePreviewFrame(paramIndex, param.frame - 1);
+function backFrameInSpriteList(paramPath) {
+	const param = findByPath(paramPath);
+	changePreviewFrame(paramPath, param.frame - 1);
+}
+function lastFrameInSpriteList(paramPath) {
+	const param = findByPath(paramPath);
+	changePreviewFrame(paramPath, param.value.length);
 }
 
-function changePreviewFrame(paramIndex, frame) {
-	const param = editedParams[paramIndex];
+function changePreviewFrame(paramPath, frame) {
+	const param = findByPath(paramPath);
 	param.frame = Math.min(Math.max(frame, 0), param.value.length - 1);
 	document.getElementById(param.fieldPath + "Frame").innerHTML = showSelectedFrame(param); //renderEditedParams(); //Показать изменения на странице
 	document.getElementById(param.fieldPath + "Timeline").value = param.frame;
@@ -639,15 +643,38 @@ function changePreviewFrame(paramIndex, frame) {
 /**
  * Устанавливает значение по вложенному пути в объекте или массиве.
  * @param {*} newValue — новое значение
- * @param {(string|number)[]} path — путь в виде массива ключей/индексов
+ * @param {(string|Array)[]} path — путь в виде массива ключей/индексов
  */
 function updateValueByPath(newValue, path) {
 	let index = null;
-	if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
-		path.shift();
-		editedParams[index].value = updateChildValueByPath(editedParams[index].value, newValue, path);
+	if (typeof path === "string" && (index = editedParams.findIndex(p => p.fieldPath === path || p.startFieldPath === path)) != -1) {
+		editedParams[index].value = newValue;
+		return editedParams[index];
 	}
+	index = parseInt(path);
+	if (index) {
+		editedParams[index].value = newValue;
+		return editedParams[index];
+	}
+	const pathList = (typeof path === "string") ? path.split('.') : path;
+	if (Array.isArray(pathList) && (index = editedParams.findIndex(p => p.fieldPath === pathList[0] || p.startFieldPath === pathList[0])) != -1) {
+		pathList.shift();
+		editedParams[index].value = updateChildValueByPath(editedParams[index].value, newValue, pathList);
+		return editedParams[index];
+	}
+	console.warn("updateValueByPath: параметр не найден для пути: " + path.join('/') + "; Тип: <" + typeof path + ">, parseInt = " + index);
+	return null;
 }
+
+function findByPath(fieldPath) {
+	const index = parseInt(fieldPath);
+	if (index) return editedParams[index];
+	if (!fieldPath) return null;
+	fieldPath = fieldPath.trim();
+	return editedParams.find(p => p.startFieldPath === fieldPath) ?? editedParams.find(p => p.fieldPath === fieldPath);
+}
+
+
 
 /**
  * Устанавливает значение по вложенному пути в объекте или массиве.
@@ -666,7 +693,7 @@ function updateChildValueByPath(currentObj, newValue, path) {
 		if ((objKey == 'x' || objKey == 'y' || objKey == 'z') && i == path.length - 1) {
 			break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
 		}
-		if (current == null) { throw new Error(`Невозможно получить свойство '${objKey}' в объекте: ` + JSON.stringify(currentObj)); }
+		if (current == null) { console.error(`Невозможно получить свойство '${objKey}' в объекте: ` + ((currentObj) ? JSON.stringify(currentObj) : 'NULL')); }
 		if (typeof current !== 'object' && !Array.isArray(current)) { //throw new Error(`Свойство '${objKey}' должно быть объектом для сохранения изменений в родительском объекте: ` + JSON.stringify(currentObj));
 			break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
 		} else {
@@ -690,14 +717,19 @@ function updateChildValueByPath(currentObj, newValue, path) {
 
 
 
-function getValueByPath(path) {
+function findValueByPath(path) {
 	let index = null;
-	if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
-		if (path.length === 1) {
-			return editedParams[index].value;
-		}
-		let lastObject = editedParams[index].value;
-		let current = editedParams[index].value;
+	let param = null;
+	if (!Array.isArray(path)) {
+		param = findByPath(path);
+		return param.value;
+	} else if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
+		param = editedParams[index];
+	}
+	if (param) {
+		if (path.length === 1) return param.value;
+		let lastObject = param.value;
+		let current = param.value;
 		let objKey = path[path.length - 1];
 		for (let i = 1; i < path.length; i++) {
 			objKey = path[i];
@@ -705,7 +737,7 @@ function getValueByPath(path) {
 			if ((objKey == 'x' || objKey == 'y' || objKey == 'z') && i == path.length - 1) {
 				break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
 			}
-			if (current == null) { throw new Error(`Невозможно получить свойство '${objKey}' в объекте: ` + JSON.stringify(currentObj)); }
+			if (current == null) { console.error(`Невозможно получить свойство '${objKey}' в объекте: ` + JSON.stringify(lastObject)); }
 			if (typeof current !== 'object' && !Array.isArray(current)) { //throw new Error(`Свойство '${objKey}' должно быть объектом для сохранения изменений в родительском объекте: ` + JSON.stringify(currentObj));
 				break; //Остановить цикл. //Оставить предыдущий объект, если текущее значение является всего лишь строкой
 			} else {
@@ -728,28 +760,33 @@ function getValueByPath(path) {
 
 
 // Добавить новый элемент в массив
-function addArrayItemByMeta(paramIndex) {
-	const param = editedParams[paramIndex];
-	if (!Array.isArray(param.value)) param.value = [];
-	if (Array.isArray(param.objectMetaData)) {
-		const newItem = {};
-		param.objectMetaData.forEach(field => {
-			newItem[field.fieldPath] = field.value;
-		});
-		param.value.push(newItem);
+function addArrayItemByMeta(path, positionIndex = -1, objectMetaData = null) {
+	let paramArray = findValueByPath(path);
+	const param = (Array.isArray(path)) ? findByPath(path[0]) : findByPath(path);
+	if (!paramArray) { console.warn(`addArrayItemByMeta: ${path} - массив не найден`); return; }
+	if (!Array.isArray(paramArray)) { console.warn(`addArrayItemByMeta: ${path} - не является массивом = `, paramArray); return; }
+	let newItem;
+	objectMetaData = objectMetaData ?? param.objectMetaData;
+	if (Array.isArray(objectMetaData)) {
+		newItem = newObjectByMetaData(objectMetaData);
 	} else {
-		param.value.push(''); //Добавить пустую строку
+		newItem = ''; // Пустая строка по умолчанию
+		if (objectMetaData == null) console.warn("addArrayItemByMeta.objectMetaData == null - параметр фукнции не указан");
 	}
-	updateParam(paramIndex, param.value, true);
+	let insertIndex;
+	if (positionIndex === -1 || positionIndex < 0) {
+		insertIndex = paramArray.length;// Добавляем в конец, как в оригинальной функции
+	} else {
+		insertIndex = Math.min(positionIndex + 1, paramArray.length);// Вставляем после указанного индекса, но не дальше конца массива
+	}
+	paramArray.splice(insertIndex, 0, newItem);
+	renderEditedParams();
 }
 
-// Удалить элемент по индексу
-function removeArrayItem(paramIndex, itemIndex) {
-	const param = editedParams[paramIndex];
-	if (Array.isArray(param.value)) {
-		param.value.splice(itemIndex, 1);
-		updateParam(paramIndex, param.value, true);
-	}
+function newObjectByMetaData(metaData) {
+	let newItem = {};
+	metaData.forEach(field => { newItem[field.fieldPath] = field.value; });
+	return newItem;
 }
 
 // Обновить поле в объекте массива
@@ -775,18 +812,16 @@ function renderFileArray(param, index, fileType = ".png") {
 	param.value = param.value || [];
 	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const renderItem = (itemValue, i) => {
-
+		//<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
 		return `
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="field-label">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
-							<img src="images/download.png" onclick="saveArrayItemToFile(${index}, ${i})">
-						</div>
 						<label class="fileInputLabel">
 							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
@@ -866,13 +901,11 @@ function renderJsonArray(param, index) {
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="field-label">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${index}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
-							<img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})">
-						</div>
 						<label class="fileInputLabel">
 							<input type="file" class="fileInput" accept=".json" oninput="loadJsonFromFile(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
@@ -962,21 +995,23 @@ function saveJsonToFile(paramIndex, itemIndex) {
 
 
 const setOwnValueText = "< Указать свой >";
-function renderStringList(param, index, objKey = null, placeholder = "", tooltip = "") {
+function renderStringList(param, path, objKey = null, placeholder = "", tooltip = "") {
 	if (param.options) { //Показать список
-		let selectHTML = `<select onchange="updateOptionParam(${index}, this.value, '${objKey || ''}');" class="field-input">`;
+		const fullPath = (Array.isArray(path)) ? path.join('.') : path;
+		let selectHTML = `<select onchange="updateOptionParam('${fullPath}', this.value, '${objKey || ''}');" class="field-input" id="${fullPath}">`;
 		if (!param.options.includes(setOwnValueText)) { param.options.unshift(""); param.options.unshift(setOwnValueText); }
 		param.options.forEach(opt => {
 			const isSelected = opt == param.value ? ' selected' : '';
 			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt == setOwnValueText ? tr(opt) : opt)}</option>`; //Показать перевод для setOwnValueText
 		});
 		selectHTML += '</select>';
-		if (param.optionsValue == setOwnValueText || (param.value != "" && param.options.includes(param.value) == false)) {
+		if (param.optionsValue == setOwnValueText || param.value == setOwnValueText || (param.value != "" && param.options.includes(param.value) == false)) {
 			param.value = param.value.replace(setOwnValueText, '');
 			param.optionsValue = setOwnValueText;
 			placeholder = placeholder || param.placeholder || param.type;
 			tooltip = tooltip || param.tooltip || "";
-			selectHTML += `<br><input type="text" value="${param.value}" onchange="updateParam(${index}, this.value, false)" id="${param.fieldPath}" placeholder="${placeholder}" data-tooltip="${tooltip}"></input>`;
+			const userInput = `<input type="text" value="${param.value}" onchange="updateUserOptionParam('${fullPath}', this.value, false)" placeholder="${placeholder}" data-tooltip="${tooltip}"></input>`;
+			selectHTML = '<div style="display: grid;grid-template-columns: 1fr 2em; max-width: 10em;">' + userInput + selectHTML + '</div>';
 		}
 		return selectHTML;
 	}
@@ -984,12 +1019,13 @@ function renderStringList(param, index, objKey = null, placeholder = "", tooltip
 	return '';
 }
 
-function updateOptionParam(index, value, objKey) {
-	editedParams[index].optionsValue = value;
-	updateParam(index, value, true, objKey);
+function updateOptionParam(path, value, objKey) {
+	updateParam(path, value, true, objKey).optionsValue = value;
 }
 
-
+function updateUserOptionParam(path, value) {
+	updateParam(path, value, false);
+}
 
 
 
