@@ -64,10 +64,24 @@ const typeFullForm = { //Форма для редактирования набо
 			${getInputForType(param, index, null, hitMetaData)}
 			</div>`;
 	},
+	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
+	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
+	'AnimationSprite[]': function (param, idx) { return renderAnimationSprite(param, idx, frameArrayMetaData); },
+	'PhysicsMaterialMultiply[]': function (param, idx) { return renderObjectArray(param, idx, physicsMaterialMultiplyMetaData); },
 };
 
-typeFullForm['AnimationSprite[]'] = (param, idx) => { return renderTextureListEditor(param, idx); };
-typeFullForm['PhysicsMaterialMultiply[]'] = (param, idx) => { return renderObjectArray(param, idx, physicsMaterialMultiplyMetaData); };
+const spriteArrayMetaData = [
+	{ "fieldPath": "sprite", "comment": "Спрайт, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	{ "fieldPath": "pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 }
+];
+
+const frameArrayMetaData = [
+	{ "fieldPath": "texture", "comment": "Спрайт, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	{ "fieldPath": "pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 }
+];
+
 const physicsMaterialMultiplyMetaData = [
 	{ "fieldPath": "materialName", "comment": "Материал тела", "type": "string", "value": "skin", options: ['armor', 'skin', 'metal'] },
 	{ "fieldPath": "scaleFirst", "comment": "Умножить урон при попадании в материал", "type": "float", "value": 1 },
