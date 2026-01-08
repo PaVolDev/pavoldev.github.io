@@ -228,6 +228,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["WeaponHandPoints.coverMove.sprites", ""],
 	["WeaponHandPoints.fingerPoint", ""], //(0, 0, 0)
 	["WeaponHandPoints.fingerAngle", ""],
+	["shotAnimations", ""],
 	["shotAnimations[0].animation", ""],
 ];
 
@@ -253,7 +254,8 @@ const typeFullForm = { //Полная форма для редактирован
 	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
 	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
 	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
-	'AnimationSprite[]': function (param, idx) { return renderTextureListEditor(param, idx); }
+	'AnimationSprite[]': function (param, idx) { return renderAnimationSprite(param, idx, frameArrayMetaData); },
+	'NameAnimationFire[]': function (param, idx) { return renderObjectArray(param, idx, shotAnimationMetaData); },
 }
 const typeLightForm = { //Одно поле для редактирования без заголовка
 	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); }
@@ -263,6 +265,22 @@ const spriteArrayMetaData = [
 	{ "fieldPath": "sprite", "comment": "Спрайт, PNG-файл", "type": "Sprite", "value": "" },
 	{ "fieldPath": "pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 }
+];
+const frameArrayMetaData = [
+	{ "fieldPath": "texture", "comment": "Спрайт, PNG-файл", "type": "Sprite", "value": "" },
+	{ "fieldPath": "pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+	{ "fieldPath": "pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 }
+];
+
+//{ "fieldPath": "имяПоля", "comment": "Текст из [Tooltip]", "type": "типПоля", "value": "значениПоУмолчанию" },
+const shotAnimationMetaData = [
+	{ "fieldPath": "animation", "comment": "Имя анимации", "type": "string", "value": "", options: ["fire", "LabelShotFire"] },
+	{ "fieldPath": "fire", "comment": "Анимация огня/дыма", "type": "Transform", "value": "gunFlash" },
+	{ "fieldPath": "audioTimeRandom", "comment": "Сдвигать звук выстрела во время огня", "type": "float", "value": 0.05 },
+	{ "fieldPath": "chamberStep", "comment": "Число выстрелов для анимации", "type": "int", "value": 0 },
+	{ "fieldPath": "magazineStep", "comment": "Число выстрелов для анимации", "type": "int", "value": 0 },
+	{ "fieldPath": "timeFreeze", "comment": "Дополнительная задержка/заморозка оружия при работе анимации", "type": "float", "value": 0 },
+	{ "fieldPath": "playWhenEmpty", "comment": "Показать анимацию после последнего выстрела перед запуском перезарядки. Например для помповых дробовиков следует отключить параметр", "type": "bool", "value": false }
 ];
 
 
@@ -381,6 +399,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.gunFlash.Transform.localPosition", "comment": "Координаты огня от выстрела", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.gunFlash.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
+	{ "fieldPath": "weapon.shotAnimations", "comment": "Анимация выстрела", "type": "NameAnimationFire[]", "value": "" },
 	{ "fieldPath": "weapon.shotAnimations[0].animation", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
 	{ "fieldPath": "weapon.strikeAnimations[0]", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
@@ -529,7 +548,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.timeFreezeShot", "comment": "Дополнительная задержка/заморозка оружия после выстрела на основе magazinePlayStep или chamberAnimationStep", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.playEmptyBoltAnimation", "comment": "Показать анимацию затвора перед запуском перезарядки. Например для помповых дробовиков лучше отключить параметр", "type": "bool", "value": true },
 	{ "fieldPath": "weapon.shotAudioList", "comment": "Случайный звук выстрела, PCM 16-bit 44100Hz", "type": "AudioClip[]", "value": "" },
-	{ "fieldPath": "weapon.shotAnimations", "comment": "Вспышка от выстрела, огонь на кончике ствола", "type": "NameAnimationFire[]", "value": "" },
 	{ "fieldPath": "weapon.shellDrop.position", "comment": "Гильза. Локальные координаты", "type": "Vector2", "value": "(0, 0)", "spritePreview": "images/shell.png", "spritePivotPoint": { x: 0.08, y: 0.5 }, "spritePixelPerUnit": 100 },
 	{ "fieldPath": "weapon.shellDrop.angleRotation", "comment": "Наклон объекта в локальных координатах", "type": "int", "value": 0 },
 	{ "fieldPath": "weapon.shellDrop.angle", "comment": "Направление выброса в локальных координатах", "type": "int", "value": 0 },
