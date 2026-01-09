@@ -1017,7 +1017,7 @@ function stringIsObject(value) {
 // ——— РЕДАКТИРОВАНИЕ ———
 function updateParam(path, value, updateParamList = false, objKey = null) {
 	let index = parseInt(path) ?? editedParams.findIndex(p => p.fieldPath === path || p.startFieldPath === path);
-	if (isNaN(index) && typeof path === "string" && path.includes('.')) {
+	if (isNaN(index) && typeof path === "string") {
 		const param = updateValueByPath(value, path);
 		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
