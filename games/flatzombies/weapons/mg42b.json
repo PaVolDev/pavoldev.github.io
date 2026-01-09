@@ -26,7 +26,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(0.323, -0.165, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.260, -0.03, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.610, -0.07, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.544, -0.008, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.700, 0.7, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.080, 0.12, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
