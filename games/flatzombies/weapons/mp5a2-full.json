@@ -91,5 +91,5 @@
     "weapon.fireRateInMinute": "800",
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "weapon.shotAnimations[0].audioTimeRandom": "0.052"
+    "weapon.shotAnimations[0].audioTimeRandom": "0.0666"
 }
