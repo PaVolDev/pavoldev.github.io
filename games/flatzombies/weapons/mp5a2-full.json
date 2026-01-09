@@ -26,7 +26,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 32,
     "weapon.WeaponHandPoints.magazineInsert": "(0.392, -0.172, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.280, -0.06, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.464, 0.205, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.460, 0.147, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.022, -0.002, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.022, 0.006, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
