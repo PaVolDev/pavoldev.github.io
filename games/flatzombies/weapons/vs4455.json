@@ -25,7 +25,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 10,
     "weapon.WeaponHandPoints.magazineInsert": "(0.370, -0.24, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.270, -0.07, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.861, -0.073, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.861, -0.061, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.970, -0.06, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.970, -0.06, 0)",
     "weapon.WeaponHandPoints.weaponType": "sr3m",
