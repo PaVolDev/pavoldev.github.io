@@ -200,11 +200,11 @@ function showAnimationFrame(param) {
 	const fieldsHtml = param.spriteMetaData.map(fieldMeta => {
 		const fieldMetaValue = frames[frame][fieldMeta.fieldPath];
 		if (fieldMeta.type == "Sprite") {
-			return `<img src="${fieldMetaValue}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.fieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}`;
+			return `<img src="${fieldMetaValue}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.startFieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}`;
 		}
 		return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
 							<div class="field-label">${fieldMeta.fieldPath}</div>
-							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.startFieldPath, animationIndex, 'frames', frame, fieldMeta.fieldPath])}</div>
 						</div>`;
 	}).join('');
 	return `
@@ -224,14 +224,14 @@ function showAnimationFrame(param) {
 //Работа с массивом изображений
 //Показать список анимаций
 function renderAnimationSprite(param, paramIndex, spriteMetaData) {
-	param.value = param.value || [];
+	param.value = param.value || [{ "name": "asd", "frames": [{ "texture": "", "pivotPoint": "(0.5, 0.5)", "pixelPerUnit": 50 }] }];
 	param.frame = param.frame || 0;
 	param.index = paramIndex;
 	param.spriteMetaData = spriteMetaData;
 	param.value = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	param.previewAnimation = param.previewAnimation ?? '';
 
-	const animations = param.value;
+	const animations = Array.isArray(param.value) ? param.value : [];
 	let html = `
 		<div>
 			<strong data-tooltip="${param.startFieldPath}">${param.displayName || param.fieldPath}</strong><br>
@@ -289,8 +289,8 @@ function renderAnimationSprite(param, paramIndex, spriteMetaData) {
 			: ''}
 						<span id="${param.fieldPath}Frame">${showAnimationFrame(param)}</span>
 						<div class="row-actions">
-							${param.frame > 0 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, -1)" data-tooltip="Поменять местами текущий кадр">⬅</button>` : `<div></div>`}
-							${param.frame < frames.length - 1 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, 1)" data-tooltip="Поменять местами текущий кадр">➡</button>` : `<div></div>`}
+							${param.frame > 0 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, -1)" data-tooltip="Поменять местами текущий кадр">⬅</button>` : ''}
+							${param.frame < frames.length - 1 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, 1)" data-tooltip="Поменять местами текущий кадр">➡</button>` : ''}
 							<button class="add" onclick="addAnimationFrame(${paramIndex}, ${animIdx}); nextFrameInFrameList('${param.startFieldPath}');">Добавить</button>
 						</div>
 					</div>
@@ -320,6 +320,9 @@ function removeAnimation(paramIndex, animIdx) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value)) {
 		param.value.splice(animIdx, 1);
+		if (param.value.length == 0) {
+			param.value.push({ name: 'empty', frames: [] });
+		}
 		forceRenderEditedParams();
 	}
 }
@@ -416,7 +419,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 		return `<div class="array-item" data-index="${i}">
 				<div class="array-item-head">
 					<div class="array-item-title">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem('${param.startFieldPath}', ${i})" data-tooltip="Удалить из списка">✕</button>
 				</div>
 				<div class="grid-in-object">
 					<div class="field-row" data-tooltip="Материал тела">
@@ -522,7 +525,7 @@ function renderObjectArray(param, index, objectMetaData) {
 			fieldMeta.value = item[fieldMeta.fieldPath];
 			return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
 							<div class="field-label">${fieldMeta.fieldPath}</div>
-							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, i, fieldMeta.fieldPath])}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.startFieldPath, i, fieldMeta.fieldPath])}</div>
 						</div>`;
 		}).join('');
 
@@ -562,7 +565,8 @@ function renderSpriteArray(param, index, objectMetaData) {
 	param.objectMetaData = objectMetaData; // добавляем метаданные в param
 	param.frame = param.frame || 0;
 	param.index = index;
-	param.value = Array.isArray(param.value) ? param.value : JSON.parse(param.value) || [];
+	param.value = param.value || [{ "sprite": "", "pivotPoint": "(0.5, 0.5)", "pixelPerUnit": 50 }];
+	param.value = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const items = param.value;
 	return `<strong>${param.fieldPath}</strong><br>
         <small>${param.comment || ''}</small><br>
@@ -593,18 +597,18 @@ function showSelectedFrame(param) {
 	const fieldsHtml = param.objectMetaData.map(fieldMeta => {
 		fieldMeta.value = param.value[frame][fieldMeta.fieldPath];
 		if (fieldMeta.type == "Sprite") {
-			return `<img src="${fieldMeta.value}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}`;
+			return `<img src="${fieldMeta.value}" style="width: 180px; height: 180px; object-fit: contain; margin: auto; background-color: ${background ?? 'black'};" onerror="this.style.visibility='hidden';"><br>${getInput(fieldMeta, [param.startFieldPath, frame, fieldMeta.fieldPath])}`;
 		}
 		return `<div class="field-row" data-tooltip="${fieldMeta.comment || ''}">
 							<div class="field-label">${fieldMeta.fieldPath}</div>
-							<div class="field-control">${getInput(fieldMeta, [param.fieldPath, frame, fieldMeta.fieldPath])}</div>
+							<div class="field-control">${getInput(fieldMeta, [param.startFieldPath, frame, fieldMeta.fieldPath])}</div>
 						</div>`;
 	}).join('');
 	return `
             <div class="array-item" data-index="${frame}">
                 <div class="array-item-head">
                     <div class="array-item-title">${param.fieldPath}[${frame}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${frame})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem('${param.startFieldPath}', ${frame})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
                     ${fieldsHtml}
@@ -629,10 +633,12 @@ function lastFrameInSpriteList(paramPath) {
 function changePreviewFrame(paramPath, frame) {
 	const param = findByPath(paramPath);
 	param.frame = Math.min(Math.max(frame, 0), param.value.length - 1);
-	document.getElementById(param.fieldPath + "Frame").innerHTML = showSelectedFrame(param); //renderEditedParams(); //Показать изменения на странице
-	document.getElementById(param.fieldPath + "Timeline").value = param.frame;
-	document.getElementById(param.fieldPath + "Current").innerHTML = param.frame + 1;
-	document.getElementById(param.fieldPath + "Total").innerHTML = param.value.length;
+	if (2 <= param.value.length) {
+		document.getElementById(param.fieldPath + "Frame").innerHTML = showSelectedFrame(param); //renderEditedParams(); //Показать изменения на странице
+		document.getElementById(param.fieldPath + "Timeline").value = param.frame;
+		document.getElementById(param.fieldPath + "Current").innerHTML = param.frame + 1;
+		document.getElementById(param.fieldPath + "Total").innerHTML = param.value.length;
+	}
 }
 
 
@@ -814,7 +820,7 @@ function renderFileArray(param, index, fileType = ".png") {
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="field-label">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem('${param.startFieldPath}', ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
@@ -898,7 +904,7 @@ function renderJsonArray(param, index) {
             <div class="array-item" data-index="${i}">
                 <div class="array-item-head">
                     <div class="field-label">${param.fieldPath}[${i}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(${param.startFieldPath}, ${i})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem('${param.startFieldPath}', ${i})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
