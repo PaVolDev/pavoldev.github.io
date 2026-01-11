@@ -1,28 +1,2954 @@
 {
     "id": "rsh-12",
-    "idTemplate": "sw686",
+    "idTemplate": "glock18c",
     "type": "weapon",
     "weapon.caliber": "12.7x55",
     "storeInfo.nameFull": "RSh-12",
     "storeInfo.magazineSize": "5",
-    "storeInfo.iconBase64": "data:image/png;base64,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",
+    "storeInfo.iconBase64": "data:image/png;base64,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",
+    "storeInfo.silencerPosition": "(111, 34)",
+    "weapon.WeaponHandPoints.boltStop": false,
+    "weapon.reloadBoltStop": false,
+    "luaScriptBase64": "data:application/octet-stream;base64,ZnVuY3Rpb24gb25SZWxvYWRTdGFydCh3ZWFwb24pDQoJQ1MuVW5pdHlFbmdpbmUuRGVidWcuTG9nKCJMdWEub25SZWxvYWRTdGFydDogIiAuLiB3ZWFwb24uaWQgLi4gIiAtINC+0YDRg9C20LjQtSIpDQoJd2VhcG9uLmN1cnJlbnRDaGFtYmVyID0gMA0KZW5kDQo=",
+    "weapon.beltFeeder": true,
+    "weapon.chamberSize": "1",
+    "weapon.shellDrop.quantity": 5,
     "weapon.reloadScaleTime": "0.9",
-    "weapon.addedGameObjects": "lasersight,sight",
-    "weapon.addedComponents": "lasersight.SpriteRenderer,sight.SpriteRenderer",
-    "weapon.lasersight.Transform.localPosition": "(0.666, 0.04, 0)",
-    "weapon.lasersight.gameObject.SetActive": true,
-    "weapon.lasersight.SpriteRenderer.enabled": true,
-    "weapon.lasersight.Transform.localEulerAngles.z": 0,
-    "weapon.lasersight.SpriteRenderer.sortingOrder": 18,
-    "weapon.lasersight.SpriteRenderer.sprite.pixelPerUnit": 100,
-    "weapon.lasersight.SpriteRenderer.sprite.pivotPoint": "(0.362, 0.450)",
-    "weapon.sight.Transform.localPosition": "(0.323, 0.387, 0)",
+    "weapon.addedGameObjects": "lasersight,sight,handgrip",
+    "weapon.addedComponents": "lasersight.SpriteRenderer,sight.SpriteRenderer,handgrip.SpriteRenderer",
+    "weapon.sight.Transform.localPosition": "(0.333, 0.354, 0)",
     "weapon.sight.gameObject.SetActive": true,
     "weapon.sight.SpriteRenderer.enabled": true,
     "weapon.sight.Transform.localEulerAngles.z": 0,
     "weapon.sight.SpriteRenderer.sortingOrder": 18,
     "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": 100,
     "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0.362, 0.450)",
+    "weapon.WeaponHandPoints.clip": {
+        "clipName": "\u0420\u0435\u0432\u043e\u043b\u044c\u0432\u0435\u0440 RSh12",
+        "length": 2.625,
+        "frameRate": 32,
+        "curves": [
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": -1.3333333730697632,
+                        "outTangent": -1.3333333730697632
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -1,
+                        "inTangent": -2.6666667461395264,
+                        "outTangent": 10.666666984558105
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 1,
+                        "inTangent": 10.666666984558105,
+                        "outTangent": 2.6666667461395264
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 2,
+                        "inTangent": 2.6666667461395264,
+                        "outTangent": 6.400000095367432
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 3,
+                        "inTangent": 6.400000095367432,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 3,
+                        "inTangent": 0,
+                        "outTangent": 2
+                    },
+                    {
+                        "time": 2,
+                        "value": 4,
+                        "inTangent": 2,
+                        "outTangent": -8
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 3,
+                        "inTangent": -4,
+                        "outTangent": -4
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 3,
+                        "inTangent": -3.692307710647583,
+                        "outTangent": -3.692307710647583
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": -7.384615421295166,
+                        "outTangent": -7.384615421295166
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/head",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/head",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/head",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -14,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": -18,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": -22.5,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": -22.5,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": -22.5,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": -22.5,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": -25,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": -25,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": -26,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": -26,
+                        "inTangent": 0,
+                        "outTangent": -32
+                    },
+                    {
+                        "time": 0.375,
+                        "value": -32,
+                        "inTangent": -32,
+                        "outTangent": -90.66666412353516
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -49,
+                        "inTangent": -90.66666412353516,
+                        "outTangent": -32
+                    },
+                    {
+                        "time": 0.75,
+                        "value": -55,
+                        "inTangent": -32,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": -55,
+                        "inTangent": 0,
+                        "outTangent": -28
+                    },
+                    {
+                        "time": 1.125,
+                        "value": -62,
+                        "inTangent": -28,
+                        "outTangent": -44.79999923706055
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": -69,
+                        "inTangent": -44.79999923706055,
+                        "outTangent": 54.85714340209961
+                    },
+                    {
+                        "time": 1.5,
+                        "value": -57,
+                        "inTangent": 54.85714340209961,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": -57,
+                        "inTangent": 0,
+                        "outTangent": -24
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": -60,
+                        "inTangent": -24,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": -60,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": -60,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": -60,
+                        "inTangent": 0,
+                        "outTangent": -24
+                    },
+                    {
+                        "time": 2.125,
+                        "value": -63,
+                        "inTangent": -24,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": -63,
+                        "inTangent": 0,
+                        "outTangent": 63.9146728515625
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": -51.01599884033203,
+                        "inTangent": 63.9146728515625,
+                        "outTangent": 114.35884857177734
+                    },
+                    {
+                        "time": 2.625,
+                        "value": -26,
+                        "inTangent": 114.35884857177734,
+                        "outTangent": -64
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.x",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.y",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.z",
+                "path": "man/body/weaponParent/arm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": -24,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": -24,
+                        "inTangent": 0,
+                        "outTangent": -115.0026626586914
+                    },
+                    {
+                        "time": 0.375,
+                        "value": -45.5629997253418,
+                        "inTangent": -115.0026626586914,
+                        "outTangent": -87.66400146484375
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -62,
+                        "inTangent": -87.66400146484375,
+                        "outTangent": -5.333333492279053
+                    },
+                    {
+                        "time": 0.75,
+                        "value": -63,
+                        "inTangent": -5.333333492279053,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": -63,
+                        "inTangent": 0,
+                        "outTangent": -388
+                    },
+                    {
+                        "time": 1.125,
+                        "value": -160,
+                        "inTangent": -388,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": -160,
+                        "inTangent": 0,
+                        "outTangent": 361.1428527832031
+                    },
+                    {
+                        "time": 1.5,
+                        "value": -81,
+                        "inTangent": 361.1428527832031,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": -81,
+                        "inTangent": 0,
+                        "outTangent": -16
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": -83,
+                        "inTangent": -16,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": -83,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": -83,
+                        "inTangent": 0,
+                        "outTangent": -42.66666793823242
+                    },
+                    {
+                        "time": 2,
+                        "value": -87,
+                        "inTangent": -42.66666793823242,
+                        "outTangent": 128
+                    },
+                    {
+                        "time": 2.125,
+                        "value": -71,
+                        "inTangent": 128,
+                        "outTangent": -10.666666984558105
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": -72,
+                        "inTangent": -10.666666984558105,
+                        "outTangent": 79.9146728515625
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": -57.01599884033203,
+                        "inTangent": 79.9146728515625,
+                        "outTangent": 150.93028259277344
+                    },
+                    {
+                        "time": 2.625,
+                        "value": -24,
+                        "inTangent": 150.93028259277344,
+                        "outTangent": -458.6666564941406
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.x",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0.44999998807907104,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0.44999998807907104,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0.44999998807907104,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.y",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_LocalPosition.z",
+                "path": "man/body/weaponParent/arm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm/forearm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm/forearm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm/forearm",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 78,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 78,
+                        "inTangent": 0,
+                        "outTangent": -154.6666717529297
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 49,
+                        "inTangent": -154.6666717529297,
+                        "outTangent": 154.6666717529297
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 78,
+                        "inTangent": 154.6666717529297,
+                        "outTangent": 16
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 81,
+                        "inTangent": 16,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 81,
+                        "inTangent": 0,
+                        "outTangent": 4
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 82,
+                        "inTangent": 4,
+                        "outTangent": 32
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 87,
+                        "inTangent": 32,
+                        "outTangent": -86.85713958740234
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 68,
+                        "inTangent": -86.85713958740234,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 68,
+                        "inTangent": 0,
+                        "outTangent": -24
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 65,
+                        "inTangent": -24,
+                        "outTangent": 32
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 68,
+                        "inTangent": 32,
+                        "outTangent": -32
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 65,
+                        "inTangent": -32,
+                        "outTangent": 42.66666793823242
+                    },
+                    {
+                        "time": 2,
+                        "value": 69,
+                        "inTangent": 42.66666793823242,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 69,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 69,
+                        "inTangent": 0,
+                        "outTangent": 96
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 87,
+                        "inTangent": 96,
+                        "outTangent": -41.14285659790039
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 78,
+                        "inTangent": -41.14285659790039,
+                        "outTangent": -237.8240203857422
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm2/forearm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm2/forearm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm2/forearm2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 74,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 74,
+                        "inTangent": 0,
+                        "outTangent": 80
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 89,
+                        "inTangent": 80,
+                        "outTangent": 90.66666412353516
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 106,
+                        "inTangent": 90.66666412353516,
+                        "outTangent": 96
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 124,
+                        "inTangent": 96,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 124,
+                        "inTangent": 0,
+                        "outTangent": 12
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 127,
+                        "inTangent": 12,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 127,
+                        "inTangent": 0,
+                        "outTangent": -45.71428680419922
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 117,
+                        "inTangent": -45.71428680419922,
+                        "outTangent": -64
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 111,
+                        "inTangent": -64,
+                        "outTangent": -72
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 102,
+                        "inTangent": -72,
+                        "outTangent": 64
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 108,
+                        "inTangent": 64,
+                        "outTangent": -64
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 102,
+                        "inTangent": -64,
+                        "outTangent": -106.66666412353516
+                    },
+                    {
+                        "time": 2,
+                        "value": 92,
+                        "inTangent": -106.66666412353516,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 92,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 92,
+                        "inTangent": 0,
+                        "outTangent": -74.66666412353516
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 78,
+                        "inTangent": -74.66666412353516,
+                        "outTangent": -18.285715103149414
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 74,
+                        "inTangent": -18.285715103149414,
+                        "outTangent": 448
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm/forearm/fingers",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm/forearm/fingers",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm/forearm/fingers",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": -52,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": -52,
+                        "inTangent": 0,
+                        "outTangent": 186.6666717529297
+                    },
+                    {
+                        "time": 0.375,
+                        "value": -17,
+                        "inTangent": 186.6666717529297,
+                        "outTangent": -192
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -53,
+                        "inTangent": -192,
+                        "outTangent": 320
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 7,
+                        "inTangent": 320,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 7,
+                        "inTangent": 0,
+                        "outTangent": -180
+                    },
+                    {
+                        "time": 1.125,
+                        "value": -38,
+                        "inTangent": -180,
+                        "outTangent": -38.400001525878906
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": -44,
+                        "inTangent": -38.400001525878906,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": -32
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": -47,
+                        "inTangent": -32,
+                        "outTangent": 32
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": -44,
+                        "inTangent": 32,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": -44,
+                        "inTangent": 0,
+                        "outTangent": -74.66666412353516
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": -58,
+                        "inTangent": -74.66666412353516,
+                        "outTangent": 27.428571701049805
+                    },
+                    {
+                        "time": 2.625,
+                        "value": -52,
+                        "inTangent": 27.428571701049805,
+                        "outTangent": 266.6666564941406
+                    }
+                ]
+            },
+            {
+                "propertyName": "boltMove.move",
+                "path": "man/body/weaponParent/arm/forearm/fingers/\u043e\u0440\u0443\u0436\u0438\u0435",
+                "type": "WeaponHandPoints, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 5.333333492279053
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 1,
+                        "inTangent": 5.333333492279053,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 1,
+                        "inTangent": 0,
+                        "outTangent": -8
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": -8,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.x",
+                "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.y",
+                "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.75,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.5,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.625,
+                        "value": 0,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    }
+                ]
+            },
+            {
+                "propertyName": "localEulerAnglesRaw.z",
+                "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+                "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": -39,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": -39,
+                        "inTangent": 0,
+                        "outTangent": 117.33333587646484
+                    },
+                    {
+                        "time": 0.375,
+                        "value": -17,
+                        "inTangent": 117.33333587646484,
+                        "outTangent": -85.33333587646484
+                    },
+                    {
+                        "time": 0.5625,
+                        "value": -33,
+                        "inTangent": -85.33333587646484,
+                        "outTangent": 69.33333587646484
+                    },
+                    {
+                        "time": 0.75,
+                        "value": -20,
+                        "inTangent": 69.33333587646484,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 0.875,
+                        "value": -20,
+                        "inTangent": 0,
+                        "outTangent": -180
+                    },
+                    {
+                        "time": 1.125,
+                        "value": -65,
+                        "inTangent": -180,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.28125,
+                        "value": -65,
+                        "inTangent": 0,
+                        "outTangent": 45.71428680419922
+                    },
+                    {
+                        "time": 1.5,
+                        "value": -55,
+                        "inTangent": 45.71428680419922,
+                        "outTangent": 234.6666717529297
+                    },
+                    {
+                        "time": 1.59375,
+                        "value": -33,
+                        "inTangent": 234.6666717529297,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 1.71875,
+                        "value": -33,
+                        "inTangent": 0,
+                        "outTangent": -64
+                    },
+                    {
+                        "time": 1.8125,
+                        "value": -39,
+                        "inTangent": -64,
+                        "outTangent": 64
+                    },
+                    {
+                        "time": 1.90625,
+                        "value": -33,
+                        "inTangent": 64,
+                        "outTangent": 128
+                    },
+                    {
+                        "time": 2,
+                        "value": -21,
+                        "inTangent": 128,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.125,
+                        "value": -21,
+                        "inTangent": 0,
+                        "outTangent": 0
+                    },
+                    {
+                        "time": 2.21875,
+                        "value": -21,
+                        "inTangent": 0,
+                        "outTangent": 21.33333396911621
+                    },
+                    {
+                        "time": 2.40625,
+                        "value": -17,
+                        "inTangent": 21.33333396911621,
+                        "outTangent": -100.57142639160156
+                    },
+                    {
+                        "time": 2.625,
+                        "value": -39,
+                        "inTangent": -100.57142639160156,
+                        "outTangent": 373.3333435058594
+                    }
+                ]
+            },
+            {
+                "propertyName": "m_IsActive",
+                "path": "man/body/weaponParent/arm/forearm/fingers/\u043e\u0440\u0443\u0436\u0438\u0435/magazine",
+                "type": "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "keys": [
+                    {
+                        "time": 0,
+                        "value": 1,
+                        "inTangent": "Infinity",
+                        "outTangent": "Infinity"
+                    },
+                    {
+                        "time": 0.1875,
+                        "value": 1,
+                        "inTangent": "Infinity",
+                        "outTangent": "Infinity"
+                    }
+                ]
+            }
+        ],
+        "events": [
+            {
+                "time": 0,
+                "functionName": "LabelShotFire",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0,
+                "functionName": "RightRifleToBody",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0,
+                "functionName": "LeftHandOnHandguard",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.1875,
+                "functionName": "LabelReload",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.1875,
+                "functionName": "LabelReloadEmpty",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.1875,
+                "functionName": "RightRifleToBody",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.1875,
+                "functionName": "LabelShotFire",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.1875,
+                "functionName": "LeftHandOnHandguard",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.375,
+                "functionName": "LeftHandOnMagazine",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.46875,
+                "functionName": "PlaySound",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": "Assets/Sounds/Weapons/clipout-p90.wav"
+            },
+            {
+                "time": 0.5625,
+                "functionName": "LeftHandOnMagazine",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.6875,
+                "functionName": "WeaponShellDrop",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 0.75,
+                "functionName": "LeftHandOnMagazine",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 1.125,
+                "functionName": "LeftHandSaveOriginal",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 1.28125,
+                "functionName": "LeftHandSaveOriginal",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 1.5,
+                "functionName": "LeftHandOnBullet",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 1.90625,
+                "functionName": "PlaySound",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": "Assets/Sounds/Weapons/clipin_tmp.wav"
+            },
+            {
+                "time": 2,
+                "functionName": "LeftHandOnMagazineInsert",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 2.40625,
+                "functionName": "LeftHandOnHandguard",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 2.625,
+                "functionName": "LeftHandOnHandguard",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 2.625,
+                "functionName": "RightRifleToBody",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 2.625,
+                "functionName": "LabelReloadEmpty",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            },
+            {
+                "time": 2.625,
+                "functionName": "LabelReload",
+                "stringParameter": "",
+                "floatParameter": 0,
+                "intParameter": 0,
+                "objectReferenceParameter": ""
+            }
+        ]
+    },
+    "weapon.handgrip.Transform.localPosition": "(0.371, -0.071, 0)",
+    "weapon.handgrip.gameObject.SetActive": true,
+    "weapon.handgrip.SpriteRenderer.enabled": true,
+    "weapon.handgrip.Transform.localEulerAngles.z": 0,
+    "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
+    "weapon.handgrip.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "weapon.handgrip.SpriteRenderer.sprite.pivotPoint": "(0.304, 0.461)",
     "weapon.WeaponHandPoints.WeaponAnimation": "",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
@@ -30,51 +2956,72 @@
     "weapon.WeaponHandPoints.coverMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.coverMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.coverMove.render": "",
-    "weapon.WeaponHandPoints.boltMove.movePosition": "(0, 0.1, 0)",
-    "weapon.WeaponHandPoints.boltMove.startPosition": "(0, 0.21, 0)",
+    "weapon.WeaponHandPoints.boltMove.movePosition": "(0.07, 0.111, 0)",
+    "weapon.WeaponHandPoints.boltMove.startPosition": "(0.07, 0.18, 0)",
     "weapon.WeaponHandPoints.boltMove.render": "boltRender",
     "weapon.WeaponHandPoints.openCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
-    "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
-    "weapon.WeaponHandPoints.handInsertPoint": "(0.000, 0, 0)",
+    "weapon.WeaponHandPoints.bulletPoint": "(-0.2, 0.12)",
+    "weapon.WeaponHandPoints.handInsertPoint": "(0.070, -0.09, 0)",
     "weapon.WeaponHandPoints.boltMovePoint": "(0.000, 0, 0)",
     "weapon.WeaponHandPoints.boltPoint": "(0.000, 0, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 0,
     "weapon.WeaponHandPoints.magazineInsert": "(0.000, 0, 0)",
-    "weapon.WeaponHandPoints.magazinePoint": "(0.000, 0, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.000, 0, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(0.000, 0, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(0.000, 0, 0)",
+    "weapon.WeaponHandPoints.magazinePoint": "(0.060, 0.16, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.405, -0.057, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.000, -0.04, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.170, -0.04, 0)",
     "weapon.WeaponHandPoints.weaponType": "",
+    "weapon.magazine.SpriteRenderer.sprite": "",
+    "storeInfo.author": "",
+    "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.Transform.localEulerAngles.z": 0,
     "weapon.SpriteRenderer.sortingOrder": 17,
-    "weapon.SpriteRenderer.sprite.pixelPerUnit": 530,
-    "weapon.SpriteRenderer.sprite.pivotPoint": "(0.362, 0.450)",
+    "weapon.SpriteRenderer.sprite.pixelPerUnit": 119,
+    "weapon.SpriteRenderer.sprite.pivotPoint": "(0.304, 0.461)",
     "storeInfo.silencerGroup": "sniper",
-    "weapon.boltRender.Transform.localPosition": "(0.000, 0.21, 0)",
+    "weapon.magazine.Transform.localPosition": "(-0.160, -0.08, 0)",
+    "weapon.magazine.gameObject.SetActive": false,
+    "weapon.magazine.SpriteRenderer.enabled": false,
+    "weapon.magazine.Transform.localEulerAngles.z": -25,
+    "weapon.magazine.SpriteRenderer.sortingOrder": 16,
+    "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
+    "weapon.boltRender.Transform.localPosition": "(0.070, 0.18, 0)",
     "weapon.boltRender.gameObject.SetActive": true,
     "weapon.boltRender.SpriteRenderer.enabled": true,
     "weapon.boltRender.Transform.localEulerAngles.z": 0,
     "weapon.boltRender.SpriteRenderer.sortingOrder": 16,
-    "weapon.boltRender.SpriteRenderer.sprite.pixelPerUnit": 480,
+    "weapon.boltRender.SpriteRenderer.sprite.pixelPerUnit": "110",
     "weapon.boltRender.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "weapon.laserPosition": "(0.750, 0.024, 0)",
-    "weapon.gunFlash.Transform.localPosition": "(0.800, 0.157, 0)",
+    "weapon.lasersight.Transform.localPosition": "(0.691, 0.028, 0)",
+    "weapon.lasersight.gameObject.SetActive": true,
+    "weapon.lasersight.SpriteRenderer.enabled": true,
+    "weapon.lasersight.Transform.localEulerAngles.z": 0,
+    "weapon.lasersight.SpriteRenderer.sortingOrder": 18,
+    "weapon.lasersight.SpriteRenderer.sprite.pixelPerUnit": 100,
+    "weapon.lasersight.SpriteRenderer.sprite.pivotPoint": "(0.362, 0.450)",
+    "weapon.WeaponSilencerMod.localPoint": "(0.770, 0.134, 0)",
+    "weapon.laserPosition": "(0.722, 0.012, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(0.770, 0.132, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "LabelShotFire",
+    "weapon.magazineMax": "5",
+    "weapon.magazineDrop.position": "(0.000, 0, 0)",
+    "weapon.magazineDrop.angle": "0",
+    "weapon.magazineDrop.angleRotation": 0,
     "weapon.shellDrop.position": "(0.080, 0.111, 0)",
     "weapon.shellDrop.angle": 130,
     "weapon.recoilSteps": 2,
     "weapon.recoilMax": "10",
     "weapon.recoilDecrease": "13",
-    "weapon.bolt": "(-0.190, 0.201, 0)",
-    "weapon.flashlight": "(0.750, 0.024, 0)",
+    "weapon.bolt": "(0.288, 0.143, 0)",
+    "weapon.flashlight": "(0.753, 0.01, 0)",
     "weapon.automat": false,
-    "weapon.fireRateInMinute": "300",
-    "weapon.chamberSize": "5",
-    "weapon.WeaponHandPoints.fingerPoint": "(-0.040, 0.020)",
+    "weapon.fireRateInMinute": "500",
+    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0
 }
