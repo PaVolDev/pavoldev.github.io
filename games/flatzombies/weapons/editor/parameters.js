@@ -518,7 +518,8 @@ function updateInputSpriteMillimetersByPPU(spriteParam, ppuParam, idElement) {
 		img.src = spriteBase64;
 	});
 }
-function updateSpritePPU(spriteParam, ppuParam, millimeters) {
+function updateSpritePPU(spriteParam, millimeters) {
+	const ppuParam = spriteParam + ".pixelPerUnit";
 	const spriteParamIndex = editedParams.findIndex(p => p.startFieldPath == spriteParam);
 	const ppuParamIndex = editedParams.findIndex(p => p.startFieldPath == ppuParam);
 	const spriteWidthPx = editedParams[spriteParamIndex]?.naturalWidth;
@@ -526,7 +527,7 @@ function updateSpritePPU(spriteParam, ppuParam, millimeters) {
 	if (!millimeters || millimeters <= 0) { console.warn("updateSpritePPU(): millimeters == NULL"); return; }
 	const pixelPerUnit = Math.round((spriteWidthPx * oneMeterPPU * 1000) / (millimeters * oneMeterPx));
 	editedParams[ppuParamIndex].value = pixelPerUnit;
-	document.getElementById(editedParams[ppuParamIndex].fieldPath).value = pixelPerUnit;
+	document.getElementById(editedParams[ppuParamIndex].startFieldPath).value = pixelPerUnit;
 	syncParamsToScene();
 }
 
@@ -584,13 +585,13 @@ function forceRenderEditedParams(filter = '') {
 			} else if (param.type === 'Sprite') {
 				// Находим индексы параметров группы
 				// Находим индексы параметров группы
-				const pivot = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.pivotPoint'));
-				const ppu = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.pixelPerUnit'));
-				const sort = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.sortingOrder'));
-				const angle = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.localEulerAngles.z'));
-				const renderActive = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('SpriteRenderer.enabled'));
-				const objectActive = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.gameObject.SetActive'));
-				const position = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.localPosition'));
+				const pivot = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pivotPoint'));
+				const ppu = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pixelPerUnit'));
+				const sort = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.sortingOrder'));
+				const angle = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localEulerAngles.z'));
+				const renderActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('SpriteRenderer.enabled'));
+				const objectActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('gameObject')) && p.fieldPath.endsWith('.gameObject.SetActive'));
+				const position = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localPosition'));
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				li.onmouseenter = () => selectObjectByName(prefix);
 				//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
@@ -612,9 +613,9 @@ function forceRenderEditedParams(filter = '') {
                             <span class="title" >Pivot:</span>
                             <div class="vector-fields">
 							<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[0]}"
-                                   onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.fieldPath}.x">
+                                   onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.startFieldPath}.x">
                             <input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[1]}" 
-                                   onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.fieldPath}.y">
+                                   onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.startFieldPath}.y">
 							</div>
                         </div>` : ''}
 
@@ -630,17 +631,17 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
                         ${ppu ? `<span class="title">PPU:</span>
-                                <input type="number" step="10" class="num" value="${ppu.value}" id="${ppu.fieldPath}" min="10" max="300" onfocusout="inputMinMax(this); updateParam('${ppu.startFieldPath}', this.value); updateInputSpriteMillimetersByPPU('${param.startFieldPath}', '${ppu.startFieldPath}', 'mainlength')">` : ''}
+                                <input type="number" step="10" class="num" value="${ppu.value}" id="${ppu.startFieldPath}" min="10" max="300" onfocusout="inputMinMax(this); updateParam('${ppu.startFieldPath}', this.value); updateInputSpriteMillimetersByPPU('${param.startFieldPath}', '${ppu.startFieldPath}', 'mainlength')">` : ''}
 							</div>
 
 							<div class="propertyBlock">
                         ${prefix && sort ? `<span class="title">Sort:</span>
-                                <input data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" type="number" class="num" value="${sort.value}" onchange="updateParam('${sort.startFieldPath}', this.value)">` : `<div class="propertyBlock"><span class="title">Длина, мм:</span><input data-tooltip="Длина оружия. Длина реального прототипа из справочника, в миллиметрах" type="number" step="1" class="num" id="mainlength" onfocusout="updateSpritePPU('${param.startFieldPath}', '${ppu.startFieldPath}', this.value)" ></div>`}
+                                <input data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" type="number" class="num" value="${sort.value}" onchange="updateParam('${sort.startFieldPath}', this.value)" id="${sort.startFieldPath}">` : `<div class="propertyBlock"><span class="title">Длина, мм:</span><input data-tooltip="Длина оружия. Длина реального прототипа из справочника, в миллиметрах" type="number" step="1" class="num" id="mainlength" onfocusout="updateSpritePPU('${param.startFieldPath}', this.value)" ></div>`}
 						    </div>
 
 							<div class="propertyBlock">
                         ${prefix && angle ? `<span class="title">Angle:</span>
-                                <input data-tooltip="Угол поворота в градусах" type="number" step="1" class="num" value="${angle.value}" onchange="updateParam('${angle.startFieldPath}', this.value)">` : ''}
+                                <input data-tooltip="Угол поворота в градусах" type="number" step="1" class="num" value="${angle.value}" onchange="updateParam('${angle.startFieldPath}', this.value)" id="${angle.startFieldPath}">` : ''}
 							</div>
 
                     </span>
@@ -648,9 +649,9 @@ function forceRenderEditedParams(filter = '') {
                             <span class="title">Position:</span>
                             <div class="vector-fields">
 								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(position.value)[0]}"
-									onchange="updateVector('${position.startFieldPath}', 0, this.value)" id ="${position.fieldPath}.x">
+									onchange="updateVector('${position.startFieldPath}', 0, this.value)" id ="${position.startFieldPath}.x">
 								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(position.value)[1]}" 
-									onchange="updateVector('${position.startFieldPath}', 1, this.value)" id ="${position.fieldPath}.y">
+									onchange="updateVector('${position.startFieldPath}', 1, this.value)" id ="${position.startFieldPath}.y">
 							</div>
                         </div>` : ''}
                 </div>`;
@@ -662,11 +663,11 @@ function forceRenderEditedParams(filter = '') {
 
 			} else if (param.type === 'Renderer') {
 				// Находим индексы параметров группы
-				const sort = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.sortingOrder'));
-				const angle = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.localEulerAngles.z'));
-				const renderActive = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('SpriteRenderer.enabled'));
-				const objectActive = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.gameObject.SetActive'));
-				const position = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.localPosition'));
+				const sort = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.sortingOrder'));
+				const angle = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localEulerAngles.z'));
+				const renderActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('SpriteRenderer.enabled'));
+				const objectActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('gameObject')) && p.fieldPath.endsWith('.gameObject.SetActive'));
+				const position = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localPosition'));
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>` : ''}
@@ -700,8 +701,8 @@ function forceRenderEditedParams(filter = '') {
                 </div>`;
 				list.appendChild(li);
 			} else if (param.type == 'TextureSprite') {
-				const pivot = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('.pivotPoint'));
-				const ppu = editedParams.find(p => p.fieldPath.includes(prefix) && p.fieldPath.endsWith('pixelPerUnit'));
+				const pivot = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pivotPoint'));
+				const ppu = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('pixelPerUnit'));
 				const li = document.createElement('li'); li.className = 'param-block'; li.setAttribute('id', param.fieldPath + "List");
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
@@ -787,7 +788,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.fieldPath}">
+		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.startFieldPath}">
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
@@ -819,7 +820,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		if (asd != '') {
 			return asd;
 		} else {
-			return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
+			return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
 		}
 	}
 
@@ -828,7 +829,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	switch (param.type) {
 		case 'SpriteRenderer':
 		case 'Transform':
-			let selectHTML = `<select onchange="updateParam('${param.startFieldPath}', this.value, true, '${objKey || ''}');" class="field-input" id="${param.fieldPath}">`;
+			let selectHTML = `<select onchange="updateParam('${param.startFieldPath}', this.value, true, '${objKey || ''}');" class="field-input" id="${param.startFieldPath}">`;
 			selectHTML += `<option value=""${(!param.value ? ' selected' : '')}> </option>`;
 			sceneObjects.forEach(obj => {
 				if (editedParams.find(p => p.fieldPath.includes(obj.name) && typeDependencies[p.type]?.includes('Transform.localPosition'))) {
@@ -871,20 +872,20 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 			if ('min' in param && 'max' in param) {
 				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
 					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="propAngleSlider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
-					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.fieldPath}" oninput="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" value="${param.value}" >
+					<input type="text" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.startFieldPath}" oninput="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
-			return `<input type="number" value="${param.value}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}" class="field-input" data-tooltip="${param.type}" >`;
+			return `<input type="number" value="${param.value}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}" class="field-input" data-tooltip="${param.type}" >`;
 		case 'bool':
-			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam('${param.startFieldPath}', this.checked ? true : false, true, '${objKey || ''}')" id="${param.fieldPath}">`;
+			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam('${param.startFieldPath}', this.checked ? true : false, true, '${objKey || ''}')" id="${param.startFieldPath}">`;
 		case 'AudioClip[]':
 		case 'Sprite[]':
-			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
+			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
 		default:
 			if (stringIsObject(param.value)) { //Объект JavaScript
-				return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(param.value)}</textarea>`;
+				return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(param.value)}</textarea>`;
 			}
-			return `<input type="text" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" placeholder="${param.placeholder || ''}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}">`;
+			return `<input type="text" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" placeholder="${param.placeholder || ''}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">`;
 	}
 }
 
@@ -940,7 +941,7 @@ function getInput(param, path) {
 		if (asd != '') {
 			return asd;
 		} else {
-			return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.fieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
+			return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea>`;
 		}
 	}
 
@@ -1040,7 +1041,7 @@ function updateFieldHTML(index, value) {
 	const param = findByPath(index);
 	if (param) {
 		param.value = value;
-		document.getElementById(param.fieldPath).value = value;
+		document.getElementById(param.startFieldPath).value = value;
 	}
 }
 
