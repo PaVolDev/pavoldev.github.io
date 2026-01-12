@@ -435,11 +435,23 @@ function createParam() {
 	const newFieldValue = document.getElementById('newFieldValue');
 	const newFieldType = document.getElementById('newFieldType');
 	if (!newFieldPath.value) return;
-	editedParams.unshift({ fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: newFieldType.value, value: newFieldValue.value });
+	if (newFieldType.value in typeDependencies) {
+		typeDependencies[newFieldType.value].forEach(filed => {
+			sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
+			const newSpriteInfo = { "fieldPath": newFieldPath.value + '.' + filed, "startFieldPath": newFieldPath.value + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+			editedParams.unshift(newSpriteInfo);
+			availableParams.unshift(newSpriteInfo);
+		});
+	}
+
+	const newProperty = { fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: newFieldType.value, value: newFieldValue.value };
+	editedParams.unshift(newProperty);
+	availableParams.unshift(newProperty);
 	if (newFieldType.value == "Vector3" || newFieldType.value == "Vector2") {
 		editedPoint.unshift({ name: newFieldPath.value, angle: null, parent: null });
 		editedParams[0].spritePreview = "images/point.png";
 	}
+
 	newFieldPath.value = ''; newFieldValue.value = '';
 	renderEditedParams();
 	syncParamsToScene();
