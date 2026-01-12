@@ -297,6 +297,7 @@ ul {
 	max-width: 10em;
 }
 
+
 #saveButton {
 	background: rgb(106, 255, 142);
 	width: 100%;
@@ -391,6 +392,10 @@ input.num {
 
 .fileInputButton:hover {
 	background: rgb(255, 182, 109);
+}
+
+.drag-over {
+	outline: 3px dashed rgb(255, 167, 78);
 }
 
 .point {
@@ -820,6 +825,7 @@ img.tooltip {
 	cursor: pointer;
 	transition: transform 0.1s;
 }
+
 .bg-btn.active {
 	border-color: #00000052;
 	transform: scale(1.1);
