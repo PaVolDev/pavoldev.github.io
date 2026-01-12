@@ -92,6 +92,10 @@ const physicsMaterialMultiplyMetaData = [
 
 const availableByField = {}
 
+const importReplace = [
+	{ fieldPath: "storeInfo.autor", newPath: "storeInfo.author" },
+	{ fieldPath: "storeInfo.autorURL", newPath: "storeInfo.authorURL" },
+];
 
 const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
 	["arrowsPerShot", ""],
