@@ -1304,7 +1304,7 @@ function importFromJSON(jsonData) {
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
 				const pathSuffix = field.key.split('.').slice(-2).join('.') // 'weapon.parent.laserSight.SpriteRenderer.sprite' => 'SpriteRenderer.sprite', получаем суффикс и ищем какой тип данных имеет этот параметр по похожим данным из массива sampleParams
 				const analog = sampleParams.findLast(p => p.fieldPath.endsWith(pathSuffix));
-				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": analog?.type || "string", "value": field.value, "suffix": analog?.suffix });
+				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": analog?.type || typeByValue(field.value), "value": field.value, "suffix": analog?.suffix });
 			}
 		});
 
@@ -1319,7 +1319,14 @@ function importFromJSON(jsonData) {
 
 
 
-
+function typeByValue(value) {
+	if (value.startsWith("data:image/png;base64")) {
+		return "TextureSprite";
+	} else if (value.startsWith("data:audio/wav;base64")) {
+		return "AudioClip";
+	}
+	return "string";
+}
 
 
 
