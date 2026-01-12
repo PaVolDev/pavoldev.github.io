@@ -602,9 +602,9 @@ function forceRenderEditedParams(filter = '') {
                 <div class="spriteFields">
                     <div style="flex:1; width:100%;">
                         <div class="input-group">
-                            <input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value)" placeholder="image/png;base64,...">
+                            <input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value)" placeholder="image/png;base64,..." data-file-input-id="${param.startFieldPath}-file"  id="${param.startFieldPath}">
 							<label class="fileInputLabel">
-                                <input type="file" class="fileInput" accept=".png" oninput="updateSprite(${idx}, this);">
+                                <input type="file" class="fileInput" accept=".png" oninput="updateSprite(${idx}, this);" id="${param.startFieldPath}-file">
                                 <div class="fileInputButton" data-tooltip="Выбрать другой PNG-файл">Заменить</div>
                             </label>
                         </div>
@@ -769,6 +769,39 @@ function forceRenderEditedParams(filter = '') {
 			list.appendChild(li);
 		}
 	});
+
+	// Обработка drag & drop для всех .drop-target
+	document.querySelectorAll('.drop-target').forEach(input => {
+		const fileInputId = input.dataset.fileInputId;
+		const fileInput = document.getElementById(fileInputId);
+		if (!fileInput) return;
+		// Предотвращаем стандартное поведение браузера
+		['dragover', 'dragenter'].forEach(evt => {
+			input.addEventListener(evt, e => {
+				e.preventDefault();
+				e.stopPropagation();
+				input.classList.add('drag-over');
+			});
+		});
+		['dragleave', 'drop'].forEach(evt => {
+			input.addEventListener(evt, e => {
+				e.preventDefault();
+				e.stopPropagation();
+				input.classList.remove('drag-over');
+			});
+		});
+		// Обработка сброса файла
+		input.addEventListener('drop', e => {
+			const files = e.dataTransfer.files;
+			if (files.length > 0) {
+				const dt = new DataTransfer();// Используем DataTransfer для установки файлов
+				dt.items.add(files[0]); // Берём первый файл (можно цикл для multiple)
+				fileInput.files = dt.files;
+				fileInput.dispatchEvent(new Event('input', { bubbles: true }));// Эмулируем событие input, чтобы сработал oninput
+			}
+		});
+	});
+
 	renderAvailableParams(document.getElementById('searchInput').value); //Обновить на экране список доступных парамтеров
 	translateNode(list);
 }
@@ -788,8 +821,8 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
-		return `<input type="text" class="text-input" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.startFieldPath}">
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)">
+		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
@@ -913,8 +946,8 @@ function getInput(param, path) {
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
 		// <div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
-		return `<input type="text" class="text-input" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}">
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)">
+		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
+		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
 				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
 	}
 
