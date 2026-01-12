@@ -123,6 +123,10 @@ const typeDependencies = { //Для параметров указаного ти
 		'gameObject.SetActive',
 		'Transform.localPosition'
 	],
+	'TextureSprite': [
+		'pivotPoint',
+		'pixelPerUnit',
+	],
 	'Renderer': [
 		'SpriteRenderer.sprite.pivotPoint',
 		'SpriteRenderer.sprite.pixelPerUnit',
