@@ -1032,6 +1032,9 @@ function getInput(param, path) {
 		case 'bool':
 			return `<input type="checkbox" ${(currentValue === 'true' || currentValue) ? 'checked' : ''} onchange="updateValueByPath(this.checked ? true : false, ${pathString})" id="${idElement}">`;
 		default:
+			if (currentValue?.length > 50) {
+				return `<textarea onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}">${currentValue}</textarea>`;
+			}
 			return `<input type="text" value="${currentValue}" data-tooltip="${param.type}" onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}">`;
 	}
 }
