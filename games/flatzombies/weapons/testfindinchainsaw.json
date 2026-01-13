@@ -33,7 +33,7 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-0.962, 0.609, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.102, 0.526, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
-    "storeInfo.author": "findin",
+    "storeInfo.author": "INSTRUCTION",
     "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
