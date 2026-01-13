@@ -61,7 +61,7 @@
             "bullets": 1,
             "angleRandom": 2,
             "angleSpread": 0.8,
-            "damage": "3",
+            "damage": "2",
             "distance": 4,
             "impulse": "12",
             "stopPower": "0.11",
@@ -93,7 +93,7 @@
                     "materialName": "skin"
                 }
             ],
-            "noiseVolume": "1.25"
+            "noiseVolume": "1.5"
         },
         {
             "id": "chainsawdmgfull",
@@ -111,7 +111,7 @@
             "bullets": 1,
             "angleRandom": 2,
             "angleSpread": 0.8,
-            "damage": "6",
+            "damage": "3.8",
             "distance": 4,
             "impulse": "1",
             "stopPower": "0",
