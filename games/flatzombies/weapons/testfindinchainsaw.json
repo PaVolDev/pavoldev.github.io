@@ -47,7 +47,7 @@
             "idTemplate": "axe",
             "type": "cartridge",
             "caliberName": "chainsawdmg",
-            "uiName": "Semi-Chisel Chain",
+            "uiName": "Semi-Chisel",
             "author": "findin",
             "authorURL": "https://t.me/findinflatzombies",
             "shellSkin.pixelPerUnit": 100,
@@ -58,7 +58,7 @@
             "damage": "3",
             "distance": 4,
             "impulse": "12",
-            "stopPower": "0.38",
+            "stopPower": "0.11",
             "penetration": {
                 "modeHit": "FIRST",
                 "minHits": 2,
@@ -88,6 +88,53 @@
                 }
             ],
             "noiseVolume": "1.25"
+        },
+        {
+            "id": "chainsawdmgfull",
+            "idTemplate": "axe",
+            "type": "cartridge",
+            "caliberName": "chainsawdmg",
+            "uiName": "Full-Chisel",
+            "author": "findin",
+            "authorURL": "https://t.me/findinflatzombies",
+            "shellSkin.pixelPerUnit": 100,
+            "shellSkin.pivotPoint": "(0.5, 0.5)",
+            "bullets": 1,
+            "angleRandom": 2,
+            "angleSpread": 0.8,
+            "damage": "6",
+            "distance": 4,
+            "impulse": "1",
+            "stopPower": "0",
+            "penetration": {
+                "modeHit": "FIRST",
+                "minHits": 2,
+                "maxHits": 2,
+                "minDist": 0,
+                "maxDist": 10,
+                "findExitPoint": false
+            },
+            "penetrationDamage": [
+                {
+                    "scaleFirst": 1,
+                    "scaleThrough": 0.5,
+                    "stopBulletDamage": 0,
+                    "materialName": "armor"
+                },
+                {
+                    "scaleFirst": 1,
+                    "scaleThrough": 0.5,
+                    "stopBulletDamage": 0,
+                    "materialName": "metal"
+                },
+                {
+                    "scaleFirst": 1,
+                    "scaleThrough": 0.25,
+                    "stopBulletDamage": 0,
+                    "materialName": "skin"
+                }
+            ],
+            "noiseVolume": "1.5"
         }
     ],
     "weapon.magazine.Transform.localPosition": "(-0.407, -0.4, 0)",
