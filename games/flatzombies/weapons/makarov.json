@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(-0.164, -0.09, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.300, -0.1, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.500, -0.1, 0)",
-    "weapon.WeaponHandPoints.weaponType": "glock18c",
+    "weapon.WeaponHandPoints.weaponType": "deagle",
     "storeInfo.author": "findin",
     "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
