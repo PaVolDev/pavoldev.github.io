@@ -38,7 +38,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(0.857, 0.173, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.800, 0.272, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.809, 0.273, 0)",
-    "weapon.WeaponHandPoints.weaponType": "mossberg590",
+    "weapon.WeaponHandPoints.weaponType": "sniper",
     "storeInfo.author": "findin",
     "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
