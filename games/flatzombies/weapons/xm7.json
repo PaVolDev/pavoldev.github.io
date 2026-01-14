@@ -27,18 +27,71 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.306, -0.287, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.273, -0.129, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.906, 0.116, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-0.986, 0.207, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-0.986, 0.207, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-0.900, 0.34, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.965, 0.275, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAR15",
-    "storeInfo.autor": "findin",
-    "storeInfo.autorURL": "https://t.me/f1ndin",
+    "storeInfo.author": "findin",
+    "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.Transform.localEulerAngles.z": 0,
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "180",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.400, 0.450)",
-    "cartridgeList": [],
+    "cartridgeList": [
+        {
+            "id": "sigfury",
+            "idTemplate": "7.62x51",
+            "type": "cartridge",
+            "iconButtonSprite": "data:image/png;base64,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",
+            "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAAAbCAYAAADxsuiMAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAXKADAAQAAAABAAAAGwAAAACL201GAAAD4UlEQVRoBe2Zv08UQRTHZ2bvwNzxy8iZHBpjgSQ2NOBfoCYWWKKFhShROguDBR02xBgTjT8wNkYLYkKhFhQqJDYmWpgoMcacRMCLJsYCQvhxILf7/L7FWfaO4xa87MId95Jhhjfz5sdnZt7czghRlkAJSHdrNDhoJOonGg0zFIkuziYaTvYuuPPL6cIJOMAZ9ljdxAWhZB+RiKLqUZPEmXBIHc9uRpGoISmaoeewD2EXgkIoHSFSkeTkVyEoJqRYEiR+kpDvpZSvw+bCq1jnw9n/GawD/MtI3x5FxichZFxXhMwBZah2/b8rduxculJI8rgMQVhOkEhyIt+YTGSms8I4+D0XphiId95LSolpyhIHXGLkxhFB1lvkG6tl5JxhSF7tWriRNZXozCKPgYdC7jF4AHcXdaeZzxzAP5XK7J+bCY8eunRnSRew3cDnwd4KQWY3lC7YXISq8IcnRYesfC5TErIGdgGjYlbVYHeWLPUuWmMOTT24WKvrW/G7MVEBpie00iN2doVHuWLK9mshsVM5lqoI3cK5aHOzgaeq47zkMSuewtul1FwKr25fFxEqPz35qKOS6drAW1u7lpH2apRBW2xUYrKyy/0dVGV0IWKfD16N8SnMwqBL88D0eXXb9PDHqDVs1l7AtW9j4KXmSjQLr52tyxUSS3PZjHAFXsB1Z7zKFdKZrbTV4/O7D9aipTa0wnVHguqYbi+oOJiFhGM5LCWfk54rPKiBb007AflvOGNKV4XwMZQJPJ+PLtUVHtREL+9vv7mYDdyr8TJ0L0Lr5yt9r+L2Yfyzb2cJKAQkYd2OG3hKK9eJ87mcdUy2vTqYDzn+wP8nDnDM9XetzBGzQWDLIUf7fqkCAS5J/NYDcICD6JBW5ogZtlM2R37xqqT015VKkcaPlCsa0CpESz2GUn/K6/ydEFtCSr9WekpYqi3ecf+JBukAb5o5MAbltM7IEfvVqRxNBa4yfYD+Im2pxobzd1/qXyg8qgy/nBi+/gM6fqN0RCmVhkESbn/eVkrbBle5MobrFef0dQyKO8FXtXx/ZHPZxIsPn3Erz20kJmF9Od7RnwFaY8l4UoLyDcIpBD0Rv1DTVTycTgtpaR0nsQcpBP1BlG0B+MOI9yLwnS+X4wBT3qr0B2l+/eeAe3eJAJ3r5IY+Q3BZz4OuRCXhzd5VEzoFO96NPDbewdyXjQtb81MbER7G5W2StBuHHl5saB41fwiZi8829IB8LneTGcDJkj24YqmDk28BrnE03dV0tPtjbtP8WsJnM4RnviwuAmtm/9vwtVpcbNWnUuZUc1tPPp/uqqacLBPYpgT+AjjbBZXjZfi5AAAAAElFTkSuQmCC",
+            "caliberName": "6.8x51",
+            "uiName": "6.8x51",
+            "author": "findin",
+            "authorURL": "https://t.me/findinflatzombies",
+            "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAHCAYAAAA8sqwkAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAADKADAAQAAAABAAAABwAAAABk3MtMAAAAfElEQVQYGU2OAQ7AIAgDdWHf3oP2j71qE9YCoiTGCtdif+7LWhXk9qp2Co5E5Fj9gkusGZQbzt2Q46P31nGqIM2smWIDhzysCYUh8LmLBgUmqnBCEIKKm2nBIznT8SYr7zc8eaYn17hTaZxOxkHLgIs/inxQTMx8h5fDuz9UhT36jwcC5QAAAABJRU5ErkJggg==",
+            "shellSkin.pixelPerUnit": "100",
+            "shellSkin.pivotPoint": "(0.5, 0.5)",
+            "bullets": 1,
+            "angleRandom": 0,
+            "angleSpread": 0,
+            "damage": "6",
+            "distance": 24,
+            "impulse": "25",
+            "stopPower": 0.1,
+            "penetration": {
+                "modeHit": "FIRST",
+                "minHits": 2,
+                "maxHits": 2,
+                "minDist": 2,
+                "maxDist": 100,
+                "findExitPoint": true
+            },
+            "penetrationDamage": [
+                {
+                    "scaleFirst": 0.4,
+                    "scaleThrough": 0,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "armor"
+                },
+                {
+                    "scaleFirst": 0.4,
+                    "scaleThrough": 0,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "metal"
+                },
+                {
+                    "scaleFirst": 1,
+                    "scaleThrough": 0.4,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "skin"
+                }
+            ]
+        }
+    ],
     "storeInfo.silencerGroup": "rifle",
     "weapon.magazine.Transform.localPosition": "(0.305, -0.207, 0)",
     "weapon.magazine.gameObject.SetActive": true,
