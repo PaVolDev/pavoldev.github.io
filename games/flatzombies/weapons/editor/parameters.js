@@ -110,8 +110,14 @@ async function onSelectWeapon(event) {
 		//Обновить список
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список
 			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
-			if (filter.length != 0 && filter.findIndex(data => field.value == data[1]) == -1) {
-				addParam(field.fieldPath, false); //console.log(field.startFieldPath + ":" + field.value);
+			let filterIndex = (filter.length != 0) ? filter.findIndex(data => field.value != data[1]) : -1;
+			if (filterIndex != -1) {
+				console.log(field.fieldPath + ": " + filter[filterIndex]);
+				if (filter[filterIndex].length == 3) {
+					addParam(filter[filterIndex][2], true);
+				} else {
+					addParam(field.fieldPath, false);
+				}
 			}
 		});
 		//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
@@ -392,10 +398,10 @@ function syncSceneObjectToParams(obj) {
 
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
 function addParam(fieldPath, addAsFirst = true) {
-	if (editedParams.some(p => p.fieldPath === fieldPath)) return;
-	let param = availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
-	if (!param) return;
-	param.value = availableParams.find(p => p.fieldPath === fieldPath)?.value || param.value;
+	if (editedParams.some(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath)) return;
+	let param = availableParams.find(p => p.startFieldPath === fieldPath) || availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.startFieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
+	if (!param) { console.error(`addParam(${fieldPath}) == NULL - параметр не найден`); return; }
+	param.value = availableParams.find(p => p.startFieldPath === fieldPath || p.fieldPath === fieldPath)?.value || param.value;
 	if (addAsFirst) {
 		const depKeys = Object.keys(typeDependencies);
 		depKeys.forEach(type => {
