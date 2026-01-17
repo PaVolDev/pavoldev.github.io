@@ -221,7 +221,7 @@ function renderScene() {
 }
 
 //Показать только спрайты без точек
-function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1) {
+function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1, maxHeight = 1024, maxWidth = 1024) {
 	convertedPoint = new Array(); // Сбросим/инициализируем
 	const w = canvas.width * 2;
 	const h = canvas.height * 2;
@@ -275,8 +275,8 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 		empty.width = empty.height = 1;
 		return { base64: empty.toDataURL('image/png').split(',')[1], points: convertedPoint };// Если всё прозрачно — вернуть 1x1 прозрачный PNG
 	}
-	const cropW = maxX - minX + 1;
-	const cropH = maxY - minY + 1;
+	const cropW = Math.min(maxX - minX + 1, maxWidth);
+	const cropH = Math.min(maxY - minY + 1, maxHeight);
 	const out = document.createElement('canvas');
 	out.width = cropW;
 	out.height = cropH;
