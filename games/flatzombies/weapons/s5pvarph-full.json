@@ -70,7 +70,7 @@
     "weapon.recoilDecrease": 20,
     "weapon.bolt": "(0.041, 0.156, 0)",
     "weapon.flashlight": "(0.431, 0.256, 0)",
-    "weapon.automat": true,
+    "weapon.automat": false,
     "weapon.fireRateInMinute": 725,
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
