@@ -1,0 +1,49 @@
+{
+    "id": "musket-balls",
+    "idTemplate": ".50BMG",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,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",
+    "iconListSprite": "data:image/png;base64,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",
+    "caliberName": "iron-ball",
+    "uiName": "Musket Balls",
+    "author": "",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0.5,
+    "angleSpread": 1,
+    "damage": "25",
+    "distance": "16",
+    "impulse": 45,
+    "stopPower": "0.3",
+    "penetration": {
+        "modeHit": "RANDOM_FIRST",
+        "minHits": 2,
+        "maxHits": 2,
+        "minDist": 2,
+        "maxDist": 100,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.8,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ]
+}
