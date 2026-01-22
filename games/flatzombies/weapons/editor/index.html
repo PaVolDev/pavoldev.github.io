@@ -44,7 +44,7 @@
 							<option value="AnimationSprite[]">Анимация</option>
 							<option value="Sprite[]">Список спрайтов</option>
 							<option value="AudioClip[]">Список звуков</option>
-							<option value="NameAnimationFire[]">NameAnimationFire[]</option>
+							<option value="NameAnimationFire[]">GunFlash[]</option>
 							<option value="Vector2">Vector2</option>
 							<option value="Vector3">Vector3</option>
 						</select>
@@ -68,6 +68,10 @@
 		<div class="panel" id="centerPanel">
 			<div class="titlePanel hidden" id="centerTitle">Отредактированные параметры</div>
 			<div class="titlePanel " id="startCenterTitle">Новое оружие</div>
+			<!-- <div id="startCenterTitle" style="display: grid; grid-template-columns: 1fr 1fr;">
+				<div class="titlePanel">Новое оружие</div>
+				<div class="titlePanel" style="text-align: right;"><a href="/test">💩 Мои моды</a></div>
+			</div> -->
 			<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 			<div class="fields hidden" id="startFields">
 				<label for="idWeapon">ID:</label>
@@ -228,7 +232,7 @@
 							<label for="propTexture">Текстура:</label>
 							<input type="text" id="propTexture">
 							<label class="fileInputLabel">
-								<input type="file" class="fileInput" id="sceneFileInput" accept=".png" >
+								<input type="file" class="fileInput" id="sceneFileInput" accept=".png">
 								<span class="fileInputButton" data-tooltip="Загрузить PNG-файл">Заменить</span>
 							</label>
 						</div>
