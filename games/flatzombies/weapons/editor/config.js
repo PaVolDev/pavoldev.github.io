@@ -281,10 +281,10 @@ const frameArrayMetaData = [
 const shotAnimationMetaData = [
 	{ "fieldPath": "animation", "comment": "Имя анимации", "type": "string", "value": "", options: ["fire", "LabelShotFire"] },
 	{ "fieldPath": "fire", "comment": "Анимация огня/дыма", "type": "Transform", "value": "gunFlash" },
-	{ "fieldPath": "audioTimeRandom", "comment": "Сдвигать звук выстрела во время огня", "type": "float", "value": 0.05 },
+	{ "fieldPath": "audioTimeRandom", "comment": "Сдвигать звук для следующего выстрела", "type": "float", "value": 0.05 },
 	{ "fieldPath": "chamberStep", "comment": "Число выстрелов для анимации", "type": "int", "value": 0 },
 	{ "fieldPath": "magazineStep", "comment": "Число выстрелов для анимации", "type": "int", "value": 0 },
-	{ "fieldPath": "timeFreeze", "comment": "Дополнительная задержка/заморозка оружия при работе анимации", "type": "float", "value": 0 },
+	{ "fieldPath": "timeFreeze", "comment": "Задержка/заморозка оружия при работе анимации", "type": "float", "value": 0 },
 	{ "fieldPath": "playWhenEmpty", "comment": "Показать анимацию после последнего выстрела перед запуском перезарядки. Например для помповых дробовиков следует отключить параметр", "type": "bool", "value": false }
 ];
 
