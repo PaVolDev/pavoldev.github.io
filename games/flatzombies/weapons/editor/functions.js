@@ -825,10 +825,13 @@ function renderFileArray(param, index, fileType = ".png") {
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
+						<div>
+						<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
 						<label class="fileInputLabel">
 							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 						</label>
+						</div>
 					</div>
                 </div>
             </div>
@@ -909,10 +912,13 @@ function renderJsonArray(param, index) {
                 <div class="grid-in-object">
 					<div class="field-control">
 						<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
+						<div>
+						<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
 						<label class="fileInputLabel">
 							<input type="file" class="fileInput" accept=".json" oninput="loadJsonFromFile(${index}, ${i}, this)">
 							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
 						</label>
+						</div>
 					</div>
                 </div>
             </div>
