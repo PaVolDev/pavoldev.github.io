@@ -111,8 +111,7 @@ async function onSelectWeapon(event) {
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список
 			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
 			let filterIndex = (filter.length != 0) ? filter.findIndex(data => field.value != data[1]) : -1;
-			if (filterIndex != -1) {
-				console.log(field.fieldPath + ": " + filter[filterIndex]);
+			if (filterIndex != -1) { //console.log(field.fieldPath + ": " + filter[filterIndex]);
 				if (filter[filterIndex].length == 3) {
 					addParam(filter[filterIndex][2], true);
 				} else {
@@ -838,10 +837,12 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
+		<div>
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
-				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
+		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
+		</div>`;
 	}
 
 	if (param.options) { //Показать список
@@ -963,10 +964,12 @@ function getInput(param, path) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		// <div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
 		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
+		<div>
+		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
-				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>`;
+		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
+		</div>`;
 	}
 
 	//Объект JavaScript
