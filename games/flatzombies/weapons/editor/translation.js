@@ -42,6 +42,8 @@ function translateNode(node) {
 
 //Перебираем исходные строки в том порядке, в котором они заданы
 window.sourceTextIds = new Array();
+let newIndex = 0;
+let maxIndex = 0;
 function tr(text) {
 	if (!text || window.sourceTextIds.length == 0) return text;
 	//Поиск полного соответствия
@@ -49,11 +51,12 @@ function tr(text) {
 		const key = window.sourceTextIds[i];
 		const from = window.sourceText[key];
 		const to = window.translate[key]; //перевод по тому же ключу
-		if (from && to !== undefined && text === from) { //console.log(from + " -> " + to);
+		if (from && to !== undefined && text === from) {
+			return to; //просто возвращаем перевод
+		} else if (key == text) {
 			return to; //просто возвращаем перевод
 		}
 	}
-
 	//Частичная замена
 	for (let i = 0; i < window.sourceTextIds.length; i++) { //Перебираем все ключи из sourceText
 		const key = window.sourceTextIds[i];
@@ -63,7 +66,11 @@ function tr(text) {
 			return text.replace(from, to); //просто возвращаем перевод
 		}
 	}
-	if (text.match(/^.*[А-ЯЁ].+$/i)) { console.warn("Не найден перевод для текста:\n" + text); }
+	if (text.match(/^.*[А-ЯЁ].+$/i)) {
+		newIndex++;
+		const index = maxIndex + newIndex;
+		console.warn(`Не найден перевод для текста:\n${index}: "${text}",`);
+	}
 	return text;
 }
 
@@ -77,8 +84,8 @@ function loadScript(src, defaultFile = undefined) {
 			script.src = url;
 			script.onload = () => resolve(url);
 			script.onerror = () => {
-				if (!isFallback && defaultFile) {	
-					attemptLoad(defaultFile, true);	
+				if (!isFallback && defaultFile) {
+					attemptLoad(defaultFile, true);
 				} else {
 					reject(new Error(`Ошибка загрузки скрипта: ${isFallback ? defaultFile : src}`));
 				}
@@ -130,6 +137,7 @@ async function loadTranslation() {
 			window.sourceTextIds = Object.keys(window.sourceText).sort((a, b) => {
 				return window.sourceText[b].length - window.sourceText[a].length; //отсортировать массив по длине строк из sourceText — от самых длинных к самым коротким
 			});
+			window.sourceTextIds.forEach(id => maxIndex = (id < 7000) ? Math.max(maxIndex, id) : maxIndex);
 			applyTranslation(); //Применяем перевод
 			document.dispatchEvent(new Event('DOMLanguageLoaded'));
 		} catch (error) {
