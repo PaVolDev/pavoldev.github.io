@@ -824,7 +824,7 @@ function renderFileArray(param, index, fileType = ".png") {
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
-						<input type="text" class="text-input" placeholder="data:file/type;base64,..." onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
+						<input type="text" class="text-input" placeholder="${fileType}" onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
 						<div>
 						<label class="fileInputLabel">
 							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
