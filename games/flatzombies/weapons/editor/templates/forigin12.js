@@ -18,7 +18,7 @@ export default {
 "weapon.RifleWithMagazine.recoilMax": 9,
 "weapon.RifleWithMagazine.recoilDecrease": 25,
 "weapon.RifleWithMagazine.shotDirection": 4,
-"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 "weapon.RifleWithMagazine.timeFreezeShot": 0,
 "weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 "weapon.RifleWithMagazine.shotAudioList": [],
@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "forigin12",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -214,5 +215,16 @@ export default {
 "weapon.boltRender.name": "boltRender",
 "weapon.name": "forigin12",
 "storeInfo.silencerGroup": "seg12",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": true
+  }
+],
 };

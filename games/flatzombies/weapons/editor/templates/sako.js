@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "sako",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "",
 "weapon.WeaponHandPoints.parentName": "fingers3",
 "weapon.WeaponHandPoints.weaponClipName": "оружие3",
@@ -213,5 +214,16 @@ export default {
 "weapon.boltHandle.boltRender.name": "boltRender",
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "sako",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

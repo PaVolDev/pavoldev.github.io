@@ -71,7 +71,8 @@ export default {
 	"weapon.WeaponSilencerMod.name": "barrettM99",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "",
-	"weapon.WeaponHandPoints.weaponType": "",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "",
 	"weapon.WeaponHandPoints.parentName": "fingers3",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие3",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-1, 0.15)",
@@ -162,5 +163,16 @@ export default {
 	"weapon.boltRender.name": "boltRender",
 	"weapon.name": "barrettM99",
 "storeInfo.silencerGroup": "sniper",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

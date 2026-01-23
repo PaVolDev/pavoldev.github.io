@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "barrettMRAD",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "sniper",
 "weapon.WeaponHandPoints.parentName": "fingers3",
 "weapon.WeaponHandPoints.weaponClipName": "оружие3",
@@ -223,5 +224,16 @@ export default {
 "weapon.sight.name": "sight",
 "weapon.name": "barrettMRAD",
 "storeInfo.silencerGroup": "sniper",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

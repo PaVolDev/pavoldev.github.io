@@ -18,7 +18,7 @@ export default {
 	"weapon.RifleWithMagazine.recoilMax": 9,
 	"weapon.RifleWithMagazine.recoilDecrease": 15,
 	"weapon.RifleWithMagazine.shotDirection": 1.5,
-	"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+	"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 	"weapon.RifleWithMagazine.timeFreezeShot": 0,
 	"weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 	"weapon.RifleWithMagazine.shotAudioList": [],
@@ -88,7 +88,8 @@ export default {
 	"weapon.WeaponSilencerMod.name": "barrettM107A",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "",
-	"weapon.WeaponHandPoints.weaponType": "heavyRightBoltRifle",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "heavyRightBoltRifle",
 	"weapon.WeaponHandPoints.parentName": "fingers3",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие3",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-0.99, 0.13)",
@@ -182,5 +183,16 @@ export default {
 	"weapon.lasersight.name": "lasersight",
 	"weapon.name": "barrettM107A",
 "storeInfo.silencerGroup": "sniper",
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

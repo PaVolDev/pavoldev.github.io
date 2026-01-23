@@ -18,7 +18,7 @@ export default {
 "weapon.RifleWithMagazine.recoilMax": 8,
 "weapon.RifleWithMagazine.recoilDecrease": 20,
 "weapon.RifleWithMagazine.shotDirection": 1,
-"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 "weapon.RifleWithMagazine.timeFreezeShot": 0,
 "weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 "weapon.RifleWithMagazine.shotAudioList": [],
@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "shak12",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -187,5 +188,16 @@ export default {
 "weapon.handgrip.name": "handgrip",
 "weapon.name": "shak12",
 "storeInfo.silencerGroup": "sniper",
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

@@ -74,6 +74,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "dp12",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "shotgun",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -179,5 +180,25 @@ export default {
 "weapon.name": "dp12",
 "storeInfo.silencerGroup": "shotgun",
 "weapon.addBulletsReload": 2,
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  },
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 2,
+    "magazineStep": 0,
+    "timeFreeze": 0.42,
+    "playWhenEmpty": false
+  }
+],
 };

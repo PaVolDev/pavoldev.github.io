@@ -71,7 +71,8 @@ export default {
 	"weapon.WeaponSilencerMod.name": "mr27",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "",
-	"weapon.WeaponHandPoints.weaponType": "",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "",
 	"weapon.WeaponHandPoints.parentName": "fingers",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-1.03, -0.02)",
@@ -170,5 +171,16 @@ export default {
 	"storeInfo.silencerGroup": "mr27",
 	"storeInfo.patronOrderSize": "8",
 	"storeInfo.patronListSpaceStep": "2",
-	"shotAnimations[0].animation": "fire",
+	"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "fire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

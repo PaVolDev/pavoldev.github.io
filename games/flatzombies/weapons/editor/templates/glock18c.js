@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "glock18c",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -197,5 +198,16 @@ export default {
 "weapon.name": "glock18c",
 "storeInfo.silencerGroup": "pistol",
 "storeInfo.silencerGroup": "pistol",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

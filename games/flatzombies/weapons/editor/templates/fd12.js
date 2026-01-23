@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "fd12",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -188,5 +189,16 @@ export default {
 "weapon.name": "fd12",
 "storeInfo.silencerGroup": "shotgun",
 "weapon.addBulletsReload": 2,
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

@@ -71,11 +71,12 @@ export default {
 "weapon.WeaponSilencerMod.name": "ares16",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "machinegun",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
 "weapon.WeaponHandPoints.buttstockPoint":"(-0.9, 0)",
-"weapon.WeaponHandPoints.buttstockReload":"(-0.9, 0)",
+"weapon.WeaponHandPoints.buttstockReload": "(-0.7, 0.7)",
 "weapon.WeaponHandPoints.handguardPoint":"(0.62, -0.07)",
 "weapon.WeaponHandPoints.fingerPoint":"(0, 0, 0)",
 "weapon.WeaponHandPoints.fingerAngle": 0,
@@ -180,5 +181,16 @@ export default {
 "weapon.cover.name": "cover",
 "weapon.name": "ares16",
 "storeInfo.silencerGroup": "rifle",
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

@@ -74,7 +74,8 @@ export default {
 	"weapon.WeaponSilencerMod.name": "ksg",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "!AnimationWeaponCache (WeaponAnimationCache)",
-	"weapon.WeaponHandPoints.weaponType": "shotgun",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "shotgun",
 	"weapon.WeaponHandPoints.parentName": "fingers",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-1.01, 0.14)",
@@ -179,5 +180,16 @@ export default {
 	"weapon.name": "ksg",
 	"storeInfo.silencerGroup": "shotgun",
 "weapon.addBulletsReload": 2,
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

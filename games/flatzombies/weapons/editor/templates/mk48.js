@@ -71,11 +71,12 @@ export default {
 "weapon.WeaponSilencerMod.name": "mk48",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "machinegun",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
 "weapon.WeaponHandPoints.buttstockPoint":"(-1.08, 0.12)",
-"weapon.WeaponHandPoints.buttstockReload":"(-1.08, 0.12)",
+"weapon.WeaponHandPoints.buttstockReload": "(-0.6, 0.7)",
 "weapon.WeaponHandPoints.handguardPoint":"(0.61, -0.07)",
 "weapon.WeaponHandPoints.fingerPoint":"(0, 0, 0)",
 "weapon.WeaponHandPoints.fingerAngle": 0,
@@ -188,5 +189,16 @@ export default {
 "weapon.laserSight.name": "laserSight",
 "weapon.name": "mk48",
 "storeInfo.silencerGroup": "rifle",
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "fire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 0,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

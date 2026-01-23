@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "grizzly85",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "shotgun+magazine",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -197,5 +198,16 @@ export default {
 "weapon.name": "grizzly85",
 "storeInfo.silencerGroup": "shotgun",
 "weapon.addBulletsReload": 2,
-"shotAnimations[0].animation": "LabelShotgunShot",
+"weapon.shotAnimations[0].animation": "LabelShotgunShot",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotgunShot",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

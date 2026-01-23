@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "at308",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "rifleAK",
 "weapon.WeaponHandPoints.parentName": "fingers3",
 "weapon.WeaponHandPoints.weaponClipName": "оружие3",
@@ -214,5 +215,16 @@ export default {
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "at308",
 "storeInfo.silencerGroup": "sniper",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

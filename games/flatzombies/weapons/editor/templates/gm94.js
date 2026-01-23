@@ -62,6 +62,7 @@ export default {
 "weapon.Shotgun.name": "gm94",
 "weapon.Shotgun.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -186,5 +187,16 @@ export default {
 "weapon.cover.name": "cover",
 "weapon.name": "gm94",
 "storeInfo.silencerGroup": "",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

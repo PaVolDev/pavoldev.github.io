@@ -18,7 +18,7 @@ weapons.push({
 "weapon.RifleWithMagazine.recoilMax": 8,
 "weapon.RifleWithMagazine.recoilDecrease": 16,
 "weapon.RifleWithMagazine.shotDirection": 2,
-"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 "weapon.RifleWithMagazine.timeFreezeShot": 0,
 "weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 "weapon.RifleWithMagazine.shotAudioList": [],
@@ -88,6 +88,7 @@ weapons.push({
 "weapon.WeaponSilencerMod.name": "aa12",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"!AnimationWeaponCache (WeaponAnimationCache)",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -191,7 +192,18 @@ weapons.push({
 "weapon.boltHandle.name": "boltHandle",
 "weapon.name": "aa12",
 "storeInfo.silencerGroup": "seg12",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 
 
 });

@@ -71,11 +71,12 @@ weapons.push({
 	"weapon.WeaponSilencerMod.name": "mk46",
 	"weapon.WeaponSilencerMod.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "!AnimationWeaponCache (WeaponAnimationCache)",
-	"weapon.WeaponHandPoints.weaponType": "machinegun",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "machinegun",
 	"weapon.WeaponHandPoints.parentName": "fingers",
 	"weapon.WeaponHandPoints.weaponClipName": "оружие",
 	"weapon.WeaponHandPoints.buttstockPoint": "(-1.08, 0.12)",
-	"weapon.WeaponHandPoints.buttstockReload": "(-1.08, 0.12)",
+	"weapon.WeaponHandPoints.buttstockReload": "(-0.6, 0.7)",
 	"weapon.WeaponHandPoints.handguardPoint": "(0.61, -0.07)",
 	"weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
 	"weapon.WeaponHandPoints.fingerAngle": 0,
@@ -181,6 +182,17 @@ weapons.push({
 	"weapon.laserSight.Transform.localPosition": "(1, 0, 0)",
 	"weapon.laserSight.Transform.localEulerAngles.z": 0,
 	"weapon.name": "mk46",
-"storeInfo.silencerGroup": "rifle",
-"shotAnimations[0].animation": "fire",
+	"storeInfo.silencerGroup": "rifle",
+	"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "fire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 0,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 });

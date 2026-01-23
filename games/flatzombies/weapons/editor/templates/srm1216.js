@@ -18,7 +18,7 @@ export default {
 "weapon.RifleWithMagazine.recoilMax": 9,
 "weapon.RifleWithMagazine.recoilDecrease": 14,
 "weapon.RifleWithMagazine.shotDirection": 1,
-"weapon.RifleWithMagazine.chamberAnimationStep": 0,
+"weapon.RifleWithMagazine.chamberAnimationStep": 1,
 "weapon.RifleWithMagazine.timeFreezeShot": 0.75,
 "weapon.RifleWithMagazine.playEmptyBoltAnimation": false,
 "weapon.RifleWithMagazine.shotAudioList": [],
@@ -88,6 +88,7 @@ export default {
 "weapon.WeaponSilencerMod.name": "srm1216",
 "weapon.WeaponSilencerMod.hideFlags.value__": 0,
 "weapon.WeaponHandPoints.animations":"",
+"weapon.WeaponHandPoints.clip": "",
 "weapon.WeaponHandPoints.weaponType": "",
 "weapon.WeaponHandPoints.parentName": "fingers",
 "weapon.WeaponHandPoints.weaponClipName": "оружие",
@@ -192,5 +193,24 @@ export default {
 "weapon.sight.name": "sight",
 "weapon.name": "srm1216",
 "storeInfo.silencerGroup": "seg12",
-"shotAnimations[0].animation": "LabelShotFire",
+"weapon.shotAnimations": [
+  {
+    "animation": "LabelShotFire",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 0,
+    "magazineStep": 4,
+    "timeFreeze": 0.75,
+    "playWhenEmpty": false
+  },
+  {
+    "animation": "",
+    "fire": "gunFlash",
+    "audioTimeRandom": 0.05,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };

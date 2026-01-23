@@ -89,7 +89,8 @@ export default {
 	"weapon.WeaponArrowBow.name": "bow",
 	"weapon.WeaponArrowBow.hideFlags.value__": 0,
 	"weapon.WeaponHandPoints.animations": "",
-	"weapon.WeaponHandPoints.weaponType": "",
+	"weapon.WeaponHandPoints.clip": "",
+"weapon.WeaponHandPoints.weaponType": "",
 	"weapon.WeaponHandPoints.parentName": "fingers2",
 	"weapon.WeaponHandPoints.weaponClipName": "",
 	"weapon.WeaponHandPoints.buttstockPoint": "(0, 0)",
@@ -197,5 +198,15 @@ export default {
 	"weapon.SpriteRenderer.enabled": true,
 	"weapon.name": "bow",
 "storeInfo.silencerGroup": "",
-"shotAnimations[0].animation": "fire",
+"weapon.shotAnimations[0].animation": "fire",
+"weapon.shotAnimations": [
+  {
+    "animation": "fire",
+    "audioTimeRandom": 0.0,
+    "chamberStep": 1,
+    "magazineStep": 0,
+    "timeFreeze": 0.0,
+    "playWhenEmpty": false
+  }
+],
 };
