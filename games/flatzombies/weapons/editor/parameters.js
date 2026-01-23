@@ -824,7 +824,7 @@ function forceRenderEditedParams(filter = '') {
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
-const fileType = []; fileType["TextFile"] = ""; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
+const fileType = []; fileType["TextFile"] = ".txt"; fileType["LuaScript"] = ".lua"; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.startFieldPath == param.startFieldPath) ?? editedParams.findIndex(field => field.fieldPath == param.fieldPath);
 
@@ -837,7 +837,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
+		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="${accept}" style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
 		<div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
 		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
@@ -964,7 +964,7 @@ function getInput(param, path) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
-		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="data:file/type;base64,..." style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
+		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="${accept}" style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
 		<div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
 		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
