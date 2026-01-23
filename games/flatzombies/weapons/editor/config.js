@@ -235,6 +235,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["shotAnimations", ""],
 	["shotAnimations[0].animation", ""],
 	["WeaponHandPoints.weaponType", "", "weapon.WeaponHandPoints.WeaponAnimation"],
+	["WeaponHandPoints.clip", ""]
 ];
 
 var mainParams = [ //Список важных параметров для записи в итоговый файл. Показать ошибку, если параметр не указан
@@ -404,7 +405,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.gunFlash.Transform.localPosition", "comment": "Координаты огня от выстрела", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
 	{ "fieldPath": "weapon.gunFlash.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.gunFlash.AnimatorSprite.animations", "comment": "Список анимаций", "type": "AnimationSprite[]", "value": "" },
-	{ "fieldPath": "weapon.shotAnimations", "comment": "Анимация выстрела", "type": "NameAnimationFire[]", "value": "" },
+	//{ "fieldPath": "weapon.shotAnimations", "comment": "Анимация выстрела", "type": "NameAnimationFire[]", "value": "" },
 	{ "fieldPath": "weapon.shotAnimations[0].animation", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
 	{ "fieldPath": "weapon.strikeAnimations[0]", "comment": "Анимация выстрела", "type": "string", "value": "fire", options: ["fire", "LabelShotFire"] },
 	// { "fieldPath": "weapon.gunFlash.AnimatorSprite.initialAnimation", "comment": "Имя текущей анимации", "type": "string", "value": "" },
