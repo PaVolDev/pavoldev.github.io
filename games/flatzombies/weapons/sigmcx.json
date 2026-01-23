@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-0.900, 0, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.900, 0, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAR15",
-    "storeInfo.author": "",
+    "storeInfo.author": "MaximusMds",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
