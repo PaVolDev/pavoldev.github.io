@@ -307,7 +307,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "weapon.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.caliber", "comment": "Калибр оружия. Основной тип патрона<br>Все настройки для урона находятся в патроне", "type": "WeaponCartridge", "value": "", "options": ["9x19", "45ACP", "9x39", "10.3x77", "10x22", "12.7x99", "12.7x99P", "12.7x55", "12x70", "40mm", "44Mag", "5.56x45", "5.7x28", "7.62x39", "7.62x51", "7.62x51Sniper", "7.62x54", "7.62x67", "8.6x70", "arrows", "axe", "katana", "shovel"] }, //
 	{ "fieldPath": "cartridgeList", "comment": "Список разных видов патронов.<br>Создайте патрон в отдельном <a href='ammo/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a><br>В редакторе нажмите Экспорт файла и загрузите его в список:", "type": "WeaponCartridge[]", "value": "" },
-	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "TextFile", "value": "" },
+	{ "fieldPath": "luaScriptBase64", "comment": "Дополнительный скрипт на языке LUA.", "type": "LuaScript", "value": "" },
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
