@@ -1344,7 +1344,11 @@ function importFromJSON(jsonData) {
 
 
 function typeByValue(value) {
-	if (value.startsWith("data:image/png;base64")) {
+	if (value === false || value === true) {
+		return "bool";
+	} else if (!value) {
+		return "string";
+	} else if (value.startsWith("data:image/png;base64")) {
 		return "TextureSprite";
 	} else if (value.startsWith("data:audio/wav;base64")) {
 		return "AudioClip";
