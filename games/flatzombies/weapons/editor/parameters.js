@@ -1346,11 +1346,11 @@ function importFromJSON(jsonData) {
 function typeByValue(value) {
 	if (value === false || value === true) {
 		return "bool";
-	} else if (!value) {
+	} else if (!value || typeof value !== 'string') { //если значение содержит объект, то возвращаем string для HTML-формы
 		return "string";
-	} else if (value.startsWith("data:image/png;base64")) {
+	} else if (value?.startsWith("data:image/png;base64")) {
 		return "TextureSprite";
-	} else if (value.startsWith("data:audio/wav;base64")) {
+	} else if (value?.startsWith("data:audio/wav;base64")) {
 		return "AudioClip";
 	}
 	return "string";
