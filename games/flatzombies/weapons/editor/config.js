@@ -232,7 +232,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["WeaponHandPoints.coverMove.sprites", ""],
 	["WeaponHandPoints.fingerPoint", ""], //(0, 0, 0)
 	["WeaponHandPoints.fingerAngle", ""],
-	["shotAnimations", ""],
+	//["shotAnimations", ""], v209
 	["shotAnimations[0].animation", ""],
 	["WeaponHandPoints.weaponType", "", "weapon.WeaponHandPoints.WeaponAnimation"],
 	["WeaponHandPoints.clip", ""]
