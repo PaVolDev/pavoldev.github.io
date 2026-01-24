@@ -37,6 +37,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 253,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.450, 0.335)",
+    "cartridgeList": [],
     "weapon.magazine.Transform.localPosition": "(0.236, -0.095, 0)",
     "weapon.magazine.gameObject.SetActive": true,
     "weapon.magazine.SpriteRenderer.enabled": true,
@@ -58,7 +59,7 @@
     "weapon.shotAnimations[0].animation": "fire",
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
-    "weapon.chamberAnimationStep": 0,
+    "weapon.chamberAnimationStep": 1,
     "weapon.shellDrop.position": "(0.192, 0.229, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
@@ -71,6 +72,5 @@
     "weapon.fireRateInMinute": "900",
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
-    "weapon.WeaponHandPoints.fingerAngle": 0,
-    "cartridgeList": []
+    "weapon.WeaponHandPoints.fingerAngle": 0
 }
