@@ -49,7 +49,7 @@
             "author": "Dafyich",
             "authorURL": "",
             "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEkAAAAUCAYAAADBYxD1AAAAAXNSR0IArs4c6QAAAlVJREFUWEftmM1q20AQx/+z+ooVjCAtvvVQMPjqoJCLoW/Q0gco9A36QD32WuixIee0DZgqMSktJJeSQ6GQxsREkm1pd6es8tGPOFi2eyiOFoRW0sxo56eRtP8lVG0qAbqy6GxstEgIftftHplzzWbTa9TvPRaEtalRJhgo8DFp7s/je+UjORso214ohj0YZKfAOAgCHUVRPs94CkhhGN5ftbw9AurDNH02zvPUX/WfCKIXRCTmCfxPfJjHDEoXiUXEZ6zxA4RY5XKXGW/kp72DCCgNrID0aHPzIcj+TEAtSZNca82e61mmLTLA/8mXmSGlZCI6B7jLzK+kyj8oKZW0bWVZll5RSiYAhBCx4zjZVeXdgBQncZGb67hYIkYwkJRS18+NwSxIKLMHwATTIdMHgxPXosR30vXt3S/9OwvJwCBBILr+LP9R+I5F8L28sbWzf1JBqiD9Ko6/X7eqkib8MSpIJX6jFaQKUgkCJUyqSqoglSBQwmTmShIEX+aNrf07PE9iZk1U6LecGTEJZMwYm2MAx7bACEny/P3h4fkk7cbMTEspS6RkgGKj3RTwUmfDnSGRARPXajVGFCEyqgTQhTq52HAD0mg4fJvL/LvnrrSEJTq3TdtLVPjMJuaVgBGgDDmz8+8OxCbJr8Rk9kXTrEdSyY/E9FoekMEx2ypAp9Wq28HaNgMPEpWtR1F02m63A184TwWEO23AGtrkd0SMBZc1iEdCfbss+Wm3vfW6lVjcl/0LpX7ZFl5PMnHCMAyUUtTr9c7mHt2SOk6WwEua7Lxp/QRYeZkkLWUIUQAAAABJRU5ErkJggg==",
-            "shellSkin.pixelPerUnit": "250",
+            "shellSkin.pixelPerUnit": "220",
             "shellSkin.pivotPoint": "(0.5, 0.5)",
             "bullets": 1,
             "angleRandom": 0,
@@ -66,14 +66,7 @@
                 "maxDist": 0,
                 "findExitPoint": true
             },
-            "penetrationDamage": [
-                {
-                    "materialName": "armor",
-                    "scaleFirst": "1",
-                    "scaleThrough": "2",
-                    "stopBulletDamage": "1"
-                }
-            ]
+            "penetrationDamage": []
         }
     ],
     "storeInfo.silencerGroup": "rifle",
