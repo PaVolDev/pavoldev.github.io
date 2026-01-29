@@ -73,7 +73,7 @@
     "weapon.shotAnimations[0].animation": "fire",
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
-    "weapon.chamberAnimationStep": 0,
+    "weapon.chamberAnimationStep": 1,
     "weapon.shellDrop.position": "(0.157, 0.327, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
