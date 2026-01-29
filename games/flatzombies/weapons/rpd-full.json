@@ -33,7 +33,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.4, -0.175, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.79, 0.06, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.7, 0.6, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.1, 0.1, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.08, 0.15, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
