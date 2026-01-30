@@ -39,6 +39,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 126,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.32, 0.6, 0)",
+    "cartridgeList": [],
     "storeInfo.silencerGroup": "shotgun",
     "weapon.sight.Transform.localPosition": "(0.26, 0.21, 0)",
     "weapon.sight.gameObject.SetActive": true,
