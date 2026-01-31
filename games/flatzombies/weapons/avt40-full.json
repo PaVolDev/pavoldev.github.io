@@ -26,7 +26,7 @@
     "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
     "weapon.WeaponHandPoints.handInsertPoint": "(0.46, -0.052, 0)",
     "weapon.WeaponHandPoints.boltMovePoint": "(0.36, 0.23, 0)",
-    "weapon.WeaponHandPoints.boltPoint": "(0.69, 0.23, 0)",
+    "weapon.WeaponHandPoints.boltPoint": "(0.72, 0.23, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 10,
     "weapon.WeaponHandPoints.magazineInsert": "(0.46, -0.052, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.46, -0.052, 0)",
