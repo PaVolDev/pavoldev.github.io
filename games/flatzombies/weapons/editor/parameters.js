@@ -22,6 +22,12 @@ function onLoaded() {
 	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
 	templateInput.addEventListener('change', onSelectWeapon);
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
+	//Сразу открыть оружие для редактирования
+	const editedWeapon = localStorage.getItem('editedWeapon');
+	if (editedWeapon) {
+		importFromJSON(JSON.parse(editedWeapon));
+		localStorage.setItem('editedWeapon', '');
+	}
 }
 
 document.addEventListener("DOMLanguageLoaded", onLanguageLoaded);
@@ -195,7 +201,7 @@ function syncParamsToScene() {
 	const processedNames = new Set();
 	editedParams.filter(p => typeDependencies[p.type]?.includes('Transform.localPosition')).forEach(param => {
 		const prefix = getPrefix(param.fieldPath, param.suffix);
-		let parentName = prefix?.includes('.') ? prefix.split('.').slice(0, -1).join('.') : '';
+		let parentName = prefix?.includes('.') ? prefix.split('.').slice(0, -1).at(-1) : '';
 		let name = prefix || 'sprite';
 		if (prefix?.includes('.')) name = prefix.split('.').pop();
 		if (!parentName && name != 'sprite') parentName = 'sprite';
@@ -220,6 +226,7 @@ function syncParamsToScene() {
 		const [lx, ly] = parseVector(localPosStr);
 		const [px, py] = parseVector(pivotStr);
 		const angle = convertTo180(parseFloat(angleStr) || 0);
+		console.log(param.fieldPath + "/parentName: " + parentName);
 		sceneObjects.push({
 			name: uniqueName,
 			parent: parentName,
