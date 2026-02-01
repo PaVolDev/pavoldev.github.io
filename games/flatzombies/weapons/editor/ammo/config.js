@@ -105,7 +105,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 var mainParams = [ //Список важных параметров для записи в итоговый файл
 	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true },
 	{ fieldPath: "idTemplate", idHTMLInput: "idTemplate" },
-	{ fieldPath: "type", value: "playerskin" }, //Указать сразу своё значение 
+	{ fieldPath: "type", value: "cartridge" }, //Указать сразу своё значение 
 	{ fieldPath: "iconButtonSprite", idHTMLInput: "iconButtonSprite" },
 	{ fieldPath: "iconListSprite", idHTMLInput: "iconListSprite" },
 	{ fieldPath: "caliberName", idHTMLInput: "caliberName" },
