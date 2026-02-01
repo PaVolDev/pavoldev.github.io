@@ -132,7 +132,7 @@ function renderScene() {
 	sortedObjects.forEach(o => {
 		if (!o.texture || o.enabled === false || o.isActive === false || o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false) return;
 		const img = images[o.texture];
-		if (!img || !img.complete) return;
+		if (!img || !img.complete || img.naturalWidth == 0) return;
 		const ppu = o.pixelPerUnit;
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
 		const worldPos = getWorldPosition(o.name);
@@ -233,6 +233,19 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 	const c = off.getContext('2d');
 	c.clearRect(0, 0, w, h); c.save(); c.translate(w / 2, h / 2); // Центр канваса — центр мира (как в Unity)
 	c.scale(viewPPU, viewPPU); // Масштаб пикселей на юнит
+
+	// 1. Создаем карту для быстрого доступа к объектам по имени
+	// 2. Функция для рекурсивного или итеративного получения пути
+	const map = new Map(sceneObjects.map(obj => [obj.name, obj]));
+	sceneObjects.forEach(obj => {
+		const pathParts = [];
+		let current = obj;
+		while (current) {
+			pathParts.unshift(current.name); // Добавляем имя в начало массива
+			current = map.get(current.parent); // Переходим к родителю
+		}
+		obj.path = pathParts.join('.');// 3. Записываем результат в свойство path через точку
+	});
 	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
 	sortedObjects.forEach(o => {
 		const worldPos = getWorldPosition(o.name);
@@ -241,8 +254,9 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 			let screenY = (h / 2) + worldPos.y * viewPPU;
 			convertedPoint.push({ name: o.name, rawX: screenX, rawY: screenY }); // Сохраняем "сырые" координаты до обрезки — позже скорректируем
 		}
+		console.log("renderSpritesToBase64: "+o.path);
 		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || (o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false)) return;
-		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore)) != -1) return;
+		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore) || o.path.includes(ignore)) != -1) return;
 		const img = images[o.texture];
 		if (!img || !img.complete) return;
 		const ppu = o.pixelPerUnit || 100;
