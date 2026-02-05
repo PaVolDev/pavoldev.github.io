@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFUAAAATCAYAAADh9EErAAAAAXNSR0IArs4c6QAAA0RJREFUWEftmM1rHVUYxp/nnLn3kqJRNKkiIkjVRUFcdOVG8g+IBk3Bld8Fd25KiKtZ2gqlGxEXirisIBJ3BWMRBP8AwSJFW2hrSeJtcpP7MXPnvI/MNL1J2txmKvcuQufAzOKc9+v85pwz532Jqo2cAIdZjONjh/Yam5ysq9Vq9OP4QrbH+G17GnmkB8jgAOqZMy9PTLunn/FI1t76eHH5m7NvfL3nPEQDtQygSXIAjxLN4OlpAPJndxNkJtupcy9OAhPKrtK0Lhe2/TjPEOBJGWF3+Qn05g3B++3Y7uWn28nQXN5cWTj701+j+m4F1Lk5+Ndm5mZJfmZC1mtnS7WGPzEqJwfBTq/bXxLxC6TfalH/YmszbBATVsdadggoduWVrYk89u+Emo93w855HT06rePHvyv6CqhfnjhWm3jxyPvO41OZJpNOQNTwQ4+GgwDpfmNMen2BzGBYE/U3iT8B14G0Ejk0C1pSECkSqQH5bgWDzDkq3zU30V06efJ8uwD3czwTXZ+afk/kKUmPPJBQk+1fBIXiuKEjQQWgONKArX5Amcj1vCOXzd+ELMv0ykcLP1wuoMbxTPTc9OF3SZ4ys0crqDuhllzzBjFkL3ywsHipgrrFLBm6UiuoJQncLVZB/d/ohitWUCuoYyAwBpPVSq2gjoHAGEyOZaUemXriHUecNlX31N2X/6FfMC9I3ADULBIFKYG52Q/nv79a3FPPnZvz6TLfhsNpC3oo7drNqOGeHMOCuE+T0iCbKa2pQd5TSoXMFSxNwjqAdZNuELwI8DycrtV86GdMruGP1dX6Uw/7K7iQxfGtWsCwtnX5h3t+6s1X4dwnJlzvJtnnde++2jcoMRWUkrQiB8mtScwTPECGvIp1RxFQRMhTun1tF6aQAtgk2b8tX+SEMp9Xu0juKmrccqWQy5fzkEcZ+gJaoZ8tWuClFOlKI43a/+DHXhzvUW0rEfigaPLtF7OHGaKXzNtqz13+vd599vV99ak2AjdCZua8kwWjouA8nJMhyKi8fwDEBXkXpfnYvrYBBJdlEdVV2C2f9uFrkRPzYuMdLWXNzBDqNV+iptvBRqsdkqjXmZ//daNMTGVkHqhKVBkgo5D5D4iQJTL99bATAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": "290",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "300",
+    "iconButtonSprite.pixelPerUnit": "250",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": "250",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
