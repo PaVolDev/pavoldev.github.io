@@ -136,7 +136,7 @@
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
-    "weapon.shellDrop.position": "(0.44, 0.25, 0)",
+    "weapon.shellDrop.position": "(0.4, 0.25, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": 9,
