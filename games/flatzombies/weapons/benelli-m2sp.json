@@ -9,7 +9,7 @@
     "storeInfo.silencerPosition": "(354, 7)",
     "weapon.scaleAngleScatter": "0.7",
     "weapon.playerScaleMove": "0.7",
-    "weapon.reloadScaleTime": "1.7",
+    "weapon.reloadScaleTime": "1.5",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
