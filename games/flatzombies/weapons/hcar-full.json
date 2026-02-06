@@ -33,7 +33,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.4, -0.16, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.9, 0.06, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.3, 0.3, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.05, 0.1, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.98, 0.1, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
