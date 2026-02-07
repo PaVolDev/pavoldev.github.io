@@ -42,12 +42,6 @@
             "scaleFirst": "1",
             "scaleThrough": "0.4",
             "stopBulletDamage": 0
-        },
-        {
-            "materialName": "metal",
-            "scaleFirst": "0.6",
-            "scaleThrough": "0.3",
-            "stopBulletDamage": 0
         }
     ]
 }
