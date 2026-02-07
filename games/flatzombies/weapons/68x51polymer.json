@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAATCAYAAADPsWC5AAAAAXNSR0IArs4c6QAAAnVJREFUWEftl79rFEEUx9+PnezFQozYCMHuGhOuuj8gaQSPDUbMCgmInaCVhYQgIeaMIhg7g5VWFkIWbAI2iuSvEGIUFMRKjHiJZnd25sns5S65JJqLcE1u33az8+a999mZnfdFyA2wwWBq6kFf4bg6PXv71js39mp11T9jqcTWnmzMMQAgHgsLSKfYiYgVwBpba8Tz2opDxpDLR5z9xUcpkIT589n+/jVEbFm3AQGr1flR8nAyvDQ2EcebPZbsFaXUVSbu3UblInWq/K11EUQADB4mUqOKA3ITkQ/amCd64+frWq32Y3h4OHVRmxBm786PF471PA6CihIRNMYUmNljZkBsbpgOE+js8m6jaK03AOAtMz/3GZaKxWLcCqHXXwhGzve5752mKToARwwCJEkCRGQJcdHqzRulUmmtWyEIEb1Ek1wbGBj4nkPIIeQ7IT8O+/8T7s+PF3x/IQi64nbY/8dYvfdowi+ohSConOiCKzKHQEQ5hKxZYo5s/Ot6S7PULcdBa50iwBshesomWRocHEyazdJM9eFlT/HMxdGRm0TEWidj7HkXmLmwRznsUmEHdPxOEFnEVuklUtctu8ezteQw6gkABSwgaNgVA7ZiZOP1ZzVO9bOvnz4uViqVuJF3s77pubmiQr98Z3ryhXu5srJyKrZ4zvd6nJZomgHrsrQi1JaeJBJjBX6DiAWnxZ1xJt3qsdO9uhQVWSepwTQc/o2ZlEolNZuSCdBtQ4c4Y5oJdOuher++/u1LuVzWrfN2+IRhSFEUNSOLCC0vL2dafacNDQ21BcD5RFEEYRg6cm1bPfVWzd+2839MPBoa+T8K3+nyB2E3nCONX5xlAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": "300",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pixelPerUnit": "250",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5, 0)",
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
