@@ -9,7 +9,7 @@
     "author": "Dafyich",
     "authorURL": "",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAAPCAYAAAC853xMAAAAAXNSR0IArs4c6QAAALNJREFUSEvt1rENwkAMheH3G9EwABINPdtEDAEUSUlNC1vRshLKnVHoIAm6DsnJbfDd87NMc6pqz9yAlYK8nPIdYwesB0juWQ3Ncf+UtAxifjNSSgKTGWOs3ME9EroQrhkeKfWCUY+ZeNsmmf3s+AyPNOklWz1m4pPt+KTh3XKD0QNmHvVJLrdW0iKSvKjj9aG6IDt/wBGS9z7DxcDZ77j3ywT/+8yU88NgC2y+A3V3F359AfsYYCUfih2gAAAAAElFTkSuQmCC",
-    "shellSkin.pixelPerUnit": "270",
+    "shellSkin.pixelPerUnit": "300",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "300",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5, 0)",
@@ -18,7 +18,7 @@
     "bullets": "1",
     "angleRandom": 2,
     "angleSpread": 0.9,
-    "damage": "7",
+    "damage": "9",
     "distance": 24,
     "impulse": 30,
     "stopPower": 0.2,
@@ -29,25 +29,5 @@
         "minDist": 0.5,
         "maxDist": 4,
         "findExitPoint": true
-    },
-    "penetrationDamage": [
-        {
-            "materialName": "armor",
-            "scaleFirst": "0.2",
-            "scaleThrough": "0",
-            "stopBulletDamage": 0
-        },
-        {
-            "materialName": "skin",
-            "scaleFirst": "1",
-            "scaleThrough": "0.4",
-            "stopBulletDamage": 0
-        },
-        {
-            "materialName": "metal",
-            "scaleFirst": "0.2",
-            "scaleThrough": "0",
-            "stopBulletDamage": 0
-        }
-    ]
+    }
 }
