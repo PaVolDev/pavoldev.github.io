@@ -42,6 +42,12 @@
             "scaleFirst": "0.3",
             "scaleThrough": "0",
             "stopBulletDamage": 0
+        },
+        {
+            "materialName": "skin",
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0
         }
     ]
 }
