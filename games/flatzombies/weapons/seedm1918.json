@@ -67,6 +67,61 @@
     "weapon.WeaponHandPoints.fingerPoint": "(-0.016, 0.205)",
     "weapon.WeaponHandPoints.fingerAngle": -32,
     "cartridgeList": [
-        []
+        {
+            "id": "seed3006",
+            "idTemplate": "7.62x51",
+            "type": "cartridge",
+            "iconButtonSprite": "data:image/png;base64,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",
+            "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAARCAYAAAArDQkmAAACIElEQVR4AeyYzU4aURTHzxmoLBpT36B2h+miJLJr0eEJ+gYFWzcmbYK1rWxURjZo/YxfG6K4cC9PMCMYN2rQhQlLHsAYXWjUBI5nAM3NMFEW6JDx3swvzL0Z7sf/x73JoOSywfn8dlAX2c32RsBSzLZ8NjjhJtIzPe8ty3S8qiBBABBUEQLsBkshwig3JVwFQik9699oJzEKB9xwnZ7dJtKzPSRydV1WGx50RQP/0EwxM359fc7f7/SSbIU4PSlHxkdUK4TG1srHgnh8P3a/9v+zPjIU1H8OBqqkxkJ6nY2p8b6JOpHpsVB/arT3XTPrkkKsKSE0HOHicS7eE4FarQOqYMJSoUaUABJ1MhVEA3xvz1PjfcQUWNo8y4rYSZJC4MULC8cYy8rUJRVMOfezkELuk3DuM2DKqe2cL5+kEOdEWEfmnaMYUog1FmfrXVJIiwT4Ojwt6el5hLRkaq+yk3MppI28I0BMCmkHIUQZoEpgdDK3KYU4I6QERAsIEIWby654Mj8QT+4eAxcphEMQr3IZDOC37GZApOrbOAAlPB5c4JANGzJY6y+mEKnxyRwyH1jCsLkj4lOHFzzWw2UrxPdGMZAHEfF6sfTwLTfeEBn817f67ddJOPT1QGuGob972tzqgbacPtKml/aHOeSwDQMcvMYSFv8l8ztPRafYPdDZ6TV+jBQ1kQ6v4lIhxOc3dA/+KYa//y4+GZhdXq1suwMAAP//G0DA1AAAAAZJREFUAwAFJp1e9UApqgAAAABJRU5ErkJggg==",
+            "caliberName": ".30-06",
+            "uiName": ".30-06",
+            "author": "seed",
+            "authorURL": "",
+            "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAVCAYAAACwnEswAAABYUlEQVR4AeyTv07DMBDG7yLeA48ZQcCIWt6ANyigPgGwJw9AeYKCujIWiYGJ8G9jpxti7dStFJQcNoXFMpGdNpaVnpVvyPnsu/t+cvQ03Oo8DrcTXSoOhvV8s7mu567q/+3VRnJ5HrcMNlUORUR4IE+nugoCFQN95fmakDG1xyJMC8KsfxbfLQtMJM01fogoLnpxoms8/lAAjWdWNojY/gHTi98knM4iPvwLRF1KgKmu2WfBQJQ5RqEAxEH/F8zD9U7LVaVAjDU5aOHAHAwSZa5iIBb2+kxhID7dtqjFQCxM8pnCQHy6bVGLgViY5DOlHiA+J2hYLWcg02nRMAvCGscZSFjtN68bBhIYUwbCQAJzILB2+IUwkMAcqLMdggwcxS8E6lg0kCDE7v7LnqtKgURIbZPqGKEBd04A5iC6J6PD7unre5WZSoEcHY/uTapSaAlnQr1igkBp/jUTi4D4G+4bAAD//wjAk4cAAAAGSURBVAMADzKOjf/nAJ4AAAAASUVORK5CYII=",
+            "shellSkin.pixelPerUnit": "300",
+            "shellSkin.pivotPoint": "(0.5, 0.5)",
+            "iconButtonSprite.pixelPerUnit": "150",
+            "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+            "iconListSprite.pixelPerUnit": "150",
+            "iconListSprite.pivotPoint": "(0.5, 0.5)",
+            "bullets": 1,
+            "angleRandom": 0,
+            "angleSpread": 0,
+            "damage": 5,
+            "distance": 24,
+            "impulse": 30,
+            "stopPower": "0.2",
+            "penetration": {
+                "modeHit": "FIRST",
+                "minHits": 2,
+                "maxHits": 2,
+                "minDist": 2,
+                "maxDist": 100,
+                "findExitPoint": true
+            },
+            "penetrationDamage": [
+                {
+                    "scaleFirst": 0.4,
+                    "scaleThrough": 0,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "armor"
+                },
+                {
+                    "scaleFirst": 0.4,
+                    "scaleThrough": 0,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "metal"
+                },
+                {
+                    "scaleFirst": 1,
+                    "scaleThrough": 0.4,
+                    "stopBulletDamage": 0,
+                    "editorDamage": 0,
+                    "materialName": "skin"
+                }
+            ]
+        }
     ]
 }
