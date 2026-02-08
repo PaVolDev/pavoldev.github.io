@@ -33,13 +33,13 @@
     "penetrationDamage": [
         {
             "materialName": "armor",
-            "scaleFirst": "0.3",
+            "scaleFirst": "0.2",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
-            "scaleFirst": "0.3",
+            "scaleFirst": "0.2",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
