@@ -32,20 +32,20 @@
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "0.5",
-            "scaleThrough": "0",
+            "scaleFirst": 1.4,
+            "scaleThrough": 0.42,
             "stopBulletDamage": 0,
             "materialName": "armor"
         },
         {
-            "scaleFirst": "0.5",
-            "scaleThrough": "0",
+            "scaleFirst": 1.4,
+            "scaleThrough": 0.42,
             "stopBulletDamage": 0,
             "materialName": "metal"
         },
         {
-            "scaleFirst": "1.4",
-            "scaleThrough": "0",
+            "scaleFirst": "1.75",
+            "scaleThrough": 0.6,
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
