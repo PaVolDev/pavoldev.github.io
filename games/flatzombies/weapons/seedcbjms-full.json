@@ -34,7 +34,7 @@
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.254, -0.016, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "seed",
-    "storeInfo.authorURL": "https://https://t.me/seedarmscom",
+    "storeInfo.authorURL": "https://t.me/seedarmscom",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.SpriteRenderer.sortingOrder": 17,
