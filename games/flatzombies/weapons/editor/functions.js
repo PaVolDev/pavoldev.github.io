@@ -211,7 +211,7 @@ function showAnimationFrame(param) {
             <div class="array-item" data-animation="${animation.name}" data-frame="${frame}">
                 <div class="array-item-head">
                     <div class="array-item-title">[${animationIndex}][${frame}]</div>
-					<button class="remove-btn" onclick="removeArrayItem(['${param.startFieldPath}', ${animationIndex}], ${frame})" data-tooltip="Удалить из списка">✕</button>
+					<button class="remove-btn" onclick="removeArrayItem(['${param.startFieldPath}', ${animationIndex}, 'frames'], ${frame})" data-tooltip="Удалить из списка">✕</button>
                 </div>
                 <div class="grid-in-object">
                     ${fieldsHtml}
@@ -489,6 +489,8 @@ function removeArrayItem(path, itemIndex) {
 	if (Array.isArray(paramArray)) {
 		paramArray.splice(itemIndex, 1);
 		renderEditedParams();
+	} else {
+		console.warn("removeArrayItem: параметр не найден: " + path.join('/') + "[" + itemIndex + "]; paramArray:", paramArray);
 	}
 }
 
@@ -655,7 +657,7 @@ function updateValueByPath(newValue, path) {
 		return editedParams[index];
 	}
 	index = parseInt(path);
-	if (index) {
+	if (!isNaN(index)) {
 		editedParams[index].value = newValue;
 		return editedParams[index];
 	}
@@ -671,7 +673,7 @@ function updateValueByPath(newValue, path) {
 
 function findByPath(fieldPath) {
 	const index = parseInt(fieldPath);
-	if (index) return editedParams[index];
+	if (!isNaN(index)) return editedParams[index];
 	if (!fieldPath) return null;
 	fieldPath = fieldPath.trim();
 	return editedParams.find(p => p.startFieldPath === fieldPath) ?? editedParams.find(p => p.fieldPath === fieldPath);
@@ -754,9 +756,13 @@ function findValueByPath(path) {
 			return parseVector(lastObject[objKey])[1];
 		} else if (lastKey == 'z') {
 			return parseVector(lastObject[objKey])[2];
-		} else {
+		} else if (lastObject[objKey] !== undefined) {
 			return lastObject[objKey];
+		} else {
+			return lastObject;
 		}
+	} else {
+		console.warn("findValueByPath: параметр не найден для пути: " + path.join('/') + "; Тип: <" + typeof path + ">");
 	}
 }
 
