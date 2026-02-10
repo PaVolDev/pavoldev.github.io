@@ -930,7 +930,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 		case 'int':
 			if ('min' in param && 'max' in param) {
 				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
-					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="${idElement}Slider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
+					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="${param.startFieldPath}Slider" oninput="updateFieldHTML(${index}, this.value)" value="${param.value}">
 					<input type="number" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.startFieldPath}" oninput="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
