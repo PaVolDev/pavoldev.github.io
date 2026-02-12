@@ -32,7 +32,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.34, -0.1, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.81, 0.06, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.900, 0.7, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.1, 0.25, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.06, 0.3, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
@@ -91,6 +91,6 @@
     "weapon.chamberSize": 200,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 7278,
+    "version": 7400,
     "targetVersion": 208
 }
