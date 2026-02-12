@@ -74,5 +74,5 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.000, 0, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.620, 0.1, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.000, 0.3, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.150, -0.25, 0)"
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.150, 0, 0)"
 }
