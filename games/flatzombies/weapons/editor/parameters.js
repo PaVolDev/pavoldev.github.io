@@ -1400,21 +1400,20 @@ function getExportResultJSON() {
 	}
 	json['selspriteupd'] = 'update';
 	standrtParams.forEach(key => {
-		// if (Array.isArray(key)) {
-		// 	const first = editedParams.find(p => p.startFieldPath.endsWith(key[0]));
-		// 	if (first !== undefined && first.value === editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value && first.value !== selectedWeapon[first.startFieldPath]) {
-		// 		alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
-		// 		return;
-		// 	}
-		// } else if (selectedWeapon[key] && editedParams.find(p => p.startFieldPath == key)?.value == selectedWeapon[key]) {
-		// 	json['selspriteupd'] = 'standrt';
-		// 	return;
-		// }
 		if (selectedWeapon[key] && editedParams.find(p => p.startFieldPath == key)?.value === selectedWeapon[key]) {
 			json['selspriteupd'] = 'standrt';
 			return;
 		}
 	});
+	standrtPoints.forEach(key => {
+		const firstPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[0]))?.value).toString();
+		const nextPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value).toString();
+		if (firstPoint === nextPoint && firstPoint != "0,0,0") {
+			alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
+			return;
+		}
+	});
+
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, 120, 600);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
