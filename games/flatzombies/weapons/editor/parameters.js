@@ -1410,7 +1410,6 @@ function getExportResultJSON() {
 		const nextPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value).toString();
 		if (firstPoint === nextPoint && firstPoint != "0,0,0") {
 			alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
-			badPoints = true;
 			return null; //Останавливаем функцию
 		}
 	}
