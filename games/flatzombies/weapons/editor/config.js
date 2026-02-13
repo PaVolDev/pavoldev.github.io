@@ -376,7 +376,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 ];
 
 //Список параметров, которые должны быть отредактированы
-var standrtParams = ["weapon.SpriteRenderer.sprite", [".magazinePoint", ".magazineInsert"]];
+var standrtParams = ["weapon.SpriteRenderer.sprite"];
 
 //idHTMLInput - взять значение из HTML-элемента по его id
 //sourceFieldPath - взять значение из другого параметра по его fieldPath
