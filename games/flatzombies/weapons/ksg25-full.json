@@ -30,7 +30,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.490, -0.443, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.617, -0.426, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.685, -0.046, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-1.028, 0.354, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.200, 0.04, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.978, 0.134, 0)",
     "weapon.WeaponHandPoints.weaponType": "shotgun",
     "storeInfo.author": "",
