@@ -97,10 +97,14 @@ const importReplace = [
 	{ fieldPath: "storeInfo.autorURL", newPath: "storeInfo.authorURL" },
 ];
 
-const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
+//Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
+const defaultAddedFields = [
 	["arrowsPerShot", ""],
 	["distHitArrow", ""],
 ];
+
+//Список параметров, которые должны быть отредактированы
+var standrtParams = ["iconButtonSprite"];
 
 var mainParams = [ //Список важных параметров для записи в итоговый файл
 	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true },
