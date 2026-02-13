@@ -1405,15 +1405,15 @@ function getExportResultJSON() {
 			return;
 		}
 	});
-	standrtPoints.forEach(key => {
+	for (const key of standrtPoints) {
 		const firstPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[0]))?.value).toString();
 		const nextPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value).toString();
 		if (firstPoint === nextPoint && firstPoint != "0,0,0") {
 			alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
-			return;
+			badPoints = true;
+			return null; //Останавливаем функцию
 		}
-	});
-
+	}
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, 120, 600);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
@@ -1444,6 +1444,7 @@ function convertTextValueToJsonFile(value) {
 document.getElementById('exportJsonFile').addEventListener('click', () => {
 	if (!editedParams || editedParams.length == 0) { return; }
 	const json = getExportResultJSON();
+	if (!json) { return; }
 	const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
@@ -1461,6 +1462,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	if (!editedParams || editedParams.length == 0) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getExportResultJSON();
+	if (!json) { return; }
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
 	json['lang'] = navigator.language;
 	json['login'] = document.getElementById('login').value;
