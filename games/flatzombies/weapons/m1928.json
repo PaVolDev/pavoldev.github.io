@@ -86,7 +86,7 @@
     "weapon.magazineMax": "50",
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
-    "weapon.shellDrop.position": "(0.227, 0.255, 0)",
+    "weapon.shellDrop.position": "(0.181, 0.29, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": "10",
@@ -97,7 +97,7 @@
     "weapon.automat": true,
     "weapon.fireRateInMinute": "700",
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "version": 1,
     "targetVersion": 208
