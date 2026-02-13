@@ -1403,7 +1403,7 @@ function getExportResultJSON() {
 		if (Array.isArray(key)) {
 			const firstValue = editedParams.find(p => p.startFieldPath.endsWith(key[0]))?.value;
 			if (firstValue !== undefined && firstValue === editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value) {
-				alert(`${tr("Ошибка:")}\n${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
+				alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
 				return;
 			}
 		} else if (selectedWeapon[key] && editedParams.find(p => p.startFieldPath == key)?.value == selectedWeapon[key]) {
@@ -1480,7 +1480,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		alert(tr(data));
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert(tr("Ошибка браузера:\n") + tr(error.message));
+		alert(tr("Ошибка:\n") + tr(error.message));
 	});
 });
 
