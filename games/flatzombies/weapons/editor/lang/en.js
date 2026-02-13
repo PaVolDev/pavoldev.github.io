@@ -140,11 +140,12 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	2017: "Error reading file",
 	2018: "File is missing 'idTemplate' identifier",
 	2019: "Some parameters are missing.\nThe mod may run with errors.\nPlease specify the following parameters:\n",
-	2020: "Browser error:\n",
+	2020: "Error:\n",
 	2021: "The name of the new object.\nYou can specify the parent object, for example: parent.newSprite",
 	2022: "Length, mm:",
 	2023: "Weapon length. Total length of the actual prototype from the reference documentation, in millimeters.",
-	
+	2024: "The parameters do not have to match, they have different purposes.",
+
 	3000: "Sprite, PNG file",
 	3001: "Sprite pivot point",
 	3002: "Pixels per unit",
