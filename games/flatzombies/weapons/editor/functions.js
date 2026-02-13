@@ -722,12 +722,16 @@ function updateChildValueByPath(currentObj, newValue, path) {
 
 
 
-function findValueByPath(path) {
+function findValueByPath(path, defaultValue = undefined) {
 	let index = null;
 	let param = null;
 	if (!Array.isArray(path)) {
 		param = findByPath(path);
-		return param.value;
+		if (param) {
+			return param.value;
+		} else {
+			return defaultValue;
+		}
 	} else if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
 		param = editedParams[index];
 	}
@@ -763,6 +767,7 @@ function findValueByPath(path) {
 		}
 	} else {
 		console.warn("findValueByPath: параметр не найден для пути: " + path.join('/') + "; Тип: <" + typeof path + ">");
+		return defaultValue;
 	}
 }
 
