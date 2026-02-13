@@ -105,6 +105,7 @@ const defaultAddedFields = [
 
 //Список параметров, которые должны быть отредактированы
 var standrtParams = ["iconButtonSprite"];
+var standrtPoints = [];
 
 var mainParams = [ //Список важных параметров для записи в итоговый файл
 	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true },
