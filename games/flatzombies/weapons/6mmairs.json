@@ -21,7 +21,7 @@
     "damage": 1,
     "distance": 24,
     "impulse": 15,
-    "stopPower": 0.05,
+    "stopPower": "0.01",
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
