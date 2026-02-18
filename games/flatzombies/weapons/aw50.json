@@ -22,8 +22,8 @@
     "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
     "weapon.WeaponHandPoints.handInsertPoint": "(0.5, -0.05, 0)",
-    "weapon.WeaponHandPoints.boltMovePoint": "(-0.2, 0.15, 0)",
-    "weapon.WeaponHandPoints.boltPoint": "(0.05, 0.15, 0)",
+    "weapon.WeaponHandPoints.boltMovePoint": "(-0.2, 0.25, 0)",
+    "weapon.WeaponHandPoints.boltPoint": "(0.05, 0.25, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 0,
     "weapon.WeaponHandPoints.magazineInsert": "(0.5, -0.04, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.5, -0.04, 0)",
@@ -94,6 +94,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 13,
+    "version": 14,
     "targetVersion": 208
 }
