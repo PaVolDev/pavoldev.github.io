@@ -22,7 +22,7 @@
     "weapon.WeaponHandPoints.openCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
-    "weapon.WeaponHandPoints.handInsertPoint": "(0.335, -0.08, 0)",
+    "weapon.WeaponHandPoints.handInsertPoint": "(0.286, -0.285, 0)",
     "weapon.WeaponHandPoints.boltMovePoint": "(0.060, 0.3, 0)",
     "weapon.WeaponHandPoints.boltPoint": "(0.510, 0.3, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 0,
@@ -30,7 +30,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.269, -0.058, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(1.000, 0.1, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.026, 0.288, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-0.950, 0.097, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.969, 0.155, 0)",
     "weapon.WeaponHandPoints.weaponType": "heavyRightBoltRifle",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
@@ -88,8 +88,8 @@
     "weapon.automat": false,
     "weapon.fireRateInMinute": "200",
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 3,
+    "version": 4,
     "targetVersion": 208
 }
