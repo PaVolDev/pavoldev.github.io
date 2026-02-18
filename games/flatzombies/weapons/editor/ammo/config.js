@@ -10,7 +10,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: '.position', angle: '.angle', parent: null },
 ]
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'];
+const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'targetVersion', 'version', 'selspriteupd'];
 const ignoreExportFields = ['storeInfo.iconBase64', 'gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.'];
 const prefixHide = ['cartridge.'];
 const prefixExport = 'cartridge.'; //Вернуть приставку при экспорте
