@@ -108,7 +108,7 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'position', angle: 'angle', parent: null },
 ]
 const ignoreIconSprites = ['gunFlash', ".player", ".player.man"]; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize', 'targetVersion', 'version'];
+const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize', 'targetVersion', 'version', 'selspriteupd'];
 const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive', 'weapon.WeaponHandPoints.WeaponAnimation',
 	"weapon.player.Transform.localPosition",
 	"weapon.player.man.Transform.localPosition",
