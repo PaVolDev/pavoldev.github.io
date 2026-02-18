@@ -464,7 +464,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
-	//v209: { "fieldPath": "animationSounds", "comment": "Звуки анимации при перезарядке", "type": "AnimationSounds[]", "value": "" },
+	{ "fieldPath": "animationSounds", "comment": "Звуки анимации при перезарядке", "type": "AnimationSounds[]", "value": "" },
 ]
 
 
@@ -1018,84 +1018,84 @@ const sounds = [
 	{
 		clip: "rifleAK", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "shotgunBullpupDP12", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "shotgun", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "rifleLeftBolt", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "pistol", sounds:
 			[
-				{ source: "pistol_clipout.wav", replace: "pistol_clipout.wav" },
-				{ source: "pistol_clipin_p250.wav", replace: "pistol_clipin_p250.wav" },
-				{ source: "boltforward_922.wav", replace: "boltforward_922.wav" }
+				{ source: "pistol_clipout", replace: "pistol_clipout" },
+				{ source: "pistol_clipin_p250", replace: "pistol_clipin_p250" },
+				{ source: "boltforward_922", replace: "boltforward_922" }
 			]
 	},
 	{
 		clip: "rsh12", sounds:
 			[
-				{ source: "clipout-p90.wav", replace: "clipout-p90.wav" },
-				{ source: "clipin_tmp.wav", replace: "clipin_tmp.wav" }
+				{ source: "clipout-p90", replace: "clipout-p90" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
 			]
 	},
 	{
 		clip: "rifleAN94", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "machinegun", sounds:
 			[
-				{ source: "m249_boxout.wav", replace: "m249_boxout.wav" },
-				{ source: "galil_clipout.wav", replace: "galil_clipout.wav" },
-				{ source: "galil_clipin.wav", replace: "galil_clipin.wav" },
-				{ source: "m249_chain2.wav", replace: "m249_chain2.wav" },
-				{ source: "cliphit-432.wav", replace: "cliphit-432.wav" },
-				{ source: "boltback-08.wav", replace: "boltback-08.wav" },
-				{ source: "boltforward-210.wav", replace: "boltforward-210.wav" }
+				{ source: "m249_boxout", replace: "m249_boxout" },
+				{ source: "galil_clipout", replace: "galil_clipout" },
+				{ source: "galil_clipin", replace: "galil_clipin" },
+				{ source: "m249_chain2", replace: "m249_chain2" },
+				{ source: "cliphit-432", replace: "cliphit-432" },
+				{ source: "boltback-08", replace: "boltback-08" },
+				{ source: "boltforward-210", replace: "boltforward-210" }
 			]
 	},
 	{
 		clip: "shotgun+magazine", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
@@ -1106,44 +1106,44 @@ const sounds = [
 	{
 		clip: "gm94", sounds:
 			[
-				{ source: "clipout-51.wav", replace: "clipout-51.wav" },
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "cliphit-247.wav", replace: "cliphit-247.wav" },
-				{ source: "boltforward-90.wav", replace: "boltforward-90.wav" },
-				{ source: "boltback-41.wav", replace: "boltback-41.wav" }
+				{ source: "clipout-51", replace: "clipout-51" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "cliphit-247", replace: "cliphit-247" },
+				{ source: "boltforward-90", replace: "boltforward-90" },
+				{ source: "boltback-41", replace: "boltback-41" }
 			]
 	},
 	{
 		clip: "hk69", sounds:
 			[
-				{ source: "boltforward-151.wav", replace: "boltforward-151.wav" },
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "cliphit-432.wav", replace: "cliphit-432.wav" }
+				{ source: "boltforward-151", replace: "boltforward-151" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "cliphit-432", replace: "cliphit-432" }
 			]
 	},
 	{
 		clip: "barrettM99", sounds:
 			[
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "sniper", sounds:
 			[
-				{ source: "clipout-271.wav", replace: "clipout-271.wav" },
-				{ source: "clipin_154.wav", replace: "clipin_154.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltback-22.wav", replace: "boltback-22.wav" }
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
 			]
 	},
 	{
 		clip: "shotgun+leftBolt", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
@@ -1154,454 +1154,454 @@ const sounds = [
 	{
 		clip: "sw686", sounds:
 			[
-				{ source: "clipout-p90.wav", replace: "clipout-p90.wav" },
-				{ source: "clipin_tmp.wav", replace: "clipin_tmp.wav" }
+				{ source: "clipout-p90", replace: "clipout-p90" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
 			]
 	},
 	{
 		clip: "srm1212", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "mr27", sounds:
 			[
-				{ source: "clipout-51.wav", replace: "clipout-51.wav" },
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "clipin_tmp.wav", replace: "clipin_tmp.wav" }
+				{ source: "clipout-51", replace: "clipout-51" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
 			]
 	},
 	{
 		clip: "heavyRightBoltRifle", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "p90", sounds:
 			[
-				{ source: "ump45_clipout.wav", replace: "ump45_clipout.wav" },
-				{ source: "ump45_boltforward.wav", replace: "ump45_boltforward.wav" },
-				{ source: "cliphit-267.wav", replace: "cliphit-267.wav" },
-				{ source: "boltback-254.wav", replace: "boltback-254.wav" },
-				{ source: "boltforward-90.wav", replace: "boltforward-90.wav" }
+				{ source: "ump45_clipout", replace: "ump45_clipout" },
+				{ source: "ump45_boltforward", replace: "ump45_boltforward" },
+				{ source: "cliphit-267", replace: "cliphit-267" },
+				{ source: "boltback-254", replace: "boltback-254" },
+				{ source: "boltforward-90", replace: "boltforward-90" }
 			]
 	},
 	{
 		clip: "aa12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "grizzly85123", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "benelli-m4", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "ak308", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "rifleAR15", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "ksg", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "ak12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "ak74u", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "aug", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "barrettMRAD", sounds:
 			[
-				{ source: "clipout-271.wav", replace: "clipout-271.wav" },
-				{ source: "clipin_154.wav", replace: "clipin_154.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltback-22.wav", replace: "boltback-22.wav" }
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
 			]
 	},
 	{
 		clip: "amb17", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "cougarms", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "czbren2", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "czEvo3A1", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "dp12", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "f2000", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "fd12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "forigin12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "rem870dm", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "imbelai2", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "g36c", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "galilace21", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "lr300", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "m110", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "m200", sounds:
 			[
-				{ source: "clipout-271.wav", replace: "clipout-271.wav" },
-				{ source: "clipin_154.wav", replace: "clipin_154.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltback-22.wav", replace: "boltback-22.wav" }
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
 			]
 	},
 	{
 		clip: "mossberg590", sounds:
 			[
-				{ source: "shell_insert-144.wav", replace: "shell_insert-144.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	},
 	{
 		clip: "mp5", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "pp19bizon", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "pp90m1", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "remR11rsass", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "rpk16", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "saiga12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "scarh", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "scarlcqc", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "scarssr", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "shak12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "sigmpx", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "six12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "sr2veresk", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "sr3m", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "ump45", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "vepr12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltpull-215.wav", replace: "boltpull-215.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
 			]
 	},
 	{
 		clip: "xtr12", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-845.wav", replace: "boltback-845.wav" },
-				{ source: "boltforward-20.wav", replace: "boltforward-20.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
 			]
 	},
 	{
 		clip: "grizzly85", sounds:
 			[
-				{ source: "clipout-ak47.wav", replace: "clipout-ak47.wav" },
-				{ source: "clipin_ak74.wav", replace: "clipin_ak74.wav" },
-				{ source: "boltback-252.wav", replace: "boltback-252.wav" },
-				{ source: "boltback-45.wav", replace: "boltback-45.wav" }
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
 			]
 	}
 ];
