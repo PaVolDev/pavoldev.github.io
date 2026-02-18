@@ -107,23 +107,20 @@ async function switchLanguage(input) { //
 	}
 }
 
+//Найти и загрузить выбранный язык при запуске страницы
 document.addEventListener("DOMContentLoaded", loadTranslation);
 async function loadTranslation() {
 	let directory = document.getElementsByName('langdirectory')[0]?.content || 'lang/';
 	let savedLang = localStorage.getItem('selectedLanguage');//Проверяем, есть ли сохраненный язык
 	//Если нет сохраненного языка, пробуем определить язык браузера
 	if (!savedLang) {
-		const browserLang = navigator.language || navigator.languages[0];
-		//Простое сопоставление: если начинается с 'ru' -> 'ru', если с 'en' -> 'en', иначе 'en'
-		if (browserLang.startsWith('ru')) {
-			savedLang = 'ru';
-		} else if (browserLang.startsWith('en')) {
-			savedLang = 'en';
-		} else if (browserLang.startsWith('zh')) { //Для китайского
-			savedLang = 'cn';
-		} else {
-			savedLang = 'en'; //По умолчанию
-		}
+		const browserLang = (navigator.language || navigator.languages[0]).toLowerCase(); //"ru-RU"
+		// 1. Получаем список всех значений (value) из select
+		const selectEl = document.getElementById('lang');
+		const availableLangs = Array.from(selectEl.options).map(opt => opt.value.toLowerCase());
+		// 2. Ищем совпадение: есть ли в нашем списке язык, с которого начинается browserLang
+		const matchedLang = availableLangs.find(lang => browserLang.startsWith(lang));// Например, если browserLang "ru-RU", то find вернет "ru"
+		savedLang = matchedLang || 'en'; // 3. Если нашли — берем его, если нет — ставим 'en' 
 		//Сохраняем определенный язык
 		localStorage.setItem('selectedLanguage', savedLang);
 	}
