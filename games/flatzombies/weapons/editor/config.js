@@ -464,7 +464,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.patronListSpaceStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.patronOrderSize", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
-	{ "fieldPath": "animationSounds", "comment": "Звуки анимации при перезарядке", "type": "AnimationSounds[]", "value": "" },
+	{ "fieldPath": "weapon.animationSounds", "comment": "Звуки анимации при перезарядке", "type": "AnimationSounds[]", "value": "" },
 ]
 
 
@@ -730,7 +730,6 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ "fieldPath": "weapon.damageScale", "comment": "Множитель урона", "type": "float", "value": 0, min: 0.8, max: 3 },
 	{ "fieldPath": "weapon.animationClip", "comment": "Анимация оружия", "type": "AnimationClip", "value": "" },
 	{ "fieldPath": "weapon.reloadScaleTime", "comment": "Множитель для скорости перезарядки [0.5 - 2]<br>Скорость анимации и время для перезарядки", "type": "float", "value": 0, min: 0.5, max: 2 },
-	{ "fieldPath": "weapon.animationSounds", "comment": "Звуки перезарядки. Звуки меняются при вызове события AnimationEvent, чтобы один клип с анимацей на разных оружиях мог запускать разные звуки", "type": "WeaponSoundKeyValue[]", "value": "" },
 	{ "fieldPath": "weapon.cameraSnake", "comment": "Дистанция для смещения камеры в одну сторону во время тряски при стрельбе", "type": "Vector3", "value": "(0, 0, 0)" },
 	{ "fieldPath": "weapon.cameraShakeTime", "comment": "Длительность тряски (в секундах)", "type": "float", "value": 0 },
 	{ "fieldPath": "weapon.cameraSizeScale", "comment": "Размер камеры", "type": "float", "value": 0 },
