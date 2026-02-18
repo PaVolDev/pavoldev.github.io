@@ -34,7 +34,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.370, -0.205, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.269, -0.058, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(1.000, 0.1, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-1.026, 0.288, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.052, 0.418, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.969, 0.155, 0)",
     "weapon.WeaponHandPoints.weaponType": "heavyRightBoltRifle",
     "storeInfo.author": "Dafyich",
@@ -96,6 +96,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 4,
+    "version": 5,
     "targetVersion": 208
 }
