@@ -66,7 +66,7 @@
     "weapon.boltRender.handgrip.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.9)",
     "weapon.addBulletsReload": 2,
     "weapon.magazineMax": 14,
-    "weapon.chamberAnimationStep": "14",
+    "weapon.chamberAnimationStep": "1",
     "weapon.shellDrop.position": "(-0.42, 0.25, 0)",
     "weapon.shellDrop.angle": "105",
     "weapon.shellDrop.quantity": 1,
@@ -80,6 +80,6 @@
     "weapon.chamberSize": "1",
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 11,
+    "version": 12,
     "targetVersion": 208
 }
