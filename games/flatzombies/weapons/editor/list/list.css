@@ -1,0 +1,113 @@
+ .gallery {
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	gap: 2px;
+ 	justify-content: center;
+ }
+
+ .item {
+ 	text-align: center;
+ 	padding: 15px;
+ 	border-radius: 10px;
+ 	width: 180px;
+ 	word-wrap: break-word;
+ }
+
+ .preview {
+ 	width: 120px;
+ 	height: 120px;
+ 	object-fit: contain;
+ 	margin-bottom: 10px;
+ 	border: 1px solid #eee;
+ 	background: #fff;
+ }
+
+
+ .info {
+ 	display: grid;
+	grid-template-columns: 1fr 1fr;
+ 	justify-content: center;
+ 	gap: 8px;
+ 	padding: 4px 8px;
+ 	border-radius: 12px;
+ }
+
+ .rating-item {
+ 	display: flex;
+ 	align-items: center;
+ 	gap: 2px;
+ }
+
+ .info img {
+ 	width: 20px;
+ 	height: 20px;
+ 	vertical-align: middle;
+ }
+
+ .item a {
+ 	color: #007bff;
+ 	text-decoration: none;
+ 	font-size: 14px;
+ }
+
+ .item a:hover {
+ 	text-decoration: underline;
+ }
+
+ .filename {
+ 	font-weight: bold;
+ 	margin-top: 8px;
+ 	font-size: 13px;
+ 	color: #333;
+ }
+
+
+ .status {
+ 	margin-top: 6px;
+ 	font-size: 18px;
+ }
+
+ .actions {
+ 	margin-top: 8px;
+ }
+
+ .actions a {
+ 	display: inline-block;
+ 	margin: 0 4px;
+ 	text-decoration: none;
+ 	color: #d9534f;
+ 	font-weight: bold;
+ }
+
+ .actions a:hover {
+ 	text-decoration: underline;
+ }
+
+
+
+ .message {
+ 	font-size: 1.5rem;
+ 	color: #333;
+ 	margin-bottom: 1rem;
+ 	text-align: center;
+ 	padding: 0 1rem;
+ }
+
+ .delete-button {
+ 	background-color: #dc3545;
+ 	color: white;
+ 	border: none;
+ 	padding: 0.75rem 2rem;
+ 	font-size: 1.1rem;
+ 	border-radius: 6px;
+ 	cursor: pointer;
+ 	margin-bottom: 1rem;
+ }
+
+ .delete-button:hover {
+ 	background-color: #c82333;
+ }
+
+ .delete-button:active {
+ 	transform: translateY(0);
+ }
