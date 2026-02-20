@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>Список модов</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="../stylemobile.css">
+	<link rel="stylesheet" href="list.css">
+</head>
+
+<body>
+	<!-- Центральная панель -->
+	<div class="panel window" id="centerPanel">
+		<div class="titlePanel " id="startCenterTitle">Список модов</div>
+		<div style="width: 40%; margin: auto;" id="loginpanel">
+			<div id="authError" class="hidden" style="color: rgb(231, 76, 60); text-align: center; margin-bottom: 10px; font-size: 14px;">⚠ Ошибка соединения с сервером</div>
+			<div id="authorizationStatus" style="display: none; width: 100%; text-align: center;">Авторизация...<br>
+				<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
+			</div>
+			<form method="POST" class="save" id="loginblock">
+				<input type="hidden" name="action" value="login">
+				<input type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
+				<input type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
+				<button type="submit" id="submit" class="resultButton sendButton" data-tooltip="Сохранить на общий сервер">Войти</button>
+			</form>
+		</div>
+
+		<div id="list"></div>
+
+		<select id="lang" class="selectLanguage panelInput" onchange="switchLanguage(this);" style="max-width: 144px;margin: auto;margin-top: 70px;">
+			<option value="pt">Português (Brasil)</option>
+			<option value="en">English</option>
+			<option value="ru">Русский</option>
+			<option value="cn">简体中文</option>
+		</select>
+	</div>
+
+
+
+
+
+
+
+
+	<!-- Подключаем скрипты -->
+	<meta name="langdirectory" content="lang/" />
+	<script src="../translation.js"></script>
+	<script src="../lang/ru.js"></script>
+	<script src="list.js"></script>
+	<!-- Подключаем данные -->
+
+	<!-- Редактор -->
+
+</body>
+
+</html>
