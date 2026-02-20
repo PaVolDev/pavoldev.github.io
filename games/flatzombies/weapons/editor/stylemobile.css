@@ -23,4 +23,8 @@
 		padding: 30px 4px;
 		width: 97%;
 	}
+
+	.window {
+		max-width: 100%;
+	}
 }
