@@ -11,6 +11,7 @@ document.getElementById('loginblock').addEventListener('submit', async function 
 	document.getElementById('loginblock').classList.add('hidden');
 	document.getElementById('authError').classList.add('hidden');
 	document.getElementById('authorizationStatus').classList.remove('hidden');
+	showLoadingNewWeapon();
 
 	try {
 		const response = await fetch(atob(server), {
@@ -26,15 +27,14 @@ document.getElementById('loginblock').addEventListener('submit', async function 
 		});
 
 		const data = await response.json();
-
 		if (data.success) {
-			// Сохраняем логин+пароль в память
-			currentUser.login = login;
+			currentUser.login = login;// Сохраняем логин+пароль в память
 			currentUser.password = password;
 			showWeaponsList(data.weapons);
 		} else {
 			showError(data.message || 'Неверный логин или пароль');
 		}
+		hideLoadingNewWeapon();
 
 	} catch (error) {
 		showError('Ошибка соединения с сервером');
@@ -48,6 +48,12 @@ let currentUser = {
 	password: null
 };
 
+function showLoadingNewWeapon() {
+	document.getElementById("loading").classList.remove('hidden');
+}
+function hideLoadingNewWeapon() {
+	document.getElementById("loading").classList.add('hidden');
+}
 
 function showWeaponsList(weapons) {
 	document.getElementById('authorizationStatus').classList.add('hidden');
@@ -130,11 +136,7 @@ function showError(message) {
 // Защита от XSS
 function escapeHtml(str) {
 	if (!str) return '';
-	return String(str)
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;');
+	return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 
@@ -145,7 +147,7 @@ async function downloadAndSaveJSON(modName, url, localStorageKey, openURL) {
 	try {
 		const image = document.getElementById("image" + modName);
 		const lastImage = image ? image.src : null;
-		if (image) image.src = 'images/loading.png';
+		if (image) image.src = 'images/loadingblack.png';
 		// 1. Скачиваем файл
 		const response = await fetch(url);
 		if (image && lastImage) image.src = lastImage;
@@ -172,9 +174,7 @@ async function downloadAndSaveJSON(modName, url, localStorageKey, openURL) {
 
 function handleSelectChange(select) {
 	var selectedValue = select.value;
-
 	if (selectedValue === "action") return;
-
 	var selectedOption = select.options[select.selectedIndex];
 	var url = selectedOption.getAttribute("data-url");
 	var modName = select.getAttribute("modname");
@@ -210,7 +210,7 @@ function handleSelectChange(select) {
 
 		const image = document.getElementById("image" + modName);
 		const lastImage = image ? image.src : null;
-		if (image) image.src = 'images/loading.png';
+		if (image) image.src = 'images/loadingblack.png';
 
 		// Отправляем POST с логином+паролем и действием
 		fetch(atob(server), {
