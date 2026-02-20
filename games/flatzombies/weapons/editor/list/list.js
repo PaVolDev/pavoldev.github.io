@@ -1,36 +1,67 @@
 const server = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvdXNlci1saXN0LnBocA';
+
+// ─── Автовход при загрузке страницы ──────────────────────────────
+document.addEventListener('DOMContentLoaded', async function () {
+	const token = localStorage.getItem('session');
+	if (!token) return; // Нет токена — показываем форму
+	document.getElementById('authorizationStatus').classList.remove('hidden');
+	try {
+		const response = await fetch(atob(server), {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				action: 'auto_login',
+				token: token
+			})
+		});
+		const data = await response.json();
+		if (data.success) {
+			document.getElementById('loginblock').classList.add('hidden');
+			document.getElementById('loginActions').classList.remove('hidden');
+			showWeaponsList(data.weapons);
+		} else {
+			// Токен не валиден — чистим localStorage, показываем форму
+			localStorage.removeItem('session');
+			document.getElementById('authorizationStatus').classList.add('hidden');
+			console.warn('Автовход не удался: ' + data.message);
+		}
+	} catch (error) {
+		console.error('Автовход не удался:', error);
+		document.getElementById('authorizationStatus').classList.add('hidden');
+	}
+});
+
+
+// ─── Обычный вход ─────────────────────────────────────────────────
 document.getElementById('loginblock').addEventListener('submit', async function (e) {
 	e.preventDefault();
-
 	const login = document.getElementById('login').value.trim();
 	const password = document.getElementById('password').value.trim();
-
 	if (!login || !password) return;
-
-	// Скрываем форму и ошибку, показываем анимацию
+	doLogin(login, password);
+});
+async function doLogin(login, password) {
 	document.getElementById('loginblock').classList.add('hidden');
 	document.getElementById('authError').classList.add('hidden');
 	document.getElementById('authorizationStatus').classList.remove('hidden');
 	showLoadingNewWeapon();
-
 	try {
 		const response = await fetch(atob(server), {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				action: 'login',
 				login: login,
 				password: password
 			})
 		});
-
 		const data = await response.json();
 		if (data.success) {
-			currentUser.login = login;// Сохраняем логин+пароль в память
+			currentUser.login = login;
 			currentUser.password = password;
+			localStorage.setItem('session', data.token);// Сохраняем токен в localStorage
 			showWeaponsList(data.weapons);
+			document.getElementById('loginActions').classList.remove('hidden');
 		} else {
 			showError(data.message || 'Неверный логин или пароль');
 		}
@@ -40,7 +71,35 @@ document.getElementById('loginblock').addEventListener('submit', async function 
 		showError('Ошибка соединения с сервером');
 		console.error(error);
 	}
-});
+}
+
+
+
+
+
+// ─── Выход ───────────────────────────────────────────────────────
+document.getElementById('logout').addEventListener('click', logout);
+async function logout() {
+	const token = localStorage.getItem('session');
+	await fetch(atob(server), {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			action: 'logout',
+			token: token
+		})
+	});
+
+	currentUser.login = null;
+	currentUser.password = null;
+	localStorage.removeItem('session');
+	document.getElementById('loginblock').classList.remove('hidden');
+	document.getElementById('loginActions').classList.add('hidden');
+	document.getElementById('list').innerHTML = '';
+}
+
+
+
 
 // Храним в памяти после успешного входа
 let currentUser = {
@@ -79,11 +138,15 @@ function showWeaponsList(weapons) {
 		const reportHtml = report >= 1 ? `<img src="images/warning.png" alt="Жалоба"><span class="count">${report}</span>` : '';
 		html += `
             <div class="item">
-                <img src="${icon}"
-                     alt="Иконка ${escapeHtml(String(id))}"
-                     id="image${escapeHtml(String(id))}"
-                     class="preview">
-
+                <img src="${icon}" alt="Иконка ${escapeHtml(String(id))}" id="image${escapeHtml(String(id))}" class="preview">
+				<div class="actions" id="actions${id}">
+                    <select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
+                        <option value="action">Действия...</option>
+                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 Файл</option>
+                        <option value="edit"     data-url="${escapeHtml(fileUrl)}">📝 Редактировать</option>
+                        <option value="remove">❌ Удалить</option>
+                    </select>
+                </div>
                 <div class="filename">${escapeHtml(String(id))}</div>
 
                 <div class="info">
@@ -104,14 +167,7 @@ function showWeaponsList(weapons) {
                     </span>
                 </div>
 
-                <div class="actions" id="actions${id}">
-                    <select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
-                        <option value="action">Действия...</option>
-                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 Файл</option>
-                        <option value="edit"     data-url="${escapeHtml(fileUrl)}">📝 Редактировать</option>
-                        <option value="remove">❌ Удалить</option>
-                    </select>
-                </div>
+                
             </div>
         `;
 	});
@@ -125,7 +181,7 @@ function showError(message) {
 	// Скрываем анимацию, возвращаем форму
 	document.getElementById('authorizationStatus').classList.add('hidden');
 	document.getElementById('loginblock').classList.remove('hidden');
-
+	document.getElementById('loginActions').classList.add('hidden');
 	// Показываем блок ошибки с текстом
 	const errorEl = document.getElementById('authError');
 	errorEl.textContent = '⚠ ' + message;
@@ -232,7 +288,6 @@ function handleSelectChange(select) {
 		}).then(data => {
 			if (data.success) {
 				if (image) image.src = 'images/removed.png';
-				document.getElementById("status" + modName).innerHTML = '❌';
 				document.getElementById("actions" + modName).style.display = 'none';
 			} else {
 				if (image && lastImage) image.src = lastImage;
