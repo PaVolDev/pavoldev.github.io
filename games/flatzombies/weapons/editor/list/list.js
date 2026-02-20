@@ -59,7 +59,7 @@ function showWeaponsList(weapons) {
 		return;
 	}
 
-	let html = '<div class="gallery">'; 
+	let html = '<div class="gallery">';
 	weapons.forEach(weapon => {
 		const id = weapon.id;
 		const modType = weapon.modType ?? '';
@@ -70,7 +70,7 @@ function showWeaponsList(weapons) {
 		const rating = weapon.raiting ?? 0;
 		const report = weapon.report ?? 0;
 
-		const reportHtml = report >= 1 ? `<img src="images/warning.png" alt="Жалоба"><span class="count">${report}</span>`: '';
+		const reportHtml = report >= 1 ? `<img src="images/warning.png" alt="Жалоба"><span class="count">${report}</span>` : '';
 		html += `
             <div class="item">
                 <img src="${icon}"
@@ -82,7 +82,7 @@ function showWeaponsList(weapons) {
 
                 <div class="info">
                     <span class="rating-item">
-                        <img src="images/approved.png" alt="Рейтинг">
+                        <img src="images/plays.png" alt="Рейтинг">
                         <span class="count">${rating}</span>
                     </span>
                     <span class="rating-item">
@@ -183,9 +183,9 @@ function handleSelectChange(select) {
 		if (!url) { select.value = "action"; return; }
 
 		if (modType === "weapon") {
-			downloadAndSaveJSON(url, 'editedWeapon', window.location.origin + "/mods/weapon-editor/");
+			downloadAndSaveJSON(url, 'editedWeapon', window.location.href.replace('/list', ''));
 		} else if (modType === "cartridge") {
-			downloadAndSaveJSON(url, 'editedWeapon', window.location.origin + "/mods/weapon-editor/ammo");
+			downloadAndSaveJSON(url, 'editedWeapon', window.location.href.replace('/list', '/ammo'));
 		} else {
 			alert("Error #811: " + modType);
 		}
@@ -219,22 +219,22 @@ function handleSelectChange(select) {
 				id: modName
 			})
 		}).then(response => {
-				if (!response.ok) {
-					return response.json().then(data => {
-						throw new Error(data.message || 'Ошибка сервера');
-					});
-				}
-				return response.json();
-			}).then(data => {
-				if (data.success) {
-					if (image) image.src = 'images/removed.png';
-					document.getElementById("status" + modName).innerHTML = '❌';
-					document.getElementById("actions" + modName).style.display = 'none';
-				} else {
-					if (image && lastImage) image.src = lastImage;
-					alert("Ошибка: " + (data.message || 'Неизвестная ошибка'));
-				}
-			})
+			if (!response.ok) {
+				return response.json().then(data => {
+					throw new Error(data.message || 'Ошибка сервера');
+				});
+			}
+			return response.json();
+		}).then(data => {
+			if (data.success) {
+				if (image) image.src = 'images/removed.png';
+				document.getElementById("status" + modName).innerHTML = '❌';
+				document.getElementById("actions" + modName).style.display = 'none';
+			} else {
+				if (image && lastImage) image.src = lastImage;
+				alert("Ошибка: " + (data.message || 'Неизвестная ошибка'));
+			}
+		})
 			.catch(error => {
 				if (image && lastImage) image.src = lastImage;
 				alert("Ошибка браузера:\n" + error.message);
