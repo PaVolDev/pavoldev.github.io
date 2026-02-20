@@ -120,6 +120,11 @@ ul {
 	scrollbar-color: var(--accent) var(--panel);
 }
 
+.window {
+	max-width: 620px;
+	margin: auto;
+}
+
 .hierarchy {
 	scrollbar-width: thin;
 	scrollbar-color: var(--accent) var(--panel);
@@ -298,12 +303,12 @@ ul {
 }
 
 
-#saveButton {
+.sendButton {
 	background: rgb(106, 255, 142);
 	width: 100%;
 }
 
-#saveButton:hover {
+.sendButton:hover {
 	background: rgb(125, 181, 255);
 }
 
