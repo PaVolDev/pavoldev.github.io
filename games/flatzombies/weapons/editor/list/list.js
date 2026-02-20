@@ -141,10 +141,14 @@ function escapeHtml(str) {
 
 //url - Путь к вашему файлу - 'https://api.example.com/data.json'
 //Объем localStorage ограничен примерно 5 МБ. Если ваш JSON-файл больше (например, огромный список товаров), используйте IndexedDB.
-async function downloadAndSaveJSON(url, localStorageKey, openURL) {
+async function downloadAndSaveJSON(modName, url, localStorageKey, openURL) {
 	try {
+		const image = document.getElementById("image" + modName);
+		const lastImage = image ? image.src : null;
+		if (image) image.src = 'images/loading.png';
 		// 1. Скачиваем файл
 		const response = await fetch(url);
+		if (image && lastImage) image.src = lastImage;
 		if (!response.ok) {
 			console.error(`Ошибка загрузки: ${response.status}`);
 			alert(`Ошибка загрузки: ${response.status}`);
@@ -183,9 +187,9 @@ function handleSelectChange(select) {
 		if (!url) { select.value = "action"; return; }
 
 		if (modType === "weapon") {
-			downloadAndSaveJSON(url, 'editedWeapon', window.location.href.replace('/list', ''));
+			downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', ''));
 		} else if (modType === "cartridge") {
-			downloadAndSaveJSON(url, 'editedWeapon', window.location.href.replace('/list', '/ammo'));
+			downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', '/ammo'));
 		} else {
 			alert("Error #811: " + modType);
 		}
