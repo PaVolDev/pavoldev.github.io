@@ -233,7 +233,7 @@ function handleSelectChange(select) {
 		}
 
 	} else if (selectedValue === "remove") {
-		const confirmed = confirm("Удалить мод '" + modName + "'?!");
+		const confirmed = confirm(modName + ' - ' + tr("Удалить мод?"));
 		if (!confirmed) {
 			select.value = "action";
 			return;
