@@ -17,12 +17,9 @@
 	<!-- Центральная панель -->
 	<div class="panel window" id="centerPanel">
 		<div class="titlePanel " id="startCenterTitle" style="text-align: center;">Список модов</div>
-		<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading" class="hidden">
+		<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 		<div style="width: 40%; margin: auto;" id="loginpanel">
 			<div id="authError" class="hidden" style="color: rgb(231, 76, 60); text-align: center; margin-bottom: 10px; font-size: 14px;">⚠ Ошибка соединения с сервером</div>
-			<div id="authorizationStatus" style="display: none; width: 100%; text-align: center;">Авторизация...<br>
-				<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
-			</div>
 			<form method="POST" class="save" id="loginblock">
 				<input type="hidden" name="action" value="login">
 				<input type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
@@ -55,7 +52,7 @@
 	<!-- Подключаем скрипты -->
 	<meta name="langdirectory" content="lang/" />
 	<script src="../translation.js"></script>
-	<script src="../lang/ru.js"></script>
+	<script src="lang/ru.js"></script>
 	<script src="list.js"></script>
 	<!-- Подключаем данные -->
 
