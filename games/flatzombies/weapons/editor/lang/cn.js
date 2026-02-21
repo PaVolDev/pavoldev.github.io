@@ -22,6 +22,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1018: "请构思并输入您武器的唯一标识符",
 	1019: "选择武器",
 	1020: "选择要用作模板的武器，作为基础父级 Unity 预制件.",
+	1085: "我的模组",
 	1086: "导入...",
 	1087: "打开模组文件",
 	1088: "导出...",
@@ -431,6 +432,5 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	4094: "Axe - 斧头 (id: axe)",
 	4095: "Bow - 弓 (id: bow)",
 	4096: "Shovel - 铲 (id: lopata)",
-	4097: "Русский",
 	4098: "从其他窗口拖拽文件到这里",
 });
