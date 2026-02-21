@@ -10,5 +10,6 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1012: "编辑",
 	1013: "文件",
 	1014: "删除",
-	1015: "操作…"
+	1015: "操作…",
+	1016: "删除模组?"
 });
