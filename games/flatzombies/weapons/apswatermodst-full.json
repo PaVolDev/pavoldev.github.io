@@ -47,7 +47,6 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.359, 0.429)",
-    "cartridgeList": [],
     "storeInfo.silencerGroup": "",
     "weapon.magazine.Transform.localPosition": "(0.510, -0.223, 0)",
     "weapon.magazine.gameObject.SetActive": true,
@@ -107,6 +106,7 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 8,
+    "cartridgeList": [],
+    "version": 9,
     "targetVersion": 208
 }
