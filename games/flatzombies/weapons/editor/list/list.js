@@ -1,10 +1,10 @@
 const server = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvdXNlci1saXN0LnBocA';
 
 // ─── Автовход при загрузке страницы ──────────────────────────────
+const token = localStorage.getItem('session');
 document.addEventListener('DOMContentLoaded', async function () {
-	const token = localStorage.getItem('session');
-	if (!token) return; // Нет токена — показываем форму
-	document.getElementById('authorizationStatus').classList.remove('hidden');
+	if (!token) { hideLoadingNewWeapon(); return; }// Нет токена — показываем форму
+	showLoadingNewWeapon();
 	try {
 		const response = await fetch(atob(server), {
 			method: 'POST',
@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 		} else {
 			// Токен не валиден — чистим localStorage, показываем форму
 			localStorage.removeItem('session');
-			document.getElementById('authorizationStatus').classList.add('hidden');
 			console.warn('Автовход не удался: ' + data.message);
 		}
+		hideLoadingNewWeapon();
 	} catch (error) {
 		console.error('Автовход не удался:', error);
-		document.getElementById('authorizationStatus').classList.add('hidden');
+		hideLoadingNewWeapon();
 	}
 });
 
@@ -43,7 +43,6 @@ document.getElementById('loginblock').addEventListener('submit', async function 
 async function doLogin(login, password) {
 	document.getElementById('loginblock').classList.add('hidden');
 	document.getElementById('authError').classList.add('hidden');
-	document.getElementById('authorizationStatus').classList.remove('hidden');
 	showLoadingNewWeapon();
 	try {
 		const response = await fetch(atob(server), {
@@ -57,8 +56,7 @@ async function doLogin(login, password) {
 		});
 		const data = await response.json();
 		if (data.success) {
-			currentUser.login = login;
-			currentUser.password = password;
+			token = data.token;
 			localStorage.setItem('session', data.token);// Сохраняем токен в localStorage
 			showWeaponsList(data.weapons);
 			document.getElementById('loginActions').classList.remove('hidden');
@@ -89,9 +87,6 @@ async function logout() {
 			token: token
 		})
 	});
-
-	currentUser.login = null;
-	currentUser.password = null;
 	localStorage.removeItem('session');
 	document.getElementById('loginblock').classList.remove('hidden');
 	document.getElementById('loginActions').classList.add('hidden');
@@ -99,13 +94,6 @@ async function logout() {
 }
 
 
-
-
-// Храним в памяти после успешного входа
-let currentUser = {
-	login: null,
-	password: null
-};
 
 function showLoadingNewWeapon() {
 	document.getElementById("loading").classList.remove('hidden');
@@ -115,15 +103,11 @@ function hideLoadingNewWeapon() {
 }
 
 function showWeaponsList(weapons) {
-	document.getElementById('authorizationStatus').classList.add('hidden');
-
 	const list = document.getElementById('list');
-
 	if (!weapons || weapons.length === 0) {
 		list.innerHTML = '<p style="text-align:center; color:#aaa;">Файлы не найдены</p>';
 		return;
 	}
-
 	let html = '<div class="gallery">';
 	weapons.forEach(weapon => {
 		const id = weapon.id;
@@ -133,18 +117,16 @@ function showWeaponsList(weapons) {
 		const likes = weapon.likes ?? 0;
 		const dislikes = weapon.dislikes ?? 0;
 		const rating = weapon.raiting ?? 0;
-		const report = weapon.report ?? 0;
-
-		const reportHtml = report >= 1 ? `<img src="images/warning.png" alt="Жалоба"><span class="count">${report}</span>` : '';
+		const state = weapon.state == 'publish' ? '✅' : '📵';
 		html += `
             <div class="item">
                 <img src="${icon}" alt="Иконка ${escapeHtml(String(id))}" id="image${escapeHtml(String(id))}" class="preview">
 				<div class="actions" id="actions${id}">
                     <select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
-                        <option value="action">Действия...</option>
-                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 Файл</option>
-                        <option value="edit"     data-url="${escapeHtml(fileUrl)}">📝 Редактировать</option>
-                        <option value="remove">❌ Удалить</option>
+                        <option value="action">${tr('Действия...')}</option>
+                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 ${tr('Файл')}</option>
+                        <option value="edit"     data-url="${escapeHtml(fileUrl)}">📝 ${tr('Редактировать')}</option>
+                        <option value="remove">❌ ${tr('Удалить')}</option>
                     </select>
                 </div>
                 <div class="filename">${escapeHtml(String(id))}</div>
@@ -159,7 +141,7 @@ function showWeaponsList(weapons) {
                         <span class="count">${likes}</span>
                     </span>
                     <span class="rating-item">
-                        ${reportHtml}
+                        ${state}
                     </span>
                     <span class="rating-item">
                         <img src="images/dislike.png" alt="Дизлайк">
@@ -179,7 +161,7 @@ function showWeaponsList(weapons) {
 
 function showError(message) {
 	// Скрываем анимацию, возвращаем форму
-	document.getElementById('authorizationStatus').classList.add('hidden');
+	hideLoadingNewWeapon();
 	document.getElementById('loginblock').classList.remove('hidden');
 	document.getElementById('loginActions').classList.add('hidden');
 	// Показываем блок ошибки с текстом
@@ -257,8 +239,8 @@ function handleSelectChange(select) {
 			return;
 		}
 
-		// Проверяем что credentials есть в памяти
-		if (!currentUser.login || !currentUser.password) {
+		// Проверяем что token есть в памяти
+		if (!token) {
 			alert("Ошибка: данные авторизации потеряны. Перезагрузите страницу.");
 			select.value = "action";
 			return;
@@ -274,8 +256,7 @@ function handleSelectChange(select) {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				action: 'remove',
-				login: currentUser.login,
-				password: currentUser.password,
+				token: token,
 				id: modName
 			})
 		}).then(response => {
