@@ -254,7 +254,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 			let screenY = (h / 2) + worldPos.y * viewPPU;
 			convertedPoint.push({ name: o.name, rawX: screenX, rawY: screenY }); // Сохраняем "сырые" координаты до обрезки — позже скорректируем
 		}
-		console.log("renderSpritesToBase64: "+o.path);
+		console.log("renderSpritesToBase64: " + o.path);
 		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || (o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false)) return;
 		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore) || o.path.includes(ignore)) != -1) return;
 		const img = images[o.texture];
@@ -527,7 +527,7 @@ function trimTransparentEdges(base64, maxSize, step, padding, callback) {
 		const findEdge = (start, end, step, getCoord) => {
 			for (let i = start; i !== end; i += step) {
 				for (let j = 0; j < (getCoord === 'x' ? height : width); j++) {
-					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) !== 0) return i;
+					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) > 10) return i;
 				}
 			}
 			return getCoord === 'x' ? width : height;
@@ -536,6 +536,7 @@ function trimTransparentEdges(base64, maxSize, step, padding, callback) {
 		let bottom = findEdge(height - 1, -1, -step, 'y') + 1;
 		let left = findEdge(0, width, step, 'x');
 		let right = findEdge(width - 1, -1, -step, 'x') + 1;
+		console.log("findEdge: top: " + top + "; bottom: " + bottom + "; left: " + left + "; right: " + right);
 		if (left >= right || top >= bottom) return callback(base64);
 		//ДОБАВЛЯЕМ PADDING
 		top = Math.max(0, top - padding);
