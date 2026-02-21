@@ -22,6 +22,7 @@ window.translate = Object.assign(window.translate, {
 	1018: "Crie e informe o identificador da sua arma",
 	1019: "Selecione uma arma",
 	1020: "Selecione a arma que será usada como template, como Prefab pai base do Unity",
+	1085: "Meus mods",
 	1086: "Importar...",
 	1087: "Abrir arquivo com o mod",
 	1088: "Exportar...",
