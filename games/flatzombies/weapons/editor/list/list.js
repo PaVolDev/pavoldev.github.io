@@ -1,7 +1,7 @@
 const server = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvdXNlci1saXN0LnBocA';
 
 // ─── Автовход при загрузке страницы ──────────────────────────────
-const token = localStorage.getItem('session');
+let token = localStorage.getItem('session');
 document.addEventListener('DOMContentLoaded', async function () {
 	if (!token) { hideLoadingNewWeapon(); return; }// Нет токена — показываем форму
 	showLoadingNewWeapon();
