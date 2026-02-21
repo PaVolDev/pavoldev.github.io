@@ -10,5 +10,6 @@ window.translate = Object.assign(window.translate, {
 	1012: "Edit",
 	1013: "File",
 	1014: "Delete",
-	1015: "Actions..."
+	1015: "Actions...",
+	1016: "Delete mod?"
 });
