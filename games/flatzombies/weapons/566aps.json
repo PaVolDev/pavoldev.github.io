@@ -1,0 +1,43 @@
+{
+    "id": "566aps",
+    "idTemplate": "5.56x45",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANkAAAAUCAYAAAAAyJgcAAAECUlEQVR4AeyaX0xbVRzHf7/TAiuMTPfgw/5k+GIWE582jT5RjLq0w5gYaXxQ194S0TloMZIlAnpRmmWOQAvzzwgtZXMPVh80utvhg2UvupnsSRONRsGIGp/cTLeRlZ6f51iaFJaRFhIY3N/J/eaX+zvn/jmfm+895/4RqfFIKJWIkBYslNKczttZyVj39MRIz5upU0e3LeDhwAQqIiCAyCxu8f5AV0arNFess21EbCAC8/pc1UxyuHv87MnuPbZlwR1fEQEBgHdBsSC6Qas0V6yze0RQnNCfk6jM1pM5PdzbCFyYQBkElMnKaMVNlhJwS6ApPZVMJfoz5WjpDnjdPgTYZKu51moqCaBG/zJkRQ2yudar/9a5mHEpPWScXiorFnzNGgpE09FgmzVkeNJR/4PWcOvD1nCg8bPjRn3m3cNbdTw/GNyuYyrV4kiZLdVQYWGTVQiMm284Ah4keIgQnl8q9e7hhHo8ChHQB4BgEYhvQcpvQOJUVQ38eyM394OKH0lBHzproLfuz/pjW7fXu7+Ite7TRtSmnBzx7/1yxNiRMU3n7ciwyW5HhvNMAGCXguDRQoAuLZAwKUh+ChKPEoi++bww8nnwXLv7973KePfr0U+1X7SwyRbh4BUmUBaBReYjgDFB9J0y3qQa/VJWzOj9fPCFncU9scmKJDgygdUTKJiP4C2HcM5a0cD0uZPBPWyy1YOtcA/c3D4EsAHnZZJNZp8rzj1dWwKz6sXKBEgxyCZbW/B8tM1NYFZ17y8Q4pE8ykezO7PBe+oc59lkigovTGCFBGbV54EzQPgOIj6mzeWq2nKfp33s0uV/Gn7x+T7O728bzbHJVkiXN7MlAT1SpdU0MKbeJu6TJJ7IA5j5WkefuHnzojLXH02vvJdFBDJNUxYJrZ/JimfAkQncOQQKJgJIq1MqiKgHgJ4lwEaHQz5OTnw5h45jNdWun+qu7vr5YDgx3fzi6I0DXWeuaXOp7W5Z2GS3IOHEJiCgzaJVMIo2DcHbgHBWjUITSjFAVB+X8SWJYj8CtErEB0DIFlU3IAmO5F3OZ1zb5NOualcsuyP7Se2V3V8faE/+ePBI/LenwmN/6xGryTTntbG0lmPGJluOznJ1BFfUHS4JZfy3qNt4wwlkrRmD3Yq1llfFgjoTb3hDiee8neN+pbA3FB/whOOnmkNjlz3hRLw5FP/e25G8qOq+au5M/Ppk2+j1pkByTpvJp56ttKFghYVNVik4ohl15zJrt+Qa/B2RgM94/UI5qvQw3H7zEBAEMAMLhZDc/6skt1DFAWAKifz+UOTeQ+39fb6241eBy8YgsM5nKRDQr6Y9U1qHXz1xQQtLcjpvc6kv9uj2d/Q3HQpFJtb5evHhNyCB/wAAAP//giXO0AAAAAZJREFUAwBPPEqnGkCuNQAAAABJRU5ErkJggg==",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANkAAAAUCAYAAAAAyJgcAAAECUlEQVR4AeyaX0xbVRzHf7/TAiuMTPfgw/5k+GIWE582jT5RjLq0w5gYaXxQ194S0TloMZIlAnpRmmWOQAvzzwgtZXMPVh80utvhg2UvupnsSRONRsGIGp/cTLeRlZ6f51iaFJaRFhIY3N/J/eaX+zvn/jmfm+895/4RqfFIKJWIkBYslNKczttZyVj39MRIz5upU0e3LeDhwAQqIiCAyCxu8f5AV0arNFess21EbCAC8/pc1UxyuHv87MnuPbZlwR1fEQEBgHdBsSC6Qas0V6yze0RQnNCfk6jM1pM5PdzbCFyYQBkElMnKaMVNlhJwS6ApPZVMJfoz5WjpDnjdPgTYZKu51moqCaBG/zJkRQ2yudar/9a5mHEpPWScXiorFnzNGgpE09FgmzVkeNJR/4PWcOvD1nCg8bPjRn3m3cNbdTw/GNyuYyrV4kiZLdVQYWGTVQiMm284Ah4keIgQnl8q9e7hhHo8ChHQB4BgEYhvQcpvQOJUVQ38eyM394OKH0lBHzproLfuz/pjW7fXu7+Ite7TRtSmnBzx7/1yxNiRMU3n7ciwyW5HhvNMAGCXguDRQoAuLZAwKUh+ChKPEoi++bww8nnwXLv7973KePfr0U+1X7SwyRbh4BUmUBaBReYjgDFB9J0y3qQa/VJWzOj9fPCFncU9scmKJDgygdUTKJiP4C2HcM5a0cD0uZPBPWyy1YOtcA/c3D4EsAHnZZJNZp8rzj1dWwKz6sXKBEgxyCZbW/B8tM1NYFZ17y8Q4pE8ykezO7PBe+oc59lkigovTGCFBGbV54EzQPgOIj6mzeWq2nKfp33s0uV/Gn7x+T7O728bzbHJVkiXN7MlAT1SpdU0MKbeJu6TJJ7IA5j5WkefuHnzojLXH02vvJdFBDJNUxYJrZ/JimfAkQncOQQKJgJIq1MqiKgHgJ4lwEaHQz5OTnw5h45jNdWun+qu7vr5YDgx3fzi6I0DXWeuaXOp7W5Z2GS3IOHEJiCgzaJVMIo2DcHbgHBWjUITSjFAVB+X8SWJYj8CtErEB0DIFlU3IAmO5F3OZ1zb5NOualcsuyP7Se2V3V8faE/+ePBI/LenwmN/6xGryTTntbG0lmPGJluOznJ1BFfUHS4JZfy3qNt4wwlkrRmD3Yq1llfFgjoTb3hDiee8neN+pbA3FB/whOOnmkNjlz3hRLw5FP/e25G8qOq+au5M/Ppk2+j1pkByTpvJp56ttKFghYVNVik4ohl15zJrt+Qa/B2RgM94/UI5qvQw3H7zEBAEMAMLhZDc/6skt1DFAWAKifz+UOTeQ+39fb6241eBy8YgsM5nKRDQr6Y9U1qHXz1xQQtLcjpvc6kv9uj2d/Q3HQpFJtb5evHhNyCB/wAAAP//giXO0AAAAAZJREFUAwBPPEqnGkCuNQAAAABJRU5ErkJggg==",
+    "caliberName": "5x66",
+    "uiName": "5.66",
+    "author": "Statrec",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAIAAACjN0L0AAAAK0lEQVQYGWNcksxACWAxMjKiRD/j/7ddlOhn+XvuHCX6GSn0PxMllgP1AgAyLwfBLz6rPAAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 4,
+    "distance": 24,
+    "impulse": 20,
+    "stopPower": 0.05,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "skin",
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 1,
+    "targetVersion": 208
+}
