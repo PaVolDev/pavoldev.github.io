@@ -301,7 +301,17 @@ ul {
 	width: 100%;
 	max-width: 10em;
 }
+.jsonFileButton:hover {
+	background: rgb(255, 209, 109);
+}
 
+.openURL {
+	background: rgb(165, 165, 165);
+	width: 100%;
+	max-width: 10em;
+}
+.openURL:hover {
+	background: rgb(246, 246, 246);}
 
 .sendButton {
 	background: rgb(106, 255, 142);
@@ -340,9 +350,6 @@ input.num {
 	grid-column-gap: 1px;
 }
 
-.jsonFileButton:hover {
-	background: rgb(255, 209, 109);
-}
 
 .propertyBlock {
 	display: grid;
