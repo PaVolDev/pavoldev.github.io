@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
+window.translate = Object.assign(window.translate, {
 	1000: "Add new parameter",
 	1001: "Close",
 	1002: "Object property path",
@@ -22,6 +22,7 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1018: "Enter a unique identifier for your weapon",
 	1019: "Select weapon",
 	1020: "Select the weapon to be used as a template, as the base parent Unity Prefab",
+	1085: "My mods",
 	1086: "Import...",
 	1087: "Open mod file",
 	1088: "Export...",
@@ -431,6 +432,5 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	4094: "Axe - Топор (id: axe)",
 	4095: "Bow - Лук (id: bow)",
 	4096: "Shovel - Лопата (id: lopata)",
-	4097: "Русский",
 	4098: "Drag a file here from another window",
 });
