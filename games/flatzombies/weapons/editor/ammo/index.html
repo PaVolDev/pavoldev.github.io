@@ -147,7 +147,8 @@
 			<div class="buttonPanel hidden" id="buttonPanel">
 				<div>
 					<button id="importJsonFile" class="resultButton jsonFileButton" data-tooltip="Открыть файл с модом">Импорт...</button><br>
-					<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button>
+					<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button><br>
+					<a href="../list/" target="_blank"><button id="importJsonFile" class="resultButton openURL">Мои моды</button></a>
 				</div>
 				<div>
 					<div class="savePanel">
@@ -155,7 +156,7 @@
 							<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
 						</div>
 						<form method="GET" class="save" id="save">
-							<button type="submit" id="saveButton" class="resultButton" data-tooltip="Сохранить на общий сервер">Отправить</button>
+							<button type="submit" id="saveButton" class="resultButton sendButton" data-tooltip="Сохранить на общий сервер">Отправить</button>
 							<input type="hidden" name="action" value="login">
 							<input data-tooltip="Логин и пароль для вашего мода.<br>Пароль нужен, чтобы только вы могли редактировать свои моды, чтобы никакой PROгебатор-228из5Б не мог изменить и сломать ваше творение" type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
 							<input data-tooltip="Браузер должен будет предложить сохранить пароль.<br>Сохраните пароль и используйте его при повторном запуске страницы" type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
@@ -169,7 +170,7 @@
 			</div>
 			<span style="position: relative; width: 100%; height: 100%;">
 				<select id="lang" class="selectLanguage panelInput" onchange="switchLanguage(this);" style="position: absolute; bottom: 0px; max-width: 144px;">
-					<option value="pt-BR">Português Brasileiro</option>
+					<option value="pt">Português (Brasil)</option>
 					<option value="en">English</option>
 					<option value="ru">Русский</option>
 					<option value="cn">简体中文</option>
@@ -256,6 +257,7 @@
 			<div class="heading" style="position: relative;">
 				<div class="h2">Правила для мододелов</div>
 				<select class="selectLanguage" style="position: absolute; right: 0;" onchange="switchLanguage(this);">
+					<option value="pt">Português (Brasil)</option>
 					<option value="en">English</option>
 					<option value="ru">Русский</option>
 					<option value="cn">简体中文</option>
