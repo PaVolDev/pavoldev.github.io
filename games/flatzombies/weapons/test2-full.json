@@ -77,6 +77,6 @@
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20,
-    "version": 5,
+    "version": 6,
     "targetVersion": 208
 }
