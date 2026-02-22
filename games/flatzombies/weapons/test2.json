@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(0.680, 0.08, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.165, 0.603, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.078, 0.009, 0)",
-    "weapon.WeaponHandPoints.weaponType": "mr27",
+    "weapon.WeaponHandPoints.weaponType": "",
     "storeInfo.author": "UAC",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
@@ -36,7 +36,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.450, 0.400)",
-    "storeInfo.silencerGroup": "mr27",
+    "storeInfo.silencerGroup": "sniper",
     "weapon.WeaponSilencerMod.localPoint": "(0.983, 0.064, 0)",
     "weapon.laserPosition": "(1.350, 0.023, 0)",
     "weapon.gunFlash.Transform.localPosition": "(1.363, 0.25, 0)",
@@ -73,6 +73,6 @@
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20,
-    "version": 4,
+    "version": 5,
     "targetVersion": 208
 }
