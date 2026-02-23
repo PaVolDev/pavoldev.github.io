@@ -36,7 +36,6 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 109,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.306, 0.400)",
-    "storeInfo.silencerGroup": "",
     "weapon.boltRender.Transform.localPosition": "(-0.316, 0.295, 0)",
     "weapon.boltRender.gameObject.SetActive": true,
     "weapon.boltRender.SpriteRenderer.enabled": true,
@@ -71,6 +70,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 23,
+    "version": 24,
     "targetVersion": 208
 }
