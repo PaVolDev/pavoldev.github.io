@@ -3716,7 +3716,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.627, -0.267, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.234, -0.157, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.894, 0.066, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-0.986, 0.386, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-0.800, 0.22, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.072, -0.064, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
     "storeInfo.author": "StatRec",
@@ -3785,6 +3785,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 15,
+    "version": 16,
     "targetVersion": 208
 }
