@@ -70,7 +70,7 @@
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": "7",
     "weapon.recoilMax": "16",
-    "weapon.recoilDecrease": "24",
+    "weapon.recoilDecrease": "20",
     "weapon.bolt": "(0.301, 0.16, 0)",
     "weapon.flashlight": "(0.253, 0.118, 0)",
     "weapon.automat": false,
@@ -78,6 +78,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 8,
+    "version": 9,
     "targetVersion": 208
 }
