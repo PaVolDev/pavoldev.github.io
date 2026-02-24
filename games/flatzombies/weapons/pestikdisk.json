@@ -7,17 +7,22 @@
     "caliberName": "disk",
     "uiName": "disk",
     "arrowSample.arrowRender.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAADCAYAAAA6Lue6AAAAIklEQVR4AdzPAQ0AAAzCsAd1twhmQQcsmYBCfLePG2gCEQAAAP//DHWimwAAAAZJREFUAwB5mHlhlx3+QQAAAABJRU5ErkJggg==",
+    "author": "",
+    "authorURL": "",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "50",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": "0.1",
+    "damage": "1",
     "distance": 4,
     "impulse": 25,
     "stopPower": 0.6,
-    "noiseVolume": 1,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
@@ -56,5 +61,7 @@
     "arrowSample.arrowRender.SpriteRenderer.enabled": true,
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
     "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "31",
-    "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)"
+    "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
+    "version": 1,
+    "targetVersion": 208
 }
