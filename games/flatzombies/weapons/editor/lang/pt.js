@@ -73,7 +73,7 @@ window.translate = Object.assign(window.translate, {
 	1510: "❌ Conteúdo 18+ é proibido",
 	1511: "❌ Conteúdo brainrot degradante é proibido",
 	1512: "❌ Humor de banheiro é proibido",
-	1513: "❌ Pixelart, linhas pretas e bordas tremidas nas formas são proibidos",
+	1513: "❌ Pixelart, gradiente, desfoque, linhas pretas e bordas tremidas nas formas são proibidos",
 	1514: "❌ Conteúdo que viole a legislação do seu país é proibido",
 	1515: "❌ É proibido criar armas com características acima do protótipo real",
 
