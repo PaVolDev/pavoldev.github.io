@@ -226,7 +226,7 @@ function syncParamsToScene() {
 		const [lx, ly] = parseVector(localPosStr);
 		const [px, py] = parseVector(pivotStr);
 		const angle = convertTo180(parseFloat(angleStr) || 0);
-		console.log(param.fieldPath + "/parentName: " + parentName);
+		//console.log(param.fieldPath + "/parentName: " + parentName);
 		sceneObjects.push({
 			name: uniqueName,
 			parent: parentName,
@@ -274,12 +274,10 @@ function syncParamsToScene() {
 		document.getElementById("rightPanel").classList.add('hidden')
 	}
 	// Перезагрузка кэша с изображениями
-	if (typeof preloadImages === 'function') {
-		preloadImages();
-		refreshHierarchy();
-		renderScene();
-		selectObject(selectedObject);
-	}
+	updateImageCache();
+	refreshHierarchy();
+	renderScene();
+	selectObject(selectedObject);
 }
 
 //Найти угол, который связан с координатами для объекта на сцене
@@ -555,15 +553,15 @@ function updateSpritePPU(spriteParam, millimeters) {
 	syncParamsToScene();
 }
 
-/* function getImageWidthFromBase64(base64String) {
+function getImageFromBase64(base64String) {
 	return new Promise((resolve, reject) => {
 		const img = new Image();
 		img.onload = () => {
-			resolve(img.naturalWidth);
+			resolve(img);
 		};
 		img.src = base64String;
 	});
-} */
+}
 
 function forceRenderEditedParams(filter = '') {
 	const processed = new Set();
@@ -1398,7 +1396,7 @@ function getExportResultJSON() {
 	if (empty.length != 0) {
 		alert(tr("Некоторые параметры не указаны.\nМод может работать с ошибками.\nСледует указать параметры:\n") + empty.join("\n"));
 	}
-	json['selspriteupd'] = 'update';
+
 	standrtParams.forEach(key => {
 		if (selectedWeapon[key] && editedParams.find(p => p.startFieldPath == key)?.value === selectedWeapon[key]) {
 			json['selspriteupd'] = 'standrt';
