@@ -3,8 +3,16 @@ class SpriteScreenListener {
 	onSelect(spriteRender) { }
 	onRender(spriteRender) { }
 	onInactive(spriteRender) { }
+	onStartDrag(event, spriteRender) { }
+	onDrag(event, spriteRender) { }
+	onEndDrag(event, spriteRender) { }
 	onSyncSceneToParams(spriteRender) { }
 	onSyncParamsToScene(spriteRender) { }
+
+	onSceneStartDrag(event, selectedObject) { }
+	onSceneEndDrag(event, selectedObject) { }
+	onScenePivotPointEndDrag(event, selectedObject) { }
+	onScenePivotPointStartDrag(event, selectedObject) { }
 }
 
 //Обновлять fingerPoint при вращении объекта, который используется как точка с рендером пальцев от игрового персонажа
@@ -13,13 +21,44 @@ class SpriteScreenListener {
 class HandRenderListener extends SpriteScreenListener {
 	rifleX; rifleY; //Записать координаты смещения оружия от точки вращения кисти
 	riflePoint;
+	shiftKey;
 	constructor(rifleX, rifleY) {
 		super(); // Необходимо вызвать конструктор родительского класса
 		this.rifleX = rifleX; this.rifleY = rifleY;
+		this.shiftKey = false;
 	}
-	onSelect(spriteRender) {
 
+	onScenePivotPointEndDrag(selectedObject) {
+		const hand = sceneObjects.find(s => s.name == 'fingerRender');
+		hand.localPosition.x = 0;
+		hand.localPosition.y = 0;
 	}
+
+	onEndDrag(event, dragObject) {
+		const imageInfo = images["sprite"];
+		if (!imageInfo) return;
+		const pixelPerUnit = findValueByPath("weapon.SpriteRenderer.sprite.pixelPerUnit");
+		if (!pixelPerUnit) return;
+		const pivotPointParam = findByPath("weapon.SpriteRenderer.sprite.pivotPoint");
+		if (!pivotPointParam) return;
+		const pivotPoint = parseVector(pivotPointParam.value);
+		const distanceX = (dragObject.localPosition.x * pixelPerUnit) / imageInfo.naturalWidth;
+		const distanceY = (dragObject.localPosition.y * pixelPerUnit) / imageInfo.naturalHeight;
+		pivotPointParam.value = '(' + (pivotPoint[0] + distanceX).toFixed(2) + ', ' + (pivotPoint[1] - distanceY).toFixed(2) + ')';
+		//Двигать дочерние объекты в обратную сторону
+		if (!event.shiftKey) {
+			sceneObjects.forEach(child => {
+				if (child.parent == "sprite") { //Таким образом объекты на экране остаются на месте, когда мы двигаем опорную точку
+					child.localPosition.x = Math.round((child.localPosition.x - dragObject.localPosition.x) / 0.01) * 0.01;
+					child.localPosition.y = Math.round((child.localPosition.y - dragObject.localPosition.y) / 0.01) * 0.01;
+					syncSceneObjectToParams(child);
+				}
+			});
+		}
+		syncParamsToScene();
+		renderEditedParams();
+	}
+
 	onRender(spriteRender) { this.onSyncSceneToParams(spriteRender); }
 
 	//Копирование параметров ИЗ сцены
