@@ -46,14 +46,16 @@ function rotateVec(vec, deg) {
 	};
 }
 
-function preloadImages() {
-	const uniqueTextures = [...new Set(sceneObjects.map(o => o.texture))];
-	uniqueTextures.forEach(tex => {
-		if (!images[tex]) {
+
+const lastImageCache = {};
+function updateImageCache() {
+	sceneObjects.forEach(({ name, texture }) => {
+		if (lastImageCache[name] != texture) {
 			const img = new Image();
-			img.src = tex;
+			img.src = texture; // Используем путь из свойства texture
+			images[name] = img; // Записываем в объект под ключом name
+			lastImageCache[name] = texture;
 			img.onload = () => renderScene();
-			images[tex] = img;
 		}
 	});
 }
@@ -131,7 +133,7 @@ function renderScene() {
 	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
 	sortedObjects.forEach(o => {
 		if (!o.texture || o.enabled === false || o.isActive === false || o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false) return;
-		const img = images[o.texture];
+		const img = images[o.name];
 		if (!img || !img.complete || img.naturalWidth == 0) return;
 		const ppu = o.pixelPerUnit;
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
@@ -147,7 +149,7 @@ function renderScene() {
 
 	// 2. Рисуем обводку выбранного объекта ПОСЛЕ всех спрайтов → она будет сверху
 	if (selectedObject && selectedObject.parent) {
-		const img = images[selectedObject.texture];
+		const img = images[selectedObject.name];
 		if (img && img.complete) {
 			const ppu = selectedObject.pixelPerUnit;
 			const worldSize = { w: img.width / ppu, h: img.height / ppu };
@@ -257,7 +259,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 		console.log("renderSpritesToBase64: " + o.path);
 		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || (o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false)) return;
 		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore) || o.path.includes(ignore)) != -1) return;
-		const img = images[o.texture];
+		const img = images[o.name];
 		if (!img || !img.complete) return;
 		const ppu = o.pixelPerUnit || 100;
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
@@ -324,7 +326,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 	sortedObjects.forEach(o => {
 		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false) return;
 		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore)) != -1) return;
-		const img = images[o.texture];
+		const img = images[o.name];
 		if (!img || !img.complete) return;
 		const ppu = o.pixelPerUnit;
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
@@ -380,7 +382,7 @@ function getObjectAtPoint(wx, wy) {
 	lastMouseClickPoint.x = wx; lastMouseClickPoint.y = wy;
 	const sortedForHit = [...sceneObjects].sort((a, b) => (a.parent === "" ? 1 : 0) - (b.parent === "" ? 1 : 0) || b.sortingOrder - a.sortingOrder);
 	for (const o of sortedForHit) {
-		const img = images[o.texture];
+		const img = images[o.name];
 		if (!img || !img.complete) continue;
 		const ppu = o.pixelPerUnit;
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
@@ -486,15 +488,14 @@ document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) 
 	const file = fileEvent.target.files[0];
 	if (!file) return;
 	const reader = new FileReader();
-	reader.onload = e => {
-		const base64 = e.target.result;
+	reader.onload = event => {
+		const base64 = event.target.result;
 		sceneObjects[objectId].texture = base64;
 		// Обрезаем прозрачные края
 		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
 			propertyInputs.texture.value = trimmedBase64;
 			propertyInputs.texture.dispatchEvent(fileEvent);
-			console.log("fileEvent: " + fileEvent.type);
-			preloadImages(); //Перезагрузка кэша с изображениями
+			updateImageCache(); //Перезагрузка кэша с изображениями
 			renderScene();
 		});
 	};
@@ -570,8 +571,8 @@ function selectObject(obj) {
 	propertiesDiv.style.display = 'block';
 	// Обновляем значения полей
 	propertyInputs.name.innerHTML = obj.name || '';
-	propertyInputs.posX.value = parseFloat(obj.localPosition?.x).toFixed(3) || 0;
-	propertyInputs.posY.value = -parseFloat(obj.localPosition?.y).toFixed(3) || 0;
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 1000) / 1000;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 1000) / 1000;
 	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
@@ -611,22 +612,24 @@ function addObject() {
 		pivotPoint: { x: 0.5, y: 0.5 },
 		enabled: true
 	});
-	preloadImages();
+	updateImageCache();
 	refreshHierarchy();
 	renderScene();
 }
 
 
-canvas.addEventListener('mousedown', (e) => {
-	startMove(e.clientX, e.clientY, e.button == 1);
+canvas.addEventListener('mousedown', (event) => {
+	startMove(event, event.button == 1);
 });
-canvas.addEventListener('touchstart', (e) => {
-	e.preventDefault();
-	const touch = e.touches[0];
-	startMove(touch.clientX, touch.clientY, 2 <= e.touches.length);
+canvas.addEventListener('touchstart', (event) => {
+	event.preventDefault();
+	const touch = event.touches[0];
+	startMove(touch, 2 <= event.touches.length);
 }, { passive: false });
 
-function startMove(mouseX, mouseY, parentMove) {
+function startMove(event, parentMove) {
+	const mouseX = event.clientX;
+	const mouseY = event.clientY; 
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
@@ -659,7 +662,7 @@ function startMove(mouseX, mouseY, parentMove) {
 		dragStartWorldPos = getWorldPosition(pivotHitObject.name);
 		dragStartWorldAngle = getWorldAngle(pivotHitObject.name);
 		const o = dragObject;
-		const img = images[o.texture];
+		const img = images[o.name];
 		if (!img || !img.complete) {
 			isDraggingPivot = false;
 			return;
@@ -670,6 +673,9 @@ function startMove(mouseX, mouseY, parentMove) {
 		const offset = { x: -o.pivotPoint.x * worldSize.w, y: -(1 - o.pivotPoint.y) * worldSize.h };
 		const rotatedOffset = rotateVec(offset, -dragStartWorldAngle); // Since forward is rotate(worldAngle)
 		dragStartTopLeft = { x: dragStartWorldPos.x + rotatedOffset.x, y: dragStartWorldPos.y + rotatedOffset.y };
+		sceneObjects.forEach(child => {
+			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointStartDrag(event, selectedObject); }
+		});
 		return;
 	}
 
@@ -683,19 +689,27 @@ function startMove(mouseX, mouseY, parentMove) {
 		dragObject = hit;
 		dragStartMouseWorld = { x: wx, y: wy };
 		dragStartWorldPos = getWorldPosition(hit.name);
+		if (selectedObject) {
+			if (spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onStartDrag(event, selectedObject);
+			sceneObjects.forEach(child => {
+				if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onSceneStartDrag(event, selectedObject); }
+			});
+		}
 	}
 }
 
-canvas.addEventListener('mousemove', (e) => {
-	mouseMove(e.clientX, e.clientY, e.shiftKey);
+canvas.addEventListener('mousemove', (event) => {
+	mouseMove(event, event.shiftKey);
 });
-canvas.addEventListener('touchmove', (e) => {
-	e.preventDefault();
-	const touch = e.touches[0];
-	mouseMove(touch.clientX, touch.clientY);
+canvas.addEventListener('touchmove', (event) => {
+	event.preventDefault();
+	const touch = event.touches[0];
+	mouseMove(touch);
 }, { passive: false });
 
-function mouseMove(mouseX, mouseY, shiftKey) {
+function mouseMove(event, shiftKey = false) {
+	const mouseX = event.clientX;
+	const mouseY = event.clientY; 
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
@@ -717,8 +731,8 @@ function mouseMove(mouseX, mouseY, shiftKey) {
 			y: newWorldPos.y - parentPos.y
 		};
 		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
-		dragObject.localPosition.x = newLocalPos.x.toFixed(3);
-		dragObject.localPosition.y = newLocalPos.y.toFixed(3);
+		dragObject.localPosition.x = Math.round(newLocalPos.x * 1000) / 1000;
+		dragObject.localPosition.y = Math.round(newLocalPos.y * 1000) / 1000;
 		renderScene();
 	} else if (isDraggingPivot) {
 		const mouseDeltaX = wx - dragStartMouseWorld.x;
@@ -761,6 +775,7 @@ function mouseMove(mouseX, mouseY, shiftKey) {
 		o.localPosition.y = newLocalPos.y;
 
 		renderScene();
+		if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onDrag(event, selectedObject);
 	}
 
 };
@@ -769,13 +784,22 @@ function mouseMove(mouseX, mouseY, shiftKey) {
 canvas.addEventListener('mouseup', mouseUp);
 canvas.addEventListener('touchcancel', mouseUp, { passive: false });
 canvas.addEventListener('touchend', mouseUp, { passive: false });
-function mouseUp() {
+function mouseUp(event) {
 	if (isDragging) {
 		isDragging = false;
 		dragObject = null;
+		if (selectedObject) {
+			if (spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onEndDrag(event, selectedObject);
+			sceneObjects.forEach(child => {
+				if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onSceneEndDrag(event, selectedObject); }
+			});
+		}
 	} else if (isDraggingPivot) {
 		isDraggingPivot = false;
 		dragObject = null;
+		sceneObjects.forEach(child => {
+			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointEndDrag(event, selectedObject); }
+		});
 	}
 	if (selectedObject) {
 		if (selectedObject.parent == "") {
@@ -808,17 +832,17 @@ function getPinchDistance(touches) {
 	const dy = touches[0].clientY - touches[1].clientY;
 	return Math.sqrt(dx * dx + dy * dy);
 }
-function handleTouchStart(e) {
-	if (e.touches.length === 2) {
+function handleTouchStart(event) {
+	if (event.touches.length === 2) {
 		isPinching = true;
-		initialPinchDistance = getPinchDistance(e.touches);
-		e.preventDefault();
+		initialPinchDistance = getPinchDistance(event.touches);
+		event.preventDefault();
 	}
 }
-function handleTouchMove(e) {
-	if (isPinching && e.touches.length === 2) {
-		e.preventDefault();
-		const currentDistance = getPinchDistance(e.touches);
+function handleTouchMove(event) {
+	if (isPinching && event.touches.length === 2) {
+		event.preventDefault();
+		const currentDistance = getPinchDistance(event.touches);
 		if (initialPinchDistance && currentDistance) {
 			const scale = currentDistance / initialPinchDistance;// Вычисляем коэффициент масштабирования
 			const newViewPPU = viewPPU * scale;// Применяем как мультипликативный zoom (аналог wheel)
@@ -828,7 +852,7 @@ function handleTouchMove(e) {
 		}
 	}
 }
-function handleTouchEnd(e) {
+function handleTouchEnd(event) {
 	if (isPinching) {
 		isPinching = false;
 		initialPinchDistance = null;
@@ -836,6 +860,6 @@ function handleTouchEnd(e) {
 }
 
 // Initialize
-preloadImages();
+updateImageCache();
 refreshHierarchy();
 renderScene();
