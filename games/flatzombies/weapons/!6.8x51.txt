@@ -1,1 +1,1 @@
-sigfury;68x51polymer
+sigfury;68x51polymer;6.8x51
