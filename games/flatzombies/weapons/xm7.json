@@ -26,8 +26,8 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.306, -0.287, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.273, -0.129, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.906, 0.116, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-1.007, 0.184, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.008, 0.177, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.046, 0.03, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.046, 0.029, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
     "storeInfo.author": "findin",
     "storeInfo.authorURL": "https://t.me/findinflatzombies",
@@ -74,6 +74,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 5,
+    "version": 6,
     "targetVersion": 208
 }
