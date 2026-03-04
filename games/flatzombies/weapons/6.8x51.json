@@ -21,7 +21,7 @@
     "damage": 6,
     "distance": 24,
     "impulse": "25",
-    "stopPower": 0.1,
+    "stopPower": "0.8",
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 2,
@@ -47,12 +47,12 @@
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": 0.4,
+            "scaleThrough": "0",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 1,
+    "version": 3,
     "targetVersion": 208
 }
