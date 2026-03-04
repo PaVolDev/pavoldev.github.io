@@ -14,7 +14,7 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": 17,
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": 156,
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.370, 0.280)",
-    "weapon.back.Transform.localPosition": "(0.220, 0.237, 0)",
+    "weapon.back.Transform.localPosition": "(0.168, 0.248, 0)",
     "weapon.back.gameObject.SetActive": true,
     "weapon.back.SpriteRenderer.enabled": true,
     "weapon.back.Transform.localEulerAngles.z": 0,
@@ -46,7 +46,7 @@
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.990, 0.15, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "findin",
-    "storeInfo.authorURL": "https://t.me/f1ndin",
+    "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.SpriteRenderer.sortingOrder": 18,
@@ -104,6 +104,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.013, 0.044)",
     "weapon.WeaponHandPoints.fingerAngle": -7,
-    "version": 2,
+    "version": 3,
     "targetVersion": 208
 }
