@@ -62,7 +62,7 @@
     "cartridgeList": [],
     "storeInfo.silencerGroup": "rifle",
     "weapon.laserSight.Transform.localPosition": "(1.050, 0.17, 0)",
-    "weapon.laserSight.gameObject.SetActive": true,
+    "weapon.laserSight.gameObject.SetActive": false,
     "weapon.laserSight.SpriteRenderer.enabled": false,
     "weapon.laserSight.Transform.localEulerAngles.z": 0,
     "weapon.laserSight.SpriteRenderer.sortingOrder": 18,
@@ -112,6 +112,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.013, 0.044)",
     "weapon.WeaponHandPoints.fingerAngle": -7,
-    "version": 3,
+    "version": 4,
     "targetVersion": 208
 }
