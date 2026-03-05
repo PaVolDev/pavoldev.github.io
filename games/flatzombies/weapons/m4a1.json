@@ -106,7 +106,7 @@
     "weapon.gunFlash.Transform.localPosition": "(1.799, 0.236, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
-    "weapon.shotAnimations[0].animation": "fire",
+    "weapon.shotAnimations[0].animation": "LabelShotFire",
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
@@ -123,6 +123,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.006, 0.018)",
     "weapon.WeaponHandPoints.fingerAngle": -3,
-    "version": 1,
+    "version": 2,
     "targetVersion": 208
 }
