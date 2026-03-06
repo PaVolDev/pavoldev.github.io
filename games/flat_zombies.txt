@@ -1,3 +1,10 @@
+v2.0.9:
+• Increased difficulty of game modes;
+• Player can now only perform one action at a time: shoot or kick;
+• Zombies have additional animations while running;
+• Fixed various bugs;
+• Android 8.0+
+
 v2.0.8:
 • Mod support with new weapons;
 • Settings: option to increase brightness;
@@ -10,7 +17,6 @@ v2.0.8:
 • Shotgun: immediately begin reloading when the weapon is empty after firing;
 • Player/Audio/Bug: weapon sounds sometimes failed to play while walking;
 • Weapons: current ammo lists will be reset;
-APK: https://drive.google.com/file/d/1uW-xzeQYZHtKzUOyAK27md3SIQiBrYqx/view
 
 v2.0.7:
 • Weapons: M110 and MK48;
@@ -53,7 +59,6 @@ Full changes list:
 • Settings: option to hide control buttons;
 • Training/Interface: added zombie characteristics (health and attack power);
 • Modes: after death, 50% of the money will remain;
-APK: https://drive.google.com/file/d/1Tf3Y9MDrEJnoQfikz-u4CQpTQLmtEeJT/view
 
 v2.0.6-539:
 • Fixed a bug with Thai language;
@@ -66,7 +71,6 @@ v2.0.6:
 • Settings: list of default skins for player;
 • Settings: bloodstains quality option;
 • Android 6.0+
-APK: https://drive.google.com/file/d/1S4s_LHKqVP1NR4W9TsbL9FJA3YEYB3MZ/view?usp=drive_link
 
 v2.0.5:
 • Training mode: damage numbers for every bullet hit;
@@ -77,14 +81,12 @@ v2.0.5:
 • Changed sounds for AK74U, AK12, RPK16;
 • Changed gun fire texture;
 • 2.0.5-509/Training mode: option to disable damage on the screen;
-APK: https://drive.google.com/file/d/1MboF_gCEJ_OINyszlXwY7TYtjgvGEb-h/view?usp=drive_link
 
 v2.0.4:
 • Fixed zombies in defense game mode;
 • Fixed control buttons and some bugs in the interface.
 • Office/Interface/Bug: the text with weapons has always been displayed in only one language;
 • All weapons are unlocked from ads;
-APK: https://drive.google.com/file/d/14gjNjirUZiojpLd_e4dDrgWSEkCpzV9T/view?usp=drive_link
 
 v2.0.3:
 • Weapons: different types of cartridges for all rifles
