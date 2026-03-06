@@ -77,6 +77,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.141)",
     "weapon.WeaponHandPoints.fingerAngle": -22,
-    "version": 7,
+    "version": 8,
     "targetVersion": 208
 }
