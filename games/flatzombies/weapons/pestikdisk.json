@@ -6,7 +6,7 @@
     "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAADCAYAAAA6Lue6AAAAIklEQVR4AdzPAQ0AAAzCsAd1twhmQQcsmYBCfLePG2gCEQAAAP//DHWimwAAAAZJREFUAwB5mHlhlx3+QQAAAABJRU5ErkJggg==",
     "caliberName": "disk",
     "uiName": "disk",
-    "arrowSample.arrowRender.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAABCAYAAAAB3PQ6AAAAG0lEQVR4AZzDQREAAAABwRnpVKQsHe6xajzqAAAA///NIvl9AAAABklEQVQDAGd5JSnh8r+AAAAAAElFTkSuQmCC",
+    "arrowSample.arrowRender.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAABCAYAAAAW/mTzAAAAD0lEQVR4AWKaNdPjPzoGAAAA//9UUuOIAAAABklEQVQDAIAZDGXZoZ9xAAAAAElFTkSuQmCC",
     "author": "",
     "authorURL": "",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
@@ -39,7 +39,7 @@
             "stopBulletDamage": 0
         }
     ],
-    "angleScatter": 0,
+    "angleScatter": "0.87",
     "evenlySpread": 0,
     "timeTriggers": 0.6,
     "distHitArrow": 25,
@@ -62,6 +62,6 @@
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
     "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "31",
     "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "version": 3,
+    "version": 4,
     "targetVersion": 208
 }
