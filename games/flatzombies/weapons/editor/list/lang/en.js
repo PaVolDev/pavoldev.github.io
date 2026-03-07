@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, {
+window.translate = Object.assign(window.translate, { //English
 	1004: "Mod list",
 	1005: "Server connection error",
 	1006: "Signing in...",
@@ -11,5 +11,6 @@ window.translate = Object.assign(window.translate, {
 	1013: "File",
 	1014: "Delete",
 	1015: "Actions...",
-	1016: "Delete mod?"
+	1016: "Delete mod?",
+	1017: "Download file",
 });
