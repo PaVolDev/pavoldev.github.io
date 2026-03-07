@@ -124,7 +124,7 @@ function showWeaponsList(weapons) {
 				<div class="actions" id="actions${id}">
                     <select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
                         <option value="action">${tr('Действия...')}</option>
-                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 ${tr('Файл')}</option>
+                        <option value="download" data-url="${escapeHtml(fileUrl)}">📄 ${tr('Скачать файл')}</option>
                         <option value="edit"     data-url="${escapeHtml(fileUrl)}">📝 ${tr('Редактировать')}</option>
                         <option value="remove">❌ ${tr('Удалить')}</option>
                     </select>
