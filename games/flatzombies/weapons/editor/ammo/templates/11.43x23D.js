@@ -4,7 +4,7 @@ export default {
 "shellSkin.pixelPerUnit": "100",
 "id": "11.43x23D",
 "uiName": "11.43x23D",
-"caliberName": "45ACP",
+"caliberName": "11.43x23",
 "iconButtonSprite":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAAZCAYAAABq35PiAAACQ0lEQVRYCe2YTVLbQBCFu4WdSryxSUixo3yAVJEbYN+AG2BuYhbsOQGILacwN0iqvAenWLIwG0zQT/NamhlZZQuZnSwxrvG0ZqSp7s9veuThm8tzobTw43xOe92eXl0R0yjtru73y8N0YLy7fc/Ln92vbljYmStGy/YAxJGxR9sAQn2NY5lou7/bGaM5U3t9ERL85PwOCH3OwWDhSTJRyQPJPRX7QqBjZrmHW9dFrpWB0Oe8ooe3rV+EfWY+RIUC8lVjUWWUFaeMshu3YTzCsvnyrd2Hr0/L/oYvQekS0ftrowwNBnrovS6CCcyuXi+XTZRRKxgaPID8Dhahj0qqiGARJEwalTOWVQD7GFniDu2JhdBIZWRQuK9JFRByULLxVatWCXQ1PO1RKORDKdh+aYyOe9R15bYBMGzcBkrRFuvJoHYJ1Ib+0VZiHn3CcNTk+BOGgYEt2W9QzrASSP/c2SvbSsu7aAwM5E2fWjzG7jLjMLYMcm3tYWQQaKaRF4HQsdrmDIUgLe5DDaeIc0ZhuqdiOWjca0vxyNrbt6NTX648phwEQEmcb5QyVBGx0BlqWgyExikDh3t/8NoNRSgJQ8Msj02UUZsEChBzHOwMjB6ypk30GkSUKAMq0ZxRtFQyGOL239UJs6kraSmIHY8H0f8wd8LlnEUC+ZAyfnzvDTGpfk70bcxNVG1jkrjHdBGJ/C12FTB0uZQrwykCp0TJSrtWJLBHxZNXY6Rz8Gv4/G+aOLNjTnFwDkpQiXMwsu9XG+wmby63u/ioKEUhAAAAAElFTkSuQmCC",
 "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
 "iconButtonSprite.pixelPerUnit": "130",
