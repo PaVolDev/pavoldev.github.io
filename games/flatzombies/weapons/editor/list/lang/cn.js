@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
+window.translate = Object.assign(window.translate, { // 简体中文
 	1004: "模组列表",
 	1005: "连接服务器错误",
 	1006: "正在登录...",
@@ -11,5 +11,6 @@ window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
 	1013: "文件",
 	1014: "删除",
 	1015: "操作…",
-	1016: "删除模组?"
+	1016: "删除模组?",
+	1017: "下载文件",
 });
