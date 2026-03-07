@@ -1408,7 +1408,7 @@ function getExportResultJSON() {
 		const nextPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value).toString();
 		if (firstPoint === nextPoint && firstPoint != "0,0,0") {
 			alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
-			return null; //Останавливаем функцию
+			return false; //Останавливаем функцию
 		}
 	}
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
@@ -1457,9 +1457,9 @@ const saveState = document.getElementById('saveState');
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
-	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const json = getExportResultJSON();
 	if (!json) { return; }
+	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
 	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
 	json['lang'] = navigator.language;
 	json['login'] = document.getElementById('login').value;
