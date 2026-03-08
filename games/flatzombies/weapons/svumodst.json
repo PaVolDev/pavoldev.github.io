@@ -39,7 +39,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(-0.581, -0.123, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(-0.660, -0.173, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.522, 0.079, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-2.183, 0.98, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-2.675, 0.933, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.323, 0.088, 0)",
     "weapon.WeaponHandPoints.weaponType": "ak74u",
     "storeInfo.author": "StatRec",
@@ -84,7 +84,7 @@
     "weapon.automat": false,
     "weapon.fireRateInMinute": "380",
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.boltbox.Transform.localPosition": "(-0.615, 0.165, 0)",
     "weapon.boltbox.gameObject.SetActive": true,
@@ -100,6 +100,6 @@
     "weapon.zatvor.SpriteRenderer.sortingOrder": 16,
     "weapon.zatvor.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.zatvor.SpriteRenderer.sprite.pivotPoint": "(0.440, 0.450)",
-    "version": 23,
+    "version": 24,
     "targetVersion": 209
 }
