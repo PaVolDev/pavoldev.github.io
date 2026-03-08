@@ -11,7 +11,7 @@
     "weapon.boltrender.gameObject.SetActive": true,
     "weapon.boltrender.SpriteRenderer.enabled": true,
     "weapon.boltrender.Transform.localEulerAngles.z": 0,
-    "weapon.boltrender.SpriteRenderer.sortingOrder": 18,
+    "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": 128,
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.250, 0.450)",
     "weapon.addedComponents": "boltrender.SpriteRenderer",
@@ -96,6 +96,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.022, 0.167)",
     "weapon.WeaponHandPoints.fingerAngle": -26,
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
