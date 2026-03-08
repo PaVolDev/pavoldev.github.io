@@ -43,7 +43,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(-0.581, -0.123, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(-0.660, -0.173, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.522, 0.079, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-2.183, 0.98, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-2.675, 0.933, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.323, 0.088, 0)",
     "weapon.WeaponHandPoints.weaponType": "ak74u",
     "storeInfo.author": "StatRec",
@@ -89,7 +89,7 @@
     "weapon.automat": false,
     "weapon.fireRateInMinute": "380",
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.boltbox.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAAQCAYAAAACjcH6AAAAp0lEQVR4AeySQQrAIAwEbR7j0f8/RXyJJ1sjeAj10irdCltYqoEYnFEcv98QaDK892U2IYQS5nLW/l0ye9dbv76IJkMXDJ6AkSEiBzCuzt4lSzn1Z2Bk9CL/GAKUgeE+nEoZQyyYImVguA+nUsYQC6a4TEbO2THvGaj+ZTL0sMdhgyFAGQYHdkMZWP5mOmUYHNgNZWD5m+lNRkpJNDHGg/megbJXKxcAAAD//xhbY1IAAAAGSURBVAMAd/J0Pwv/xToAAAAASUVORK5CYII=",
     "weapon.boltbox.Transform.localPosition": "(-0.615, 0.165, 0)",
@@ -107,6 +107,6 @@
     "weapon.zatvor.SpriteRenderer.sortingOrder": 16,
     "weapon.zatvor.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.zatvor.SpriteRenderer.sprite.pivotPoint": "(0.440, 0.450)",
-    "version": 23,
+    "version": 24,
     "targetVersion": 209
 }
