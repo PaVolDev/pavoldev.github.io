@@ -8,7 +8,7 @@
     "uiName": "5.45x39 tehkrim",
     "author": "",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAIAAACjN0L0AAAAK0lEQVQYGWNcksxACWAxMjKiRD/j/7ddlOhn+XvuHCX6GSn0PxMllgP1AgAyLwfBLz6rPAAAAABJRU5ErkJggg==",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAYAAAAsVdWjAAAAAXNSR0IArs4c6QAAAKBJREFUKFN1UAEOg0AIo3fzXZrMZyzmnP7/CbIAB4dLJMZgpbQUW5sZJMX63Ep/GGhvEGJGGiaCs5mkY4Had+FSXwoIKSrYQoZOW2d9Guzfl4nL0v14M2qJQYhy3/Pn21wNc3GZybklEPZzZTvBz+8uhFyS86ygi9G3+Mxwj3auXJ7ISf0h8BFF2o3PNnOd6vAR2RmkjrxSloGrQQ/AQvgBH+M8Lr42QLcAAAAASUVORK5CYII=",
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "120",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
