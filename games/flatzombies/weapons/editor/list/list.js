@@ -117,7 +117,7 @@ function showWeaponsList(weapons) {
 		const likes = weapon.likes ?? 0;
 		const dislikes = weapon.dislikes ?? 0;
 		const rating = weapon.raiting ?? 0;
-		const state = weapon.state == 'publish' ? '✅' : '📵';
+		const status = weapon.status == 'publish' ? '✅' : '📵';
 		html += `
             <div class="item">
                 <img src="${icon}" alt="Иконка ${escapeHtml(String(id))}" id="image${escapeHtml(String(id))}" class="preview">
@@ -141,7 +141,7 @@ function showWeaponsList(weapons) {
                         <span class="count">${likes}</span>
                     </span>
                     <span class="rating-item">
-                        ${state}
+                        ${status}
                     </span>
                     <span class="rating-item">
                         <img src="images/dislike.png" alt="Дизлайк">
