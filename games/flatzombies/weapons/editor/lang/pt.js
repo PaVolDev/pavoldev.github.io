@@ -30,7 +30,7 @@ window.translate = Object.assign(window.translate, {
 	1090: "Salvando...",
 	1091: "Enviar",
 	1092: "Salvar no servidor compartilhado",
-	1093: "Login e senha do seu mod.<br>A senha é necessária para que só você possa editar seus mods, para que nenhum OGProHacker2000 consiga alterar e quebrar sua criação",
+	1093: "Crie um usuário e uma senha para seus mods.<br>A senha é necessária para que só você possa editar seus mods, para que nenhum OGProHacker2000 consiga alterar e quebrar sua criação",
 	1094: "Login",
 	1095: "O navegador deve oferecer salvar a senha.<br>Salve a senha e use-a ao reabrir a página",
 	1096: "Senha",
