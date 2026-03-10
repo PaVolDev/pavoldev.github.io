@@ -571,8 +571,8 @@ function selectObject(obj) {
 	propertiesDiv.style.display = 'block';
 	// Обновляем значения полей
 	propertyInputs.name.innerHTML = obj.name || '';
-	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 1000) / 1000;
-	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 1000) / 1000;
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100;
 	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
@@ -731,8 +731,8 @@ function mouseMove(event, shiftKey = false) {
 			y: newWorldPos.y - parentPos.y
 		};
 		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
-		dragObject.localPosition.x = Math.round(newLocalPos.x * 1000) / 1000;
-		dragObject.localPosition.y = Math.round(newLocalPos.y * 1000) / 1000;
+		dragObject.localPosition.x = Math.round(newLocalPos.x * 100) / 100;
+		dragObject.localPosition.y = Math.round(newLocalPos.y * 100) / 100;
 		renderScene();
 	} else if (isDraggingPivot) {
 		const mouseDeltaX = wx - dragStartMouseWorld.x;
