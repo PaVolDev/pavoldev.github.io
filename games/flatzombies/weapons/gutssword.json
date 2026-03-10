@@ -38,12 +38,12 @@
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.120, 0.380)",
     "weapon.delayBullet": 0.1,
-    "weapon.bolt": "(0.593, 0.081, 0)",
+    "weapon.bolt": "(0.830, 0.102, 0)",
     "weapon.automat": false,
     "weapon.fireRateInMinute": "160",
     "weapon.chamberSize": 10,
-    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 23,
+    "version": 26,
     "targetVersion": 209
 }
