@@ -31,7 +31,7 @@ window.translate = Object.assign(window.translate, {
 	1091: "Enviar",
 	1092: "Salvar no servidor compartilhado",
 	1093: "Crie um usuário e uma senha para seus mods.<br>A senha é necessária para que só você possa editar seus mods, para que nenhum OGProHacker2000 consiga alterar e quebrar sua criação",
-	1094: "Login",
+	1094: "Username",
 	1095: "O navegador deve oferecer salvar a senha.<br>Salve a senha e use-a ao reabrir a página",
 	1096: "Senha",
 	1097: "• Teste fechado — a arma ficará disponível apenas pelo identificador. No modo Treino, na lista de armas há o botão Adicionar; nesse menu, informe o identificador e carregue a arma no jogo. Você pode fazer várias alterações e reenviar; depois, no jogo, pressione Atualizar para recarregar o mod<br>• Publicar — adicionar a arma na lista geral para todos os jogadores",
