@@ -40,9 +40,9 @@
     "arrowSample.WeaponArrow.speed": 70,
     "arrowSample.WeaponArrow.timerLive": 3,
     "arrowSample.WeaponArrow.floor": -6,
-    "arrowSample.WeaponArrow.pointTip": "(-1, 0)",
-    "arrowSample.WeaponArrow.pointFrontTip": "(0.3, 0, 0)",
-    "arrowSample.WeaponArrow.pointSpriteCheck": "(0.25, 0)",
+    "arrowSample.WeaponArrow.pointTip": "(-0.140, 0, 0)",
+    "arrowSample.WeaponArrow.pointFrontTip": "(0.300, 0, 0)",
+    "arrowSample.WeaponArrow.pointSpriteCheck": "(0.250, 0, 0)",
     "arrowSample.WeaponArrow.angleTipSpeed": 90,
     "arrowSample.WeaponArrow.spriteHit": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAACCAYAAACQahZdAAAAE0lEQVR4AWJat27df3TMxIAFAAAAAP//H6p4SwAAAAZJREFUAwDcYQ8y3LqBFwAAAABJRU5ErkJggg==",
     "arrowSample.WeaponArrow.spriteHit.pixelPerUnit": "50",
@@ -55,6 +55,6 @@
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
     "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
