@@ -15,7 +15,7 @@
     "weapon.WeaponHandPoints.coverMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.coverMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.coverMove.render": "",
-    "weapon.WeaponHandPoints.boltMove.movePosition": "(0.85, 0.17, -66)",
+    "weapon.WeaponHandPoints.boltMove.movePosition": "(0.85, 0.17, -90)",
     "weapon.WeaponHandPoints.boltMove.startPosition": "(0.85, 0.2, 0)",
     "weapon.WeaponHandPoints.boltMove.render": "barrel",
     "weapon.WeaponHandPoints.openCoverPoint": "(0, 0)",
@@ -76,6 +76,6 @@
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20,
-    "version": 42,
+    "version": 43,
     "targetVersion": 209
 }
