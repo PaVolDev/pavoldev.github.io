@@ -68,7 +68,7 @@
     "weapon.recoilSteps": 2,
     "weapon.recoilMax": 5,
     "weapon.recoilDecrease": "5",
-    "weapon.bolt": "(0.400, 0.15, 0)",
+    "weapon.bolt": "(2.260, 0.191, 0)",
     "weapon.flashlight": "(0.264, -0.012, 0)",
     "weapon.automat": false,
     "weapon.fireRateInMinute": 3600,
@@ -77,6 +77,6 @@
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20,
     "cartridgeList": [],
-    "version": 36,
+    "version": 37,
     "targetVersion": 209
 }
