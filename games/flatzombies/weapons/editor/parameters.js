@@ -1373,6 +1373,7 @@ function getExportResultJSON() {
 	const empty = new Array();
 	mainParams.forEach(param => {
 		let index = -1;
+		let fullKeyPath = param.fieldPath;
 		let value = "";
 		if (param.hasOwnProperty("idHTMLInput")) {
 			value = document.getElementById(param.idHTMLInput)?.value || editedParams.find(field => field.fieldPath == param.idHTMLInput)?.value;
@@ -1386,7 +1387,7 @@ function getExportResultJSON() {
 		} else {
 			console.warn("Не удалось найти значение для параметра [" + param.fieldPath + "] - параметр пропущен и не записан в json");
 		}
-		if (value != "" && !json[param.fieldPath]) json[param.fieldPath] = value;
+		if (value != "" && !json[fullKeyPath]) json[fullKeyPath] = value;
 	});
 	mainParams.forEach(param => {
 		if (!json[param.fieldPath]) {
@@ -1419,7 +1420,9 @@ function getExportResultJSON() {
 	}
 	editedParams.forEach(param => {
 		if (!ignoreExportFields.find(word => param.startFieldPath.includes(word)) && param.fieldPath != param.type) {
-			json[param.startFieldPath || param.fieldPath] = convertTextValueToJsonFile(param.value);
+			let fullKeyPath = param.startFieldPath || param.fieldPath;
+			exportReplace.forEach(field => { if (fullKeyPath.includes(field.fieldPath)) { fullKeyPath = fullKeyPath.replace(field.fieldPath, field.newPath); } });   //Заменить имена параметров
+			json[fullKeyPath] = convertTextValueToJsonFile(param.value);
 		}
 	});
 	// const img = document.createElement('img'); //Предпросмотр сгенерированого изображения
