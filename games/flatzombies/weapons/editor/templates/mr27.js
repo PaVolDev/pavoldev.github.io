@@ -169,8 +169,8 @@ export default {
 	"weapon.name": "mr27",
 	"weapon.addBulletsReload": 2,
 	"storeInfo.silencerGroup": "mr27",
-	"storeInfo.patronOrderSize": "8",
-	"storeInfo.patronListSpaceStep": "2",
+	"storeInfo.ammoListLimit": "8",
+	"storeInfo.ammoListStep": "2",
 	"weapon.shotAnimations[0].animation": "fire",
 "weapon.shotAnimations": [
   {
