@@ -69,9 +69,6 @@ function addNewObject(addNewComponent = "") {
 	return spritePath;
 }
 
-
-
-
 function addNewComponent(input) {
 	if (input.value == "SpriteRenderer") {
 		addNewSprite();
@@ -90,6 +87,10 @@ function addNewComponent(input) {
 			});
 		}
 	}
+}
+
+function showDisableNewSprite() {
+	alert(tr('Функция недоступна'))
 }
 
 
