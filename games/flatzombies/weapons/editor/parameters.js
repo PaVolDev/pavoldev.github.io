@@ -249,9 +249,11 @@ function syncParamsToScene() {
 		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; } //if (availableByField[param.fieldPath]) console.log(param.fieldPath + ': ' + editedParams.find(p => (p.fieldPath === availableByField[param.fieldPath].parent)).value);
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
+		//console.log(param.fieldPath + "/parent: " + getPointField(param.fieldPath, 'parent'));
+		renderPoint = editedPoint.find(p => param.fieldPath === p.name || param.fieldPath.endsWith(p.name));
 		sceneObjects.push({
 			name: param.spriteName || param.fieldPath, //Пытаемся использовать имя
-			parent: getPointField(param.fieldPath, 'parent') || 'sprite',
+			parent: getPointField(param.fieldPath, 'parent') || renderPoint?.parent || 'sprite',
 			texture: param.spritePreview || 'images/point.png',
 			localPosition: { x, y },
 			localAngle: convertTo180(parseFloat(getPointField(param.fieldPath, 'angle')) || 0),
@@ -261,7 +263,7 @@ function syncParamsToScene() {
 			enabled: param.hasOwnProperty('enabled') ? param.enabled : true,
 			isActive: param.hasOwnProperty('isActive') ? param.isActive : true,
 			canChangePivot: false,
-			canChangeLocalAngle: editedPoint.findIndex(p => (param.fieldPath === p.name || param.fieldPath.endsWith(p.name)) && p.angle) != -1,
+			canChangeLocalAngle: renderPoint && renderPoint.angle,
 			parameter: param.startFieldPath
 		});
 		const newObj = sceneObjects[sceneObjects.length - 1];
@@ -439,30 +441,30 @@ function addParam(fieldPath, addAsFirst = true) {
 }
 
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
-function createParam() {
+function createParam(newFieldPath = null, newFieldType = null, newFieldValue = null, newFieldComment = null) {
 	closeAddNewField();
-	const newFieldPath = document.getElementById('newFieldPath');
-	const newFieldValue = document.getElementById('newFieldValue');
-	const newFieldType = document.getElementById('newFieldType');
-	if (!newFieldPath.value) return;
-	if (newFieldType.value in typeDependencies) {
-		typeDependencies[newFieldType.value].forEach(filed => {
+	newFieldPath = newFieldPath ?? document.getElementById('newFieldPath')?.value;
+	newFieldValue = newFieldValue ?? document.getElementById('newFieldValue')?.value;
+	newFieldType = newFieldType ?? document.getElementById('newFieldType')?.value;
+	if (!newFieldPath) return;
+	if (newFieldType in typeDependencies) {
+		typeDependencies[newFieldType].forEach(filed => {
 			sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
-			const newSpriteInfo = { "fieldPath": newFieldPath.value + '.' + filed, "startFieldPath": newFieldPath.value + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+			const newSpriteInfo = { "fieldPath": newFieldPath + '.' + filed, "startFieldPath": newFieldPath + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
 			editedParams.unshift(newSpriteInfo);
 			availableParams.unshift(newSpriteInfo);
 		});
 	}
 
-	const newProperty = { fieldPath: newFieldPath.value, startFieldPath: newFieldPath.value, comment: "", type: newFieldType.value, value: newFieldValue.value };
+	const newProperty = { fieldPath: newFieldPath, startFieldPath: newFieldPath, comment: newFieldComment, type: newFieldType, value: newFieldValue };
 	editedParams.unshift(newProperty);
 	availableParams.unshift(newProperty);
-	if (newFieldType.value == "Vector3" || newFieldType.value == "Vector2") {
-		editedPoint.unshift({ name: newFieldPath.value, angle: null, parent: null });
+	if (newFieldType == "Vector3" || newFieldType == "Vector2") {
+		editedPoint.unshift({ name: newFieldPath, angle: null, parent: null });
 		editedParams[0].spritePreview = "images/point.png";
 	}
 
-	newFieldPath.value = ''; newFieldValue.value = '';
+	newFieldPath = ''; newFieldValue = '';
 	renderEditedParams();
 	syncParamsToScene();
 }
@@ -658,8 +660,9 @@ function forceRenderEditedParams(filter = '') {
 
 							<div class="propertyBlock">
                         ${prefix && sort ? `<span class="title">Sort:</span>
-                                <input data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" type="number" class="num" value="${sort.value}" onchange="updateParam('${sort.startFieldPath}', this.value)" id="${sort.startFieldPath}">` : `<div class="propertyBlock"><span class="title">Длина, мм:</span><input data-tooltip="Длина оружия. Длина реального прототипа из справочника, в миллиметрах" type="number" step="1" class="num" id="mainlength" onfocusout="updateSpritePPU('${param.startFieldPath}', this.value)" ></div>`}
-						    </div>
+                                <input data-tooltip="Порядок отрисовки - SpriteRenderer.sortingOrder" type="number" class="num" value="${sort.value}" onchange="updateParam('${sort.startFieldPath}', this.value)" id="${sort.startFieldPath}">` : ``}
+                        ${!prefix ? `<span class="title">Длина, мм:</span><input data-tooltip="Длина оружия. Длина реального прототипа из справочника, в миллиметрах" type="number" step="1" class="num" id="mainlength" onfocusout="updateSpritePPU('${param.startFieldPath}', this.value)" >` : ``}
+								</div>
 
 							<div class="propertyBlock">
                         ${prefix && angle ? `<span class="title">Angle:</span>
