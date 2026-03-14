@@ -10,7 +10,7 @@
     "weapon.addedGameObjects": "scope,boltrender,fon,bolthandle",
     "weapon.addedComponents": "scope.SpriteRenderer,boltrender.SpriteRenderer,fon.SpriteRenderer,bolthandle.SpriteRenderer",
     "weapon.scaleAngleScatter": "0.8",
-    "weapon.damageScale": "1.25",
+    "weapon.damageScale": "1.1111111",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0.23, 0.17, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0.4, 0.17, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "bolthandle",
@@ -105,6 +105,6 @@
     "weapon.scope.SpriteRenderer.sortingOrder": 17,
     "weapon.scope.SpriteRenderer.sprite.pixelPerUnit": "129",
     "weapon.scope.SpriteRenderer.sprite.pivotPoint": "(0.370, 0.370)",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
