@@ -261,6 +261,11 @@ ul {
 	color: #cfcfcf;
 }
 
+.newParamFields {
+	grid-template-columns: 60% 38%;
+}
+
+
 #idWeapon,
 #idTemplate {
 	margin-bottom: 8px;
@@ -301,6 +306,7 @@ ul {
 	width: 100%;
 	max-width: 10em;
 }
+
 .jsonFileButton:hover {
 	background: rgb(255, 209, 109);
 }
@@ -310,8 +316,10 @@ ul {
 	width: 100%;
 	max-width: 10em;
 }
+
 .openURL:hover {
-	background: rgb(246, 246, 246);}
+	background: rgb(246, 246, 246);
+}
 
 .sendButton {
 	background: rgb(106, 255, 142);
