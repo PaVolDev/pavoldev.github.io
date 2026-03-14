@@ -194,7 +194,14 @@
 				<div class="objectList">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<span>Объекты:</span>
-						<img data-tooltip="Добавить новый объект со спрайтом" onclick="addNewSprite()" src="images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
+						<span>
+							<img onclick="showSelect('addNewObject')" data-tooltip="Добавить новый объект" src="images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
+							<select onclick="addNewComponent(this)" id="addNewObject" style="opacity: 0;pointer-events: none;width: 0;height: 0;">
+								<option value="SpriteRenderer">SpriteRenderer</option>
+								<option value="Transform">Transform</option>
+								<option value="AnimatorSprite" param-path="AnimatorSprite.animations; AnimatorSprite.playStart" param-type="AnimationSprite[]; bool" param-value=";true">AnimatorSprite</option>
+							</select>
+						</span>
 					</div>
 					<div id="hierarchy"></div>
 				</div>
