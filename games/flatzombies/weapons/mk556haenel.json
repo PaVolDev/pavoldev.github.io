@@ -89,6 +89,6 @@
     "weapon.fon.SpriteRenderer.sortingOrder": "16",
     "weapon.fon.SpriteRenderer.sprite.pixelPerUnit": 127,
     "weapon.fon.SpriteRenderer.sprite.pivotPoint": "(0.340, 0.460)",
-    "version": 18,
+    "version": 19,
     "targetVersion": 209
 }
