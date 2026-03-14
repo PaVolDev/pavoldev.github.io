@@ -73,7 +73,7 @@
     "weapon.bolt": "(0.4, 0.19, 0)",
     "weapon.flashlight": "(0.86, 0.2, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": 750,
+    "weapon.fireRateInMinute": "800",
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
@@ -91,6 +91,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": "182",
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.450)",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
