@@ -41,7 +41,7 @@ window.translate = Object.assign(window.translate, {
 	1101: "Use mouse controls:<br><b>LMB</b> – select and move sprite; click empty space to pan view<br><b>Mouse wheel</b> – zoom in/out<br><b>Wheel click</b> – pan the preview area<br><b>LMB+Shift</b> – when moving the pivot point, move the child objects",
 	1442: "Use mouse controls:\nLMB – select and move sprite\nMouse wheel – zoom in/out\nWheel click – pan all sprites in preview\nLMB+Shift – when moving the pivot point, move the child objects",
 	1102: "Objects:",
-	1103: "Add new object with sprite",
+	1103: "Add new object",
 	1104: "Object position relative to parent",
 	1107: "Rotation angle in degrees",
 	1108: "Local Angle:",
@@ -59,6 +59,7 @@ window.translate = Object.assign(window.translate, {
 	1120: "Show",
 	1121: "Modding Rules",
 	1122: "Your mod must match the zombie shooter theme",
+	1123: "Feature unavailable",
 
 	1500: "❌ Stolen assets (textures, models, sounds) are prohibited",
 	1501: "❌ Recoloring textures and duplicating weapons from the game is prohibited",
