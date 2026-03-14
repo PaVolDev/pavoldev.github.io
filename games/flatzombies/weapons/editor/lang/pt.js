@@ -41,7 +41,7 @@ window.translate = Object.assign(window.translate, {
 	1101: "Use os botões do mouse<br><b>LMB</b> — selecionar o sprite e mover; ao clicar em uma área vazia, mover toda a área de pré-visualização<br><b>Roda do mouse</b> — aumentar/diminuir a pré-visualização<br><b>Clique na roda</b> — mover a área de pré-visualização<br><b>LMB+Shift</b> — ao mover o ponto de rotação, mover os objetos filhos junto com o cursor do mouse",
 	1442: "Use os botões do mouse\nLMB — selecionar o sprite e mover\nRoda do mouse — aumentar/diminuir a pré-visualização\nClique na roda — mover todos os sprites para a pré-visualização\nClique na roda — mover todos os sprites para a pré-visualização\nLMB+Shift — ao mover o ponto de rotação, mover os objetos filhos junto com o cursor do mouse",
 	1102: "Objetos:",
-	1103: "Adicionar novo objeto com sprite",
+	1103: "Adicionar novo objeto",
 	1104: "Posição do objeto dentro do objeto pai",
 	1107: "Ângulo de rotação em graus",
 	1108: "Local Angle:",
@@ -59,6 +59,7 @@ window.translate = Object.assign(window.translate, {
 	1120: "Mostrar",
 	1121: "Regras para modders",
 	1122: "Seu mod deve corresponder ao tema de um shooter de zumbis",
+	1123: "Função indisponível",
 
 	1500: "❌ Assets roubados (texturas, modelos, sons) são proibidos",
 	1501: "❌ É proibido recolorir texturas e duplicar armas do jogo",
