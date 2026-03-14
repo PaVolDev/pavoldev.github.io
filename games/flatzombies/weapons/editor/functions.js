@@ -1,39 +1,101 @@
 
 function addNewSprite() {
-	const spriteName = prompt(tr("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite"));
-	if (!spriteName) { return; }
-	if (sceneObjects.find(o => o.name === spriteName)) {
-		alert('Объект с таким именем уже существует!');
-		return;
-	}
-	var index = editedParams.findIndex(p => p.fieldPath == 'addedGameObjects');
-	if (index == -1) {
-		addParam('addedGameObjects', true);
-		editedParams[0].value = spriteName;
-	} else {
-		updateParam(index, editedParams[index].value + ',' + spriteName, true);
-	}
-
-	const component = '.SpriteRenderer';
-	index = editedParams.findIndex(p => p.fieldPath == 'addedComponents');
-	if (index == -1) {
-		addParam('addedComponents', true);
-		editedParams[0].value = spriteName + component;
-	} else {
-		updateParam(index, editedParams[index].value + ',' + spriteName + component, true);
-	}
-
+	const spritePath = addNewObject("SpriteRenderer");
+	if (!spritePath) return false;
 	typeDependencies['Sprite'].forEach(filed => {
 		sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
-		const newSpriteInfo = { "fieldPath": spriteName + '.' + filed, "startFieldPath": 'weapon.' + spriteName + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+		const newSpriteInfo = { "fieldPath": spritePath + '.' + filed, "startFieldPath": 'weapon.' + spritePath + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
 		editedParams.unshift(newSpriteInfo);
 		availableParams.unshift(newSpriteInfo);
 	});
-	const newSpriteInfo = { "fieldPath": spriteName + ".SpriteRenderer.sprite", "startFieldPath": 'weapon.' + spriteName + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" };
+	const newSpriteInfo = { "fieldPath": spritePath + ".SpriteRenderer.sprite", "startFieldPath": 'weapon.' + spritePath + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" };
 	editedParams.unshift(newSpriteInfo);
 	availableParams.unshift(newSpriteInfo);
 	renderEditedParams();
 	syncParamsToScene();
+	return spritePath;
+}
+
+function addUnityComponent(component = "") {
+	const spritePath = addNewObject(component);
+	if (!spritePath) return false;
+	let transformField = spritePath + ".Transform.localPosition";
+	let transformParent = null;
+	let spriteName = spritePath;
+	if (spritePath.includes('.')) {
+		const path = spritePath.split('.');
+		transformParent = path[0];
+		spriteName = path[path.length - 1];
+	}
+	editedPoint.unshift({ name: transformField, angle: null, parent: transformParent });
+	const newSpriteInfo = { "fieldPath": transformField, "startFieldPath": 'weapon.' + transformField, "comment": "Объект", "type": "Vector3", suffix: ".Transform.localPosition", "value": "(0, -0.5, 0)", spritePreview: "images/point.png", sortingOrder: 20, spriteName: spriteName };
+	editedParams.unshift(newSpriteInfo);
+	availableParams.unshift(newSpriteInfo);
+	renderEditedParams();
+	syncParamsToScene();
+	return spritePath;
+}
+
+function addTransformObject() {
+	return addUnityComponent();
+}
+
+function addNewObject(addNewComponent = "") {
+	const spritePath = prompt(tr("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite"));
+	if (!spritePath) { return false; }
+	if (sceneObjects.find(o => o.name === spritePath)) {
+		alert('Объект с таким именем уже существует!');
+		return false;
+	}
+	var index = editedParams.findIndex(p => p.fieldPath == 'addedGameObjects');
+	if (index == -1) {
+		addParam('addedGameObjects', true);
+		editedParams[0].value = spritePath;
+	} else {
+		updateParam(index, editedParams[index].value + ',' + spritePath, true);
+	}
+
+	if (addNewComponent) {
+		const component = spritePath + '.' + addNewComponent;
+		index = editedParams.findIndex(p => p.fieldPath == 'addedComponents');
+		if (index == -1) {
+			addParam('addedComponents', true);
+			editedParams[0].value = component;
+		} else {
+			updateParam(index, editedParams[index].value + ',' + component, true);
+		}
+	}
+
+	return spritePath;
+}
+
+
+
+
+function addNewComponent(input) {
+	if (input.value == "SpriteRenderer") {
+		addNewSprite();
+	} else if (input.value == "Transform") {
+		addTransformObject();
+	} else {
+		const spritePath = addUnityComponent(input.value);
+		if (spritePath) {
+			const option = input.options[input.selectedIndex];// Находим выбранный <option> // Извлекаем атрибуты
+			const paths = option.getAttribute('param-path').split(';').map(s => s.trim());// Извлекаем строки и разбиваем их в массивы, удаляя лишние пробелы
+			const types = option.getAttribute('param-type').split(';').map(s => s.trim());
+			const values = option.getAttribute('param-value').split(';').map(s => s.trim());
+			paths.forEach((path, index) => {
+				const newParamComment = availableParams.find(p => p.fieldPath.endsWith(path))?.comment;
+				createParam('weapon.' + spritePath + "." + path, types[index], values[index], newParamComment);
+			});
+		}
+	}
+}
+
+
+
+function showSelect(idElement) {
+	document.getElementById(idElement).showPicker(); // Вызывает нативное окно выбора (поддерживается современными браузерами)
 }
 
 
