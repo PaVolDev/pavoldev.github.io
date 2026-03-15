@@ -1,0 +1,55 @@
+{
+    "id": "7.62x25",
+    "idTemplate": "9x19A",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAUCAYAAAAwaEt4AAABMElEQVR4AezSsYrCQBAG4F3vAY7jHuuI5V19dlYWgo1gIdgIFlZ2WpsywccS8QFknV92YFxjwkokQSf4OzurZHe/pJOuZ84nM/6iPqPwfK11u55mVfHbaLR0xOrJajFyyP5wTMR8rUNrPpKqpPSwtgRoGrwkTIPbuF3aEmBKQDHZLf+zmJiSq7UwJXu++5N1NokJIxbd8KVgig5YNseIRUBvDcNoEojnFIYlqAIIbw8NjcJAQYRxFEag8BA4CsMaQVWYAIRbhWGJoCpMAILWWZcrDCREgPIz2HTbDyM2/ewho2AdhSEFgCB4U6i9fN4aBhgIQJCLiP96KRgcMibAQLzFVWktjDOn/Lc3tjHBIWNyJRE0EibvD+cW+f76zIP/1dbiwFUBxl9v0q1t0QdudAYAAP//6uYZLwAAAAZJREFUAwAE11mpdbUi3QAAAABJRU5ErkJggg==",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAUCAYAAAAwaEt4AAABMElEQVR4AezSsYrCQBAG4F3vAY7jHuuI5V19dlYWgo1gIdgIFlZ2WpsywccS8QFknV92YFxjwkokQSf4OzurZHe/pJOuZ84nM/6iPqPwfK11u55mVfHbaLR0xOrJajFyyP5wTMR8rUNrPpKqpPSwtgRoGrwkTIPbuF3aEmBKQDHZLf+zmJiSq7UwJXu++5N1NokJIxbd8KVgig5YNseIRUBvDcNoEojnFIYlqAIIbw8NjcJAQYRxFEag8BA4CsMaQVWYAIRbhWGJoCpMAILWWZcrDCREgPIz2HTbDyM2/ewho2AdhSEFgCB4U6i9fN4aBhgIQJCLiP96KRgcMibAQLzFVWktjDOn/Lc3tjHBIWNyJRE0EibvD+cW+f76zIP/1dbiwFUBxl9v0q1t0QdudAYAAP//6uYZLwAAAAZJREFUAwAE11mpdbUi3QAAAABJRU5ErkJggg==",
+    "caliberName": "7.62x25",
+    "uiName": "7.62x25",
+    "author": "_tOWP",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAATklEQVR4AYzMMQ2AMBBG4ccvAAWdCRoQhCFEoIWJhUuqAgOlodMlnS59ybc+Pcf2R+hSWmYi/UjoJZLWDye7bkapVoiYFZxyLkT2k8k1AAAA//85UtRwAAAABklEQVQDAPUydZ38w95PAAAAAElFTkSuQmCC",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "120",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "120",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 2,
+    "distance": 24,
+    "impulse": 15,
+    "stopPower": "0.04",
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "scaleFirst": "0.5",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": "0.5",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 4,
+    "targetVersion": 209
+}
