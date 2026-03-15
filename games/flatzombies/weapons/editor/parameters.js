@@ -253,7 +253,7 @@ function syncParamsToScene() {
 		renderPoint = editedPoint.find(p => param.fieldPath === p.name || param.fieldPath.endsWith(p.name));
 		sceneObjects.push({
 			name: param.spriteName || param.fieldPath, //Пытаемся использовать имя
-			parent: getPointField(param.fieldPath, 'parent') || renderPoint?.parent || 'sprite',
+			parent: getPointField(param.fieldPath, 'parentByParam', renderPoint?.parent || 'sprite'),
 			texture: param.spritePreview || 'images/point.png',
 			localPosition: { x, y },
 			localAngle: convertTo180(parseFloat(getPointField(param.fieldPath, 'angle')) || 0),
@@ -283,10 +283,11 @@ function syncParamsToScene() {
 }
 
 //Найти угол, который связан с координатами для объекта на сцене
-function getPointField(fieldPath, property) {
+function getPointField(fieldPath, property, defaultValue = null) {
 	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
-	if (!reference) { return null; }
-	if (!reference[property]) { return null; } //console.warn('getPointField(' + fieldPath + ', ' + property + '): reference[' + property + '] == NULL - return NULL;'); 
+	if (!reference) return defaultValue;
+	if (!(property in reference)) return defaultValue;
+	if (!reference[property]) return defaultValue;  //console.warn('getPointField(' + fieldPath + ', ' + property + '): reference[' + property + '] == NULL - return NULL;'); 
 	fieldPath = fieldPath.replace(reference.name, reference[property]); //shellDrop.position => shellDrop.angle
 	let param = editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
 	if (param) return param.value;
@@ -297,7 +298,7 @@ function getPointField(fieldPath, property) {
 		if (!param) { console.warn('getPointField(' + fieldPath + ', ' + property + '): editedParams[' + fieldPath + '] == NULL - return; - Параметры не успели загрузиться, но функция уже пытается раньше времени найти связаный параметр?'); return 0; }
 		return parseVector(param.value)[2];
 	}
-	return null;
+	return defaultValue;
 }
 
 //Найти и изменить парамтер
