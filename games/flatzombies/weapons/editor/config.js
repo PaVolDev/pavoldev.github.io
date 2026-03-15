@@ -130,21 +130,21 @@ class MagazineInsertListener extends SpriteScreenListener {
 const weapons = new Array();
 
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
-	{ name: 'flashlight', angle: null, parent: 'WeaponSilencerMod.bolt' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
-	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
-	{ name: 'laserPosition', angle: null, parent: null },
-	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parent: null },
-	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parent: null },
-	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parent: null },
-	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parent: null },
-	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parent: null },
-	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parent: null },
-	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parent: null },
-	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
-	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
-	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
-	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
-	{ name: 'position', angle: 'angle', parent: null },
+	{ name: 'flashlight', angle: null, parentByParam: 'WeaponSilencerMod.bolt', parent: null }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
+	{ name: 'WeaponSilencerMod.localPoint', angle: null, parentByParam: 'WeaponSilencerMod.bolt', parent: null },
+	{ name: 'laserPosition', angle: null, parentByParam: null, parent: null },
+	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parentByParam: null, parent: null },
+	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parentByParam: null, parent: null },
+	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'position', angle: 'angle', parentByParam: null, parent: null },
 ]
 const ignoreIconSprites = ['gunFlash', ".player", ".player.man"]; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize', 'targetVersion', 'version', 'selspriteupd'];
