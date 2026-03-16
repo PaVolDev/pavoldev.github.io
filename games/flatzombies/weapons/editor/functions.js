@@ -74,7 +74,7 @@ function addNewComponent(input) {
 		addNewSprite();
 	} else if (input.value == "Transform") {
 		addTransformObject();
-	} else {
+	} else if (input.value) {
 		const spritePath = addUnityComponent(input.value);
 		if (spritePath) {
 			const option = input.options[input.selectedIndex];// Находим выбранный <option> // Извлекаем атрибуты
