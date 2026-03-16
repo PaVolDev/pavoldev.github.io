@@ -936,7 +936,7 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 					<input type="number" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.startFieldPath}" oninput="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
-			return `<input type="number" value="${param.value}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}" class="field-input" data-tooltip="${param.type}" >`;
+			return `<input type="number" value="${param.value}" ${param.min ? `min="${param.min}"` : ''} ${param.max ? `max="${param.max}"` : ''} onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}" class="field-input" data-tooltip="${param.type}" >`;
 		case 'bool':
 			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam('${param.startFieldPath}', this.checked ? true : false, true, '${objKey || ''}')" id="${param.startFieldPath}">`;
 		case 'AudioClip[]':
