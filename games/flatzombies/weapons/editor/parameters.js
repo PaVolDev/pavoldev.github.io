@@ -577,7 +577,7 @@ function forceRenderEditedParams(filter = '') {
 			if (!matchesSearch) { return; }
 		}
 		if (processed.has(param.fieldPath)) return;
-		const renderFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type] || typeLightForm[param.startFieldPath] || typeLightForm[param.type];
+		const lightFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 		const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath];
 		if (typeDeps) {
 			const prefix = getPrefix(param.fieldPath, param.suffix);//const name = prefix || 'sprite';
@@ -588,7 +588,7 @@ function forceRenderEditedParams(filter = '') {
 			groupPaths.forEach(fp => processed.add(fp));
 			groupPaths.forEach(fp => hiddenPaths.add(fp));
 
-			if (renderFormByType) {
+			if (typeFullForm[param.startFieldPath] || typeFullForm[param.type] || lightFormByType) {
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
 				groupPaths.forEach(path => {
 					child = editedParams.findIndex(p => p.fieldPath === path); if (child == -1) { console.warn('editedParams[' + path + '] == NULL'); return; }
@@ -776,11 +776,11 @@ function forceRenderEditedParams(filter = '') {
 				list.appendChild(li);
 			}
 
-		} else if (renderFormByType) {
-			const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
-			li.innerHTML = `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>`
-			li.innerHTML += renderFormByType(param, idx, null);
-			list.appendChild(li);
+		// } else if (lightFormByType) {
+		// 	const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
+		// 	li.innerHTML = `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>`
+		// 	li.innerHTML += lightFormByType(param, idx, null);
+		// 	list.appendChild(li);
 		} else {
 			// Обычный параметр
 			const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); li.className = 'param-block';
