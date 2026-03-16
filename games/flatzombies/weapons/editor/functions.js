@@ -1113,6 +1113,26 @@ function updateUserOptionParam(path, value) {
 
 
 let cartridgeListParam = null; //Параметр со списком патронов записываем в отдельную переменную, чтобы убирать с экрана
+let startCaliberDescription = "";
+let lastCaliberValue = "";
+function renderWeaponCartridge(param, index) {
+	if ('options' in param) {
+		if (!startCaliberDescription) startCaliberDescription = tr(param.comment);
+		if (lastCaliberValue != param.optionsValue) {
+			if (param.optionsValue == setOwnValueText) {
+				param.comment = tr("Укажите идентификатор патрона.<br>Создайте патрон в отдельном<br><a href='ammo/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a> и отправьте на сервер");
+			} else {
+				param.comment = startCaliberDescription;
+			}
+			lastCaliberValue = param.optionsValue;
+			renderEditedParams();
+		}
+		return renderStringList(param, index, null, "Идентификатор патрона", "Укажите идентификатор патрона.<br>При загрузке оружия в игру, будет обнаружено, что оружие нуждается в патроне и игра попытается загрузить этот патрон по идентификатору. Нужно указать не калибр, а именно идентификатора вашего патрона.");
+	}
+	alert("renderWeaponCartridge: параметр не имеет списка значений\n" + param.startFieldPath + '.options == NULL');
+	return '';
+}
+/*
 function renderWeaponCartridge(param, index) {
 	if ('options' in param) {
 		let selectHTML = renderStringList(param, index, null, "Идентификатор патрона", "Укажите идентификатор патрона.<br>При загрузке оружия в игру, будет обнаружено, что оружие нуждается в патроне и игра попытается загрузить этот патрон по идентификатору. Нужно указать не калибр, а именно идентификатора вашего патрона.<br><br>Вам доступен список патронов <b>cartridgeList</b>.<br>Основной патрон можно сразу добавить в список и тогда патроны будут загружаться сразу вместе с оружием.");
@@ -1130,4 +1150,4 @@ function renderWeaponCartridge(param, index) {
 	}
 	alert("renderWeaponCartridge: параметр не имеет списка значений\n" + param.startFieldPath + '.options == NULL');
 	return '';
-}
+}*/
