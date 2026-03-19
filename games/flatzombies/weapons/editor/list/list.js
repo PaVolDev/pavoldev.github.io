@@ -102,6 +102,12 @@ function hideLoadingNewWeapon() {
 	document.getElementById("loading").classList.add('hidden');
 }
 
+const statusTooltip = {
+	'✅': "Опубликовано",
+	'👮': "Мод в процессе рассмотрения",
+	'📵': "Приватное тестирование",
+}
+
 function showWeaponsList(weapons) {
 	const list = document.getElementById('list');
 	if (!weapons || weapons.length === 0) {
@@ -117,7 +123,7 @@ function showWeaponsList(weapons) {
 		const likes = weapon.likes ?? 0;
 		const dislikes = weapon.dislikes ?? 0;
 		const rating = weapon.raiting ?? 0;
-		const status = weapon.status == 'publish' ? '✅' : '📵';
+		const status = weapon.status == 'publish' ? '✅' : weapon.status == 'review' ? '👮' : '📵';
 		html += `
             <div class="item">
                 <img src="${icon}" alt="Иконка ${escapeHtml(String(id))}" id="image${escapeHtml(String(id))}" class="preview">
@@ -132,15 +138,15 @@ function showWeaponsList(weapons) {
                 <div class="filename">${escapeHtml(String(id))}</div>
 
                 <div class="info">
-                    <span class="rating-item">
-                        <img src="images/plays.png" alt="Рейтинг">
+                    <span class="rating-item" data-tooltip="${rating} ${tr("этажей было сыграно")}">
+                        <img src="images/plays.png" >
                         <span class="count">${rating}</span>
                     </span>
                     <span class="rating-item">
                         <img src="images/like.png" alt="Лайк">
                         <span class="count">${likes}</span>
                     </span>
-                    <span class="rating-item">
+                    <span class="rating-item" data-tooltip=" ${tr(statusTooltip[status])}">
                         ${status}
                     </span>
                     <span class="rating-item">
