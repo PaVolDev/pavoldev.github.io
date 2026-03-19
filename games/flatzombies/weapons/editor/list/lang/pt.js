@@ -13,4 +13,8 @@ window.translate = Object.assign(window.translate, { //Português (Brasil)
 	1015: "Ações...",
 	1016: "Excluir mod?",
 	1017: "Baixar arquivo",
+	1400: "Publicado",
+	1401: "Em Revisão",
+	1402: "Teste Privado",
+	1403: "andares jogados",
 });
