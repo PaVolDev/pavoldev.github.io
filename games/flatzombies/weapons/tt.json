@@ -7,15 +7,8 @@
     "storeInfo.magazineSize": "8",
     "storeInfo.iconBase64": "data:image/png;base64,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",
     "storeInfo.silencerPosition": "(58, 6)",
-    "weapon.front.Transform.localPosition": "(0.085, 0.073, 0)",
-    "weapon.front.gameObject.SetActive": true,
-    "weapon.front.SpriteRenderer.enabled": true,
-    "weapon.front.Transform.localEulerAngles.z": 0,
-    "weapon.front.SpriteRenderer.sortingOrder": "20",
-    "weapon.front.SpriteRenderer.sprite.pixelPerUnit": 291,
-    "weapon.front.SpriteRenderer.sprite.pivotPoint": "(0.410, 0.540)",
-    "weapon.addedComponents": "front.SpriteRenderer",
     "weapon.addedGameObjects": "front",
+    "weapon.addedComponents": "front.SpriteRenderer",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -92,6 +85,13 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
+    "weapon.front.Transform.localPosition": "(0.085, 0.073, 0)",
+    "weapon.front.gameObject.SetActive": true,
+    "weapon.front.SpriteRenderer.enabled": true,
+    "weapon.front.Transform.localEulerAngles.z": 0,
+    "weapon.front.SpriteRenderer.sortingOrder": "20",
+    "weapon.front.SpriteRenderer.sprite.pixelPerUnit": 291,
+    "weapon.front.SpriteRenderer.sprite.pivotPoint": "(0.410, 0.540)",
     "cartridgeList": [
         {
             "id": "7.62x25",
@@ -147,6 +147,6 @@
             ]
         }
     ],
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
