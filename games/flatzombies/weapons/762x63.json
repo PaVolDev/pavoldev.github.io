@@ -44,12 +44,12 @@
             "materialName": "metal"
         },
         {
-            "scaleFirst": 1,
-            "scaleThrough": 0.5,
+            "scaleFirst": "1.5",
+            "scaleThrough": "0",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
