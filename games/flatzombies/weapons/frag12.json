@@ -17,10 +17,10 @@
     "iconButtonSprite.pivotPoint": "(0.5, 0.5, 0)",
     "iconListSprite.pixelPerUnit": "50",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
-    "bullets": "9",
+    "bullets": "10",
     "angleRandom": "70",
     "angleSpread": 1,
-    "damage": "18",
+    "damage": "25",
     "distance": 6,
     "impulse": "40",
     "stopPower": 0.8,
@@ -194,6 +194,6 @@
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
     "noiseVolume": "4",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
