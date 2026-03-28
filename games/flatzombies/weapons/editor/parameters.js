@@ -1409,14 +1409,29 @@ function getExportResultJSON() {
 			return;
 		}
 	});
-	for (const key of standrtPoints) {
+	for (const group of standrtPoints) {
+		// Сначала получаем и преобразуем все значения для текущей группы
+		const resolvedPoints = group.map(paramName => ({ name: paramName, value: parseVector(editedParams.find(p => p.startFieldPath.endsWith(paramName))?.value).toString() }));
+		// Затем сравниваем каждую уникальную пару внутри этой группы
+		for (let i = 0; i < resolvedPoints.length; i++) {
+			for (let j = i + 1; j < resolvedPoints.length; j++) {
+				const point1 = resolvedPoints[i];
+				const point2 = resolvedPoints[j];
+				if (point1.value === point2.value && point1.value !== "0,0,0") {
+					alert(`${tr("Ошибка:\n")}${point1.name} == ${point2.name}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
+					return false; // Останавливаем функцию
+				}
+			}
+		}
+	}
+	/* for (const key of standrtPoints) {
 		const firstPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[0]))?.value).toString();
 		const nextPoint = parseVector(editedParams.find(p => p.startFieldPath.endsWith(key[1]))?.value).toString();
 		if (firstPoint === nextPoint && firstPoint != "0,0,0") {
 			alert(`${tr("Ошибка:\n")}${key[0]} == ${key[1]}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
 			return false; //Останавливаем функцию
 		}
-	}
+	} */
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, 120, 600);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
