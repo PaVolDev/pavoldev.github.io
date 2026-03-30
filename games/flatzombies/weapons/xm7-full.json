@@ -40,7 +40,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 4,
     "weapon.WeaponHandPoints.magazineInsert": "(0.300, -0.28, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.220, -0.02, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.820, 0.14, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.890, 0.14, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.820, 0.24, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.810, 0.23, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
@@ -59,7 +59,7 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 15,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": 220,
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "weapon.handgrip.Transform.localPosition": "(1.040, -0.27, 0)",
+    "weapon.handgrip.Transform.localPosition": "(1.160, -0.35, 0)",
     "weapon.handgrip.gameObject.SetActive": false,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": -65,
@@ -98,6 +98,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 16,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": "180",
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.390, 0.350)",
-    "version": 24,
+    "version": 25,
     "targetVersion": 209
 }
