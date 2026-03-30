@@ -59,8 +59,8 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 15,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": 220,
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "weapon.handgrip.Transform.localPosition": "(1.160, -0.35, 0)",
-    "weapon.handgrip.gameObject.SetActive": false,
+    "weapon.handgrip.Transform.localPosition": "(0.970, 0.15, 0)",
+    "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": -65,
     "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
@@ -98,6 +98,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 16,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": "180",
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.390, 0.350)",
-    "version": 26,
+    "version": 27,
     "targetVersion": 209
 }
