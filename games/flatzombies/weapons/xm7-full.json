@@ -98,6 +98,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 16,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": "180",
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.390, 0.350)",
-    "version": 29,
+    "version": 30,
     "targetVersion": 209
 }
