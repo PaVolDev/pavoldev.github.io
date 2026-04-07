@@ -62,7 +62,7 @@
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
     "weapon.magazineMax": 30,
-    "weapon.magazineStep": 0,
+    "weapon.magazineStep": "1",
     "weapon.chamberAnimationStep": 1,
     "weapon.shellDrop.position": "(0.21, 0.28, 0)",
     "weapon.shellDrop.angle": 100,
@@ -91,6 +91,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": "182",
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.450)",
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
