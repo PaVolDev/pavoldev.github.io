@@ -11,8 +11,8 @@
     "weapon.addedComponents": "boltrender.SpriteRenderer,fon.SpriteRenderer",
     "weapon.addedGameObjects": "boltrender,fon",
     "weapon.reloadBoltStop": false,
-    "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
-    "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
+    "weapon.WeaponHandPoints.handleMove.movePosition": "(0.182, 0.162, 0)",
+    "weapon.WeaponHandPoints.handleMove.startPosition": "(0.181, 0.161, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
     "weapon.WeaponHandPoints.coverMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.coverMove.startPosition": "(0, 0, 0)",
@@ -91,6 +91,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": "182",
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.450)",
-    "version": 11,
+    "version": 12,
     "targetVersion": 209
 }
