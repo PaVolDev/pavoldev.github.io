@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAANCAYAAADrEz3JAAAAAXNSR0IArs4c6QAAAWZJREFUSEvdlj1Ow0AQhd/bmC6970DKSPSIDnBiUeQMdBRINPwm4TKIhkSKoaSmhgIF0YQDYECKQNgPrWMlxkoiigjJ2W5nZ9/syJ75hq+92i5ptvqDwQ4WtKp5nSrw8DzkPPkKKnOjP5U/pt5/uRtG62e33wwDvwXgYBjpfpYSIWNVpIkHmW5Htt9BSAIa2yQ4BJ28fuIFULL6dGBSD030BFk3u0oz3vfoet0Nhtd+W8LRZ5R55YK+zD/JRK7XcRgG9XOBh8VNRHK9ruF74Lci4Li4iUCu1zEMb+pNxTwpfiLFrxG4XocMg1pLMEvwa/X8tljorpXWSOG7Vlrsy9O1LNmJveFXfDENYCnBU6qOoGkIxRbJZGKgxBigtdt9DBqTJTtYkrCS1U9obZJpgdZX4ujc0n1M9kQwIbs0neyk+q7X3edbz9smS2vlzavThZI4Nyg0m7kxJhPsL4EvV6ffbzQQWakfX8iqDgshtWwAAAAASUVORK5CYII=",
     "shellSkin.pixelPerUnit": "290",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pixelPerUnit": "200",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
