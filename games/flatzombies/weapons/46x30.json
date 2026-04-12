@@ -9,7 +9,7 @@
     "author": "Dafyich",
     "authorURL": "",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAKCAYAAAApWHduAAAAAXNSR0IArs4c6QAAAblJREFUOE/NlEFrFEEQhev1zOwezFkvEvNjIokHCUgQT169KuLd35DxJwjenEUIIrLrxV8gKKJRE8gheBAS2bA72/We1IRkBfWYuHXpmuZNz6ueqg+jwdZTOt5N2vYtzK73e9UGSizZadDMJDNAMMggSSer6Uw1TxB6ALDIQo3YsHhMv8mUjlLCtlxN+/P489rdR+O/nNZtYdjUu8x+KTvHMl3p9ap+Sik+cK6BKBppZqaPMr50+SvOpvtk2ZWeUoGUM1bvPPwUJvfkvJrpIIWqKq0oinM1eHo4UrIwK1PrmYf0PBGM3Q3JUvhZv/1gGaNB/dUzl+kEzVGWFS7YpEkydzcyemse0Vhrm/cTRk29k50rcgdFlNUCmhw+r7+QXGFUsrAmm61vpK4xUwv7u4eDei960p0m0f7H4JjZNOd85PSpqQNYTHjXfuubMTjNk12nL3nmWNLlqldeGIIMaGH4IGibLV9PZtODqiw1NbN+h6GM1VuBoEH9jK73yv4mO29U/WqjSGkO8yBEx/OuupMM3UAqOPFnILASb3UwD4CjA/oJ5M/0yX7A8KIwNIcH33du3nt8/C/u/QLe6DIagsjb9wAAAABJRU5ErkJggg==",
-    "shellSkin.pixelPerUnit": "290",
+    "shellSkin.pixelPerUnit": "300",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "150",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
