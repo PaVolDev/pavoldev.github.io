@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(0.28, -0.16, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.32, -0.1, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.55, 0.42, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.55, 0.44, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.1, 0.6, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.93, 0.1, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
@@ -54,7 +54,7 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 16,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": "162",
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
-    "weapon.handgrip.Transform.localPosition": "(0.69, 0.42, 0)",
+    "weapon.handgrip.Transform.localPosition": "(0.69, 0.44, 0)",
     "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": "270",
@@ -95,6 +95,6 @@
     "weapon.chamberSize": "200",
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 23,
+    "version": 24,
     "targetVersion": 209
 }
