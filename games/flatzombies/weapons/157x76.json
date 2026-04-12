@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": 0.4,
     "angleSpread": 1,
-    "damage": 16,
+    "damage": 30,
     "distance": 24,
     "impulse": 50,
     "stopPower": "1",
@@ -45,11 +45,11 @@
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": "1",
+            "scaleThrough": "0",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
