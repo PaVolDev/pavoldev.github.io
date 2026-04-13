@@ -21,7 +21,7 @@
     "damage": 4,
     "distance": 24,
     "impulse": 25,
-    "stopPower": "0.2",
+    "stopPower": "0.1",
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
