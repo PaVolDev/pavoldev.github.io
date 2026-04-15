@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 4,
+    "version": 2,
     "targetVersion": 209
 }
