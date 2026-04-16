@@ -11,11 +11,11 @@
     "author": "findin",
     "authorURL": "https://t.me/findinflatzombies",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAHCAYAAADnCQYGAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAFaADAAQAAAABAAAABwAAAAASO9bsAAAALklEQVQoFWM8M4frPwMQ/OPhYWDg42N4wzAJxKUIMFGkG4fmUUNxBAwFwjQJUwDS0AUvl9ZpaAAAAABJRU5ErkJggg==",
-    "shellSkin.pixelPerUnit": "105",
+    "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "105",
+    "iconButtonSprite.pixelPerUnit": "100",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5, 0)",
-    "iconListSprite.pixelPerUnit": "50",
+    "iconListSprite.pixelPerUnit": "100",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": "10",
     "angleRandom": "70",
@@ -194,6 +194,6 @@
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
     "noiseVolume": "4",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
