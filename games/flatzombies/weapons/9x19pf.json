@@ -11,6 +11,10 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAACXBIWXMAAAqcAAAKnAH00t8SAAAAMElEQVQYlWO8MtnqPwORgEVGjY9YtQwsDEzviFd89eR54hX//Uu0WgaWGzd+E60YABr4CwiljLE/AAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": "90",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
@@ -278,5 +282,7 @@
     "arrowSample.WeaponFireRocket.speedMoveRotate": 0.2,
     "arrowSample.WeaponFireRocket.speedRotateFire": 10,
     "noiseVolume": 2,
-    "shellSkin.scale": 1
+    "shellSkin.scale": 1,
+    "version": 1,
+    "targetVersion": 209
 }
