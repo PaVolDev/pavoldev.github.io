@@ -492,7 +492,6 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.authorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "https://", placeholder: "https://youtube.com/@pavoldev" },
 	{ "fieldPath": "storeInfo.donateURL", "comment": "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", "type": "string", "value": "https://", placeholder: "https://" },
 	{ "fieldPath": "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", "comment": "Настройка анимации оружия", "type": "WeaponHandPoints", "value": "", displayName: "WeaponAnimation" },
-	//{ "fieldPath": "storeInfo.iconBase64", "comment": "Текстура оружия для интерфейса (необязательно)<br>Если не указано, то текстура будет сгенерирована автоматически", "type": "Image", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", "type": "Sprite", suffix: "SpriteRenderer.sprite", "value": "" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "weapon.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
@@ -507,6 +506,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "storeInfo.silencerGroup", "comment": "Из какой категории брать глушители", "type": "string", "value": "", "options": ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ "fieldPath": "storeInfo.ammoListStep", "comment": "Отступ в интерфейсе на экране со списком патронов", "type": "int", "value": 0 },
 	{ "fieldPath": "storeInfo.ammoListLimit", "comment": "Размер списка с патронами для двуствольного ружья", "type": "int", "value": 0 },
+	{ "fieldPath": "storeInfo.iconBase64", "comment": "Иконка оружия для интерфейса, размер: 320x120<br>Если не указано, то иконка будет сгенерирована автоматически", "type": "Image", "value": "" },
 	//209 - { "fieldPath": "weapon.animationSounds", "comment": "Звуки анимации при перезарядке", "type": "AnimationSounds[]", "value": "" },
 ]
 
