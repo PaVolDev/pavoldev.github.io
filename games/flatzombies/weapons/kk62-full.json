@@ -67,7 +67,7 @@
     "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": "90",
     "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0.000, 0.000)",
     "weapon.handgrip.Transform.localPosition": "(0.780, 0.47, 0)",
-    "weapon.handgrip.gameObject.SetActive": true,
+    "weapon.handgrip.gameObject.SetActive": false,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": "-100",
     "weapon.handgrip.SpriteRenderer.sortingOrder": 18,
@@ -96,6 +96,6 @@
     "weapon.chamberSize": "0",
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
