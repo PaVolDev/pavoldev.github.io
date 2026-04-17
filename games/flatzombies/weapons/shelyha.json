@@ -44,7 +44,7 @@
     "timeTriggers": 0.6,
     "distHitArrow": 25,
     "arrowsPerShot": 1,
-    "arrowSample.WeaponArrow.speed": "40",
+    "arrowSample.WeaponArrow.speed": "60",
     "arrowSample.WeaponArrow.timerLive": 3,
     "arrowSample.WeaponArrow.floor": -6,
     "arrowSample.WeaponArrow.pointTip": "(-0.030, 0, 0)",
@@ -62,6 +62,6 @@
     "arrowSample.arrowRender.SpriteRenderer.sortingOrder": 50,
     "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
