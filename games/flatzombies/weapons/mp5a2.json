@@ -9,7 +9,7 @@
     "storeInfo.silencerPosition": "(199, 35)",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit": "100",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
-    "storeInfo.silencerSmall.SpriteRenderer.color": "#0090FF",
+    "storeInfo.silencerSmall.SpriteRenderer.color": "#00FF3B",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -91,6 +91,6 @@
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.shotAnimations[0].audioTimeRandom": "0.0555",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
