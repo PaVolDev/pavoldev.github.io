@@ -23,7 +23,7 @@
     "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
     "weapon.WeaponHandPoints.handInsertPoint": "(-0.330, -0.58, 0)",
-    "weapon.WeaponHandPoints.boltMovePoint": "(-0.130, 0.01, 0)",
+    "weapon.WeaponHandPoints.boltMovePoint": "(-0.130, 0.1, 0)",
     "weapon.WeaponHandPoints.boltPoint": "(-0.060, 0.1, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": -15,
     "weapon.WeaponHandPoints.magazineInsert": "(-0.330, -0.48, 0)",
@@ -70,7 +70,7 @@
     "weapon.shotAnimations[0].animation": "LabelShotFire",
     "weapon.magazineMax": "12",
     "weapon.magazineStep": 0,
-    "weapon.magazineDrop.position": "(-0.200, -0.15, 0)",
+    "weapon.magazineDrop.position": "(-0.200, -0.05, 0)",
     "weapon.magazineDrop.angle": 270,
     "weapon.magazineDrop.angleRotation": 0,
     "weapon.chamberAnimationStep": 1,
@@ -87,6 +87,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
