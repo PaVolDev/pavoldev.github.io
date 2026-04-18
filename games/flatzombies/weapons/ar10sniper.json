@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(0.690, 0.1, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.950, 0.1, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.910, -0.07, 0)",
-    "weapon.WeaponHandPoints.weaponType": "rifleAK",
+    "weapon.WeaponHandPoints.weaponType": "rifleAR15",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
@@ -102,6 +102,6 @@
     "weapon.fon.SpriteRenderer.sortingOrder": "16",
     "weapon.fon.SpriteRenderer.sprite.pixelPerUnit": "119",
     "weapon.fon.SpriteRenderer.sprite.pivotPoint": "(0.490, 0.460)",
-    "version": 11,
+    "version": 12,
     "targetVersion": 209
 }
