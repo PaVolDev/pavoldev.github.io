@@ -76,7 +76,7 @@
     "weapon.shellDrop.position": "(0.320, 0.19, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
-    "weapon.recoilSteps": "2",
+    "weapon.recoilSteps": "4",
     "weapon.recoilMax": "15",
     "weapon.recoilDecrease": "17",
     "weapon.bolt": "(-0.060, 0.19, 0)",
@@ -86,6 +86,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
