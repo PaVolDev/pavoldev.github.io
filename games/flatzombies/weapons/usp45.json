@@ -27,7 +27,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(-0.140, 0.01, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.260, -0.1, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.460, -0.1, 0)",
-    "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
+    "weapon.WeaponHandPoints.weaponType": "",
     "storeInfo.author": "FakeN",
     "storeInfo.authorURL": "https://share.google/QxXcTfbsa2jDxsI83",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
@@ -82,6 +82,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 18,
+    "version": 19,
     "targetVersion": 209
 }
