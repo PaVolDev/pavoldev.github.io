@@ -103,6 +103,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": "120",
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0, 0, 0)",
-    "version": 13,
+    "version": 14,
     "targetVersion": 209
 }
