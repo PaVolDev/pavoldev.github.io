@@ -637,11 +637,12 @@ function forceRenderEditedParams(filter = '') {
                     </div>
                     ${pivot ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
                             <span class="title" >Pivot:</span>
-                            <div class="vector-fields">
-							<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[0]}"
-                                   onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.startFieldPath}.x">
-                            <input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[1]}" 
-                                   onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.startFieldPath}.y">
+                            <div class="vector-fields" style="grid-template-columns: 1fr 1fr 1fr; max-width: 10em;">
+								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[0]}"
+										onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.startFieldPath}.x">
+								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[1]}" 
+									onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.startFieldPath}.y">
+								<div class="fileInputButton" data-tooltip="Изменить точку вращения" id="${param.startFieldPath}.pivotEditor" onclick="showPivotPointEditor('${pivot.startFieldPath}', '${param.startFieldPath}')">🖱</div>
 							</div>
                         </div>` : ''}
 
@@ -675,9 +676,9 @@ function forceRenderEditedParams(filter = '') {
                     ${prefix && position ? `<div class="propertyBlock" data-tooltip="Позиция объекта внутри родительского объекта - localPosition" >
                             <span class="title">Position:</span>
                             <div class="vector-fields">
-								<input placeholder="X" type="number" step="0.02" class="num" value="${parseVector(position.value)[0]}"
+								<input placeholder="X" type="number" step="0.02" class="num" style="max-width: 6em;" value="${parseVector(position.value)[0]}"
 									onchange="updateVector('${position.startFieldPath}', 0, this.value)" id ="${position.startFieldPath}.x">
-								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(position.value)[1]}" 
+								<input placeholder="Y" type="number" step="0.02" class="num" style="max-width: 6em;" value="${parseVector(position.value)[1]}" 
 									onchange="updateVector('${position.startFieldPath}', 1, this.value)" id ="${position.startFieldPath}.y">
 							</div>
                         </div>` : ''}
@@ -746,11 +747,12 @@ function forceRenderEditedParams(filter = '') {
 							
 							${pivot ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
 							<span class="title" >Pivot:</span>
-								<div class="vector-fields">
-								<input placeholder="X" type="number" step="0.02" style="width:100%" value="${parseVector(pivot.value)[0]}"
-								onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.fieldPath}.x">
-								<input placeholder="Y" type="number" step="0.02" style="width:100%" value="${parseVector(pivot.value)[1]}" 
-								onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.fieldPath}.y">
+								<div class="vector-fields" style="grid-template-columns: 1fr 1fr 1fr;">
+									<input placeholder="X" type="number" step="0.02" style="width:100%" value="${parseVector(pivot.value)[0]}"
+										onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.fieldPath}.x">
+									<input placeholder="Y" type="number" step="0.02" style="width:100%" value="${parseVector(pivot.value)[1]}" 
+										onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.fieldPath}.y">
+									<div class="fileInputButton" data-tooltip="Изменить точку вращения" id="${param.startFieldPath}.pivotEditor" onclick="showPivotPointEditor('${pivot.startFieldPath}', '${param.startFieldPath}')">🖱</div>
 								</div>
 							</div>` : ''}
 						</div>
