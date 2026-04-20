@@ -301,7 +301,37 @@
 	</div>
 
 
-
+	<!-- Панель редактора точки вращения -->
+	<div id="pivotPointEditor" class="pivot-editor hidden" style="display: none;">
+		<div class="pivot-editor-content">
+			<div class="pivot-editor-header">
+				<div class="h2">Редактор точки вращения</div>
+				<button class="close-btn" onclick="closePivotPointEditor()" data-tooltip="Закрыть">✕</button>
+			</div>
+			<div class="pivot-editor-body">
+				<div class="pivot-canvas-container">
+					<canvas id="pivotCanvas"></canvas>
+				</div>
+				<div class="pivot-controls">
+					<div class="pivot-coords">
+						<div class="coord-input">
+							<label for="pivotX">X:</label>
+							<input type="number" id="pivotX" step="0.01" min="0" max="1" onchange="updatePivotFromInput()">
+						</div>
+						<div class="coord-input">
+							<label for="pivotY">Y:</label>
+							<input type="number" id="pivotY" step="0.01" min="0" max="1" onchange="updatePivotFromInput()">
+						</div>
+					</div>
+					<button class="save-button" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
+					<!-- <div class="pivot-buttons">
+						<button class="button add" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
+						<button class="button" onclick="closePivotPointEditor()" data-tooltip="Закрыть без применения" >Отмена</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- Подключаем скрипты -->
@@ -318,6 +348,7 @@
 	<!-- Редактор -->
 	<script src="parameters.js"></script> <!-- editedParams + UI -->
 	<script src="functions.js"></script> <!-- набор фукнций для редактирования -->
+	<script src="tooltip.js"></script>
 </body>
 
 </html>
