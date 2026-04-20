@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { // index.txt (1000–1999)
+window.translate = Object.assign(window.translate, {
 	1000: "添加新参数",
 	1001: "关闭",
 	1002: "对象属性路径",
