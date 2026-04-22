@@ -81,7 +81,7 @@
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
-    "weapon.shellDrop.position": "(0.2, 0.3, 0)",
+    "weapon.shellDrop.position": "(0.15, 0.34, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": "5",
@@ -111,6 +111,6 @@
     "weapon.fon.SpriteRenderer.sortingOrder": "16",
     "weapon.fon.SpriteRenderer.sprite.pixelPerUnit": 112,
     "weapon.fon.SpriteRenderer.sprite.pivotPoint": "(0.490, 0.460)",
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
