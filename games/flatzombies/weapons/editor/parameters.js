@@ -19,7 +19,7 @@ function onLoaded() {
 	document.getElementById("loading").classList.add('hidden');
 	document.getElementById("startFields").classList.remove('hidden');
 	document.getElementById("buttonPanel").classList.remove('hidden');
-	templateInput = document.getElementById("idTemplate"); // Удаляем все существующие <option>
+	templateInput = document.getElementById("idTemplate"); //Удаляем все существующие <option>
 	templateInput.addEventListener('change', onSelectWeapon);
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
 	//Сразу открыть оружие для редактирования
@@ -130,7 +130,7 @@ async function onSelectWeapon(event) {
 	}).catch(err => {
 		// Можно логировать или игнорировать — но промис будет отклонён
 		console.error('onSelectWeapon failed:', err);
-		throw err; // Перебрасываем ошибку дальше, если нужно
+		throw err; //Перебрасываем ошибку дальше, если нужно
 	});
 }
 
@@ -191,7 +191,7 @@ function isValidBase64Image(data) {
 	if (typeof data !== 'string') return false;
 	// Проверяем, что строка — data URL с изображением
 	const match = data.match(/^data:image\/(png|jpeg|jpg|gif);base64,(.*)$/);
-	return match && match[2].length > 100; // базовая проверка длины
+	return match && match[2].length > 100; //базовая проверка длины
 }
 
 
@@ -257,9 +257,9 @@ function syncParamsToScene() {
 			texture: param.spritePreview || 'images/point.png',
 			localPosition: { x, y },
 			localAngle: convertTo180(parseFloat(getPointField(param.fieldPath, 'angle')) || 0),
-			sortingOrder: param.sortingOrder || 1000,  // Чтобы точки были поверх других объектов
+			sortingOrder: param.sortingOrder || 1000,  //Чтобы точки были поверх других объектов
 			pixelPerUnit: param.spritePixelPerUnit || 200,
-			pivotPoint: param.spritePivotPoint || { x: 0.5, y: 0.5 }, // Центр круга
+			pivotPoint: param.spritePivotPoint || { x: 0.5, y: 0.5 }, //Центр круга
 			enabled: param.hasOwnProperty('enabled') ? param.enabled : true,
 			isActive: param.hasOwnProperty('isActive') ? param.isActive : true,
 			canChangePivot: false,
@@ -284,7 +284,7 @@ function syncParamsToScene() {
 
 //Найти угол, который связан с координатами для объекта на сцене
 function getPointField(fieldPath, property, defaultValue = null) {
-	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
+	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); //"shellDrop.position".endsWith(".position")
 	if (!reference) return defaultValue;
 	if (!(property in reference)) return defaultValue;
 	if (!reference[property]) return defaultValue;  //console.warn('getPointField(' + fieldPath + ', ' + property + '): reference[' + property + '] == NULL - return NULL;'); 
@@ -303,7 +303,7 @@ function getPointField(fieldPath, property, defaultValue = null) {
 
 //Найти и изменить парамтер
 function setPointField(fieldPath, property, newValue) {
-	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); // "shellDrop.position".endsWith(".position")
+	let reference = editedPoint.find(p => fieldPath === p.name || fieldPath.endsWith(p.name)); //"shellDrop.position".endsWith(".position")
 	if (!reference || !reference[property]) return null;
 	fieldPath = fieldPath.replace(reference.name, reference[property]); //shellDrop.position => shellDrop.angle
 	const param = editedParams.find(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath);
@@ -423,8 +423,8 @@ function addParam(fieldPath, addAsFirst = true) {
 	// Проверяем, есть ли зависимости для типа параметра
 	const dependencies = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	editedPoint.forEach(p => {
-		if (p.angle && fieldPath.endsWith(p.name)) { // "shellDrop.position".endsWith(".position")
-			dependencies.push(fieldPath.replace(p.name, p.angle)); // shellDrop.position => shellDrop.angle
+		if (p.angle && fieldPath.endsWith(p.name)) { //"shellDrop.position".endsWith(".position")
+			dependencies.push(fieldPath.replace(p.name, p.angle)); //shellDrop.position => shellDrop.angle
 			return;
 		}
 	});
@@ -434,7 +434,7 @@ function addParam(fieldPath, addAsFirst = true) {
 		const fullPath = getChildDepPath(param, depFieldPath);
 		let sample = sampleParams.find(p => p.fieldPath === fullPath);
 		if (sample && !editedParams.find(p => p.fieldPath === fullPath)) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
-			editedParams.splice(spliceIndex, 0, sample);//console.log(sample.fieldPath + ': ' + sample.value);
+			editedParams.splice(spliceIndex, 0, sample); //console.log(sample.fieldPath + ': ' + sample.value);
 		}
 	});
 	renderEditedParams();
@@ -474,12 +474,12 @@ function createParam(newFieldPath = null, newFieldType = null, newFieldValue = n
 function removeParam(path, showConfirm = true) {
 	const param = findByPath(path);
 	if (showConfirm) {
-		const confirmed = confirm(tr("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия ") + templateInput.value + "\n" + param.fieldPath); // Показываем диалог подтверждения
-		if (!confirmed) return; // Если пользователь нажал "Отмена", ничего не делаем
+		const confirmed = confirm(tr("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия ") + templateInput.value + "\n" + param.fieldPath); //Показываем диалог подтверждения
+		if (!confirmed) return; //Если пользователь нажал "Отмена", ничего не делаем
 	}
 	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	const basePaths = new Set();
-	basePaths.add(param.fieldPath);// Добавляем основной путь
+	basePaths.add(param.fieldPath); // Добавляем основной путь
 	typeDeps.forEach(depPath => {// Добавляем зависимости с префиксом
 		basePaths.add(getChildDepPath(param, depPath));
 	});
@@ -499,8 +499,8 @@ function renderAvailableParams(filter = '') {
 	availableParams.filter(param => {// Фильтр по поиску
 		filter = filter.toLowerCase();
 		const matchesSearch = (filter != '') ? param.value == filter || param.fieldPath.toLowerCase().includes(filter) || (param.comment || '').toLowerCase().includes(filter) || param.type.toLowerCase().includes(filter) : true;
-		const isAdded = !!findByPath(param.fieldPath);// Проверяем, добавлен ли параметр
-		return matchesSearch && !isAdded;// Исключаем ВСЕ добавленные параметры из списка
+		const isAdded = !!findByPath(param.fieldPath); // Проверяем, добавлен ли параметр
+		return matchesSearch && !isAdded; // Исключаем ВСЕ добавленные параметры из списка
 	}).forEach(param => {
 		const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
 		li.style = "position: relative;";
@@ -568,7 +568,7 @@ function getImageFromBase64(base64String) {
 
 function forceRenderEditedParams(filter = '') {
 	const processed = new Set();
-	const hiddenPaths = new Set(); // Чтобы не рендерить повторно параметры из группы
+	const hiddenPaths = new Set(); //Чтобы не рендерить повторно параметры из группы
 	const list = document.getElementById('editedParamsList'); list.innerHTML = '';
 	editedParams.forEach((param, idx) => {
 		if (filter != '') { //Поиск среди параметров
@@ -581,7 +581,7 @@ function forceRenderEditedParams(filter = '') {
 		const fullFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];
 		const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath];
 		if (typeDeps) {
-			const prefix = getPrefix(param.fieldPath, param.suffix);//const name = prefix || 'sprite';
+			const prefix = getPrefix(param.fieldPath, param.suffix); //const name = prefix || 'sprite';
 			const groupPaths = new Array();
 			groupPaths.push(param.fieldPath);
 			typeDeps.forEach(path => groupPaths.push(getChildDepPath(param, path)));
@@ -823,10 +823,10 @@ function forceRenderEditedParams(filter = '') {
 		input.addEventListener('drop', e => {
 			const files = e.dataTransfer.files;
 			if (files.length > 0) {
-				const dt = new DataTransfer();// Используем DataTransfer для установки файлов
-				dt.items.add(files[0]); // Берём первый файл (можно цикл для multiple)
+				const dt = new DataTransfer(); // Используем DataTransfer для установки файлов
+				dt.items.add(files[0]); //Берём первый файл (можно цикл для multiple)
 				fileInput.files = dt.files;
-				fileInput.dispatchEvent(new Event('input', { bubbles: true }));// Эмулируем событие input, чтобы сработал oninput
+				fileInput.dispatchEvent(new Event('input', { bubbles: true })); // Эмулируем событие input, чтобы сработал oninput
 			}
 		});
 	});
@@ -837,6 +837,7 @@ function forceRenderEditedParams(filter = '') {
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
 const fileType = []; fileType["TextFile"] = ".txt"; fileType["LuaScript"] = ".lua"; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
+const textFileType = [".txt", ".lua"];
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.startFieldPath == param.startFieldPath) ?? editedParams.findIndex(field => field.fieldPath == param.fieldPath);
 
@@ -847,13 +848,17 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	}
 
 	//Поле с кнопкой для загрузки файла
-	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
-		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+	if (param.type in fileType) { //Проверяем, является ли тип файловым (присутствует в fileType)
+		const ext = fileType[param.type]; const accept = ext ? ext : undefined; //можно оставить пустым для TextFile
 		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="${accept}" style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
 		<div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
-		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>
+		<label class="fileInputLabel">
+		<input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
+		<div class="fileInputButton" data-tooltip="Открыть другой файл" id="${param.startFieldPath}Rplc">Заменить</div>
+		</label>
+		${textFileType.includes(ext) ?
+				`<div class="fileInputButton add" data-tooltip="Открыть панель для редактирования" id="${param.startFieldPath}Rplc" onclick="openTextEditor('${param.startFieldPath}')">Изменить</div>` :
+				`<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>`}
 		</div>`;
 	}
 
@@ -974,8 +979,8 @@ function getInput(param, path) {
 	}
 
 	//Поле с кнопкой для загрузки файла
-	if (param.type in fileType) { // Проверяем, является ли тип файловым (присутствует в fileType)
-		const ext = fileType[param.type]; const accept = ext ? ext : undefined; // можно оставить пустым для TextFile
+	if (param.type in fileType) { //Проверяем, является ли тип файловым (присутствует в fileType)
+		const ext = fileType[param.type]; const accept = ext ? ext : undefined; //можно оставить пустым для TextFile
 		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="${accept}" style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
 		<div>
 		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
@@ -1074,12 +1079,12 @@ function getInput(param, path) {
 
 
 function htmlspecialchars(str) {
-	if (!str || typeof str !== 'string') return str; // Если не строка, возвращаем как есть
+	if (!str || typeof str !== 'string') return str; //Если не строка, возвращаем как есть
 	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
 function stringIsObject(value) {
-	if (!value || typeof value !== 'string') return false; // Если не строка, возвращаем как есть
+	if (!value || typeof value !== 'string') return false; //Если не строка, возвращаем как есть
 	value = value.trim();
 	return (7 <= value.length && ((value.startsWith("{") && value.endsWith("}")) || (value.startsWith("[") && value.endsWith("]"))));
 }
@@ -1164,21 +1169,21 @@ Promise.all(
 		item.type === 'Sprite'
 			? compressImage(item.value, maxSize)
 				.then(compressed => ({
-					...item, // копируем все исходные свойства
-					value: compressed.base64, // заменяем value на сжатый base64
-					error: undefined // очищаем ошибку, если была
+					...item, //копируем все исходные свойства
+					value: compressed.base64, //заменяем value на сжатый base64
+					error: undefined //очищаем ошибку, если была
 				}))
 				.catch(err => ({
-					...item, // оставляем оригинал
-					error: err.message || "Unknown error", // добавляем ошибку
+					...item, //оставляем оригинал
+					error: err.message || "Unknown error", //добавляем ошибку
 				}))
-			: Promise.resolve({ ...item }) // не Sprite — возвращаем без изменений
+			: Promise.resolve({ ...item }) //не Sprite — возвращаем без изменений
 	)
 ).then(results => {
 	const successful = results.filter(r => !r.error);
 	const failed = results.filter(r => r.error);
 	console.log(`Успешно: ${successful.length}, Ошибок: ${failed.length}`);
-	saveAll(results); // ← передаём ВСЕ объекты (и Sprite, и другие)
+	saveAll(results); //← передаём ВСЕ объекты (и Sprite, и другие)
 }).catch(err => {
 	console.error("Неожиданная ошибка при обработке:", err);
 });
@@ -1209,7 +1214,7 @@ function compressImage(base64, maxSize) {
 			// Возвращаем новый base64 и коэффициент масштабирования
 			resolve({ base64: canvas.toDataURL('image/png'), scale: scale });
 		};
-		img.onerror = () => { resolve({ base64: base64, scale: 1 }); }; // При ошибке — возвращаем оригинал и scale = 1
+		img.onerror = () => { resolve({ base64: base64, scale: 1 }); }; //При ошибке — возвращаем оригинал и scale = 1
 	});
 }
 
@@ -1218,27 +1223,27 @@ function compressImage(base64, maxSize) {
 function base64ToFile(base64, filename = 'file.png') {
 	base64 = base64.trim();
 	if (!base64) { alert(tr('Нет данных для сохранения в файл')); return; }
-	const base64Data = base64.split(',')[1] || base64; // Удаляем префикс data:...;base64, если он есть
-	const byteCharacters = atob(base64Data); // Декодируем base64 в бинарные данные
-	const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0))); // Создаём массив байтов
-	let mimeType = 'image/png'; // Определяем MIME-тип по умолчанию
+	const base64Data = base64.split(',')[1] || base64; //Удаляем префикс data:...;base64, если он есть
+	const byteCharacters = atob(base64Data); //Декодируем base64 в бинарные данные
+	const byteArray = new Uint8Array([...byteCharacters].map(c => c.charCodeAt(0))); //Создаём массив байтов
+	let mimeType = 'image/png'; //Определяем MIME-тип по умолчанию
 	if (base64.startsWith('data:')) {
-		const match = base64.match(/^data:([^;]+);base64,/); // Извлекаем MIME-тип
+		const match = base64.match(/^data:([^;]+);base64,/); //Извлекаем MIME-тип
 		if (match && match[1]) {
-			mimeType = match[1]; // Устанавливаем MIME-тип
-			if (filename === 'file.png') { // Если имя файла не задано
-				const ext = mimeType.split('/')[1]?.split('+')[0] || 'bin'; // Определяем расширение
-				filename = `file.${ext}`; // Обновляем имя файла
+			mimeType = match[1]; //Устанавливаем MIME-тип
+			if (filename === 'file.png') { //Если имя файла не задано
+				const ext = mimeType.split('/')[1]?.split('+')[0] || 'bin'; //Определяем расширение
+				filename = `file.${ext}`; //Обновляем имя файла
 			}
 		}
 	}
-	const blob = new Blob([byteArray], { type: mimeType }); // Создаём Blob
-	const url = URL.createObjectURL(blob); // Создаём ссылку для скачивания
-	const a = document.createElement('a'); // Создаём элемент ссылки
-	a.href = url; a.download = filename; document.body.appendChild(a); // Добавляем ссылку в документ
-	a.click(); // Имитируем клик для скачивания
-	URL.revokeObjectURL(url); // Очищаем URL
-	document.body.removeChild(a); // Удаляем элемент
+	const blob = new Blob([byteArray], { type: mimeType }); //Создаём Blob
+	const url = URL.createObjectURL(blob); //Создаём ссылку для скачивания
+	const a = document.createElement('a'); //Создаём элемент ссылки
+	a.href = url; a.download = filename; document.body.appendChild(a); //Добавляем ссылку в документ
+	a.click(); //Имитируем клик для скачивания
+	URL.revokeObjectURL(url); //Очищаем URL
+	document.body.removeChild(a); //Удаляем элемент
 }
 
 
@@ -1304,7 +1309,7 @@ function importFromJSON(jsonData) {
 	onSelectWeapon({ target: templateInput }).then(() => {
 		// Обрабатываем параметры из JSON
 		const json = new Array();
-		Object.keys(jsonData).forEach(jsonKey => { // Преобразуем полный путь к короткому формату (убираем префиксы)
+		Object.keys(jsonData).forEach(jsonKey => { //Преобразуем полный путь к короткому формату (убираем префиксы)
 			let fullKeyPath = jsonKey;
 			importReplace.forEach(field => { if (fullKeyPath.includes(field.fieldPath)) { fullKeyPath = fullKeyPath.replace(field.fieldPath, field.newPath); } });   //Заменить имена параметров
 			let shortPath = fullKeyPath;
@@ -1338,7 +1343,7 @@ function importFromJSON(jsonData) {
 				sampleParams[index].value = field.value;
 				addParam(sampleParams[index].fieldPath);
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
-				const pathSuffix = field.key.split('.').slice(-2).join('.') // 'weapon.parent.laserSight.SpriteRenderer.sprite' => 'SpriteRenderer.sprite', получаем суффикс и ищем какой тип данных имеет этот параметр по похожим данным из массива sampleParams
+				const pathSuffix = field.key.split('.').slice(-2).join('.') //'weapon.parent.laserSight.SpriteRenderer.sprite' => 'SpriteRenderer.sprite', получаем суффикс и ищем какой тип данных имеет этот параметр по похожим данным из массива sampleParams
 				const analog = sampleParams.findLast(p => p.fieldPath.endsWith(pathSuffix));
 				editedParams.push({ "fieldPath": field.key, "startFieldPath": field.fullKeyPath, "comment": null, "type": analog?.type || typeByValue(field.value), "value": field.value, "suffix": analog?.suffix });
 			}
@@ -1421,7 +1426,7 @@ function getExportResultJSON() {
 				const point2 = resolvedPoints[j];
 				if (point1.value === point2.value && point1.value !== "0,0,0") {
 					alert(`${tr("Ошибка:\n")}${point1.name} == ${point2.name}\n${tr("Параметры не должны совпадать, они имеют разное предназначение")}`);
-					return false; // Останавливаем функцию
+					return false; //Останавливаем функцию
 				}
 			}
 		}
