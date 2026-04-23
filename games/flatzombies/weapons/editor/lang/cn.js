@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, {
+window.translate = Object.assign(window.translate, { //Simplified Chinese (简体中文) 
 	1000: "添加新参数",
 	1001: "关闭",
 	1002: "对象属性路径",
@@ -60,6 +60,13 @@ window.translate = Object.assign(window.translate, {
 	1121: "模组制作者规则",
 	1122: "您的模组必须符合僵尸射击游戏的主题",
 	1123: "功能不可用",
+	1124: "关闭窗口而不保存更改？",
+	1125: "文本编辑器",
+	1126: "枢轴点编辑器",
+	1191: "保存更改",
+	1192: "保存",
+	1127: "应用",
+	1128: "应用更改",
 
 	1500: "❌ 禁止使用盗用的素材（贴图、模型、音效）",
 	1501: "❌ 禁止对游戏内贴图进行简单改色, 以及复制游戏中的武器",
