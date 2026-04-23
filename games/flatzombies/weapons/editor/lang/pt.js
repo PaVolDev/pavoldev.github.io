@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, {
+window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	1000: "Adicionar novo parâmetro",
 	1001: "Fechar",
 	1002: "Caminho para a propriedade do objeto",
@@ -60,6 +60,13 @@ window.translate = Object.assign(window.translate, {
 	1121: "Regras para modders",
 	1122: "Seu mod deve corresponder ao tema de um shooter de zumbis",
 	1123: "Função indisponível",
+	1124: "Fechar janela sem salvar as alterações?",
+	1125: "Editor de texto",
+	1126: "Editor de ponto de rotação",
+	1191: "Salvar alterações",
+	1192: "Salvar",
+	1127: "Aplicar",
+	1128: "Aplicar alterações",
 
 	1500: "❌ Assets roubados (texturas, modelos, sons) são proibidos",
 	1501: "❌ É proibido recolorir texturas e duplicar armas do jogo",
