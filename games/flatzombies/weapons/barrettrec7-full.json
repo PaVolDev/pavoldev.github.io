@@ -32,7 +32,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.25, -0.17, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.6, 0.135, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1, 0.3, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-0.74, -0.04, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.8, -0.04, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
@@ -100,6 +100,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
