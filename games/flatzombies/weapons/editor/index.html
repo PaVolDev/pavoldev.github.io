@@ -17,7 +17,7 @@
 		<!-- Левая панель: Доступные параметры -->
 		<div class="panel panelHidden" id="leftPanel">
 			<span style="position: relative;">
-				<div class="titlePanel">Доступные параметры</div>
+				<div class="titlePanel panelName">Доступные параметры</div>
 				<div onclick="showAddNewField()" data-tooltip="Добавить новый параметр" class="addNewField" id="addNewField">
 					<img src="images/add.png" width="100%" height="100%">
 				</div>
@@ -66,11 +66,11 @@
 
 		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
 		<div class="panel" id="centerPanel">
-			<div class="titlePanel hidden" id="centerTitle">Параметры оружия</div>
-			<div class="titlePanel " id="startCenterTitle">Новое оружие</div>
+			<div class="titlePanel panelName hidden" id="centerTitle">Параметры оружия</div>
+			<div class="titlePanel panelName " id="startCenterTitle">Новое оружие</div>
 			<!-- <div id="startCenterTitle" style="display: grid; grid-template-columns: 1fr 1fr;">
-				<div class="titlePanel">Новое оружие</div>
-				<div class="titlePanel" style="text-align: right;"><a href="/test">💩 Мои моды</a></div>
+				<div class="titlePanel panelName">Новое оружие</div>
+				<div class="titlePanel panelName" style="text-align: right;"><a href="/test">💩 Мои моды</a></div>
 			</div> -->
 			<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 			<div class="fields hidden" id="startFields">
@@ -183,7 +183,7 @@
 		<!-- Правая панель: Предпросмотр -->
 		<div class="panel panelHidden" id="rightPanel">
 			<span style="position: relative;">
-				<div class="titlePanel">Предпросмотр</div>
+				<div class="titlePanel panelName">Предпросмотр</div>
 				<img src="images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра<br><b>ЛКМ+Shift</b> - при перемещении точки вращения двигать дочерние объекты вместе с курсором мыши" onclick="alert(tr('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра\nЛКМ+Shift - при перемещении точки вращения двигать дочерние объекты вместе с курсором мыши'))">
 			</span>
 			<!-- Рендер объектов -->
@@ -196,7 +196,7 @@
 						<span>Объекты:</span>
 						<span>
 							<img onclick="showSelect('addNewObject')" data-tooltip="Добавить новый объект" src="images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
-							<select onclick="addNewComponent(this)" id="addNewObject" style="opacity: 0;pointer-events: none;width: 0;height: 0;" value = "">
+							<select onclick="addNewComponent(this)" id="addNewObject" style="opacity: 0;pointer-events: none;width: 0;height: 0;" value="">
 								<option value="SpriteRenderer">SpriteRenderer</option>
 								<option value="Transform">Transform</option>
 								<option value="AnimatorSprite" param-path="AnimatorSprite.animations; AnimatorSprite.playStart" param-type="AnimationSprite[]; bool" param-value=";true">AnimatorSprite</option>
@@ -305,7 +305,7 @@
 	<div id="pivotPointEditor" class="pivot-editor hidden" style="display: none;">
 		<div class="pivot-editor-content">
 			<div class="pivot-editor-header">
-				<div class="h2">Редактор точки вращения</div>
+				<div class="panelName">Редактор точки вращения</div>
 				<button class="close-btn" onclick="closePivotPointEditor()" data-tooltip="Закрыть">✕</button>
 			</div>
 			<div class="pivot-editor-body">
@@ -324,10 +324,22 @@
 						</div>
 					</div>
 					<button class="save-button" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
-					<!-- <div class="pivot-buttons">
-						<button class="button add" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
-						<button class="button" onclick="closePivotPointEditor()" data-tooltip="Закрыть без применения" >Отмена</button>
-					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Панель текстового редактора -->
+	<div id="textEditor" class="pivot-editor hidden" style="display: none;">
+		<div class="pivot-editor-content">
+			<div class="pivot-editor-header">
+				<div class="panelName">Текстовый редактор</div>
+				<button class="close-btn" onclick="closeTextEditor(true)" data-tooltip="Закрыть">✕</button>
+			</div>
+			<div class="pivot-editor-body" style="display: flex; flex-direction: column; gap: 12px;">
+				<textarea id="textEditorTextarea" style="width: 100%; min-height: 360px; resize: vertical; box-sizing: border-box; font-family: Consolas, monospace; font-size: 14px;"></textarea>
+				<div style="text-align: right;">
+					<button class="save-button" onclick="saveTextEditor()" data-tooltip="Сохранить изменения">Сохранить</button>
 				</div>
 			</div>
 		</div>
@@ -348,7 +360,9 @@
 	<!-- Редактор -->
 	<script src="parameters.js"></script> <!-- editedParams + UI -->
 	<script src="functions.js"></script> <!-- набор фукнций для редактирования -->
+	<script src="text-editor.js"></script>
 	<script src="tooltip.js"></script>
+
 </body>
 
 </html>
