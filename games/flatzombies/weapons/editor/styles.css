@@ -94,11 +94,14 @@ ul {
 }
 
 .titlePanel {
-	font-size: 16px;
-	margin: 0 0 12px 0;
-	color: var(--accent);
 	padding-bottom: 8px;
 	border-bottom: 1px solid var(--border-color);
+	margin: 0 0 12px 0;
+}
+
+.panelName {
+	font-size: 16px;
+	color: var(--accent);
 }
 
 .container {
@@ -878,7 +881,7 @@ img.tooltip {
 .pivot-editor-content {
 	background: var(--panel);
 	border-radius: 8px;
-	padding: 20px;
+	padding: 12px;
 	max-width: 900px;
 	width: 90%;
 	max-height: 90vh;
@@ -891,8 +894,8 @@ img.tooltip {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 16px;
-	padding-bottom: 12px;
+	margin-bottom: 12px;
+	padding-bottom: 4px;
 	border-bottom: 1px solid var(--border-color);
 }
 
@@ -908,7 +911,7 @@ img.tooltip {
 	color: var(--text);
 	font-size: 24px;
 	cursor: pointer;
-	padding: 4px 8px;
+	padding: 4px 16px;
 	border-radius: 4px;
 	transition: background 0.2s;
 }
