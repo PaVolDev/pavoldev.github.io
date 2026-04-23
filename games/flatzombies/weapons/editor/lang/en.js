@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, {
+window.translate = Object.assign(window.translate, { //English (USA|British)
 	1000: "Add new parameter",
 	1001: "Close",
 	1002: "Object property path",
@@ -60,6 +60,13 @@ window.translate = Object.assign(window.translate, {
 	1121: "Modding Rules",
 	1122: "Your mod must match the zombie shooter theme",
 	1123: "Feature unavailable",
+	1124: "Close window without saving changes?",
+	1125: "Text editor",
+	1126: "Pivot point editor",
+	1191: "Save changes",
+	1192: "Save",
+	1127: "Apply",
+	1128: "Apply changes",
 
 	1500: "❌ Stolen assets (textures, models, sounds) are prohibited",
 	1501: "❌ Recoloring textures and duplicating weapons from the game is prohibited",
