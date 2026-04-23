@@ -1,9 +1,9 @@
 
-// Переменные для редактора точки вращения
-let pivotEditorParam = null; // Параметр, который редактируем
-let pivotEditorImage = null; // Загруженное изображение
-let pivotPoint = { x: 0.5, y: 0.5 }; // Текущая точка вращения
-let isDragSpritePivot = false; // Флаг перетаскивания
+//Переменные для редактора точки вращения
+let pivotEditorParam = null; //Параметр, который редактируем
+let pivotEditorImage = null; //Загруженное изображение
+let pivotPoint = { x: 0.5, y: 0.5 }; //Текущая точка вращения
+let isDragSpritePivot = false; //Флаг перетаскивания
 
 function addNewSprite() {
 	const spritePath = addNewObject("SpriteRenderer");
@@ -83,8 +83,8 @@ function addNewComponent(input) {
 	} else if (input.value) {
 		const spritePath = addUnityComponent(input.value);
 		if (spritePath) {
-			const option = input.options[input.selectedIndex];// Находим выбранный <option> // Извлекаем атрибуты
-			const paths = option.getAttribute('param-path').split(';').map(s => s.trim());// Извлекаем строки и разбиваем их в массивы, удаляя лишние пробелы
+			const option = input.options[input.selectedIndex]; //Находим выбранный <option> //Извлекаем атрибуты
+			const paths = option.getAttribute('param-path').split(';').map(s => s.trim()); //Извлекаем строки и разбиваем их в массивы, удаляя лишние пробелы
 			const types = option.getAttribute('param-type').split(';').map(s => s.trim());
 			const values = option.getAttribute('param-value').split(';').map(s => s.trim());
 			paths.forEach((path, index) => {
@@ -102,22 +102,22 @@ function showDisableNewSprite() {
 
 
 function showSelect(idElement) {
-	document.getElementById(idElement).showPicker(); // Вызывает нативное окно выбора (поддерживается современными браузерами)
+	document.getElementById(idElement).showPicker(); //Вызывает нативное окно выбора (поддерживается современными браузерами)
 }
 
 
 //ПОКАЗАТЬ ПРАВИЛА
-// Показать модальное окно при загрузке страницы
+//Показать модальное окно при загрузке страницы
 var modRulesModal = document.getElementById('modRulesModal');
 document.addEventListener('DOMContentLoaded', function () {
-	if (localStorage.getItem('agreedToRulesV2') !== 'true') {// Показать только если пользователь ещё не соглашался
+	if (localStorage.getItem('agreedToRulesV2') !== 'true') {//Показать только если пользователь ещё не соглашался
 		modRulesModal.style.display = 'block';
 		document.getElementById('page').classList.add('hidden');
 	} else {
 		removeRulesWindow();
 	}
 });
-// Включить/выключить кнопку "Согласен" в зависимости от чекбокса
+//Включить/выключить кнопку "Согласен" в зависимости от чекбокса
 const checkbox = document.getElementById('agreeCheckbox');
 const agreeButton = document.getElementById('agreeBtn');
 checkbox.addEventListener('change', function () {
@@ -130,7 +130,7 @@ checkbox.addEventListener('change', function () {
 	}
 });
 
-// Закрыть окно при нажатии "Согласен"
+//Закрыть окно при нажатии "Согласен"
 agreeButton.addEventListener('click', removeRulesWindow);
 function removeRulesWindow(event = null) {
 	modRulesModal.style.display = 'none';
@@ -149,8 +149,8 @@ function generateRandomString() {
 }
 const login = document.getElementById('login');
 const password = document.getElementById('password');
-document.getElementById('save').addEventListener('mouseenter', function () { // Проверяем, пусты ли поля при загрузке страницы
-	if (!login.value && !password.value) {// Генерируем автоматические значения только если оба поля пусты
+document.getElementById('save').addEventListener('mouseenter', function () { //Проверяем, пусты ли поля при загрузке страницы
+	if (!login.value && !password.value) {//Генерируем автоматические значения только если оба поля пусты
 		login.value = generateRandomString();
 		password.value = generateRandomString();
 	}
@@ -326,7 +326,7 @@ function renderAnimationSprite(param, paramIndex, spriteMetaData) {
 
 
 
-// --- Анимации ---
+//--- Анимации ---
 function addAnimation(paramIndex) {
 	const param = editedParams[paramIndex];
 	if (!Array.isArray(param.value)) param.value = [];
@@ -361,7 +361,7 @@ function updateAnimationName(paramIndex, animIdx, name) {
 	}
 }
 
-// --- Фреймы ---
+//--- Фреймы ---
 function addAnimationFrame(paramIndex, animIdx) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[animIdx]?.frames) {
@@ -488,7 +488,7 @@ function renderPhysicsMaterialMultiply(param, index, childFields) {
 
 
 
-// Добавить новый элемент в массив
+//Добавить новый элемент в массив
 function addArrayItem(paramIndex) {
 	const param = editedParams[paramIndex];
 	if (!Array.isArray(param.value)) param.value = [];
@@ -501,7 +501,7 @@ function addArrayItem(paramIndex) {
 	updateParam(paramIndex, param.value, true);
 }
 
-// Удалить элемент по индексу
+//Удалить элемент по индексу
 function removeArrayItem(path, itemIndex) {
 	const paramArray = findValueByPath(path);
 	if (Array.isArray(paramArray)) {
@@ -512,7 +512,7 @@ function removeArrayItem(path, itemIndex) {
 	}
 }
 
-// Обновить поле в объекте массива
+//Обновить поле в объекте массива
 function updateArrayField(paramIndex, itemIndex, field, value) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[itemIndex]) {
@@ -520,7 +520,7 @@ function updateArrayField(paramIndex, itemIndex, field, value) {
 	}
 }
 
-// Обновить materialName при выборе из select
+//Обновить materialName при выборе из select
 function updateMaterialName(paramIndex, itemIndex, materialName) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[itemIndex]) {
@@ -535,9 +535,9 @@ function updateMaterialName(paramIndex, itemIndex, materialName) {
 
 
 //Универсальная функция renderObjectArray, которая работает с любым массивом объектов, основываясь на конфигурации objectMetaData
-// Форма для редактирования массива объектов
+//Форма для редактирования массива объектов
 function renderObjectArray(param, index, objectMetaData) {
-	param.objectMetaData = objectMetaData; // добавляем метаданные в param
+	param.objectMetaData = objectMetaData; //добавляем метаданные в param
 	param.value = param.value || [];
 	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const renderItem = (item, i) => {
@@ -580,9 +580,9 @@ function renderObjectArray(param, index, objectMetaData) {
 }
 
 //Универсальная функция renderSpriteArray, которая работает с любым массивом объектов, основываясь на конфигурации objectMetaData
-// Форма для редактирования массива объектов
+//Форма для редактирования массива объектов
 function renderSpriteArray(param, index, objectMetaData) {
-	param.objectMetaData = objectMetaData; // добавляем метаданные в param
+	param.objectMetaData = objectMetaData; //добавляем метаданные в param
 	param.frame = param.frame || 0;
 	param.index = index;
 	param.value = param.value || [{ "sprite": "", "pivotPoint": "(0.5, 0.5)", "pixelPerUnit": 50 }];
@@ -791,7 +791,7 @@ function findValueByPath(path, defaultValue = undefined) {
 
 
 
-// Добавить новый элемент в массив
+//Добавить новый элемент в массив
 function addArrayItemByMeta(path, positionIndex = -1, objectMetaData = null) {
 	let paramArray = findValueByPath(path);
 	const param = (Array.isArray(path)) ? findByPath(path[0]) : findByPath(path);
@@ -802,14 +802,14 @@ function addArrayItemByMeta(path, positionIndex = -1, objectMetaData = null) {
 	if (Array.isArray(objectMetaData)) {
 		newItem = newObjectByMetaData(objectMetaData);
 	} else {
-		newItem = ''; // Пустая строка по умолчанию
+		newItem = ''; //Пустая строка по умолчанию
 		if (objectMetaData == null) console.warn("addArrayItemByMeta.objectMetaData == null - параметр фукнции не указан");
 	}
 	let insertIndex;
 	if (positionIndex === -1 || positionIndex < 0) {
-		insertIndex = paramArray.length;// Добавляем в конец, как в оригинальной функции
+		insertIndex = paramArray.length; //Добавляем в конец, как в оригинальной функции
 	} else {
-		insertIndex = Math.min(positionIndex + 1, paramArray.length);// Вставляем после указанного индекса, но не дальше конца массива
+		insertIndex = Math.min(positionIndex + 1, paramArray.length); //Вставляем после указанного индекса, но не дальше конца массива
 	}
 	paramArray.splice(insertIndex, 0, newItem);
 	renderEditedParams();
@@ -821,7 +821,7 @@ function newObjectByMetaData(metaData) {
 	return newItem;
 }
 
-// Обновить поле в объекте массива
+//Обновить поле в объекте массива
 function updateArrayFieldByMeta(paramIndex, itemIndex, field, value) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[itemIndex]) {
@@ -886,7 +886,7 @@ function renderFileArray(param, index, fileType = ".png") {
 
 
 
-// Добавить новый элемент в массив
+//Добавить новый элемент в массив
 function addFileItem(paramIndex) {
 	const param = editedParams[paramIndex];
 	if (!Array.isArray(param.value)) param.value = [];
@@ -894,21 +894,21 @@ function addFileItem(paramIndex) {
 	updateParam(paramIndex, param.value, true);
 }
 
-// Обновить поле в объекте массива
+//Обновить поле в объекте массива
 function updateFileItem(paramIndex, itemIndex, value) {
 	const param = editedParams[paramIndex];
 	if (Array.isArray(param.value) && param.value[itemIndex]) {
 		param.value[itemIndex] = value;
 	}
 }
-// Обновить элемент массива
+//Обновить элемент массива
 function loadFileToArray(paramIndex, itemIndex, input) {
 	const file = input.files[0];
 	if (!file) return;
 	const reader = new FileReader();
 	reader.onload = e => {
 		const base64 = e.target.result;
-		// Обрезаем прозрачные края
+		//Обрезаем прозрачные края
 		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
 			const param = editedParams[paramIndex];
 			param.value[itemIndex] = trimmedBase64;
@@ -924,12 +924,12 @@ function loadFileToArray(paramIndex, itemIndex, input) {
 
 
 //Функция позволяет редактировать массив объектов, где каждый элемент — JSON-строка:
-// Форма для редактирования массива JSON-объектов
+//Форма для редактирования массива JSON-объектов
 function renderJsonArray(param, index) {
 	param.value = param.value || [];
 	const items = Array.isArray(param.value) ? param.value : JSON.parse(param.value);
 	const renderItem = (item, i) => {
-		// Преобразуем объект в JSON-строку
+		//Преобразуем объект в JSON-строку
 		const jsonStr = typeof item === 'object' ? htmlspecialchars(JSON.stringify(item)) : item;
 
 		return `
@@ -970,7 +970,7 @@ function renderJsonArray(param, index) {
 }
 
 
-// Добавить пустой JSON-объект в массив
+//Добавить пустой JSON-объект в массив
 function addJsonItem(paramIndex) {
 	const param = editedParams[paramIndex];
 	if (!Array.isArray(param.value)) param.value = [];
@@ -978,7 +978,7 @@ function addJsonItem(paramIndex) {
 	updateParam(paramIndex, param.value, true);
 }
 
-// Обновить JSON-объект в массиве
+//Обновить JSON-объект в массиве
 function updateJsonItem(paramIndex, itemIndex, jsonString) {
 	try {
 		const parsed = JSON.parse(jsonString);
@@ -992,7 +992,7 @@ function updateJsonItem(paramIndex, itemIndex, jsonString) {
 	}
 }
 
-// Загрузить JSON-объект из файла
+//Загрузить JSON-объект из файла
 function loadJsonFromFile(paramIndex, itemIndex, inputElement) {
 	const file = inputElement.files[0];
 	if (!file) return;
@@ -1013,7 +1013,7 @@ function loadJsonFromFile(paramIndex, itemIndex, inputElement) {
 	reader.readAsText(file);
 }
 
-// Сохранить JSON-объект в файл
+//Сохранить JSON-объект в файл
 function saveJsonToFile(paramIndex, itemIndex) {
 	const param = editedParams[paramIndex];
 	if (!Array.isArray(param.value) || !param.value[itemIndex]) return;
@@ -1107,52 +1107,52 @@ function renderWeaponCartridge(param, index) {
 	return '';
 }*/
 
-// ——— ФУНКЦИИ РЕДАКТОРА ТОЧКИ ВРАЩЕНИЯ ———
-// Показать редактор точки вращения
+//——— ФУНКЦИИ РЕДАКТОРА ТОЧКИ ВРАЩЕНИЯ ———
+//Показать редактор точки вращения
 function showPivotPointEditor(pivotParamPath, spriteParamPath) {
-	pivotEditorParam = pivotParamPath; // Сохраняем путь к параметру
+	pivotEditorParam = pivotParamPath; //Сохраняем путь к параметру
 	const pivotParam = findByPath(pivotParamPath);
 	if (!pivotParam) {
 		console.error('showPivotPointEditor: параметр не найден - ' + pivotParamPath);
 		return;
 	}
-	// Парсим текущие координаты точки вращения
+	//Парсим текущие координаты точки вращения
 	const pivotValue = pivotParam.value || '(0.5, 0.5)';
 	const coords = parseVector(pivotValue);
 	pivotPoint = { x: coords[0], y: coords[1] };
-	// Находим связанный параметр спрайта для получения Base64 изображения
+	//Находим связанный параметр спрайта для получения Base64 изображения
 	const spriteParam = findByPath(spriteParamPath);
 	if (!spriteParam || !spriteParam.value) {
 		console.error('showPivotPointEditor: не удалось найти спрайт для параметра ' + pivotParamPath);
 		alert('Не удалось найти изображение для редактирования точки вращения');
 		return;
 	}
-	// Загружаем изображение из Base64
+	//Загружаем изображение из Base64
 	pivotEditorImage = new Image();
 	pivotEditorImage.onload = function () {
 		initPivotCanvas();
 	};
 	pivotEditorImage.src = spriteParam.value;
-	// Показываем панель редактора
+	//Показываем панель редактора
 	document.getElementById('pivotPointEditor').classList.remove('hidden');
 	document.getElementById('pivotPointEditor').style.display = 'flex';
-	// Обновляем поля ввода координат
+	//Обновляем поля ввода координат
 	document.getElementById('pivotX').value = pivotPoint.x.toFixed(2);
 	document.getElementById('pivotY').value = pivotPoint.y.toFixed(2);
 }
 
-// Инициализация canvas для редактора
+//Инициализация canvas для редактора
 function initPivotCanvas() {
-	const canvas = document.getElementById('pivotCanvas'); // Холст редактора pivot.
-	const ctx = canvas.getContext('2d'); // Контекст рисования холста.
-	const container = canvas.parentElement; // Контейнер холста для отслеживания мыши вне границ изображения.
-	const targetWidth = 600; // Базовая ширина области предпросмотра.
-	const targetHeight = 400; // Базовая высота области предпросмотра.
-	let canvasWidth = targetWidth; // Рабочая ширина холста.
-	let canvasHeight = targetHeight; // Рабочая высота холста.
-	const imageRatio = pivotEditorImage.naturalWidth / pivotEditorImage.naturalHeight; // Соотношение сторон изображения.
-	const canvasRatio = canvasWidth / canvasHeight; // Соотношение сторон базовой области.
-	
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	const ctx = canvas.getContext('2d'); //Контекст рисования холста.
+	const container = canvas.parentElement; //Контейнер холста для отслеживания мыши вне границ изображения.
+	const targetWidth = 600; //Базовая ширина области предпросмотра.
+	const targetHeight = 400; //Базовая высота области предпросмотра.
+	let canvasWidth = targetWidth; //Рабочая ширина холста.
+	let canvasHeight = targetHeight; //Рабочая высота холста.
+	const imageRatio = pivotEditorImage.naturalWidth / pivotEditorImage.naturalHeight; //Соотношение сторон изображения.
+	const canvasRatio = canvasWidth / canvasHeight; //Соотношение сторон базовой области.
+
 	if (imageRatio > canvasRatio) {
 		canvasHeight = canvasWidth / imageRatio;
 	} else {
@@ -1174,23 +1174,27 @@ function initPivotCanvas() {
 	container.onmouseleave = onPivotCanvasMouseUp;
 	canvas.ontouchstart = onPivotCanvasTouchStart;
 	canvas.ontouchmove = onPivotCanvasTouchMove;
-	canvas.ontouchend = onPivotCanvasMouseUp;
+	canvas.ontouchend = onPivotCanvasTouchEnd;
+	canvas.ontouchcancel = onPivotCanvasTouchEnd;
+	container.ontouchmove = onPivotCanvasContainerTouchMove;
+	container.ontouchend = onPivotCanvasTouchEnd;
+	container.ontouchcancel = onPivotCanvasTouchEnd;
 }
 
-// Рисование точки вращения
+//Рисование точки вращения
 function drawPivotPoint(ctx, canvasWidth, canvasHeight) {
-	// Преобразуем координаты из нормализованных (0-1) в пиксели
-	// Начало координат в нижнем правом углу
+	//Преобразуем координаты из нормализованных (0-1) в пиксели
+	//Начало координат в нижнем правом углу
 	const pixelX = canvasWidth * pivotPoint.x;
-	const pixelY = canvasHeight * (1 - pivotPoint.y); // Инвертируем Y для нижнего начала координат
-	
-	// Фиксированные размеры точки вращения (не зависят от размера изображения)
-	const circleRadius = 12; // Радиус круга
-	const crossSize = 20; // Размер перекрестия
-	const centerDotRadius = 4; // Радиус центральной точки
-	const lineWidth = 2; // Толщина линии
-	
-	// Рисуем круг
+	const pixelY = canvasHeight * (1 - pivotPoint.y); //Инвертируем Y для нижнего начала координат
+
+	//Фиксированные размеры точки вращения (не зависят от размера изображения)
+	const circleRadius = 12; //Радиус круга
+	const crossSize = 20; //Размер перекрестия
+	const centerDotRadius = 4; //Радиус центральной точки
+	const lineWidth = 2; //Толщина линии
+
+	//Рисуем круг
 	ctx.beginPath();
 	ctx.arc(pixelX, pixelY, circleRadius, 0, Math.PI * 2);
 	ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
@@ -1198,8 +1202,8 @@ function drawPivotPoint(ctx, canvasWidth, canvasHeight) {
 	ctx.lineWidth = lineWidth;
 	ctx.strokeStyle = '#ff0000';
 	ctx.stroke();
-	
-	// Рисуем перекрестие
+
+	//Рисуем перекрестие
 	ctx.beginPath();
 	ctx.moveTo(pixelX - crossSize, pixelY);
 	ctx.lineTo(pixelX + crossSize, pixelY);
@@ -1207,36 +1211,36 @@ function drawPivotPoint(ctx, canvasWidth, canvasHeight) {
 	ctx.lineTo(pixelX, pixelY + crossSize);
 	ctx.strokeStyle = '#ffffff';
 	ctx.stroke();
-	
-	// Рисуем центр
+
+	//Рисуем центр
 	ctx.beginPath();
 	ctx.arc(pixelX, pixelY, centerDotRadius, 0, Math.PI * 2);
 	ctx.fillStyle = '#ffffff';
 	ctx.fill();
 }
 
-// Получить координаты мыши относительно canvas
+//Получить координаты мыши относительно canvas
 function getMousePos(canvas, event) {
-	const rect = canvas.getBoundingClientRect(); // Границы холста на экране.
-	const scaleX = canvas.width / rect.width; // Масштаб X между CSS-размером и внутренним буфером canvas.
-	const scaleY = canvas.height / rect.height; // Масштаб Y между CSS-размером и внутренним буфером canvas.
+	const rect = canvas.getBoundingClientRect(); //Границы холста на экране.
+	const scaleX = canvas.width / rect.width; //Масштаб X между CSS-размером и внутренним буфером canvas.
+	const scaleY = canvas.height / rect.height; //Масштаб Y между CSS-размером и внутренним буфером canvas.
 	return {
 		x: (event.clientX - rect.left) * scaleX,
 		y: (event.clientY - rect.top) * scaleY
 	};
 }
 
-// Перерисовка canvas редактора pivot
-function redrawPivotCanvas(canvas) { // Обновляет изображение и pivot-точку на холсте.
-	const ctx = canvas.getContext('2d'); // Контекст рисования холста.
+//Перерисовка canvas редактора pivot
+function redrawPivotCanvas(canvas) { //Обновляет изображение и pivot-точку на холсте.
+	const ctx = canvas.getContext('2d'); //Контекст рисования холста.
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.drawImage(pivotEditorImage, 0, 0, canvas.width, canvas.height);
 	drawPivotPoint(ctx, canvas.width, canvas.height);
 }
 
-// Обновление pivot-точки по позиции указателя
-function updatePivotPointFromEvent(canvas, event) { // Ограничивает pivot в пределах изображения даже вне canvas.
-	const pos = getMousePos(canvas, event); // Координаты указателя относительно холста.
+//Обновление pivot-точки по позиции указателя
+function updatePivotPointFromEvent(canvas, event) { //Ограничивает pivot в пределах изображения даже вне canvas.
+	const pos = getMousePos(canvas, event); //Координаты указателя относительно холста.
 	pivotPoint.x = Math.max(0, Math.min(1, pos.x / canvas.width));
 	pivotPoint.y = Math.max(0, Math.min(1, 1 - pos.y / canvas.height));
 	document.getElementById('pivotX').value = pivotPoint.x.toFixed(2);
@@ -1244,11 +1248,11 @@ function updatePivotPointFromEvent(canvas, event) { // Ограничивает 
 	redrawPivotCanvas(canvas);
 }
 
-// Обработка нажатия мыши на canvas
+//Обработка нажатия мыши на canvas
 function onPivotCanvasMouseDown(event) {
 	const canvas = event.target;
 	const pos = getMousePos(canvas, event);
-	// Проверяем, попали ли в точку вращения
+	//Проверяем, попали ли в точку вращения
 	const pixelX = canvas.width * pivotPoint.x;
 	const pixelY = canvas.height * (1 - pivotPoint.y);
 	const distance = Math.sqrt((pos.x - pixelX) ** 2 + (pos.y - pixelY) ** 2);
@@ -1257,30 +1261,30 @@ function onPivotCanvasMouseDown(event) {
 	canvas.style.cursor = 'move';
 }
 
-// Обработка движения мыши над canvas
+//Обработка движения мыши над canvas
 function onPivotCanvasMouseMove(event) {
-	const canvas = document.getElementById('pivotCanvas'); // Холст редактора pivot.
-	const pos = getMousePos(canvas, event); // Координаты указателя относительно холста.
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	const pos = getMousePos(canvas, event); //Координаты указателя относительно холста.
 	if (isDragSpritePivot) {
 		updatePivotPointFromEvent(canvas, event);
 	} else {
-		const pixelX = canvas.width * pivotPoint.x; // Позиция pivot по X в пикселях.
-		const pixelY = canvas.height * (1 - pivotPoint.y); // Позиция pivot по Y в пикселях.
-		const distance = Math.sqrt((pos.x - pixelX) ** 2 + (pos.y - pixelY) ** 2); // Расстояние от курсора до pivot-точки.
+		const pixelX = canvas.width * pivotPoint.x; //Позиция pivot по X в пикселях.
+		const pixelY = canvas.height * (1 - pivotPoint.y); //Позиция pivot по Y в пикселях.
+		const distance = Math.sqrt((pos.x - pixelX) ** 2 + (pos.y - pixelY) ** 2); //Расстояние от курсора до pivot-точки.
 		canvas.style.cursor = (distance <= 20) ? 'move' : 'crosshair';
 	}
 }
 
-// Обработка движения мыши в контейнере canvas
-function onPivotCanvasContainerMouseMove(event) { // Продолжает перетаскивание при выходе курсора за границы canvas.
-	const canvas = document.getElementById('pivotCanvas'); // Холст редактора pivot.
+//Обработка движения мыши в контейнере canvas
+function onPivotCanvasContainerMouseMove(event) { //Продолжает перетаскивание при выходе курсора за границы canvas.
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
 	if (!isDragSpritePivot || event.target === canvas) {
 		return;
 	}
 	updatePivotPointFromEvent(canvas, event);
 }
 
-// Обработка отпускания мыши
+//Обработка отпускания мыши
 function onPivotCanvasMouseUp(event) {
 	isDragSpritePivot = false;
 	if (event.target) {
@@ -1288,55 +1292,93 @@ function onPivotCanvasMouseUp(event) {
 	}
 }
 
-// Обработка касания для сенсорных устройств
+//Обработка касания для сенсорных устройств
+function getPivotTouchPoint(event) {
+	if (event.touches && event.touches.length > 0) {
+		return event.touches[0];
+	}
+	if (event.changedTouches && event.changedTouches.length > 0) {
+		return event.changedTouches[0];
+	}
+	return null;
+}
+
 function onPivotCanvasTouchStart(event) {
 	event.preventDefault();
-	const touch = event.touches[0];
-	const canvas = event.target;
-	const mouseEvent = new MouseEvent('mousedown', {
+	const touch = getPivotTouchPoint(event); //Текущее касание на экране.
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	if (!touch || !canvas) {
+		return;
+	}
+	onPivotCanvasMouseDown({
 		clientX: touch.clientX,
-		clientY: touch.clientY
+		clientY: touch.clientY,
+		target: canvas
 	});
-	onPivotCanvasMouseDown(mouseEvent);
 }
 
 function onPivotCanvasTouchMove(event) {
 	event.preventDefault();
-	const touch = event.touches[0];
-	const canvas = event.target;
-	const mouseEvent = new MouseEvent('mousemove', {
+	const touch = getPivotTouchPoint(event); //Текущее касание на экране.
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	if (!touch || !canvas) {
+		return;
+	}
+	//Вычисления координат выполняются через onPivotCanvasMouseMove -> getMousePos,
+	//чтобы поведение на touch полностью совпадало с mouse.
+	onPivotCanvasMouseMove({
 		clientX: touch.clientX,
-		clientY: touch.clientY
+		clientY: touch.clientY,
+		target: canvas
 	});
-	onPivotCanvasMouseMove(mouseEvent);
 }
 
-// Обновление координат из полей ввода
+function onPivotCanvasContainerTouchMove(event) {
+	event.preventDefault();
+	const touch = getPivotTouchPoint(event); //Текущее касание на экране.
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	if (!touch || !canvas) {
+		return;
+	}
+	onPivotCanvasContainerMouseMove({
+		clientX: touch.clientX,
+		clientY: touch.clientY,
+		target: event.target
+	});
+}
+
+function onPivotCanvasTouchEnd(event) {
+	event.preventDefault();
+	const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
+	onPivotCanvasMouseUp({ target: canvas });
+}
+
+//Обновление координат из полей ввода
 function updatePivotFromInput() {
-	const x = parseFloat(document.getElementById('pivotX').value); // Значение X из поля ввода.
-	const y = parseFloat(document.getElementById('pivotY').value); // Значение Y из поля ввода.
+	const x = parseFloat(document.getElementById('pivotX').value); //Значение X из поля ввода.
+	const y = parseFloat(document.getElementById('pivotY').value); //Значение Y из поля ввода.
 	if (!isNaN(x) && !isNaN(y)) {
 		pivotPoint.x = Math.max(0, Math.min(1, x));
 		pivotPoint.y = Math.max(0, Math.min(1, y));
-		const canvas = document.getElementById('pivotCanvas'); // Холст редактора pivot.
+		const canvas = document.getElementById('pivotCanvas'); //Холст редактора pivot.
 		redrawPivotCanvas(canvas);
 	}
 }
 
-// Применить изменения точки вращения
+//Применить изменения точки вращения
 function applyPivotPoint() {
 	if (!pivotEditorParam) return;
 	const param = findByPath(pivotEditorParam);
 	if (param) {
-		// Формируем новое значение в формате "(x, y)"
+		//Формируем новое значение в формате "(x, y)"
 		const newValue = `(${pivotPoint.x.toFixed(2)}, ${pivotPoint.y.toFixed(2)})`;
 		param.value = newValue;
-		// Обновляем UI
+		//Обновляем UI
 		const pivotInputX = document.getElementById(pivotEditorParam + '.x');
 		const pivotInputY = document.getElementById(pivotEditorParam + '.y');
 		if (pivotInputX) pivotInputX.value = pivotPoint.x.toFixed(2);
 		if (pivotInputY) pivotInputY.value = pivotPoint.y.toFixed(2);
-		// Синхронизируем сценой
+		//Синхронизируем сценой
 		if (typeof syncParamsToScene === 'function') {
 			syncParamsToScene();
 		}
@@ -1344,7 +1386,7 @@ function applyPivotPoint() {
 	closePivotPointEditor();
 }
 
-// Закрыть редактор точки вращения
+//Закрыть редактор точки вращения
 function closePivotPointEditor() {
 	document.getElementById('pivotPointEditor').classList.add('hidden');
 	document.getElementById('pivotPointEditor').style.display = 'none';
