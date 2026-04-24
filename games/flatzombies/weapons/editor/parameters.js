@@ -33,22 +33,36 @@ function onLoaded() {
 document.addEventListener("DOMLanguageLoaded", onLanguageLoaded);
 function onLanguageLoaded() {
 	console.log('onLanguageLoaded');
-	sampleParams.forEach(element => {
-		element.comment = tr(element.comment);
-	});
+	sampleParams.forEach(element => { element.comment = tr(element.comment); });
 }
 
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 async function onSelectWeapon(event) {
+	let preservedEditedParams = []; //Сохранённые изменения при переключении оружия
 	return new Promise((resolve, reject) => {
-		if (editedParams.find(field => field.value != selectedWeapon[field.fieldPath] && field.type === 'Sprite')) {
-			const confirmed = confirm("Все изменения будут удалены!\nСменить оружие?");
+		if (selectedWeapon && editedParams.length != 0) {
+			const confirmed = confirm("Некоторые изменения будут потеряны!\nСменить оружие?");
 			if (!confirmed) {
 				templateInput.selectedIndex = lastTemplateIndex;
 				resolve(); //Успешное завершение — даже если отменили
 				return;
 			}
+			//Продолжаем переключение оружия //Копируем текущие данные для переноса
+			editedParams.forEach(param => {
+				if (param.startFieldPath in selectedWeapon) {
+					if (selectedWeapon[param.startFieldPath] != param.value) {
+						preservedEditedParams.push(structuredClone(param));
+					}
+				} else if (param.fieldPath in selectedWeapon) {
+					if (selectedWeapon[param.fieldPath] != param.value) {
+						preservedEditedParams.push(structuredClone(param));
+					}
+				} else if (sampleParams.findIndex(s => s.startFieldPath == param.startFieldPath) == -1) {
+					preservedEditedParams.push(structuredClone(param));
+				}
+			});
+			console.log(preservedEditedParams);
 		}
 		let cacheIndex = -1;
 		if ((cacheIndex = weapons.findIndex(item => item["weapon.name"] == event.target.value || item["id"] == event.target.value || item["name"] == event.target.value)) !== -1) {
@@ -99,7 +113,7 @@ async function onSelectWeapon(event) {
 				availableParams[idx].value = selectedWeapon[field.fieldPath];
 			}
 		});
-		sampleParams.forEach(field => { //Добавить параметры из sampleParams в список доступных в availableParams 
+		sampleParams.forEach(field => { //Добавить параметры из sampleParams в список доступных в availableParams
 			if (selectedWeapon.hasOwnProperty(field.fieldPath) && !availableParams.find(p => p.fieldPath == field.fieldPath)) {
 				field.value = selectedWeapon[field.fieldPath];
 				availableParams.push(field);
@@ -125,8 +139,30 @@ async function onSelectWeapon(event) {
 				}
 			}
 		});
+		//Вернуть прошлые параметры
+		preservedEditedParams.forEach(field => {
+			const alreadyAdded = editedParams.find(param => param.startFieldPath == field.startFieldPath || param.fieldPath == field.fieldPath);
+			if (alreadyAdded) {
+				alreadyAdded.value = field.value;
+				return;
+			}
+			const newWeaponField = availableParams.find(param => param.startFieldPath == field.startFieldPath || param.fieldPath == field.fieldPath);
+			if (newWeaponField) {
+				addParam(newWeaponField.fieldPath, false);
+				const restoredField = editedParams.find(param => param.startFieldPath == field.startFieldPath || param.fieldPath == field.fieldPath);
+				if (restoredField) {
+					restoredField.value = field.value;
+				}
+				return;
+			}
+			if (!sampleParams.findIndex(param => param.startFieldPath == field.startFieldPath || param.fieldPath == field.fieldPath) == -1) {
+				editedParams.push(field);
+			}
+		});
 		//Отсортировать массив editedParams так, чтобы все параметры с type === 'Sprite' шли в начале списка
 		editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
+		renderEditedParams();
+		syncParamsToScene();
 	}).catch(err => {
 		// Можно логировать или игнорировать — но промис будет отклонён
 		console.error('onSelectWeapon failed:', err);
