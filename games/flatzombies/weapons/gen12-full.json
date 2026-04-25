@@ -28,8 +28,8 @@
     "weapon.WeaponHandPoints.boltMovePoint": "(0.16, 0.23, 0)",
     "weapon.WeaponHandPoints.boltPoint": "(0.37, 0.23, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 10,
-    "weapon.WeaponHandPoints.magazineInsert": "(0.35, -0.3, 0)",
-    "weapon.WeaponHandPoints.magazinePoint": "(0.35, -0.3, 0)",
+    "weapon.WeaponHandPoints.magazineInsert": "(0.43, -0.47, 0)",
+    "weapon.WeaponHandPoints.magazinePoint": "(0.32, -0.31, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.8, 0.1, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1, 0.5, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.82, 0.1, 0)",
@@ -38,7 +38,6 @@
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
-    "weapon.Transform.localEulerAngles.z": 0,
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 141,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.37, 0.46, 0)",
@@ -93,5 +92,7 @@
     "weapon.fireRateInMinute": "900",
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
-    "weapon.WeaponHandPoints.fingerAngle": 0
+    "weapon.WeaponHandPoints.fingerAngle": 0,
+    "version": 1,
+    "targetVersion": 209
 }
