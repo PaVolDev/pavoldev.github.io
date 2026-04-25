@@ -40,7 +40,7 @@
     "storeInfo.patronOrderSize": "8",
     "weapon.WeaponSilencerMod.localPoint": "(0.930, 0.13, 0)",
     "weapon.laserPosition": "(1.440, 0.04, 0)",
-    "weapon.gunFlash.Transform.localPosition": "(1.480, 0.23, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(1.010, 0.31, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
@@ -74,6 +74,6 @@
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, 0.291)",
     "weapon.WeaponHandPoints.fingerAngle": -46,
-    "version": 8,
+    "version": 10,
     "targetVersion": 209
 }
