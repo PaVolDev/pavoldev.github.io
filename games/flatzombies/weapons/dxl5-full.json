@@ -44,8 +44,8 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.320, -0.18, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.300, -0.09, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.760, 0.12, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-1.100, 0.07, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.100, 0.07, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-1.050, 0.07, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.050, 0.07, 0)",
     "weapon.WeaponHandPoints.weaponType": "sniper",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
@@ -109,6 +109,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.020, 0.020)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 40,
+    "version": 42,
     "targetVersion": 209
 }
