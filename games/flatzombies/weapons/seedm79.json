@@ -18,7 +18,7 @@
     "weapon.barrel.lasersight.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.barrel.lasersight.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.500)",
     "weapon.WeaponHandPoints.clip": {
-        "clipName": "\u041d\u0430 \u0431\u0430\u0437\u0435 HK69",
+        "clipName": "\u0413\u0440\u0430\u043d\u0430\u0442\u043e\u043c\u0451\u0442 HK69",
         "length": 2.25,
         "frameRate": 40,
         "curves": [
@@ -2628,14 +2628,6 @@
             },
             {
                 "time": 1.1749999523162842,
-                "functionName": "LeftHandOnBullet",
-                "stringParameter": "",
-                "floatParameter": 0,
-                "intParameter": 0,
-                "objectReferenceParameter": ""
-            },
-            {
-                "time": 1.1749999523162842,
                 "functionName": "LeftHandOnMagazineInsert",
                 "stringParameter": "",
                 "floatParameter": 0,
@@ -2796,6 +2788,6 @@
     "weapon.chamberSize": "1",
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, 0.291)",
     "weapon.WeaponHandPoints.fingerAngle": -46,
-    "version": 15,
+    "version": 16,
     "targetVersion": 209
 }
