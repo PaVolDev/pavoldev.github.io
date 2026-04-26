@@ -2660,14 +2660,6 @@
                 "objectReferenceParameter": ""
             },
             {
-                "time": 1.350000023841858,
-                "functionName": "LeftHandOnMagazine",
-                "stringParameter": "",
-                "floatParameter": 0,
-                "intParameter": 0,
-                "objectReferenceParameter": ""
-            },
-            {
                 "time": 1.625,
                 "functionName": "LeftHandOnOpenCover",
                 "stringParameter": "",
@@ -2793,6 +2785,6 @@
     "weapon.chamberSize": "1",
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, 0.291)",
     "weapon.WeaponHandPoints.fingerAngle": -46,
-    "version": 16,
+    "version": 17,
     "targetVersion": 209
 }
