@@ -203,6 +203,7 @@ function changeAnimationPreviewFrame(paramPath, frame) {
 	document.getElementById(param.fieldPath + "Frame").innerHTML = showAnimationFrame(param); //renderEditedParams(); //Показать изменения на странице
 	document.getElementById(param.fieldPath + "Timeline").value = param.frame;
 	document.getElementById(param.fieldPath + "Current").innerHTML = param.frame + 1;
+	translateNode(document.getElementById(param.fieldPath + "List"));
 }
 
 
@@ -309,7 +310,7 @@ function renderAnimationSprite(param, paramIndex, spriteMetaData) {
 						<div class="row-actions">
 							${param.frame > 0 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, -1)" data-tooltip="Поменять местами текущий кадр">⬅</button>` : ''}
 							${param.frame < frames.length - 1 ? `<button class="add" onclick="moveAnimationFrame(${paramIndex}, ${animIdx}, ${param.frame}, 1)" data-tooltip="Поменять местами текущий кадр">➡</button>` : ''}
-							<button class="add" onclick="addAnimationFrame(${paramIndex}, ${animIdx}); nextFrameInFrameList('${param.startFieldPath}');">Добавить</button>
+							<button class="add" onclick="addAnimationFrame(${paramIndex}, ${animIdx}); nextFrameInFrameList('${param.startFieldPath}');" data-tooltip="Добавить новый кадр">Добавить</button>
 						</div>
 					</div>
 				</div>
@@ -853,13 +854,15 @@ function renderFileArray(param, index, fileType = ".png") {
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
-						<input type="text" class="text-input" placeholder="${fileType}" onchange="updateFileItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
-						<div>
-						<label class="fileInputLabel">
-							<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
-							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
-						</label>
-						<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
+						<div style="display: flex; gap: 0.2em;">
+							<input type="text" class="text-input" placeholder="${fileType}" onchange="updateFileItem(${index}, ${i}, this.value)" style="flex-grow: 1; margin-bottom: 2px;" value="${htmlspecialchars(itemValue)}" id="${param.fieldPath}-input-${i}">
+							<div style="flex-shrink: 0;">
+								<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
+							</div>
+							<label class="fileInputLabel" style="flex-shrink: 0;">
+								<input type="file" class="fileInput" ${fileType ? `accept="${fileType}"` : ''} oninput="loadFileToArray(${index}, ${i}, this)">
+								<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+							</label>
 						</div>
 					</div>
                 </div>
@@ -940,13 +943,15 @@ function renderJsonArray(param, index) {
                 </div>
                 <div class="grid-in-object">
 					<div class="field-control">
-						<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
-						<div>
-						<label class="fileInputLabel">
-							<input type="file" class="fileInput" accept=".json" oninput="loadJsonFromFile(${index}, ${i}, this)">
-							<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
-						</label>
-						<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
+						<div style="display: flex; gap: 0.2em;">
+							<input type="text" class="text-input" placeholder="JSON" onchange="updateJsonItem(${index}, ${i}, this.value)" style="margin-bottom: 2px;" value="${jsonStr}" id="${param.fieldPath}-input-${i}">
+							<div style="flex-shrink: 0;">
+								<div class="iconButton" data-tooltip="Сохранить в файл"><img src="images/download.png" onclick="saveJsonToFile(${index}, ${i})"></div>
+							</div>
+							<label class="fileInputLabel" style="flex-shrink: 0;">
+								<input type="file" class="fileInput" accept=".json" oninput="loadJsonFromFile(${index}, ${i}, this)">
+								<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+							</label>
 						</div>
 					</div>
                 </div>
