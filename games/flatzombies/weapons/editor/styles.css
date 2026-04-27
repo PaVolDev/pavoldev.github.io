@@ -545,7 +545,7 @@ small {
 	grid-template-columns: 1.4fr 1fr;
 	gap: 16px;
 	align-items: start;
-	border-top: 1px dashed var(--border-color);
+	border-top: 1px solid var(--border-color);
 	padding: 7px 0;
 }
 
@@ -788,7 +788,7 @@ img.tooltip {
 	grid-template-columns: 1.4fr 1fr;
 	gap: 16px;
 	align-items: center;
-	border-bottom: 1px dashed var(--border-color);
+	border-bottom: 1px solid var(--border-color);
 	padding: 7px 0;
 }
 
@@ -805,17 +805,19 @@ img.tooltip {
 
 
 .array-items {
-	display: grid;
-	justify-content: center;
-	gap: 10px;
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+	gap: 4px;
 	margin-top: 6px;
 }
 
 .array-item {
-	max-width: 350px;
+	width: 100%;
+	max-width: 400px;
 	border: 1px solid var(--border-color);
 	border-radius: 8px;
-	padding: 10px;
+	padding: 6px;
 	background: var(--card-bg);
 }
 
