@@ -20,6 +20,12 @@ window.attrsToTranslate = ['data-tooltip', 'placeholder', 'title'];
 function applyTranslation() {
 	translateNode(document.body);
 }
+let translateTimeout;
+function translateInNextFrame(node = null) {
+	clearTimeout(translateTimeout);
+	if (!node) node = document.body;
+	translateTimeout = setTimeout(translateNode, 50, node); //50 = 20fps
+}
 function translateNode(node) {
 	if (node.nodeType === Node.TEXT_NODE) {
 		let text = node.textContent;
