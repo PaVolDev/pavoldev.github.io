@@ -144,6 +144,9 @@ const editedPoint = [ //Окно предпросмотра имеет функ�
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parentByParam: null, parent: null },
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.openCoverPoint', angle: null, parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.closedCoverPoint', angle: null, parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.bulletPoint', angle: null, parentByParam: null, parent: null },
 	{ name: 'position', angle: 'angle', parentByParam: null, parent: null },
 ]
 const ignoreIconSprites = ['gunFlash', ".player", ".player.man"]; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
@@ -320,9 +323,9 @@ const typeDependencies = { //Для параметров указаного ти
 		"magazinePoint",
 		"magazineInsert",
 		"magazineInsertAngle",
+		"handInsertPoint",
 		"boltPoint",
 		"boltMovePoint",
-		"handInsertPoint",
 		"bulletPoint",
 		"closedCoverPoint",
 		"openCoverPoint",
@@ -344,12 +347,12 @@ const typeDependencies = { //Для параметров указаного ти
 };
 
 const availableByField = {
-	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: 'machinegun' },
-	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
+	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', ''] },
+	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', ''] },
+	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', ''] },
+	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', ''] },
+	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', ''] },
+	//'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
 }
 
 //Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
