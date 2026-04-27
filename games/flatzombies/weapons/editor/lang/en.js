@@ -65,8 +65,12 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	1126: "Pivot point editor",
 	1191: "Save changes",
 	1192: "Save",
+	1193: "Delete",
+	1194: "Copy",
+	1195: "Paste",
 	1127: "Apply",
 	1128: "Apply changes",
+	1129: "Open window for editing",
 
 	1500: "❌ Stolen assets (textures, models, sounds) are prohibited",
 	1501: "❌ Recoloring textures and duplicating weapons from the game is prohibited",
@@ -107,6 +111,10 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	1615: "Frame",
 	1616: "Empty",
 	1617: "Replace with sprite",
+	1630: "Add new animation",
+	1631: "Delete animation",
+	1632: "Swap current frame",
+	1633: "Add new frame",
 	//Редактор патронов
 	1400: "Ammo Editor",
 	1419: "Ammo",
@@ -440,4 +448,5 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4095: "Bow - Лук (id: bow)",
 	4096: "Shovel - Лопата (id: lopata)",
 	4098: "Drag a file here from another window",
+	4100: "Weapon icon for UI, size: 320x120<br>If not specified, the icon will be generated automatically",
 });
