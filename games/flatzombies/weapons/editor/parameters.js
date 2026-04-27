@@ -556,9 +556,9 @@ function renderAvailableParams(filter = '') {
 
 // ——— ОТОБРАЖЕНИЕ РЕДАКТИРУЕМЫХ ПАРАМЕТРОВ ———
 let renderTimeout;
-function renderEditedParams(filter = '') { //Задержка перед рендером
+function renderEditedParams(filter = '', time = 100) { //Задержка перед рендером
 	clearTimeout(renderTimeout);
-	renderTimeout = setTimeout(forceRenderEditedParams, 100, filter);
+	renderTimeout = setTimeout(forceRenderEditedParams, time, filter);
 }
 
 
@@ -679,7 +679,7 @@ function forceRenderEditedParams(filter = '') {
 										onchange="updateVector('${pivot.startFieldPath}', 0, this.value)" id ="${pivot.startFieldPath}.x">
 								<input placeholder="Y" type="number" step="0.02" class="num" value="${parseVector(pivot.value)[1]}" 
 									onchange="updateVector('${pivot.startFieldPath}', 1, this.value)" id ="${pivot.startFieldPath}.y">
-								<div class="fileInputButton" data-tooltip="Изменить точку вращения" id="${param.startFieldPath}.pivotEditor" onclick="showPivotPointEditor('${pivot.startFieldPath}', '${param.startFieldPath}')">🖱</div>
+								<div class="fileInputButton" data-tooltip="Открыть панель для редактирования" id="${param.startFieldPath}.pivotEditor" onclick="showPivotPointEditor('${pivot.startFieldPath}', '${param.startFieldPath}')">🖱</div>
 							</div>
                         </div>` : ''}
 
@@ -1018,12 +1018,18 @@ function getInput(param, path) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { //Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; //можно оставить пустым для TextFile
-		return `<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="${accept}" style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
-		<div>
-		<label class="fileInputLabel"><input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
-		<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div></label>
-		<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
-		</div>`;
+		return `
+		<div style="display: flex; gap: 0.2em;">
+			<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="${accept}" style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
+			<div style="flex-shrink: 0;">
+				<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
+			</div>
+			<label class="fileInputLabel" style="flex-shrink: 0;">
+				<input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
+				<div class="fileInputButton" data-tooltip="Открыть другой файл">Заменить</div>
+			</label>
+		</div>
+		`;
 	}
 
 	//Объект JavaScript
