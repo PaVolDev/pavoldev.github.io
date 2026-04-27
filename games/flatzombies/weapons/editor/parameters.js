@@ -285,6 +285,7 @@ function syncParamsToScene() {
 		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; } //if (availableByField[param.fieldPath]) console.log(param.fieldPath + ': ' + editedParams.find(p => (p.fieldPath === availableByField[param.fieldPath].parent)).value);
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
+		if (x == 0 && y == 0) return;
 		//console.log(param.fieldPath + "/parent: " + getPointField(param.fieldPath, 'parent'));
 		renderPoint = editedPoint.find(p => param.fieldPath === p.name || param.fieldPath.endsWith(p.name));
 		sceneObjects.push({
