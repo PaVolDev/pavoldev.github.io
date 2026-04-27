@@ -2734,7 +2734,7 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.510, 0.48, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.000, 0, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.720, 0.09, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-1.020, 0.23, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-0.980, 0.36, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.100, 0.07, 0)",
     "weapon.WeaponHandPoints.weaponType": "",
     "storeInfo.author": "seed",
@@ -2777,6 +2777,6 @@
     "weapon.chamberSize": "1",
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, 0.291)",
     "weapon.WeaponHandPoints.fingerAngle": -46,
-    "version": 33,
+    "version": 34,
     "targetVersion": 209
 }
