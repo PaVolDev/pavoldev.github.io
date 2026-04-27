@@ -3403,7 +3403,7 @@
     "weapon.gunFlash.Transform.localPosition": "(1.610, 0.18, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
-    "weapon.shotAnimations[0].animation": "fire",
+    "weapon.shotAnimations[0].animation": "",
     "weapon.barrel.Transform.localPosition": "(0.530, 0.1, 0)",
     "weapon.barrel.gameObject.SetActive": true,
     "weapon.barrel.SpriteRenderer.enabled": true,
@@ -3425,6 +3425,6 @@
     "weapon.chamberSize": "1",
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, 0.291)",
     "weapon.WeaponHandPoints.fingerAngle": -46,
-    "version": 28,
+    "version": 29,
     "targetVersion": 209
 }
