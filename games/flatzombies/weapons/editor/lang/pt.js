@@ -65,8 +65,12 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	1126: "Editor de ponto de rotação",
 	1191: "Salvar alterações",
 	1192: "Salvar",
+	1193: "Remover",
+	1194: "Copiar",
+	1195: "Colar",
 	1127: "Aplicar",
 	1128: "Aplicar alterações",
+	1129: "Abrir painel para edição",
 
 	1500: "❌ Assets roubados (texturas, modelos, sons) são proibidos",
 	1501: "❌ É proibido recolorir texturas e duplicar armas do jogo",
@@ -107,6 +111,10 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	1615: "Quadro",
 	1616: "Vazio",
 	1617: "Substituir por sprite",
+	1630: "Adicionar nova animação",
+	1631: "Remover animação",
+	1632: "Trocar quadro atual",
+	1633: "Adicionar novo quadro",
 	//Editor de cartuchos
 	1400: "Editor de cartuchos",
 	1419: "Parâmetros do cartucho",
@@ -440,4 +448,5 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	4095: "Bow - Arco (id: bow)",
 	4096: "Shovel - Pá (id: lopata)",
 	4098: "Coloque aqui o arquivo de outra janela",
+	4100: "Ícone da arma para interface, tamanho: 320x120<br>Se não especificado, o ícone será gerado automaticamente",
 });
