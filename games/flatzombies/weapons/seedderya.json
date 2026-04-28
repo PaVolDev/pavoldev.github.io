@@ -43,7 +43,7 @@
     "weapon.sight.SpriteRenderer.sortingOrder": 18,
     "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.840)",
-    "weapon.WeaponSilencerMod.localPoint": "(2.250, 0.2, 0)",
+    "weapon.WeaponSilencerMod.localPoint": "(2.250, 0.19, 0)",
     "weapon.laserPosition": "(2.250, 0.18, 0)",
     "weapon.gunFlash.Transform.localPosition": "(2.220, 0.19, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
@@ -65,6 +65,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.018, 0.192)",
     "weapon.WeaponHandPoints.fingerAngle": -30,
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
