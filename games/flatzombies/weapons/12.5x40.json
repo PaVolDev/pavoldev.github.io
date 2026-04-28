@@ -16,7 +16,7 @@
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": "6",
-    "angleRandom": "4",
+    "angleRandom": "2",
     "angleSpread": 0.9,
     "damage": 6,
     "distance": 24,
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
