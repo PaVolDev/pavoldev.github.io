@@ -16,7 +16,7 @@
     "weapon.boltBox.SpriteRenderer.sprite.pivotPoint": "(0.250, 0.420)",
     "weapon.addedComponents": "boltBox.SpriteRenderer",
     "weapon.addedGameObjects": "boltBox",
-    "weapon.playerScaleMove": 0,
+    "weapon.playerScaleMove": "0",
     "weapon.reloadScaleTime": "1.14",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(-0.48, 0.13, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0.13, 0)",
@@ -101,6 +101,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.030, 0.030)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 54,
+    "version": 57,
     "targetVersion": 209
 }
