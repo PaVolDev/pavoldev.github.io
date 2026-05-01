@@ -93,8 +93,8 @@
     "weapon.automat": false,
     "weapon.fireRateInMinute": 800,
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(-0.130, 0.070)",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.140, 0.070)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 27,
+    "version": 29,
     "targetVersion": 209
 }
