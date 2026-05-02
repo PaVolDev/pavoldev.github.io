@@ -285,7 +285,7 @@ function syncParamsToScene() {
 		if (availableByField[param.fieldPath] && !editedParams.find(p => (p.value === availableByField[param.fieldPath].value || Array.isArray(availableByField[param.fieldPath].value) && availableByField[param.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[param.fieldPath].parent))) { return; } //if (availableByField[param.fieldPath]) console.log(param.fieldPath + ': ' + editedParams.find(p => (p.fieldPath === availableByField[param.fieldPath].parent)).value);
 		let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
 		x = parseFloat(x); y = parseFloat(y);
-		if (x == 0 && y == 0 && param.zeroHide) return;
+		//if (x == 0 && y == 0 && param.zeroHide) return;
 		//console.log(param.fieldPath + "/parent: " + getPointField(param.fieldPath, 'parent'));
 		renderPoint = editedPoint.find(p => param.fieldPath === p.name || param.fieldPath.endsWith(p.name));
 		sceneObjects.push({
@@ -468,6 +468,10 @@ function addParam(fieldPath, addAsFirst = true) {
 	// Добавляем параметры для спрайта и для объектов с несколькими настройками
 	const spliceIndex = (addAsFirst) ? 1 : editedParams.length; //spliceIndex - индекс, после которого добавить новые парарметры, добавить в начало или в конец списка
 	dependencies.forEach(depFieldPath => {	// Обрабатываем все зависимости
+		//const param = availableParams.find(p => p.startFieldPath === fieldPath || p.fieldPath === fieldPath)?.value;
+		// let [x, y] = parseVector(param.value || '(0.4,0.6,0)'); y = -y;  //отразить по оси Y
+		// x = parseFloat(x); y = parseFloat(y);
+		// if (x == 0 && y == 0 && param.zeroHide) return;
 		const fullPath = getChildDepPath(param, depFieldPath);
 		let sample = sampleParams.find(p => p.fieldPath === fullPath);
 		if (sample && !editedParams.find(p => p.fieldPath === fullPath)) {// Проверяем, что параметр ещё не добавлен и существует в sampleParams
@@ -522,6 +526,7 @@ function removeParam(path, showConfirm = true) {
 	});
 	for (let i = editedParams.length - 1; i >= 0; i--) {// Обходим в обратном порядке, чтобы splice не ломал индексы
 		if (basePaths.has(editedParams[i].fieldPath)) {// Удаляем все параметры, чей fieldPath входит в basePaths
+			onRemoveParameter(editedParams[i]);
 			console.log("removeParam: " + editedParams[i].fieldPath + '=' + editedParams[i].value);
 			editedParams.splice(i, 1);
 		}
@@ -646,7 +651,6 @@ function forceRenderEditedParams(filter = '') {
 				list.appendChild(li);
 
 			} else if (param.type === 'Sprite') {
-				// Находим индексы параметров группы
 				// Находим индексы параметров группы
 				const pivot = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pivotPoint'));
 				const ppu = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pixelPerUnit'));
@@ -877,13 +881,16 @@ const fileType = []; fileType["TextFile"] = ".txt"; fileType["LuaScript"] = ".lu
 const textFileType = [".txt", ".lua"];
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.startFieldPath == param.startFieldPath) ?? editedParams.findIndex(field => field.fieldPath == param.fieldPath);
-
 	//Тип параметра имеет свою функцию для построения формы
 	const renderFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 	if (renderFormByType && objKey == null) {
 		return renderFormByType(param, index);
 	}
+	return getInputHTML(param, index, objKey, objMetaData);
+}
 
+
+function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { //Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; //можно оставить пустым для TextFile
