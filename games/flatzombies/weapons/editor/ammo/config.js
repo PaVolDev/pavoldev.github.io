@@ -13,6 +13,8 @@ const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition'
 const ignoreExportFields = ['storeInfo.iconBase64', 'gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.'];
 const prefixHide = ['cartridge.'];
 const prefixExport = 'cartridge.'; //Вернуть приставку при экспорте
+//Слушатель события
+function onRemoveParameter(param) { }
 
 const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
 	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
