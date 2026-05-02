@@ -456,7 +456,24 @@ const typeFullForm = { //Полная форма для редактирован
 	'AnimationSounds[]': function (param, idx) { param.value = getSoundsByClip(param.value); return renderObjectArray(param, idx, animationSoundsMetaData); },
 }
 const typeLightForm = { //Одно поле для редактирования без заголовка
-	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); }
+	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); },
+	'weapon.WeaponHandPoints.clip': function (param, idx) { return renderWeaponClip(param, idx, "weapon.WeaponHandPoints.weaponType", ""); },
+}
+
+function renderWeaponClip(param, index, changeParam, newValue) {
+	const otherParam = findByPath(changeParam);
+	if (otherParam.value != newValue) {
+		otherParam.value = newValue;
+		renderEditedParams();
+		syncParamsToScene();
+	}
+	return getInputHTML(param, index);
+}
+//Слушатель события
+function onRemoveParameter(param) {
+	if (param.startFieldPath == "weapon.WeaponHandPoints.clip") {
+		updateParam("weapon.WeaponHandPoints.weaponType", "rifleAK");
+	}
 }
 
 const spriteArrayMetaData = [
