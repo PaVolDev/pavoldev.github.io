@@ -10,7 +10,7 @@
     "weapon.black.gameObject.SetActive": true,
     "weapon.black.SpriteRenderer.enabled": true,
     "weapon.black.Transform.localEulerAngles.z": 0,
-    "weapon.black.SpriteRenderer.sortingOrder": 17,
+    "weapon.black.SpriteRenderer.sortingOrder": "1",
     "weapon.black.SpriteRenderer.sprite.pixelPerUnit": "120",
     "weapon.black.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.436)",
     "weapon.zatvor.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAAANCAYAAAAKeCiYAAAAyklEQVR4AeyUvQ3DIBCFMa0lL+FFkkWcynskTIAEAyRbQJdMAQXMQg5Lid0azJ9kxJOuAN67TwBGm0EImSil7tTK4A/IQxmG4bXhdZZAYAEkpbxBnXxaa1FLMsY4LISYlFLP5HQaNcBa66zPyjn3Bt2B14Ux1tUszjlenhiEzTI9DDC9gh5Qf7KYRprgvu9RLkVmLbI96Q36fchFOjvINCmggzIWPSYpoHEckVfRDiPNkwKKzFbF9iBA8zx3Iaqi450hggDt9Gh6+RcAAP//lbN5CwAAAAZJREFUAwBW7K26yOGK4gAAAABJRU5ErkJggg==",
@@ -18,7 +18,7 @@
     "weapon.zatvor.gameObject.SetActive": true,
     "weapon.zatvor.SpriteRenderer.enabled": true,
     "weapon.zatvor.Transform.localEulerAngles.z": 0,
-    "weapon.zatvor.SpriteRenderer.sortingOrder": 17,
+    "weapon.zatvor.SpriteRenderer.sortingOrder": "3",
     "weapon.zatvor.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.zatvor.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.436)",
     "weapon.addedComponents": "zatvor.SpriteRenderer,black.SpriteRenderer",
@@ -111,6 +111,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
