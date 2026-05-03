@@ -2,7 +2,7 @@
     "id": "ak75modst",
     "idTemplate": "ak12",
     "type": "weapon",
-    "weapon.caliber": "5.56x45",
+    "weapon.caliber": "5.45x39",
     "storeInfo.nameFull": "AK-74M 6P34",
     "storeInfo.magazineSize": 30,
     "weapon.black.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAAQCAYAAAACjcH6AAAAp0lEQVR4AeySQQrAIAwEbR7j0f8/RXyJJ1sjeAj10irdCltYqoEYnFEcv98QaDK892U2IYQS5nLW/l0ye9dbv76IJkMXDJ6AkSEiBzCuzt4lSzn1Z2Bk9CL/GAKUgeE+nEoZQyyYImVguA+nUsYQC6a4TEbO2THvGaj+ZTL0sMdhgyFAGQYHdkMZWP5mOmUYHNgNZWD5m+lNRkpJNDHGg/megbJXKxcAAAD//xhbY1IAAAAGSURBVAMAd/J0Pwv/xToAAAAASUVORK5CYII=",
@@ -94,7 +94,7 @@
     "weapon.gunFlash.Transform.localPosition": "(1.781, 0.185, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
-    "weapon.shotAnimations[0].animation": "fire",
+    "weapon.shotAnimations[0].animation": "LabelShotFire",
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
@@ -111,6 +111,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
