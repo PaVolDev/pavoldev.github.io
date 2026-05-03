@@ -19,7 +19,7 @@
     "weapon.zatvor.gameObject.SetActive": true,
     "weapon.zatvor.SpriteRenderer.enabled": true,
     "weapon.zatvor.Transform.localEulerAngles.z": 0,
-    "weapon.zatvor.SpriteRenderer.sortingOrder": 17,
+    "weapon.zatvor.SpriteRenderer.sortingOrder": "15",
     "weapon.zatvor.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.zatvor.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.436)",
     "weapon.remen.Transform.localPosition": "(0.110, -0.39, 0)",
@@ -97,6 +97,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
