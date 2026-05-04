@@ -11,7 +11,7 @@
     "weapon.playerScaleMove": "0.8",
     "weapon.addedGameObjects": "sight",
     "weapon.addedComponents": "sight.SpriteRenderer",
-    "weapon.sight.Transform.localPosition": "(1.100, 0.2, 0)",
+    "weapon.sight.Transform.localPosition": "(0.000, 0.31, 0)",
     "weapon.sight.gameObject.SetActive": true,
     "weapon.sight.SpriteRenderer.enabled": true,
     "weapon.sight.Transform.localEulerAngles.z": 0,
@@ -75,6 +75,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 23,
+    "version": 26,
     "targetVersion": 209
 }
