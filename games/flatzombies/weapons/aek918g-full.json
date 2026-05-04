@@ -12,7 +12,7 @@
     "weapon.addedGameObjects": "sight",
     "weapon.addedComponents": "sight.SpriteRenderer",
     "weapon.sight.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAApCAYAAABDV7v1AAAD6ElEQVR4AdRYzWsTQRSffCc0UqXgSYqN2g+TKLQgtgU9KCL+AQURrxYE8SgIKnjUk9KLehA/QPAoChb01EMg0MSElJQIolIN9RCibZM2zYe/t3XTZDKz2a7ZNYb3y+y8efvmN2/mzUxiZ//JxxKiw8PDfeFw+BKPUCg0pTdOlhB1OBz7bDbbAx52u/12VxHVS0bLbicRdQSDQbcR9PT0uHw+H+Ph9Xqd7fyBvANguomOjo6+huO8EVQqlblyucwECLTzNzY2dkc3URi7YHwc8BmEF++1CNasDUpNn7Va7RdstiI6Pj4enpiYeMMDBM9gao5ubm6ehXEv8C/kO3WqTn0IlXM8qtXqrNPp/ICRvwJo9DCxVrAzfKYeVaJ7qSIDSMqaTNVj2mulUilNnahE+6jSbUCAlpPJ5PbUQ7G720gSH0Q0irIKbCUTFG6qdBvA673KSZ36sqrolhIkkcvVtyoflWhOVXRRmUokEh9VPgpRsF9XFWaX2O6Y2+1mHo9HKamOHBF1+xzKGqCIQhSGy0rN5C/0w3CTYlRSV1RSnchSvQHrxWKRiNZVClFEVNkC6trthwoeVeDRMnmZTqezjb0pRDGyJMjO8HC5XIcx2j5cJobwEhFGYbqUcWTf5XtRiEYikW/AFR7RaDQzPz//M5VKfcKLXwHDQmuSgIEzHgiIsmYRMIZgvcAmn+I7UojySkG9hr3iGZzM8UBi/MBVjWkB79bXJa58jIfaDqIR+L8h6H9rwxc18Lp4PH4rFoudiDUAJKeRDElcHJgM6JxtbGywlZUVtrq6qoVCNps9FY/Hv/B9U11vRMm2BRj9VUTjdEuDQAFbgbZJlVlaWio2aRoqf0W0wU/bx3ZE0Z7QcqKXqNAHnDuFDQIlbBmir4V3gtfqKsNEh/DBmpvCfbEpOeqe/zwQOXokonwScXXNY9wQUfw8cSOJnoLArkKhwPL5vIK1tTXaXpqAEwZmuoR+ZUgNDRFFlG7C4zGgSbBRs1wu1wTK+CYjeSUsb2L6tyfVCf6eOYkt55pa72AZ1PK1o4j29/fvAcnHcKg7iWCrS+D3EAylF/gdEfX7/TNwOACHZogfs7Vf5lg30ZGRkYvI3PMyRx3SS9epLqKDg4MBRPI+YOsQIZkbaebrIerCbYe2ItN/qSIQ0oRqSxTr5jqGPwmYLiBqbOpx+EziVkRETSdJHSAHBnCY+OmZhzSigUCgF6fPE7wg3TLQ1lFBRD1weBBoESlR3MbvwfoAYKng1Dsi6lBIlKKJ0V0QvWCBTpj5QqL4C7uIkV0Gpq0GblSzomAIiS4sLJQWFxcfAQ+tRiaTqf/f1Ej4NwAAAP//W6YPDAAAAAZJREFUAwA3lLhxKpreQAAAAABJRU5ErkJggg==",
-    "weapon.sight.Transform.localPosition": "(1.100, 0.2, 0)",
+    "weapon.sight.Transform.localPosition": "(0.000, 0.31, 0)",
     "weapon.sight.gameObject.SetActive": true,
     "weapon.sight.SpriteRenderer.enabled": true,
     "weapon.sight.Transform.localEulerAngles.z": 0,
@@ -79,6 +79,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 23,
+    "version": 26,
     "targetVersion": 209
 }
