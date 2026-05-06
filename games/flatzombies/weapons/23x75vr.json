@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": "0.5",
     "angleSpread": 0,
-    "damage": 3,
+    "damage": 1.5,
     "distance": 24,
     "impulse": 35,
     "stopPower": "1",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
