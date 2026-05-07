@@ -20,7 +20,7 @@
     "angleSpread": 0,
     "damage": 1.5,
     "distance": 24,
-    "impulse": 35,
+    "impulse": "100",
     "stopPower": "1",
     "penetration": {
         "modeHit": "FIRST",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
