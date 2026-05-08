@@ -1,0 +1,2933 @@
+{
+	"clipName": "Револьвер RSh12",
+	"length": 2.625,
+	"frameRate": 32,
+	"curves": [
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": -1.3333333730697632,
+					"outTangent": -1.3333333730697632
+				},
+				{
+					"time": 0.5625,
+					"value": -1,
+					"inTangent": -2.6666667461395264,
+					"outTangent": 10.666666984558105
+				},
+				{
+					"time": 0.75,
+					"value": 1,
+					"inTangent": 10.666666984558105,
+					"outTangent": 2.6666667461395264
+				},
+				{
+					"time": 1.125,
+					"value": 2,
+					"inTangent": 2.6666667461395264,
+					"outTangent": 6.400000095367432
+				},
+				{
+					"time": 1.28125,
+					"value": 3,
+					"inTangent": 6.400000095367432,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 3,
+					"inTangent": 0,
+					"outTangent": 2
+				},
+				{
+					"time": 2,
+					"value": 4,
+					"inTangent": 2,
+					"outTangent": -8
+				},
+				{
+					"time": 2.125,
+					"value": 3,
+					"inTangent": -4,
+					"outTangent": -4
+				},
+				{
+					"time": 2.21875,
+					"value": 3,
+					"inTangent": -3.692307710647583,
+					"outTangent": -3.692307710647583
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": -7.384615421295166,
+					"outTangent": -7.384615421295166
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/head",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/head",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/head",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": -14,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": -18,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": -22.5,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": -22.5,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": -22.5,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": -22.5,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": -25,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": -25,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": -26,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": -26,
+					"inTangent": 0,
+					"outTangent": -32
+				},
+				{
+					"time": 0.375,
+					"value": -32,
+					"inTangent": -32,
+					"outTangent": -90.66666412353516
+				},
+				{
+					"time": 0.5625,
+					"value": -49,
+					"inTangent": -90.66666412353516,
+					"outTangent": -32
+				},
+				{
+					"time": 0.75,
+					"value": -55,
+					"inTangent": -32,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": -55,
+					"inTangent": 0,
+					"outTangent": -28
+				},
+				{
+					"time": 1.125,
+					"value": -62,
+					"inTangent": -28,
+					"outTangent": -44.79999923706055
+				},
+				{
+					"time": 1.28125,
+					"value": -69,
+					"inTangent": -44.79999923706055,
+					"outTangent": 54.85714340209961
+				},
+				{
+					"time": 1.5,
+					"value": -57,
+					"inTangent": 54.85714340209961,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": -57,
+					"inTangent": 0,
+					"outTangent": -24
+				},
+				{
+					"time": 1.71875,
+					"value": -60,
+					"inTangent": -24,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": -60,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": -60,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": -60,
+					"inTangent": 0,
+					"outTangent": -24
+				},
+				{
+					"time": 2.125,
+					"value": -63,
+					"inTangent": -24,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": -63,
+					"inTangent": 0,
+					"outTangent": 63.9146728515625
+				},
+				{
+					"time": 2.40625,
+					"value": -51.01599884033203,
+					"inTangent": 63.9146728515625,
+					"outTangent": 114.35884857177734
+				},
+				{
+					"time": 2.625,
+					"value": -26,
+					"inTangent": 114.35884857177734,
+					"outTangent": -64
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.x",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.y",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.z",
+			"path": "man/body/weaponParent/arm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": -24,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": -24,
+					"inTangent": 0,
+					"outTangent": -115.0026626586914
+				},
+				{
+					"time": 0.375,
+					"value": -45.5629997253418,
+					"inTangent": -115.0026626586914,
+					"outTangent": -87.66400146484375
+				},
+				{
+					"time": 0.5625,
+					"value": -62,
+					"inTangent": -87.66400146484375,
+					"outTangent": -5.333333492279053
+				},
+				{
+					"time": 0.75,
+					"value": -63,
+					"inTangent": -5.333333492279053,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": -63,
+					"inTangent": 0,
+					"outTangent": -388
+				},
+				{
+					"time": 1.125,
+					"value": -160,
+					"inTangent": -388,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": -160,
+					"inTangent": 0,
+					"outTangent": 361.1428527832031
+				},
+				{
+					"time": 1.5,
+					"value": -81,
+					"inTangent": 361.1428527832031,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": -81,
+					"inTangent": 0,
+					"outTangent": -16
+				},
+				{
+					"time": 1.71875,
+					"value": -83,
+					"inTangent": -16,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": -83,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": -83,
+					"inTangent": 0,
+					"outTangent": -42.66666793823242
+				},
+				{
+					"time": 2,
+					"value": -87,
+					"inTangent": -42.66666793823242,
+					"outTangent": 128
+				},
+				{
+					"time": 2.125,
+					"value": -71,
+					"inTangent": 128,
+					"outTangent": -10.666666984558105
+				},
+				{
+					"time": 2.21875,
+					"value": -72,
+					"inTangent": -10.666666984558105,
+					"outTangent": 79.9146728515625
+				},
+				{
+					"time": 2.40625,
+					"value": -57.01599884033203,
+					"inTangent": 79.9146728515625,
+					"outTangent": 150.93028259277344
+				},
+				{
+					"time": 2.625,
+					"value": -24,
+					"inTangent": 150.93028259277344,
+					"outTangent": -458.6666564941406
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.x",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0.44999998807907104,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0.44999998807907104,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0.44999998807907104,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.y",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "m_LocalPosition.z",
+			"path": "man/body/weaponParent/arm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm/forearm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm/forearm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm/forearm",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 78,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 78,
+					"inTangent": 0,
+					"outTangent": -154.6666717529297
+				},
+				{
+					"time": 0.375,
+					"value": 49,
+					"inTangent": -154.6666717529297,
+					"outTangent": 154.6666717529297
+				},
+				{
+					"time": 0.5625,
+					"value": 78,
+					"inTangent": 154.6666717529297,
+					"outTangent": 16
+				},
+				{
+					"time": 0.75,
+					"value": 81,
+					"inTangent": 16,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 81,
+					"inTangent": 0,
+					"outTangent": 4
+				},
+				{
+					"time": 1.125,
+					"value": 82,
+					"inTangent": 4,
+					"outTangent": 32
+				},
+				{
+					"time": 1.28125,
+					"value": 87,
+					"inTangent": 32,
+					"outTangent": -86.85713958740234
+				},
+				{
+					"time": 1.5,
+					"value": 68,
+					"inTangent": -86.85713958740234,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 68,
+					"inTangent": 0,
+					"outTangent": -24
+				},
+				{
+					"time": 1.71875,
+					"value": 65,
+					"inTangent": -24,
+					"outTangent": 32
+				},
+				{
+					"time": 1.8125,
+					"value": 68,
+					"inTangent": 32,
+					"outTangent": -32
+				},
+				{
+					"time": 1.90625,
+					"value": 65,
+					"inTangent": -32,
+					"outTangent": 42.66666793823242
+				},
+				{
+					"time": 2,
+					"value": 69,
+					"inTangent": 42.66666793823242,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 69,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 69,
+					"inTangent": 0,
+					"outTangent": 96
+				},
+				{
+					"time": 2.40625,
+					"value": 87,
+					"inTangent": 96,
+					"outTangent": -41.14285659790039
+				},
+				{
+					"time": 2.625,
+					"value": 78,
+					"inTangent": -41.14285659790039,
+					"outTangent": -237.8240203857422
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm2/forearm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm2/forearm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm2/forearm2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 74,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 74,
+					"inTangent": 0,
+					"outTangent": 80
+				},
+				{
+					"time": 0.375,
+					"value": 89,
+					"inTangent": 80,
+					"outTangent": 90.66666412353516
+				},
+				{
+					"time": 0.5625,
+					"value": 106,
+					"inTangent": 90.66666412353516,
+					"outTangent": 96
+				},
+				{
+					"time": 0.75,
+					"value": 124,
+					"inTangent": 96,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 124,
+					"inTangent": 0,
+					"outTangent": 12
+				},
+				{
+					"time": 1.125,
+					"value": 127,
+					"inTangent": 12,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 127,
+					"inTangent": 0,
+					"outTangent": -45.71428680419922
+				},
+				{
+					"time": 1.5,
+					"value": 117,
+					"inTangent": -45.71428680419922,
+					"outTangent": -64
+				},
+				{
+					"time": 1.59375,
+					"value": 111,
+					"inTangent": -64,
+					"outTangent": -72
+				},
+				{
+					"time": 1.71875,
+					"value": 102,
+					"inTangent": -72,
+					"outTangent": 64
+				},
+				{
+					"time": 1.8125,
+					"value": 108,
+					"inTangent": 64,
+					"outTangent": -64
+				},
+				{
+					"time": 1.90625,
+					"value": 102,
+					"inTangent": -64,
+					"outTangent": -106.66666412353516
+				},
+				{
+					"time": 2,
+					"value": 92,
+					"inTangent": -106.66666412353516,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 92,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 92,
+					"inTangent": 0,
+					"outTangent": -74.66666412353516
+				},
+				{
+					"time": 2.40625,
+					"value": 78,
+					"inTangent": -74.66666412353516,
+					"outTangent": -18.285715103149414
+				},
+				{
+					"time": 2.625,
+					"value": 74,
+					"inTangent": -18.285715103149414,
+					"outTangent": 448
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm/forearm/fingers",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm/forearm/fingers",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm/forearm/fingers",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": -52,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": -52,
+					"inTangent": 0,
+					"outTangent": 186.6666717529297
+				},
+				{
+					"time": 0.375,
+					"value": -17,
+					"inTangent": 186.6666717529297,
+					"outTangent": -192
+				},
+				{
+					"time": 0.5625,
+					"value": -53,
+					"inTangent": -192,
+					"outTangent": 320
+				},
+				{
+					"time": 0.75,
+					"value": 7,
+					"inTangent": 320,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 7,
+					"inTangent": 0,
+					"outTangent": -180
+				},
+				{
+					"time": 1.125,
+					"value": -38,
+					"inTangent": -180,
+					"outTangent": -38.400001525878906
+				},
+				{
+					"time": 1.28125,
+					"value": -44,
+					"inTangent": -38.400001525878906,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": -32
+				},
+				{
+					"time": 1.8125,
+					"value": -47,
+					"inTangent": -32,
+					"outTangent": 32
+				},
+				{
+					"time": 1.90625,
+					"value": -44,
+					"inTangent": 32,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": -44,
+					"inTangent": 0,
+					"outTangent": -74.66666412353516
+				},
+				{
+					"time": 2.40625,
+					"value": -58,
+					"inTangent": -74.66666412353516,
+					"outTangent": 27.428571701049805
+				},
+				{
+					"time": 2.625,
+					"value": -52,
+					"inTangent": 27.428571701049805,
+					"outTangent": 266.6666564941406
+				}
+			]
+		},
+		{
+			"propertyName": "boltMove.move",
+			"path": "man/body/weaponParent/arm/forearm/fingers/оружие",
+			"type": "WeaponHandPoints, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 5.333333492279053
+				},
+				{
+					"time": 0.75,
+					"value": 1,
+					"inTangent": 5.333333492279053,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 1,
+					"inTangent": 0,
+					"outTangent": -8
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": -8,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.x",
+			"path": "man/body/weaponParent/arm2/forearm2/fingers2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.y",
+			"path": "man/body/weaponParent/arm2/forearm2/fingers2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.5625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.75,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.5,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.59375,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.8125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 1.90625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.40625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.625,
+					"value": 0,
+					"inTangent": 0,
+					"outTangent": 0
+				}
+			]
+		},
+		{
+			"propertyName": "localEulerAnglesRaw.z",
+			"path": "man/body/weaponParent/arm2/forearm2/fingers2",
+			"type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": -39,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 0.1875,
+					"value": -39,
+					"inTangent": 0,
+					"outTangent": 117.33333587646484
+				},
+				{
+					"time": 0.375,
+					"value": -17,
+					"inTangent": 117.33333587646484,
+					"outTangent": -85.33333587646484
+				},
+				{
+					"time": 0.5625,
+					"value": -33,
+					"inTangent": -85.33333587646484,
+					"outTangent": 69.33333587646484
+				},
+				{
+					"time": 0.75,
+					"value": -20,
+					"inTangent": 69.33333587646484,
+					"outTangent": 0
+				},
+				{
+					"time": 0.875,
+					"value": -20,
+					"inTangent": 0,
+					"outTangent": -180
+				},
+				{
+					"time": 1.125,
+					"value": -65,
+					"inTangent": -180,
+					"outTangent": 0
+				},
+				{
+					"time": 1.28125,
+					"value": -65,
+					"inTangent": 0,
+					"outTangent": 45.71428680419922
+				},
+				{
+					"time": 1.5,
+					"value": -55,
+					"inTangent": 45.71428680419922,
+					"outTangent": 234.6666717529297
+				},
+				{
+					"time": 1.59375,
+					"value": -33,
+					"inTangent": 234.6666717529297,
+					"outTangent": 0
+				},
+				{
+					"time": 1.71875,
+					"value": -33,
+					"inTangent": 0,
+					"outTangent": -64
+				},
+				{
+					"time": 1.8125,
+					"value": -39,
+					"inTangent": -64,
+					"outTangent": 64
+				},
+				{
+					"time": 1.90625,
+					"value": -33,
+					"inTangent": 64,
+					"outTangent": 128
+				},
+				{
+					"time": 2,
+					"value": -21,
+					"inTangent": 128,
+					"outTangent": 0
+				},
+				{
+					"time": 2.125,
+					"value": -21,
+					"inTangent": 0,
+					"outTangent": 0
+				},
+				{
+					"time": 2.21875,
+					"value": -21,
+					"inTangent": 0,
+					"outTangent": 21.33333396911621
+				},
+				{
+					"time": 2.40625,
+					"value": -17,
+					"inTangent": 21.33333396911621,
+					"outTangent": -100.57142639160156
+				},
+				{
+					"time": 2.625,
+					"value": -39,
+					"inTangent": -100.57142639160156,
+					"outTangent": 373.3333435058594
+				}
+			]
+		},
+		{
+			"propertyName": "m_IsActive",
+			"path": "man/body/weaponParent/arm/forearm/fingers/оружие/magazine",
+			"type": "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"keys": [
+				{
+					"time": 0,
+					"value": 1,
+					"inTangent": "Infinity",
+					"outTangent": "Infinity"
+				},
+				{
+					"time": 0.1875,
+					"value": 1,
+					"inTangent": "Infinity",
+					"outTangent": "Infinity"
+				}
+			]
+		}
+	],
+	"events": [
+		{
+			"time": 0,
+			"functionName": "LabelShotFire",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0,
+			"functionName": "RightRifleToBody",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0,
+			"functionName": "LeftHandOnHandguard",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.1875,
+			"functionName": "LabelReload",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.1875,
+			"functionName": "LabelReloadEmpty",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.1875,
+			"functionName": "RightRifleToBody",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.1875,
+			"functionName": "LabelShotFire",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.1875,
+			"functionName": "LeftHandOnHandguard",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.375,
+			"functionName": "LeftHandOnMagazine",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.46875,
+			"functionName": "PlaySound",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": "Assets/Sounds/Weapons/clipout-p90.wav"
+		},
+		{
+			"time": 0.5625,
+			"functionName": "LeftHandOnMagazine",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.6875,
+			"functionName": "WeaponShellDrop",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 0.75,
+			"functionName": "LeftHandOnMagazine",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 1.125,
+			"functionName": "LeftHandSaveOriginal",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 1.28125,
+			"functionName": "LeftHandSaveOriginal",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 1.5,
+			"functionName": "LeftHandOnBullet",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 1.90625,
+			"functionName": "PlaySound",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": "Assets/Sounds/Weapons/clipin_tmp.wav"
+		},
+		{
+			"time": 2,
+			"functionName": "LeftHandOnMagazineInsert",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 2.40625,
+			"functionName": "LeftHandOnHandguard",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 2.625,
+			"functionName": "LeftHandOnHandguard",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 2.625,
+			"functionName": "RightRifleToBody",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 2.625,
+			"functionName": "LabelReloadEmpty",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		},
+		{
+			"time": 2.625,
+			"functionName": "LabelReload",
+			"stringParameter": "",
+			"floatParameter": 0,
+			"intParameter": 0,
+			"objectReferenceParameter": ""
+		}
+	],
+
+	"sprites": [
+		{
+			"name": "оружие",
+			"parent": "fingers",
+			"texture": "base64",
+			"pixelPerUnit": 100,
+			"pivotPointX": 0.5,
+			"pivotPointY": 0.5,
+			"localPositionX": 0,
+			"localPositionY": 0,
+			"localAngle": 0
+		}
+	]
+}

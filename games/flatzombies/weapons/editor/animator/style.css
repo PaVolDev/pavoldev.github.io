@@ -1,0 +1,584 @@
+:root {
+	--bg: #1e1e1f;
+	--panel: #2a2a2d;
+	--accent: #6aa6ff;
+	--text: #e7e7e7;
+	--bg-darker: #121214;
+	--border-color: #333;
+	--border-hover: #444;
+	--success-color: #4caf50;
+	--danger-color: #f44336;
+	--card-bg: #19191a;
+	--input-bg: #111;
+	--transition-speed: 0.2s;
+	--text-suffix: #3a3a3a;
+	--text: white;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: #1e1e1e;
+	color: #ccc;
+	margin: 0;
+	padding: 0;
+}
+
+input {
+	padding: 6px;
+	border: none;
+	border-radius: 4px;
+}
+
+textarea {
+	width: 100%;
+	height: 8em;
+}
+
+select {
+	padding: 6px;
+}
+
+select::selection {
+	color: var(--accent);
+}
+
+input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin-right: 4px;
+}
+
+input[type="text"] {
+	width: 100%;
+}
+
+
+/* Основные стили для всех браузеров */
+input[type=range] {
+	width: 100%;
+	margin: 10px 0;
+	background-color: transparent;
+	-webkit-appearance: none;
+	appearance: none;
+	/* Сброс стилей по умолчанию (Chrome, Safari, Edge) */
+}
+
+/* Убрать обводку при фокусе */
+input[type=range]:focus {
+	outline: none;
+}
+
+/* Стилизация БЕГУНКА (Thumb) */
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background: #00ff8c;
+	cursor: pointer;
+	margin-top: -8px;
+}
+
+
+/* ЦВЕТ БЕГУНКА */
+input[type=range]::-moz-range-thumb {
+	height: 20px;
+	width: 20px;
+	border: none;
+	border-radius: 50%;
+	background: #00ff8c;
+	cursor: pointer;
+}
+
+/* Стилизация ПОЛОСЫ (Track) */
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 5px;
+	background: #ddd;
+	border-radius: 2px;
+}
+
+/* ЦВЕТ ПОЛОСЫ */
+input[type=range]::-moz-range-track {
+	width: 100%;
+	height: 5px;
+	background: #ddd;
+	border-radius: 2px;
+}
+
+input[type="text"].animate {
+	border: 2px solid #00ff8c;
+}
+
+input[type="text"].animate:disabled {
+	border: none;
+}
+
+input[type="checkbox"].animate {
+	background-color: #00ff8c;
+}
+
+input.editor {
+	width: 100%;
+	padding: 8px;
+	background: var(--input-bg);
+	border: 1px solid var(--border-color);
+	color: var(--text);
+	outline: none;
+	font-size: 13px;
+}
+
+input.editor:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px rgba(106, 166, 255, 0.2);
+}
+
+.main-container {
+	display: grid;
+	grid-template-columns: 200px 1fr 250px;
+	grid-template-rows: 1fr;
+	overflow-x: hidden;
+	padding-bottom: 10em;
+}
+
+.timeline-options {
+	height: 140px;
+	width: 100%;
+	padding: 0 4px;
+}
+
+.timeline-options-list {
+	height: 110px;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.timeline-options-list button {
+	height: 100%;
+	width: 100%;
+	background: #727274;
+	color: var(--text);
+}
+
+/*должно учитывать высоту timeline-options-list и вместе они должны быть равны высоте timeline-options*/
+.timeline-search {
+	height: 28px;
+	width: 100%;
+}
+
+.properties-panel {
+	background: #252526;
+	z-index: 150;
+}
+
+.timeline-panel {
+	height: 100%;
+	background: #1e1e1e;
+	position: relative;
+	min-height: 0;
+	margin-left: 1em;
+}
+
+.timeline-scroller {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.properties-panel h3 {
+	margin: 0;
+	padding: 8px 10px;
+	font-size: 14px;
+	background: #2a2a2a;
+	border-bottom: 1px solid #3c3c3c;
+	flex-shrink: 0;
+}
+
+#property-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	flex: 1;
+}
+
+#property-list li {
+	padding: 0;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+	cursor: pointer;
+	border-radius: 0;
+	margin: 0;
+	font-size: 13px;
+	line-height: 1;
+}
+
+#property-list li:hover {
+	background: #3a3a3a;
+}
+
+#property-list li.selected {
+	background: #0e639c;
+}
+
+
+.timeline-controls {
+	height: 30px;
+	flex-shrink: 0;
+	background: #252526;
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	border-bottom: 1px solid #3c3c3c;
+	font-size: 13px;
+}
+
+.timeline-controls label {
+	color: #ccc;
+}
+
+.timeline-controls input {
+	width: 60px;
+	margin-left: 6px;
+	padding: 2px 4px;
+	background: #333;
+	border: 1px solid #555;
+	color: var(--text);
+	border-radius: 3px;
+}
+
+.timeline-controls button {
+	padding: 2px 8px;
+	background: #0e639c;
+	color: var(--text);
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 12px;
+}
+
+.timeline-controls button:hover {
+	background: #1177bb;
+}
+
+#current-time {
+	color: #4fc3f7;
+	font-family: monospace;
+}
+
+.timeline-header {
+	height: 50px;
+	border-bottom: 1px solid #3c3c3c;
+	overflow: hidden;
+	position: relative;
+	user-select: none;
+	cursor: ew-resize;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+/* Шкалы теперь через абсолютное позиционирование */
+.frame-ruler,
+.time-ruler {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 100%;
+	display: block;
+	/* вместо flex */
+	white-space: nowrap;
+}
+
+.time-ruler {
+	top: 25px;
+}
+
+.frame-ruler span,
+.time-ruler span {
+	position: absolute;
+	display: inline-block;
+	font-size: 11px;
+	color: #888;
+	/* цвет для time-ruler по умолчанию */
+	border-left: 1px solid #333;
+	padding-left: 4px;
+	height: 100%;
+	text-align: left;
+	line-height: 25px;
+	transform: translateX(0);
+	/* будет обновляться через JS */
+}
+
+.frame-ruler span {
+	color: #4fc3f7;
+	/* цвет для frame-ruler */
+	font-weight: bold;
+}
+
+.master-track,
+.events-track {
+	height: 30px;
+	border-bottom: 1px solid #3c3c3c;
+	position: relative;
+	background: #252526;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.master-keyframe {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background: #FF9800;
+	border-radius: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	cursor: move;
+	z-index: 50;
+}
+
+.master-keyframe:hover {
+	background: #FFB74D;
+}
+
+.master-keyframe.selected {
+	background: #4fc3f7;
+	box-shadow: 0 0 4px #4fc3f7;
+}
+
+.tracks-container {
+	flex: 1;
+	position: relative;
+	min-height: 0;
+}
+
+.tracks {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+}
+
+.track-row {
+	height: 30px;
+	position: relative;
+	border-bottom: 1px solid #2a2a2a;
+	cursor: pointer;
+}
+
+.keyframe {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background: #4CAF50;
+	border-radius: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+	z-index: 2;
+}
+
+.keyframe:hover {
+	background: #8BC34A;
+}
+
+.keyframe.editing {
+	background: #FF9800;
+}
+
+.keyframe-input {
+	position: absolute;
+	width: 50px;
+	height: 20px;
+	font-size: 12px;
+	text-align: center;
+	top: -12px;
+	left: -19px;
+	z-index: 3;
+}
+
+/* Playhead теперь поверх всех элементов */
+.playhead {
+	position: absolute;
+	top: 30px;
+	bottom: 0;
+	width: 2px;
+	background: red;
+	z-index: 100;
+	pointer-events: none;
+	transform: translateX(-1px);
+}
+
+.selection-rect {
+	position: absolute;
+	border: 1px solid #4fc3f7;
+	background: rgba(79, 195, 247, 0.2);
+	pointer-events: none;
+	/* чтобы не мешал кликать внутрь */
+	z-index: 99;
+}
+
+.keyframe.selected {
+	background: #4fc3f7;
+	/* Цвет выделенного ключа */
+	box-shadow: 0 0 4px #4fc3f7;
+}
+
+
+.events-track-label {
+	width: 90px;
+	padding-left: 10px;
+	font-size: 13px;
+	color: #ccc;
+	flex-shrink: 0;
+}
+
+
+.event-marker {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 8px solid #f00;
+	/* Красный треугольник */
+	transform: translateX(-50%);
+	top: 5px;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.event-marker:hover {
+	border-top-color: #ff5555;
+}
+
+.event-marker.selected {
+	border-top-color: #4fc3f7;
+	filter: drop-shadow(0 0 4px #4fc3f7);
+}
+
+
+.inspector-panel {
+	background: #252526;
+	border-left: 1px solid #3c3c3c;
+	padding: 10px;
+	overflow-y: auto;
+	position: absolute;
+	right: 20px;
+	z-index: 99;
+	height: calc(100% - 12px);
+}
+
+.inspector-panel h3 {
+	color: #fff;
+	margin-bottom: 15px;
+	font-size: 16px;
+	border-bottom: 1px solid #555;
+	padding-bottom: 10px;
+}
+
+.inspector-panel label {
+	display: block;
+	color: #ccc;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 13px;
+}
+
+.inspector-panel input[type="text"],
+.inspector-panel input[type="number"] {
+	width: 100%;
+	padding: 6px;
+	background: #333;
+	border: 1px solid #555;
+	color: var(--text);
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+.inspector-panel input[type="text"]:focus,
+.inspector-panel input[type="number"]:focus {
+	outline: none;
+	border-color: #0e639c;
+}
+
+#scene {
+	background-color: #e0e0e0;
+}
+
+.hierarchy {
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--panel);
+	overflow-y: scroll;
+	word-break: break-all;
+	display: grid;
+	grid-template-columns: 40% 55%;
+	margin-top: 10px;
+	gap: 10px;
+}
+
+.objectList {
+	overflow-x: hidden;
+	text-wrap-mode: nowrap;
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--panel);
+}
+
+.fileInputButton {
+	display: inline-block;
+	background: rgb(255, 167, 78);
+	color: black;
+	font-size: 13px;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.fileInputButton:hover {
+	background: rgb(255, 182, 109);
+}
+
+.fileInput {
+	display: none;
+}
+
+.fileInputLabel {
+	display: inline-block;
+}
+
+ul {
+	padding-left: 8px;
+}
+
+li.selected {
+	font-weight: bold;
+}
+
+
+.event-detail-item {
+	margin-bottom: 1em;
+}

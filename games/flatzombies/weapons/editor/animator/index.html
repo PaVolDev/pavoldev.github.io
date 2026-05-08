@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Animation Editor for Unity Engine</title>
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<input type="file" id="json-file-input" accept=".json" style="display: none;" />
+	<div class="scene" style="display: flex; justify-content: space-between; align-items: center;">
+		<!-- Рендер объектов -->
+		<canvas id="scene" width="600" height="400"></canvas>
+		<div class="hierarchy">
+			<div class="objectList">
+				<div style="display: flex; justify-content: space-between; align-items: center;">
+					<span>Объекты:</span>
+					<span>
+					</span>
+				</div>
+				<div id="hierarchy"></div>
+			</div>
+			<div>
+				<span id="propName" style="text-align: right; overflow: hidden; text-wrap-mode: nowrap;"></span>
+				<div id="properties" style="display: none; margin-top: 0.5em;">
+					<div>
+						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;" data-tooltip="Позиция объекта внутри родительского объекта">
+							<span style="text-align: center;">X:</span><input type="text" id="propPosX" step="0.01" class="animate">
+							<span style="text-align: center;">Y:</span><input type="text" id="propPosY" step="0.01" class="animate">
+						</div>
+					</div>
+					<div>
+						<label for="propAngle" data-tooltip="Угол поворота в градусах">Local Angle:</label>
+						<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
+							<input type="range" min="-180" max="180" step="1" id="propAngleSlider">
+							<input type="text" min="-180" max="180" step="0.01" placeholder="float" id="propAngle" data-tooltip="Угол поворота в градусах" class="animate">
+						</div>
+					</div>
+					<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center; justify-content: space-between;">
+						<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
+						<input type="text" id="propSortingOrder" step="1">
+						<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
+						<input type="text" id="propPixelsPerUnit" step="5" min="10" max="300" onfocusout="inputMinMax(this)">
+					</div>
+					<div>
+						<span data-tooltip="Точка вращения объекта">Pivot point:</span>
+						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;">
+							<span style="text-align: center;">X:</span><input type="text" id="propPivotX" step="0.01">
+							<span style="text-align: center;">Y:</span><input type="text" id="propPivotY" step="0.01">
+						</div>
+
+					</div>
+
+					<div>
+						<label for="propTexture">Текстура:</label>
+						<input type="text" id="propTexture">
+						<label class="fileInputLabel">
+							<input type="file" class="fileInput" id="sceneFileInput" accept=".png">
+							<span class="fileInputButton" data-tooltip="Загрузить PNG-файл">Заменить</span>
+						</label>
+					</div>
+
+					<div style="display: flex;align-items: center;margin-top: 10px;">
+						<input type="checkbox" id="propRenderEnabled" class="animate" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true">
+						<input type="checkbox" id="propGameObjActive" class="animate" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)">
+						Показать
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-container">
+		<div class="properties-panel">
+			<div class="timeline-options">
+				<div class="timeline-options-list">
+					<button id="load-json-btn">📁Open</button>
+					<button id="save-json-btn">💾Save</button>
+					<button id="show-values">Value</button>
+				</div>
+				<input class="timeline-search editor" type="text" id="timeline-search" placeholder="Найти свойства">
+			</div>
+			<ul id="property-list"></ul>
+		</div>
+		<div class="timeline-panel" id="timeline-panel">
+			<div class="timeline-scroller">
+				<!-- FPS + Play Controls -->
+				<div class="timeline-controls">
+					<label>FPS: <input type="number" id="fps-input" min="1" max="120" value="30" /></label>
+					<button id="play-btn">▶️ Play</button>
+
+
+					<span id="current-time">Frame: 0 | Time: 0.00s</span>
+					<span>Keyframe:</span>
+					<label>Time: <input type="number" id="keyframe-time" /></label>
+					<label>Value: <input type="number" id="keyframe-value" /></label>
+				</div>
+
+				<div class="timeline-header">
+					<div class="frame-ruler" id="frame-ruler"></div>
+					<div class="time-ruler" id="time-ruler"></div>
+				</div>
+
+				<!-- панель общих ключей -->
+				<div class="master-track" id="master-track"></div>
+				<div class="events-track" id="events-track">
+				</div>
+
+				<div class="tracks-container">
+					<div class="tracks" id="tracks"></div>
+				</div>
+
+				<div class="playhead" id="playhead"></div>
+			</div>
+		</div>
+		<div class="inspector-panel" id="inspector-panel" style="display: none;">
+			<h3>Event Details</h3>
+			<div id="event-details-content">
+				<!-- Event details will be loaded here -->
+			</div>
+		</div>
+	</div>
+
+	<script src="animator.js"></script>
+	<script src="render.js"></script>
+	<script src="hero.js"></script>
+	<script src="animation-scene-binding.js"></script>
+</body>
+
+</html>

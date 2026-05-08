@@ -1,0 +1,797 @@
+{
+  "clipName": "Револьвер RSh12",
+  "length": 0.9375,
+  "frameRate": 32,
+  "curves": [
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": -7.384615421295166,
+          "outTangent": -7.384615421295166
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/head",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/head",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/head",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": -26,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": -32,
+          "inTangent": -32,
+          "outTangent": -90.66666412353516
+        },
+        {
+          "time": 0.9375,
+          "value": -26,
+          "inTangent": 114.35884857177734,
+          "outTangent": -64
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.x",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.y",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.z",
+      "path": "man/body/weaponParent/arm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": -24,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": -45.5629997253418,
+          "inTangent": -115.0026626586914,
+          "outTangent": -87.66400146484375
+        },
+        {
+          "time": 0.9375,
+          "value": -24,
+          "inTangent": 150.93028259277344,
+          "outTangent": -458.6666564941406
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.x",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0.44999998807907104,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0.44999998807907104,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.y",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "m_LocalPosition.z",
+      "path": "man/body/weaponParent/arm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm/forearm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm/forearm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm/forearm",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 78,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 49,
+          "inTangent": -154.6666717529297,
+          "outTangent": 154.6666717529297
+        },
+        {
+          "time": 0.9375,
+          "value": 78,
+          "inTangent": -41.14285659790039,
+          "outTangent": -237.8240203857422
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm2/forearm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm2/forearm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm2/forearm2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 74,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 89,
+          "inTangent": 80,
+          "outTangent": 90.66666412353516
+        },
+        {
+          "time": 0.9375,
+          "value": 74,
+          "inTangent": -18.285715103149414,
+          "outTangent": 448
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm/forearm/fingers",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm/forearm/fingers",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm/forearm/fingers",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": -52,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": -17,
+          "inTangent": 186.6666717529297,
+          "outTangent": -192
+        },
+        {
+          "time": 0.9375,
+          "value": -52,
+          "inTangent": 27.428571701049805,
+          "outTangent": 266.6666564941406
+        }
+      ]
+    },
+    {
+      "propertyName": "boltMove.move",
+      "path": "man/body/weaponParent/arm/forearm/fingers/оружие",
+      "type": "WeaponHandPoints, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.x",
+      "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.y",
+      "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.9375,
+          "value": 0,
+          "inTangent": 0,
+          "outTangent": 0
+        }
+      ]
+    },
+    {
+      "propertyName": "localEulerAnglesRaw.z",
+      "path": "man/body/weaponParent/arm2/forearm2/fingers2",
+      "type": "UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": -39,
+          "inTangent": 0,
+          "outTangent": 0
+        },
+        {
+          "time": 0.625,
+          "value": -17,
+          "inTangent": 117.33333587646484,
+          "outTangent": -85.33333587646484
+        },
+        {
+          "time": 0.9375,
+          "value": -39,
+          "inTangent": -100.57142639160156,
+          "outTangent": 373.3333435058594
+        }
+      ]
+    },
+    {
+      "propertyName": "m_IsActive",
+      "path": "man/body/weaponParent/arm/forearm/fingers/оружие/magazine",
+      "type": "UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "keys": [
+        {
+          "time": 0,
+          "value": 1,
+          "inTangent": "Infinity",
+          "outTangent": "Infinity"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "time": 0,
+      "functionName": "LabelShotFire",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0,
+      "functionName": "RightRifleToBody",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0,
+      "functionName": "LeftHandOnHandguard",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0.625,
+      "functionName": "LeftHandOnMagazine",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0.9375,
+      "functionName": "LeftHandOnHandguard",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0.9375,
+      "functionName": "RightRifleToBody",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0.9375,
+      "functionName": "LabelReloadEmpty",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    },
+    {
+      "time": 0.9375,
+      "functionName": "LabelReload",
+      "stringParameter": "",
+      "floatParameter": 0,
+      "intParameter": 0,
+      "objectReferenceParameter": ""
+    }
+  ],
+  "sprites": [
+    {
+      "name": "оружие",
+      "parent": "fingers",
+      "texture": "base64",
+      "pixelPerUnit": 100,
+      "pivotPointX": 0.5,
+      "pivotPointY": 0.5,
+      "localPositionX": 0,
+      "localPositionY": 0,
+	  "sortingOrder": 18,
+      "localAngle": 0
+    }
+  ]
+}
