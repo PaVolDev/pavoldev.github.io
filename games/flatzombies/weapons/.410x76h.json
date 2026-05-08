@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAECAYAAABsgwTvAAAAL0lEQVR4AayOsQ0AMAzCUGb+HziB+9jbKDeA8Gp5JD3bFQY7kmhwsiRocLKNq/wDAAD//0Ut/HcAAAAGSURBVAMAXbRuoGD6DxwAAAAASUVORK5CYII=",
     "shellSkin.pixelPerUnit": "90",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pixelPerUnit": "150",
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
