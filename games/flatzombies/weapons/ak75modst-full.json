@@ -103,6 +103,6 @@
     "weapon.remen.SpriteRenderer.sortingOrder": 17,
     "weapon.remen.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.remen.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.436)",
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
