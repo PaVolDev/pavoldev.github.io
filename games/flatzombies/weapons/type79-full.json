@@ -95,6 +95,6 @@
     "weapon.boltRenderer.SpriteRenderer.sortingOrder": "15",
     "weapon.boltRenderer.SpriteRenderer.sprite.pixelPerUnit": "171",
     "weapon.boltRenderer.SpriteRenderer.sprite.pivotPoint": "(0.501, 0.482)",
-    "version": 11,
+    "version": 12,
     "targetVersion": 209
 }
