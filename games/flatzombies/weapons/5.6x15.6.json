@@ -1,0 +1,43 @@
+{
+    "id": "5.6x15.6",
+    "idTemplate": "9x19",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAMCAYAAAAgT+5sAAABF0lEQVR4AdySQa6CMBRFbT/k+/MXoytQ14CJC3AujtEAAaKMxTkLMIE1qCvQxRg1ROp91ZrOHJigSDjc1wToO235Kp2JVTrPGjW/OPV/PJ+smxBJVcE8831f+Hccx5G1Ss/zdoTrupkLUCdIG3R1qHeFFFGDqvJwulj6XEVR6MMGxi3GWItzbnGAeoRcgLUOBDfqw7eIqMlfTQh2sEM2/afWIlKA8wXJ1F6EZLAzw68QIZmvEBFCpLUXKctyHEVR8pEiOPN0Wp6CndiSBL34FpH/5k9OkytM01SlTMMw9mhyj9XOCdRL5Bj0dMIw7MoP8JAif7/NfDCcsuqY9IMgYMGdOI5lrRINtgmsdp9AbSMTsNFB/4/7CgAA///QZx9lAAAABklEQVQDACMNBG+1XEEgAAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAMCAYAAAAgT+5sAAABF0lEQVR4AdySQa6CMBRFbT/k+/MXoytQ14CJC3AujtEAAaKMxTkLMIE1qCvQxRg1ROp91ZrOHJigSDjc1wToO235Kp2JVTrPGjW/OPV/PJ+smxBJVcE8831f+Hccx5G1Ss/zdoTrupkLUCdIG3R1qHeFFFGDqvJwulj6XEVR6MMGxi3GWItzbnGAeoRcgLUOBDfqw7eIqMlfTQh2sEM2/afWIlKA8wXJ1F6EZLAzw68QIZmvEBFCpLUXKctyHEVR8pEiOPN0Wp6CndiSBL34FpH/5k9OkytM01SlTMMw9mhyj9XOCdRL5Bj0dMIw7MoP8JAif7/NfDCcsuqY9IMgYMGdOI5lrRINtgmsdp9AbSMTsNFB/4/7CgAA///QZx9lAAAABklEQVQDACMNBG+1XEEgAAAAAElFTkSuQmCC",
+    "caliberName": "5.6x15.6",
+    "uiName": ".22 LR",
+    "author": "_tOWP",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAECAYAAABY+sXzAAAAMUlEQVR4AYzDMREAMAgDwFwEVEHniqjN6unOzDHghQEsZHjGu63iPgsqun2omFlQDQAAAP//SQGDXgAAAAZJREFUAwDGc1dvmwS75wAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "120",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 1,
+    "distance": 24,
+    "impulse": "10",
+    "stopPower": "0.02",
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "skin",
+            "scaleFirst": "0.5",
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 4,
+    "targetVersion": 209
+}
