@@ -76,7 +76,7 @@
     "weapon.recoilSteps": 15,
     "weapon.recoilMax": 7,
     "weapon.recoilDecrease": 20,
-    "weapon.bolt": "(-0.280, 0.19, 0)",
+    "weapon.bolt": "(-0.28, 0.2, 0)",
     "weapon.flashlight": "(1.610, 0.28, 0)",
     "weapon.automat": false,
     "weapon.fireRateInMinute": "120",
@@ -90,6 +90,6 @@
     "weapon.boltRenderer.SpriteRenderer.sortingOrder": "16",
     "weapon.boltRenderer.SpriteRenderer.sprite.pixelPerUnit": "129",
     "weapon.boltRenderer.SpriteRenderer.sprite.pivotPoint": "(0.300, 0.420)",
-    "version": 20,
+    "version": 21,
     "targetVersion": 209
 }
