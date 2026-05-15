@@ -9,7 +9,7 @@
     "arrowSample.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAJCAYAAABwgn/fAAACKUlEQVR4AdTUT2sTQRQA8DezuzOhyabpF/DiyVYQjILQxLab2oJ49aYoSMH/iDl4KKIoeIoUGkprKejBi1704sFgk66baAuNoCYN5At4M9k02Wz3rzNtCipSaA4pDvNj3s6wM+/tsouhR624fPzBF23qbk5dTaqqxqjMalJT3yRLH5U71cLIrUpeublRGLtezitXKwVlqpJPXPq2MnJ+o6CcLmvjh1iqiPlnx8X3seiu9Uz8fjETv8DxeA/zbG1fggH8kEroKZVIihCJISmJMJKUClBhRqLCLKU4HSDCXIDieULwIiHwglL0GgGojueUK/nRta/a2FL1s3L5+7Jy+PeKevZG6roDtboJul5n9A4eN6Cm23+os2uOz+sNB0zTA+RDCGF8Ug4IVzBGzzH116tr4+8qnxLneEE9K4Qf1i3P98F2fGgZ7nbB+qYDrgsRUYCzoghvS9roDdzt5gd9n2178LNmg2P7Agb0CB90Qt2ejxGCUEiEvj6Bb7H03xTCvgugBIPMkh+IECAUAwa/1DTc24Px3L2eFRIKChCWCciy/Jcgm5egPyx28FiCSL8EAx2RsASEIPABfriOn22bzhPke2faDfHU0HA2Dazh6GS+uOvEhPY4OqG95Hi8h2tsbV8sG73aspwFy9p6tsPaGc32YsuwF1pNe84wvDSLZ9lTnmkaTspgCbM/1jQbL3ouGt40zKNHYtnEUCw3PRhf+XBsMtNiNWz3XwAAAP//0bmVqgAAAAZJREFUAwAu1lgVYDTJVgAAAABJRU5ErkJggg==",
     "author": "_tOWP",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAHCAYAAADXhRcnAAAARklEQVR4AdTLoQ0AIAwEwKYagWNNlqhmAwyOBbDMgiEhIYQJSgMTVPL5f3cYyHMtiXMk9RAkozd5fS/Wsyd+xsY6mGurdwAAAP//KD7GjQAAAAZJREFUAwC501FWeH95wwAAAABJRU5ErkJggg==",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAHCAYAAAAF1R1/AAAARklEQVR4AdyMoQ0AIAwEm2oEjjVZopoNMDgWwDILhoSEECYoDYxQx+fv3R8G8lxL4hxJBYJk9Car6xXpFO/9u8hYB3NtFQcAAP//gCF62wAAAAZJREFUAwDIrmIhzd/ElgAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": "80",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "250",
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "120",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
