@@ -20,7 +20,7 @@
     "angleRandom": 90,
     "angleSpread": 1,
     "damage": "150",
-    "distance": 3,
+    "distance": 4,
     "impulse": "100",
     "stopPower": 0.8,
     "penetration": {
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "120",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
