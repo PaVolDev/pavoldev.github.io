@@ -12,7 +12,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAHCAYAAADXhRcnAAAARklEQVR4AdTLoQ0AIAwEwKYagWNNlqhmAwyOBbDMgiEhIYQJSgMTVPL5f3cYyHMtiXMk9RAkozd5fS/Wsyd+xsY6mGurdwAAAP//KD7GjQAAAAZJREFUAwC501FWeH95wwAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": "80",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pixelPerUnit": "250",
     "iconButtonSprite.pivotPoint": "(0.2, 0.4)",
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "120",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
