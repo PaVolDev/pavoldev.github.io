@@ -54,7 +54,7 @@
     "arrowsPerShot": 1,
     "arrowSample.WeaponRocket.speed": "120",
     "arrowSample.WeaponRocket.timerLive": 3,
-    "arrowSample.WeaponRocket.scaleGravity": "0.1",
+    "arrowSample.WeaponRocket.scaleGravity": "0",
     "arrowSample.WeaponRocket.distanceSnake": 0.2,
     "arrowSample.WeaponRocket.timeSnake": 0.3,
     "arrowSample.WeaponRocket.periodSnake": 4,
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "120",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
