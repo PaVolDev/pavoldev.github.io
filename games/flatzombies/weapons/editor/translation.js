@@ -80,6 +80,20 @@ function tr(text) {
 	return text;
 }
 
+//Частичная замена
+function trLines(text, repiat = 5) {
+	if (!text || window.sourceTextIds.length == 0 || repiat <= 0) return text;
+	for (let i = 0; i < window.sourceTextIds.length; i++) { //Перебираем все ключи из sourceText
+		const key = window.sourceTextIds[i];
+		const from = window.sourceText[key];
+		const to = window.translate[key]; //перевод по тому же ключу
+		if (from && to !== undefined && text.includes(from)) { //console.log(from + " -> " + to);
+			return trLines(text.replace(from, to), repiat - 1); //возвращаем перевод
+		}
+	}
+	return text;
+}
+
 
 //Функция для динамической загрузки скрипта
 //Если не удалось загрузить файл, то пытаемся загрузить defaultFile, если он был указан
