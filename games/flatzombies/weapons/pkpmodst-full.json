@@ -33,7 +33,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.490, 0.01, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.930, 0.41, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.580, 0.77, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-1.350, 0.2, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-1.100, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
     "storeInfo.author": "StatRec",
     "storeInfo.authorURL": "https://boosty.to/statrekmapping",
@@ -99,6 +99,6 @@
     "weapon.chamberSize": "100",
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
