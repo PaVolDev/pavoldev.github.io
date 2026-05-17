@@ -527,7 +527,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "storeInfo.silencerGroup", comment: "Из какой категории брать глушители", type: "string", value: "", options: ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
 	{ fieldPath: "storeInfo.ammoListStep", comment: "Отступ в интерфейсе на экране со списком патронов", type: "int", value: 0 },
 	{ fieldPath: "storeInfo.ammoListLimit", comment: "Размер списка с патронами для двуствольного ружья", type: "int", value: 0 },
-	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка оружия для интерфейса, размер: 320x120<br>Если не указано, то иконка будет сгенерирована автоматически", type: "Image", value: "" },
+	//{ fieldPath: "storeInfo.iconBase64", comment: "Иконка оружия для интерфейса, размер: 320x120<br>Если не указано, то иконка будет сгенерирована автоматически", type: "Image", value: "" },
 	//209 - { fieldPath: "weapon.animationSounds", comment: "Звуки анимации при перезарядке", type: "AnimationSounds[]", value: "" },
 ]
 
