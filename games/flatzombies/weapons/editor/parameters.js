@@ -42,7 +42,7 @@ async function onSelectWeapon(event) {
 	let preservedEditedParams = []; //Сохранённые изменения при переключении оружия
 	return new Promise((resolve, reject) => {
 		if (selectedWeapon && editedParams.length != 0) {
-			const confirmed = confirm("Некоторые изменения будут потеряны!\nСменить оружие?");
+			const confirmed = confirm(tr("Некоторые изменения будут потеряны!\nСменить оружие?"));
 			if (!confirmed) {
 				templateInput.selectedIndex = lastTemplateIndex;
 				resolve(); //Успешное завершение — даже если отменили
@@ -877,8 +877,8 @@ function forceRenderEditedParams(filter = '') {
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
-const fileType = []; fileType["TextFile"] = ".txt"; fileType["LuaScript"] = ".lua"; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
-const textFileType = [".txt", ".lua"];
+const fileType = []; fileType["TextFile"] = ".txt"; fileType["LuaScript"] = ".lua"; fileType["JsonFile"] = ".json"; fileType["AudioClip"] = ".wav"; fileType["Sprite"] = ".png"; fileType["Image"] = ".png"; fileType["TextureSprite"] = ".png";
+const textFileType = [".txt", ".lua", ".json", ".js"];
 function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	if (index == -1) index = editedParams.findIndex(field => field.startFieldPath == param.startFieldPath) ?? editedParams.findIndex(field => field.fieldPath == param.fieldPath);
 	//Тип параметра имеет свою функцию для построения формы
@@ -1559,10 +1559,10 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 		return response.text();
 	}).then(data => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert(tr(data));
+		alert(trLines(data));
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
-		alert(tr("Ошибка:\n") + tr(error.message));
+		alert(tr("Ошибка:\n") + trLines(error.message));
 	});
 });
 
