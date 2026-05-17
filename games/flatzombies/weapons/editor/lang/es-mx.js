@@ -71,8 +71,9 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	1127: "Aplicar",
 	1128: "Aplicar cambios",
 	1129: "Abrir ventana para editar",
-
-
+	1130: "¡Se perderán algunos cambios!\n¿Cambiar arma?",
+	
+	
 	1500: "❌ Se prohíben los assets robados (texturas, modelos, sonidos)",
 	1501: "❌ Se prohíbe recolorear texturas y duplicar armas del juego",
 	1502: "❌ Se prohíbe la publicidad de sitios externos",
@@ -128,16 +129,23 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 
 
 	1800: "No se pudo cargar el arma",
-	1801: "No se pudo cargar el arma. Revisa la consola: CTRL+SHIFT + i",
-	1802: "¡Datos guardados correctamente!\nEn el juego, en la lista de armas, pulsa el botón +Agregar e introduce el identificador del arma: ",
-	1803: "¡Mod publicado correctamente!\nEs posible que el arma no aparezca de inmediato y que durante un tiempo aparezca un error 404\nLa lista pública de armas usa caché en el servidor, así que hay que esperar a que se actualice la caché",
-	1804: "¡Datos guardados correctamente!\nPara publicar el arma en la lista pública, primero debes probarla dentro del juego.\nEn el juego, en la lista de armas, pulsa el botón +Agregar e introduce el identificador de tu arma.\n\nDespués de probarla, vuelve a pulsar Enviar",
-	1805: "Error del servidor:\nEl identificador del mod ya está en uso.\nTu contraseña no es válida para el mod ",
+	1801: "No se pudo cargar el arma. Revisa la consola: CTRL+SHIFT + I",
+	1802: "En el juego, en la lista de armas, pulsa el botón +Agregar e introduce el identificador del arma: ",
+	1803: "Es posible que el arma no aparezca de inmediato y que durante un tiempo se produzca un error 404.\nLa lista pública de armas usa caché en el servidor, así que hay que esperar a que se actualice la caché del servidor.",
+	1804: "Para publicar el arma en la lista pública, primero debes probarla dentro del juego.\nEn el juego, en la lista de armas, pulsa el botón +Agregar e introduce el identificador de tu arma.\n\nDespués de probarla, vuelve a pulsar Enviar.",
+	1805: "El identificador del mod ya está en uso.\nTu contraseña no es válida para el mod ",
 	1806: "Error",
 	1807: "Error del servidor",
-	1808: "Error del servidor:\nUsuario o contraseña incorrectos",
+	1808: "Usuario o contraseña incorrectos",
 	1809: "Contacta al desarrollador\nMod: ",
 	1810: "¡Mod publicado correctamente!",
+	1811: "¡Datos guardados correctamente!",
+	1812: "El identificador del mod ya está en uso.",
+	1813: "Tu contraseña no es válida para el mod",
+	1814: "¡Datos guardados correctamente!",
+	1815: "Usuario no encontrado",
+	1817: "El ID ya está en uso:",
+	1818: "El mod se publicará después de la moderación",
 
 	2000: "¿Eliminar parámetro de la lista?\nSi el parámetro no se indica, se tomará del arma ",
 	2001: "Eliminar parámetro",
