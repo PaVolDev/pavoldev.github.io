@@ -223,13 +223,13 @@ function renderScene() {
 }
 
 //Показать только спрайты без точек
-function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1, maxHeight = 1024, maxWidth = 1024) {
+function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1, maxHeight = 1024, maxWidth = 1024, sceneScale = 1) {
 	convertedPoint = new Array(); // Сбросим/инициализируем
 	const w = canvas.width * 2;
 	const h = canvas.height * 2;
 	const parentSprite = sceneObjects.find(sprite => sprite.parent == "");
 	if (parentSprite) { parentSprite.localPosition.x = 0; parentSprite.localPosition.y = 0; }// Сбросить сдвиг родительского спрайта
-	const viewPPU = 100; // Сбросить масштаб просмотра
+	const viewPPU = 100 * sceneScale; // Сбросить масштаб просмотра
 	const off = document.createElement('canvas');
 	off.width = w; off.height = h;
 	const c = off.getContext('2d');
