@@ -45,6 +45,8 @@
 							<option value="Sprite[]">Список спрайтов</option>
 							<option value="AudioClip[]">Список звуков</option>
 							<option value="NameAnimationFire[]">GunFlash[]</option>
+							<option value="TextFile">Текстовый файл</option>
+							<option value="JsonFile">JSON-файл</option>
 							<option value="Vector2">Vector2</option>
 							<option value="Vector3">Vector3</option>
 						</select>
@@ -191,7 +193,7 @@
 			<canvas id="scene" width="600" height="400"></canvas>
 
 			<!-- Добавляем отображение иерархии и свойств (для отладки и редактирования) -->
-			<div class="hierarchy">
+			<div class="scene-info">
 				<div class="objectList">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<span>Объекты:</span>
@@ -220,7 +222,7 @@
 							<label for="propAngle" data-tooltip="Угол поворота в градусах">Local Angle:</label>
 							<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
 								<input type="range" min="-180" max="180" step="1" id="propAngleSlider">
-								<input type="text" min="-180" max="180" step="0.01" placeholder="float" id="propAngle" data-tooltip="Угол поворота в градусах">
+								<input type="text" min="-180" max="180" step="0.01" placeholder="[-180, 180]" id="propAngle" data-tooltip="Угол поворота в градусах">
 							</div>
 						</div>
 						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center; justify-content: space-between;">
