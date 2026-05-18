@@ -68,6 +68,7 @@ input:disabled {
 input[type="checkbox"] {
 	width: 20px;
 	height: 20px;
+	margin-right: 4px;
 }
 
 input[type="text"] {
@@ -129,7 +130,7 @@ ul {
 	margin: auto;
 }
 
-.hierarchy {
+.scene-info {
 	scrollbar-width: thin;
 	scrollbar-color: var(--accent) var(--panel);
 	overflow-y: scroll;
@@ -806,7 +807,7 @@ img.tooltip {
 
 .array-items {
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	align-items: center;
 	gap: 4px;
 	margin-top: 6px;
