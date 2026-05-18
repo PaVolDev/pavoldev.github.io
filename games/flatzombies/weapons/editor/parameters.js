@@ -240,7 +240,8 @@ function syncParamsToScene() {
 		let parentName = prefix?.includes('.') ? prefix.split('.').slice(0, -1).at(-1) : '';
 		let name = prefix || 'sprite';
 		if (prefix?.includes('.')) name = prefix.split('.').pop();
-		if (!parentName && name != 'sprite') parentName = 'sprite';
+		// if (!parentName && sceneObjects.length != 0) parentName = 'sprite';
+		// if (!parentName && name != 'sprite') parentName = 'sprite';
 		let uniqueName = name;
 		let counter = 1;
 		while (processedNames.has(uniqueName)) {
@@ -618,6 +619,7 @@ function forceRenderEditedParams(filter = '') {
 			const matchesSearch = param.value == filter || param.fieldPath.toLowerCase().includes(filter) || (param.comment || '').toLowerCase().includes(filter) || param.type.toLowerCase().includes(filter);
 			if (!matchesSearch) { return; }
 		}
+		if ("showInList" in param && param.showInList === false) return;
 		if (processed.has(param.fieldPath)) return;
 		const lightFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 		const fullFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];

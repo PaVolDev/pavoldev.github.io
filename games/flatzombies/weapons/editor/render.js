@@ -73,7 +73,7 @@ function getWorldPosition(objName) {
 	let currentName = objName;
 	while (currentName) {
 		const current = byName[currentName];
-		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL"); break; }
+		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL у объекта " + objName); break; }
 		chain.push(current);
 		currentName = current.parent;
 	}
@@ -113,7 +113,7 @@ function getWorldAngle(objName) {
 	let currentName = objName;
 	while (currentName) {
 		const current = byName[currentName];
-		if (!current) { console.log("getWorldAngle: byName[" + currentName + "] == NULL"); break; }
+		if (!current) { console.log("getWorldAngle: byName[" + currentName + "] == NULL у объекта " + objName); break; }
 		angle += current.localAngle || 0;
 		currentName = current.parent;
 	}
