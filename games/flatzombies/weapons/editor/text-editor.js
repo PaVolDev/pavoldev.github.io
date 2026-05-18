@@ -29,7 +29,7 @@ function openTextEditor(paramPath) {
 	showCloseConfirm = false;
 }
 
-function onInputTextEditor(event){
+function onInputTextEditor(event) {
 	showCloseConfirm = true;
 }
 
@@ -69,7 +69,13 @@ function saveTextEditor() {
 
 //Декодирует строку base64 в обычный текст с поддержкой UTF-8, удаляя data URI заголовок.
 function decodeBase64Text(base64Value) {
-	const source = typeof base64Value === 'string' ? base64Value.trim() : ''; //Исходная строка для декодирования.
+	let source = ''; //Исходная строка для декодирования.
+	let type = typeof base64Value;
+	if (type === 'string') {
+		source = base64Value.trim();
+	} else if (type === 'object') {
+		return JSON.stringify(base64Value);
+	}
 	if (!source) return '';
 	try {
 		//Извлекаем MIME-тип и чистый base64 из data URI формата.
