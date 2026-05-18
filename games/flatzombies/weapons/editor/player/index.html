@@ -73,7 +73,6 @@
 				<select id="idTemplate" class="panelInput" data-tooltip="Выберите скин, который будет использоваться как базовый родительский Prefab">
 					<option value="">Выберите скин</option>
 					<option value="desertswat">Desert SWAT</option>
-					<option value="blueswat">Blue SWAT</option>
 				</select>
 			</div>
 			<ul id="editedParamsList"></ul>
@@ -151,7 +150,7 @@
 							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
 							<input type="text" id="propSortingOrder" step="1">
 							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
-							<input type="text" id="propPixelsPerUnit" step="5" min="10" max="300">
+							<input type="text" id="propPixelsPerUnit" step="5" min="10" max="300" onfocusout="inputMinMax(this)">
 						</div>
 						<div>
 							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
@@ -190,7 +189,7 @@
 		<div class="modal-content">
 			<div class="heading" style="position: relative;">
 				<div class="h2">Правила для мододелов</div>
-				<select class="selectLanguage" style="position: absolute; right: 0;" onchange="switchLanguage(this);">
+				<select class="selectLanguage" style="position: absolute; right: 0;" onchange="switchLanguage(this);" onvisible="showSelectedLanguage(this);">
 					<option value="pt">Português (Brasil)</option>
 					<option value="en">English</option>
 					<option value="ru">Русский</option>
