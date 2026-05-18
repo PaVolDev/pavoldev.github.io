@@ -234,6 +234,8 @@ function handleSelectChange(select) {
 			downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', ''));
 		} else if (modType === "cartridge") {
 			downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', '/ammo'));
+		} else if (modType === "playerskin") {
+			downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', '/player'));
 		} else {
 			alert("Error #811: " + modType);
 		}
