@@ -74,7 +74,7 @@ function decodeBase64Text(base64Value) {
 	if (type === 'string') {
 		source = base64Value.trim();
 	} else if (type === 'object') {
-		return JSON.stringify(base64Value);
+		return JSON.stringify(base64Value, null, 2);
 	}
 	if (!source) return '';
 	try {
