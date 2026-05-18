@@ -1490,7 +1490,7 @@ function getExportResultJSON() {
 		}
 	} */
 	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
-		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, 120, 600);
+		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
 		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
@@ -1563,6 +1563,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	}).catch(error => {
 		event.target.style.display = lastDisplayMode; saveState.style.display = 'none';
 		alert(tr("Ошибка:\n") + trLines(error.message));
+		console.warn("Ошибка: " + error.message, json);
 	});
 });
 
