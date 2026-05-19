@@ -80,6 +80,6 @@
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.damageScale": "0,6",
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
