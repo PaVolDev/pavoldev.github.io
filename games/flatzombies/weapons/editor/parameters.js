@@ -241,7 +241,7 @@ function syncParamsToScene() {
 		let name = prefix || 'sprite';
 		if (prefix?.includes('.')) name = prefix.split('.').pop();
 		// if (!parentName && sceneObjects.length != 0) parentName = 'sprite';
-		if (!parentName && name != 'sprite') parentName = 'sprite';
+		//if (!parentName && name != 'sprite') parentName = 'sprite';
 		let uniqueName = name;
 		let counter = 1;
 		while (processedNames.has(uniqueName)) {
@@ -280,6 +280,14 @@ function syncParamsToScene() {
 			parameter: param.startFieldPath
 		});
 	});
+
+	//Найти корневой родительский объект и поместить в него все остальные объекты не имеющих родителя
+	if (sceneObjects.length != 0) {
+		const rootParentName = sceneObjects[0].name;
+		sceneObjects.forEach(sceneObj => {
+			if (!sceneObj.parent && sceneObj.name != rootParentName) sceneObj.parent = rootParentName;
+		});
+	}
 
 	// Обработка Vector2/Vector3 (как точки)
 	editedParams.filter(p => (p.type === 'Vector2' || p.type === 'Vector3') && p.spritePreview).forEach(param => {
