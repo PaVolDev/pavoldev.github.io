@@ -33,15 +33,15 @@
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "0.27",
-            "scaleThrough": "0.27",
+            "scaleFirst": "0.9",
+            "scaleThrough": "0",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "skin"
         },
         {
-            "scaleFirst": "0.45",
-            "scaleThrough": "0.45",
+            "scaleFirst": "0.7",
+            "scaleThrough": "0",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "armor"
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "300",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
