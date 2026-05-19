@@ -10,11 +10,16 @@ function addNewSprite() {
 	if (!spritePath) return false;
 	typeDependencies['Sprite'].forEach(filed => {
 		sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
-		const newSpriteInfo = { "fieldPath": spritePath + '.' + filed, "startFieldPath": 'weapon.' + spritePath + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+		const newStartFieldPath = prefixExport + spritePath + '.' + filed;
+		const newFieldPath = (spritePath + '.' + filed).replace('..', '.');
+		const newSpriteInfo = { "fieldPath": newFieldPath, "startFieldPath": newStartFieldPath, "comment": sample.comment, "type": sample.type, "value": sample.value }
+		console.log("newSpriteInfo: ", newSpriteInfo);
 		editedParams.unshift(newSpriteInfo);
 		availableParams.unshift(newSpriteInfo);
 	});
-	const newSpriteInfo = { "fieldPath": spritePath + ".SpriteRenderer.sprite", "startFieldPath": 'weapon.' + spritePath + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" };
+
+	const newSpriteInfo = { "fieldPath": spritePath + ".SpriteRenderer.sprite", "startFieldPath": prefixExport + spritePath + ".SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" };
+	console.log("newSpriteInfo: ", newSpriteInfo);
 	editedParams.unshift(newSpriteInfo);
 	availableParams.unshift(newSpriteInfo);
 	renderEditedParams();
@@ -47,12 +52,20 @@ function addTransformObject() {
 }
 
 function addNewObject(addNewComponent = "") {
-	const spritePath = prompt(tr("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite"));
+	//Найти корневой родительский объект и поместить в него все объект
+	if (!selectedObject && lastDefaultParent) selectedObject = sceneObjects.find(s => s.name == lastDefaultParent);
+	if (!selectedObject) { alert("Нужно выбрать объект, в который будет добавлен новый", selectedObject); return; }
+	if (sceneObjects.length == 0) { alert("Добавление объектов не поддерживается для пустой сцены\nsceneObjects.length == 0"); return; }
+	const rootObjectParam = findByPath(selectedObject?.parameter);
+	const shortPrefix = rootObjectParam.fieldPath.replace(rootObjectParam.suffix, '');
+	const startPath = (shortPrefix) ? shortPrefix + '.' : '';
+	let spritePath = prompt(tr("Имя объекта.\nМожно указать родительский объект, например: parent.newSprite"), startPath);
 	if (!spritePath) { return false; }
 	if (sceneObjects.find(o => o.name === spritePath)) {
 		alert('Объект с таким именем уже существует!');
 		return false;
 	}
+	//Добавить в список addedGameObjects
 	var index = editedParams.findIndex(p => p.fieldPath == 'addedGameObjects');
 	if (index == -1) {
 		addParam('addedGameObjects', true);
