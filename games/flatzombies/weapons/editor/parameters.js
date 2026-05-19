@@ -233,7 +233,7 @@ function isValidBase64Image(data) {
 	return match && match[2].length > 100; //базовая проверка длины
 }
 
-
+let lastDefaultParent = '';
 // ——— СИНХРОНИЗАЦИЯ В СЦЕНУ, из параметров в sceneObjects ———
 function syncParamsToScene() {
 	sceneObjects.length = 0;
@@ -278,17 +278,20 @@ function syncParamsToScene() {
 			pivotPoint: { x: px, y: py },
 			enabled: enabledStr,
 			isActive: gameObjectIsActive,
-			canChangePivot: true,
-			canChangeLocalAngle: true,
+			canChangePivot: "canChangePivot" in param ? param.canChangePivot : true,
+			canChangeLocalAngle: "canChangeAngle" in param ? param.canChangeAngle : true,
+			canChangePosition: "canChangePosition" in param ? param.canChangePosition : true,
 			parameter: param.startFieldPath
 		});
 	});
 
 	//Найти корневой родительский объект и поместить в него все остальные объекты не имеющих родителя
 	if (sceneObjects.length != 0) {
-		const rootParentName = sceneObjects[0].name;
-		sceneObjects.forEach(sceneObj => {
-			if (!sceneObj.parent && sceneObj.name != rootParentName) sceneObj.parent = rootParentName;
+		const parents = sceneObjects.filter(s => !s.parent);
+		if (!lastDefaultParent) lastDefaultParent = parents[0].name;
+		const rootParentName = lastDefaultParent;
+		parents.forEach(sceneObj => {
+			if (sceneObj.name != rootParentName) sceneObj.parent = rootParentName;
 		});
 	}
 
