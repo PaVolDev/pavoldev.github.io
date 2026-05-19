@@ -33,7 +33,7 @@
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "0.625",
+            "scaleFirst": "0.6",
             "scaleThrough": "0",
             "stopBulletDamage": 0,
             "editorDamage": 0,
@@ -225,8 +225,8 @@
     "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.speed": 15,
     "arrowSample.SpriteRenderer.enabled": true,
     "arrowSample.SpriteRenderer.sortingOrder": 0,
-    "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "150",
+    "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "250",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
