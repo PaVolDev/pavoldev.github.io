@@ -571,8 +571,8 @@ function selectObject(obj) {
 	propertiesDiv.style.display = 'block';
 	// Обновляем значения полей
 	propertyInputs.name.innerHTML = obj.name || '';
-	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100;
-	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100;
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = !obj.canChangePosition;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = !obj.canChangePosition
 	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = !obj.canChangeLocalAngle;
 	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
@@ -629,7 +629,7 @@ canvas.addEventListener('touchstart', (event) => {
 
 function startMove(event, parentMove) {
 	const mouseX = event.clientX;
-	const mouseY = event.clientY; 
+	const mouseY = event.clientY;
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
@@ -709,7 +709,7 @@ canvas.addEventListener('touchmove', (event) => {
 
 function mouseMove(event, shiftKey = false) {
 	const mouseX = event.clientX;
-	const mouseY = event.clientY; 
+	const mouseY = event.clientY;
 	const rect = canvas.getBoundingClientRect();
 	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
 	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
@@ -717,6 +717,9 @@ function mouseMove(event, shiftKey = false) {
 	const wy = (mouseSy - canvas.height / 2) / viewPPU;
 
 	if (isDragging) {
+		if ("canChangePosition" in dragObject && dragObject.canChangePosition === false) {
+			return;
+		}
 		const mouseDeltaX = wx - dragStartMouseWorld.x;
 		const mouseDeltaY = wy - dragStartMouseWorld.y;
 		const newWorldPos = {
