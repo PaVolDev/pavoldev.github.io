@@ -39,6 +39,7 @@ function onLanguageLoaded() {
 
 // ——— ОБНОВИТЬ СПИСОК ПАРАМЕТРОВ ПРИ ВЫБОРЕ ОРУЖИЯ
 async function onSelectWeapon(event) {
+	const idInput = document.getElementById("idWeapon");
 	let preservedEditedParams = []; //Сохранённые изменения при переключении оружия
 	return new Promise((resolve, reject) => {
 		if (selectedWeapon && editedParams.length != 0) {
@@ -49,20 +50,22 @@ async function onSelectWeapon(event) {
 				return;
 			}
 			//Продолжаем переключение оружия //Копируем текущие данные для переноса
-			editedParams.forEach(param => {
-				if (param.startFieldPath in selectedWeapon) {
-					if (selectedWeapon[param.startFieldPath] != param.value) {
+			if (idInput.value) {
+				editedParams.forEach(param => {
+					if (param.startFieldPath in selectedWeapon) {
+						if (selectedWeapon[param.startFieldPath] != param.value) {
+							preservedEditedParams.push(structuredClone(param));
+						}
+					} else if (param.fieldPath in selectedWeapon) {
+						if (selectedWeapon[param.fieldPath] != param.value) {
+							preservedEditedParams.push(structuredClone(param));
+						}
+					} else if (sampleParams.findIndex(s => s.startFieldPath == param.startFieldPath) == -1) {
 						preservedEditedParams.push(structuredClone(param));
 					}
-				} else if (param.fieldPath in selectedWeapon) {
-					if (selectedWeapon[param.fieldPath] != param.value) {
-						preservedEditedParams.push(structuredClone(param));
-					}
-				} else if (sampleParams.findIndex(s => s.startFieldPath == param.startFieldPath) == -1) {
-					preservedEditedParams.push(structuredClone(param));
-				}
-			});
-			console.log(preservedEditedParams);
+				});
+				console.log(preservedEditedParams);
+			}
 		}
 		let cacheIndex = -1;
 		if ((cacheIndex = weapons.findIndex(item => item["weapon.name"] == event.target.value || item["id"] == event.target.value || item["name"] == event.target.value)) !== -1) {
