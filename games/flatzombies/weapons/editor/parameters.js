@@ -241,7 +241,7 @@ function syncParamsToScene() {
 		let name = prefix || 'sprite';
 		if (prefix?.includes('.')) name = prefix.split('.').pop();
 		// if (!parentName && sceneObjects.length != 0) parentName = 'sprite';
-		// if (!parentName && name != 'sprite') parentName = 'sprite';
+		if (!parentName && name != 'sprite') parentName = 'sprite';
 		let uniqueName = name;
 		let counter = 1;
 		while (processedNames.has(uniqueName)) {
