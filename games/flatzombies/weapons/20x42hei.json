@@ -19,7 +19,7 @@
     "bullets": "30",
     "angleRandom": "40",
     "angleSpread": 1,
-    "damage": "130",
+    "damage": "60",
     "distance": 6,
     "impulse": 600,
     "stopPower": 0.8,
@@ -33,15 +33,15 @@
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "1",
+            "scaleFirst": "0.8",
             "scaleThrough": "0.2",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "skin"
         },
         {
-            "scaleFirst": "0.5",
-            "scaleThrough": "0.2",
+            "scaleFirst": "0.7",
+            "scaleThrough": "0.15",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "armor"
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "300",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
