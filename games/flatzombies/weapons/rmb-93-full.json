@@ -42,8 +42,8 @@
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0.08, -0.02, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0.08, -0.02, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
-    "weapon.WeaponHandPoints.coverMove.movePosition": "(0.34, 0.22, -94)",
-    "weapon.WeaponHandPoints.coverMove.startPosition": "(0.34, 0.22, 0)",
+    "weapon.WeaponHandPoints.coverMove.movePosition": "(0.420, 0.2, -94)",
+    "weapon.WeaponHandPoints.coverMove.startPosition": "(0.420, 0.2, 0)",
     "weapon.WeaponHandPoints.coverMove.render": "cover",
     "weapon.WeaponHandPoints.boltMove.movePosition": "(1.3, 0.16, 0)",
     "weapon.WeaponHandPoints.boltMove.startPosition": "(0.99, 0.16, 0)",
@@ -107,6 +107,6 @@
     "weapon.boltHandle.barrel.SpriteRenderer.sortingOrder": "15",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pixelPerUnit": "169",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pivotPoint": "(0.421, 0.460)",
-    "version": 34,
+    "version": 35,
     "targetVersion": 209
 }
