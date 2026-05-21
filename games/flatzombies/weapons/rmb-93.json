@@ -71,7 +71,7 @@
     "weapon.sight.SpriteRenderer.sortingOrder": 18,
     "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.840)",
-    "weapon.WeaponSilencerMod.localPoint": "(0.930, 0.01, 0)",
+    "weapon.WeaponSilencerMod.localPoint": "(0.910, 0.01, 0)",
     "weapon.laserPosition": "(0.740, 0.16, 0)",
     "weapon.gunFlash.Transform.localPosition": "(1.710, 0.08, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
@@ -91,7 +91,7 @@
     "weapon.automat": false,
     "weapon.fireRateInMinute": "100",
     "weapon.chamberSize": 1,
-    "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
+    "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.boltHandle.barrel.Transform.localPosition": "(-0.230, -0.07, 0)",
     "weapon.boltHandle.barrel.gameObject.SetActive": true,
@@ -100,6 +100,6 @@
     "weapon.boltHandle.barrel.SpriteRenderer.sortingOrder": "15",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pixelPerUnit": "169",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pivotPoint": "(0.421, 0.460)",
-    "version": 36,
+    "version": 37,
     "targetVersion": 209
 }
