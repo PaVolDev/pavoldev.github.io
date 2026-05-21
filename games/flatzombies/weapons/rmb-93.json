@@ -63,7 +63,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": "169",
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.390, 0.500)",
-    "storeInfo.silencerGroup": "shotgun",
+    "storeInfo.silencerGroup": "seg12",
     "weapon.sight.Transform.localPosition": "(1.640, 0.01, 0)",
     "weapon.sight.gameObject.SetActive": false,
     "weapon.sight.SpriteRenderer.enabled": true,
@@ -100,6 +100,6 @@
     "weapon.boltHandle.barrel.SpriteRenderer.sortingOrder": "15",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pixelPerUnit": "169",
     "weapon.boltHandle.barrel.SpriteRenderer.sprite.pivotPoint": "(0.421, 0.460)",
-    "version": 35,
+    "version": 36,
     "targetVersion": 209
 }
