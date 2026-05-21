@@ -1547,9 +1547,18 @@ document.getElementById('exportJsonFile').addEventListener('click', () => {
 	URL.revokeObjectURL(url);
 });
 
+//Переключение режима отправки
+const saveButton = document.getElementById('saveButton');
+document.getElementById('saveMode').addEventListener('input', (event) => {
+	if (event.target.value == "test") {
+		saveButton.innerHTML = tr("Сохранить");
+	} else {
+		saveButton.innerHTML = tr("Опубликовать");
+	}
+});
+
 // Отправка JSON через POST-запрос
 const saveState = document.getElementById('saveState');
-//document.getElementById('saveButton').addEventListener('click', (event) => {
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
