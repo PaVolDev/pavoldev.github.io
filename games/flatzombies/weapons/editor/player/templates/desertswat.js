@@ -3,6 +3,7 @@ weapons.push({
 	"uiName": "Desert SWAT",
 	"author": "",
 	"authorURL": "",
+	"height": 170,
 	"player.Transform.localPosition": "(0, 0, 0)",
 	"player.Transform.localEulerAngles.z": 0,
 	"player.gameObject.SetActive": true,
