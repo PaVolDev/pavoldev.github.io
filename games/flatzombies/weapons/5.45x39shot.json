@@ -25,12 +25,12 @@
     "penetration": {
         "modeHit": "RANDOM_FIRST",
         "minHits": 1,
-        "maxHits": 1,
+        "maxHits": 2,
         "minDist": 0,
         "maxDist": 0,
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 4,
+    "version": 7,
     "targetVersion": 209
 }
