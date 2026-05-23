@@ -90,7 +90,7 @@
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
-    "weapon.shellDrop.position": "(0.340, 0.2, 0)",
+    "weapon.shellDrop.position": "(0.340, 0.24, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": "9",
@@ -103,6 +103,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
