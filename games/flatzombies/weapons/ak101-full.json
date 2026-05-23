@@ -23,7 +23,7 @@
     "weapon.boltBox.SpriteRenderer.sortingOrder": "15",
     "weapon.boltBox.SpriteRenderer.sprite.pixelPerUnit": 201,
     "weapon.boltBox.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.460)",
-    "weapon.boltRender.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAYCAYAAAAyC/XlAAACtUlEQVR4AexZy44SQRQt3g00jRJXrucLXLswMa40xvgbrIaICQsJowkQBDYGfmAWExOXrv0NEzJfIMl0SIDm0YDnlLRxkBmRWVVVEw5FQ3fS995T9557OyrCl9EeuBMBarWa0+/37zcajRAK+YAx63a7aTL/KAIg8MlOp/POtu3vk8nkMhqNhlDIB+v1+tL3/dOjCZBOpy8cx3kfi8UeIviFRCIRQjEfRCIR+ygC1Ov1l5ZlvR6NRmK5XIrVaiXAphC+r5QPNpvN6r8J0Gw2H2cymc8MOtIIrw+huAcO1gCs+/F4/APSvcWdr7jd4e1vPXAwAVj3gScQfQL1Y3t5uKjqgeC+DyJAUPc9zwuuU34libPZrDAR6N4Yvyw//kmAVqv1gnWfNZ/gRaoDnYuACJpNp9OPwJlpGI/HZ9gAXxnHWwnQ6/XYKpzjZGuxWNBpWgD20A6vXC6/BWqmoVgs0uZvtxIAos8eDofnaPHuua4rmP51AXY87YnAxgd0gsm4MQMg3Z/mcrlX8/lc4Lt2YCtrcuAD2/cSoFqtPk+lUm8Cxc+aqQswvRQBAieYvP5FAA57CoXCFwg/ByQQaP20AOwRmGDKySV3P79v1bDJ8RfXCICamPxz2EOxpAuYwWazmaCYJZjdUOKMC/6uwdcIgN1+Achhz+6Jqh+j7ZMDLPb9LAEUtIPBQHWz7nz/vwmg47Bnn3eY/ilq9/1n4m+SAO12+xlqpPYPeRh4tLVSBDIjmBjwXZslAbArnkIUaf+QBw+yZBlgCaDADTWA+CUCIfTmgKCDIAKFjmDQkeVEPp8XjuNwTaLbiezuCNOOZQaA0RM84nWRHrUHyoCLjOeC8D8wE1/DdqPfkgDY8Z/QGp1gNQII/glI8KhSqVwZHX0YLwlQKpU84MokIPjMAhv4wIj3TUb+BAAA////gR01AAAABklEQVQDAJIc2prfGk+aAAAAAElFTkSuQmCC",
+    "weapon.boltRender.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJUAAAAYCAYAAADzjL9JAAAC9klEQVR4AexaS27aUBR9/Mw3OPGkUsUwO+i46qBSR63aLgUKFCRUGQXxE6MOWEA7YdCtdIg6yQqKVBcJzB/33CdRKQEiAkaRn2/EEQTih9/xued+nKDgH2bAZQZOEpVpmulut3vVaDQYPucAWrh0HCdA+jxKVFhA63Q6X1Kp1K/xeHwbDAYZPuYgGo3eJhKJn81m8/JoUcVisZ6u69VQKPQcgjIikQjDxxyEw2EDLvUM4jrOqWq12vt4PP5xOByKxWIhVquVWC6XDJ9zEAgE5uRShEelv3q9/hIpr0dCWq/XdDyDGdhi4GBRUR2FNHcDxMihtlbiN7zJwBnO+mBRUR2FYuwVCnMBqzvDqfCSqjBwkKg2ddRkMlFl3zIwksmkYJzOAUoigYbtStO0wwp1tInvcFCPaiiCCqoCAcJxnCmCpG3bdpVxGgfIXlVoozyfz23Sx4NO1Wq1LnABviPdxXAAXQglgD3RPux8Pv+5UCiYjNM4yGazZrFYbOZyOZnK9ooKf3SBSP6GTk+3LEvgtTJAZNFeAmg+DIoshrsM7BUVBlnZdDr9YTqdClibknCXSl5tw8BOUVUqlbfo9j6NRiNZ0FK6UAW4CyAwAabCcsOBh569capboqIBp2EYPzA+SMOtBKbnSgD7EQgUeQcAKV2+hhN74yp57CzviAo1hobh5g3EFKUBJwp06VQqPJPTUiqnhmM2mwl0fIJFdR613hEVIrmHiJYDzvN83dOtihGCDBCaS1EKJFH1+/2nOyGFv/m/qFQccO66bpT6qPHY9Rm/5w4DUlTtdvsNDThVJ5zERP9RQU5FzuUOhbzKfQakqED2a6Q+5W8Uo16UKZBEhf0KXdfv88G/u8CAFBUK8RkgiHRqt1UECQn1ohQSFeiAlslkXKBw7xK+/UCKCrsfo9uzkBqUB1zZQuqzEES/B4OBg73zw2UGpKjgUF/Ral/DoXwBiOoa9eOLUqn012U+eTkwIEVFNwKBP35CuVwmt2KnggjcfvwDAAD//150Sj0AAAAGSURBVAMA0fq+qUWV2+4AAAAASUVORK5CYII=",
     "weapon.boltRender.Transform.localPosition": "(0.370, 0.21, 0)",
     "weapon.boltRender.gameObject.SetActive": true,
     "weapon.boltRender.SpriteRenderer.enabled": true,
@@ -103,6 +103,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
