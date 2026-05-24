@@ -905,12 +905,17 @@ function getInputForType(param, index = -1, objKey = null, objMetaData = null) {
 	return getInputHTML(param, index, objKey, objMetaData);
 }
 
+function textToInput(value) {
+	if (value !== null && typeof value === 'object') return htmlspecialchars(JSON.stringify(value, null, 2));
+	return htmlspecialchars(value);
+}
+
 
 function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 	//Поле с кнопкой для загрузки файла
 	if (param.type in fileType) { //Проверяем, является ли тип файловым (присутствует в fileType)
 		const ext = fileType[param.type]; const accept = ext ? ext : undefined; //можно оставить пустым для TextFile
-		return `<input type="text" class="text-input drop-target" value="${param.value || ''}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="${accept}" style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
+		return `<input type="text" class="text-input drop-target" value="${textToInput(param.value)}" onchange="updateParam('${param.startFieldPath}', this.value, '${objKey || ''}')" placeholder="${accept}" style="margin-bottom: 2px;" id="${param.startFieldPath}"  data-file-input-id="${param.startFieldPath}-file">
 		<div>
 		<label class="fileInputLabel">
 		<input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite(${index}, this)" id="${param.startFieldPath}-file">
@@ -1359,6 +1364,7 @@ document.getElementById('importJsonFile').addEventListener('click', () => {
 			alert(tr('Ошибка при чтении файла'));
 		};
 		reader.readAsText(file);
+		event.target.value = null; // Сбрасываем значение input, чтобы можно было загрузить тот же файл снова
 	});
 
 	document.body.appendChild(fileInput);
