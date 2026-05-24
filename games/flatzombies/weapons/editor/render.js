@@ -501,6 +501,7 @@ document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) 
 	};
 	reader.onerror = () => { alert('Failed to read file.'); };
 	reader.readAsDataURL(file);
+	fileEvent.target.value = null; // Сбрасываем значение input, чтобы можно было загрузить тот же файл снова
 });
 
 
