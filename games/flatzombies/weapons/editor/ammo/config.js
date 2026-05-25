@@ -140,7 +140,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "angleRandom", "comment": "Максимальное отклонение пули в градусах, для создания разброса", "type": "float", "value": 0, min: 0, max: 180 },
 	{ "fieldPath": "angleSpread", "comment": "Равномерное распределение пуль", "type": "float", "value": 0, min: 0, max: 1 },
 	{ "fieldPath": "damage", "comment": "Наносимый урон от всех пуль <br>Будет распределён между всеми пулями", "type": "float", "value": 0, max: 500 },
-	{ "fieldPath": "distance", "comment": "Дистанция пули для поиска столкновений", "type": "float", "value": 0, max: 100 },
+	{ "fieldPath": "distance", "comment": 'Дистанция пули для поиска столкновений<br><a href="../images/game-metrics.png" target="_blank">game-metrics.png</a>', "type": "float", "value": 0, max: 100 },
 	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределён между всеми пулями", "type": "float", "value": 0, max: 1000 },
 	{ "fieldPath": "stopPower", "comment": "Останавливающий эффект<br>Существо само решает как реагировать на этот параметр", "type": "float", "value": 0, min: 0, max: 1 },
 	//{ "fieldPath": "noiseVolume", "comment": "Громкость шума/выстрела", "type": "float", "value": 0, min: 0, max: 6 },
