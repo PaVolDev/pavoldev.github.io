@@ -30,26 +30,6 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "penetrationDamage": [
-        {
-            "scaleFirst": 3,
-            "scaleThrough": 0,
-            "stopBulletDamage": 0,
-            "materialName": "armor"
-        },
-        {
-            "scaleFirst": 3,
-            "scaleThrough": 0,
-            "stopBulletDamage": 0,
-            "materialName": "metal"
-        },
-        {
-            "scaleFirst": 1,
-            "scaleThrough": 0,
-            "stopBulletDamage": 0,
-            "materialName": "skin"
-        }
-    ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
