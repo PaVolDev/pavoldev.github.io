@@ -1009,7 +1009,7 @@ function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 					<input type="number" step="1" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${param.startFieldPath}" oninput="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" value="${param.value}" >
 				</div>`;
 			}
-			return `<input type="number" value="${param.value}" ${param.min ? `min="${param.min}"` : ''} ${param.max ? `max="${param.max}"` : ''} onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}" class="field-input" data-tooltip="${param.type}" >`;
+			return `<input type="number" value="${param.value}" placeholder="${param.placeholder || param.type}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" onfocusout="inputMinMax(this)" id="${param.startFieldPath}" class="field-input" data-tooltip="${param.type}" ${param.min !== undefined ? `min="${param.min}"` : ''} ${param.max !== undefined ? `max="${param.max}"` : ''} />`;
 		case 'bool':
 			return `<input type="checkbox" ${(param.value === 'true' || param.value) ? 'checked' : ''} onchange="updateParam('${param.startFieldPath}', this.checked ? true : false, true, '${objKey || ''}')" id="${param.startFieldPath}">`;
 		case 'AudioClip[]':
@@ -1133,11 +1133,11 @@ function getInput(param, path) {
 		case 'int':
 			if ('min' in param && 'max' in param) {
 				return `<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
-					<input type="range" min="${param.min}" max="${param.max}" step="0.01" id="${idElement}Slider" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}">
-					<input type="number" min="${param.min}" max="${param.max}"  placeholder="${param.type}" id="${idElement}" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}" >
+					<input type="range" step="${param.type == 'int' ? "1" : "0.01"}" min="${param.min}" max="${param.max}" id="${idElement}Slider" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}">
+					<input type="number" step="1" min="${param.min}" max="${param.max}"  placeholder="${param.placeholder || param.type}" id="${idElement}" oninput="updateValueByPath(this.value, ${pathString})" value="${currentValue}" >
 				</div>`;
 			}
-			return `<input type="number" value="${currentValue}" onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}" class="field-input" data-tooltip="${param.type}" >`;
+			return `<input type="number" value="${currentValue}" placeholder="${param.placeholder || param.type}" onchange="updateValueByPath(this.value, ${pathString})" onfocusout="inputMinMax(this)" id="${idElement}" class="field-input" data-tooltip="${param.type}" ${param.min !== undefined ? `min="${param.min}"` : ''} ${param.max !== undefined ? `max="${param.max}"` : ''} />`;
 		case 'bool':
 			return `<input type="checkbox" ${(currentValue === 'true' || currentValue) ? 'checked' : ''} onchange="updateValueByPath(this.checked ? true : false, ${pathString})" id="${idElement}">`;
 		default:
