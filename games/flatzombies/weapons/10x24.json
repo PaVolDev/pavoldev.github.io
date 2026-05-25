@@ -8,7 +8,7 @@
     "uiName": "10x24",
     "author": "Dafyich",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAATCAYAAAA5+OUhAAAAAXNSR0IArs4c6QAAAb9JREFUSEvtl8FKHEEQhv/qmZWY1zAE30HD+CAJ6yHkNTK4J8Gj5hgvIZHcc4jLMJg97F72HoSF6CGHgAcTdtGd7vlDzfbArjoedRtsaAaqu5j6uqq7qiRJNg4BWZ9Oi08AVlutlXciWMPdg17c9G1QQwlUsx4CQOe8SAAuyESEJJ2IqO4lgKOrq+n+YDD4taC5tfXqkMTroigmuhDH8XNjTNxkzSPKaYz5C/CYdLvWynmv17vQwxEP0bbWKrZCwBjziLY2/1rtEhELYESWI9J8yPP8myRJ5Ym2cxYkZZkhoihSiIqSpIZYmmV5R/ROkNJ2zi29J+6B2PxIYjtMiDLNshP1RJgQVeyjfN8NGgKksEy72clOuJ4AGbFMv88gwrzY+j4JfTj5PLFtbfXELnWemH+dPMQsnIKFmF3ssCGkSnYVRCdYT2jGNkDa1YwdajgtlB1PEA9c6/oqVnuMPwB/k9zL8x+f63B6UxR2os/WkvcTY5IDoNx3Tk7H4/HZcDic+IwtL60tvgJ4FsettyLy4vYhV81c3dHdWvZd2H17at26e7vZ2cFX2ZqvdO/N7vGfiHy5vi4O+v3+z3kD/gPZT3QjYVwYbgAAAABJRU5ErkJggg==",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAMCAYAAADs1tSHAAAAAXNSR0IArs4c6QAAARhJREFUOE/llD1OxDAQhd9zLC13InE4BtwMitQIGgRUSCQkoqHJDVLB9ksRaYUUzyAHw4aVoEFkkXDhX834afz8Mc/Tq2EYlOTCGJuR2MNHUwAMXWjv4+Z4sx/iVVU5OQzz6VpIiqo+AnrS9+uibdsegGeep5X3koUE1lpDchq4feGP16qUJMEzYG68l+umaU7pXFqJyEEUgV/WMOY3xsTK6llZ1kd0br8S0f8pgqPH9Py2rA93VgkSCo0iojFnf45Plcjz9M770Ziw1s5mzD8h4o078XfsqhLbIgKsXHyOWWBlrelF5EFVLur6/pjOZZfeDwS4SJIkIxmxPVL6O1R/Qc8puhk8FnA+zfVEsgDWxXK5WnVd9/IKqP7IDamYs7AAAAAASUVORK5CYII=",
     "shellSkin.pixelPerUnit": 300,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": 150,
@@ -38,6 +38,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
