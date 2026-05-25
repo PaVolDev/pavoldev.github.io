@@ -88,8 +88,8 @@ const frameArrayMetaData = [
 
 const physicsMaterialMultiplyMetaData = [
 	{ "fieldPath": "materialName", "comment": "Материал тела", "type": "string", "value": "skin", options: ['armor', 'skin', 'metal'] },
-	{ "fieldPath": "scaleFirst", "comment": "Умножить урон при попадании в материал", "type": "float", "value": 1 },
-	{ "fieldPath": "scaleThrough", "comment": "Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)", "type": "float", "value": 0.5 },
+	{ "fieldPath": "scaleFirst", "comment": "Умножить урон при попадании в материал", "type": "float", "value": 1, max: 10 },
+	{ "fieldPath": "scaleThrough", "comment": "Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)", "type": "float", "value": 0.5, max: 10 },
 	{ "fieldPath": "stopBulletDamage", "comment": "Остановить пулю, если урон стал слишком низким после прохождения нескольких тел", "type": "float", "value": 0 }
 ];
 
@@ -140,8 +140,8 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "angleRandom", "comment": "Максимальное отклонение пули в градусах, для создания разброса", "type": "float", "value": 0, min: 0, max: 180 },
 	{ "fieldPath": "angleSpread", "comment": "Равномерное распределение пуль", "type": "float", "value": 0, min: 0, max: 1 },
 	{ "fieldPath": "damage", "comment": "Наносимый урон от всех пуль <br>Будет распределён между всеми пулями", "type": "float", "value": 0, max: 500 },
-	{ "fieldPath": "distance", "comment": "Дистанция пули для поиска столкновений", "type": "float", "value": 0 },
-	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределён между всеми пулями", "type": "float", "value": 0, max: 10000 },
+	{ "fieldPath": "distance", "comment": "Дистанция пули для поиска столкновений", "type": "float", "value": 0, max: 100 },
+	{ "fieldPath": "impulse", "comment": "Импульс ForceMode2D.Impulse <br>Будет распределён между всеми пулями", "type": "float", "value": 0, max: 1000 },
 	{ "fieldPath": "stopPower", "comment": "Останавливающий эффект<br>Существо само решает как реагировать на этот параметр", "type": "float", "value": 0, min: 0, max: 1 },
 	//{ "fieldPath": "noiseVolume", "comment": "Громкость шума/выстрела", "type": "float", "value": 0, min: 0, max: 6 },
 	{ "fieldPath": "penetration", "comment": "Параметры проникновения пули.", "type": "HitsBullet", "value": "" },
