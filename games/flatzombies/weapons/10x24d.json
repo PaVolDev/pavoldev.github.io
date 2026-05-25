@@ -11,9 +11,9 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAANCAYAAAAnigciAAAAAXNSR0IArs4c6QAAAQdJREFUOE/tVTFOw0AQnDk7FZS8BUIFDeEFhAdQWPAKKOkNfIGK1hYSmCqBTyB+ABIVSm4HrR0HgkSJgwTbnG52tZqbu73hfXl2O51OHgWspGlvH59ChCjIIQkgfRFI1tg8BHOAEutaesyyNdbAAmIAn0Uc9AeHZduH4zKvLMZtb54kvYXeP7MhQkjeILs0hIvN3eyhJiGzLZOxQxLN+YjjjZ3sZFlKLJIYFa5E59fxC0mMi7yyZSsxLs8ri5Oup+Prw/wn0Y7on1UimKQ7MJz2B9k1R0V+I8UnCatJku5991W3ZhHcP2Z+8lHr3tBUCHOvaM3DzaROuvcQfKFwtP66dsXhMDr+Dumrtg6kg3tRAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": 300,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": 150,
+    "iconButtonSprite.pixelPerUnit": 100,
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
-    "iconListSprite.pixelPerUnit": 150,
+    "iconListSprite.pixelPerUnit": 100,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0,
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
