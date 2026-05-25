@@ -178,6 +178,7 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	2030: "Invalid login, it must be a string between 2 and 50 characters",
 	2031: "Password is too long",
 	2032: "Data must not exceed the size limit",
+	2033: "The cartridge has too high damage",
 
 	3000: "Sprite, PNG file",
 	3001: "Sprite pivot point",
