@@ -36,8 +36,8 @@
     "weapon.WeaponHandPoints.magazineInsert": "(0.36, -0.3, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.3, -0.12, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.8, 0.02, 0)",
-    "weapon.WeaponHandPoints.buttstockReload": "(-0.95, 0.2, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-0.95, 0.2, 0)",
+    "weapon.WeaponHandPoints.buttstockReload": "(-0.93, 0.25, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.93, 0.25, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "Dafyich",
     "storeInfo.authorURL": "https://",
@@ -106,6 +106,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": 17,
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": 100,
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.310, 0.470)",
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
