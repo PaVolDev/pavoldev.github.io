@@ -30,6 +30,14 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 4,
+    "penetrationDamage": [
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 5,
     "targetVersion": 209
 }
