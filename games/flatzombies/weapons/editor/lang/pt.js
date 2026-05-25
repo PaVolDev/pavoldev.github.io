@@ -178,6 +178,7 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	2030: "Login inválido, deve ser uma string entre 2 e 50 caracteres",
 	2031: "Senha muito longa",
 	2032: "Os dados não devem exceder o tamanho",
+	2033: "O cartucho tem dano muito alto",
 
 	3000: "Sprite, arquivo PNG",
 	3001: "Ponto de rotação do sprite",
