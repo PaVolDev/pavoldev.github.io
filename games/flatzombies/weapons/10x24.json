@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAMCAYAAADs1tSHAAAAAXNSR0IArs4c6QAAARhJREFUOE/llD1OxDAQhd9zLC13InE4BtwMitQIGgRUSCQkoqHJDVLB9ksRaYUUzyAHw4aVoEFkkXDhX834afz8Mc/Tq2EYlOTCGJuR2MNHUwAMXWjv4+Z4sx/iVVU5OQzz6VpIiqo+AnrS9+uibdsegGeep5X3koUE1lpDchq4feGP16qUJMEzYG68l+umaU7pXFqJyEEUgV/WMOY3xsTK6llZ1kd0br8S0f8pgqPH9Py2rA93VgkSCo0iojFnf45Plcjz9M770Ziw1s5mzD8h4o078XfsqhLbIgKsXHyOWWBlrelF5EFVLur6/pjOZZfeDwS4SJIkIxmxPVL6O1R/Qc8puhk8FnA+zfVEsgDWxXK5WnVd9/IKqP7IDamYs7AAAAAASUVORK5CYII=",
     "shellSkin.pixelPerUnit": 300,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": 100,
+    "iconButtonSprite.pixelPerUnit": 200,
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": 150,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
@@ -38,6 +38,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
