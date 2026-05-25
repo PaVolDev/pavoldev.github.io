@@ -31,6 +31,19 @@
  	border-radius: 12px;
  }
 
+ /* Запрещает перенос строки */
+ /* Скрывает текст, выходящий за границы */
+ /* Добавляет многоточие (...) при обрезке (по желанию) */
+ /* Делает тег блочно-строчным для точного контроля ширины */
+ /* Удерживает ширину в рамках родителя */
+ .count {
+ 	white-space: nowrap;
+ 	overflow: hidden;
+ 	text-overflow: ellipsis;
+ 	display: inline-block;
+ 	max-width: 100%;
+ }
+
  .rating-item {
  	display: flex;
  	align-items: center;
