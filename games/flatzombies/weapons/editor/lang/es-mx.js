@@ -180,6 +180,7 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	2030: "Usuario no válido, debe ser una cadena de entre 2 y 50 caracteres",
 	2031: "Contraseña demasiado larga",
 	2032: "Los datos no deben exceder el tamaño",
+	2033: "El cartucho tiene un daño demasiado alto",
 
 	3000: "Sprite, archivo PNG",
 	3001: "Punto de pivote del sprite",
