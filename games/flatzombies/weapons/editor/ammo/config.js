@@ -126,7 +126,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ "fieldPath": "author", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", "type": "string", "value": "", placeholder: "pavoldev" },
 	{ "fieldPath": "authorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", "type": "string", "value": "", placeholder: "https://youtube.com/@pavoldev" },
 	{ "fieldPath": "uiName", "comment": "Имя короткое для отображения в интерфейсе", "type": "string", "value": "", placeholder: "7.62x54R" },
-	{ "fieldPath": "caliberName", "comment": "Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название.<br>Строка используется как второй идентификатор для связи с оружием", "type": "string", "value": "", placeholder: "7.62x54R" },
+	{ "fieldPath": "caliberName", "comment": "Калибр патрона. Разные типы патрона одного калибра должны иметь одинаковое название.<br>Строка используется как второй идентификатор для связи с оружием", "type": "string", "value": "", placeholder: "7.62x54R" },
 	{ "fieldPath": "shellSkin", "comment": "Гильза при стрельбе", "type": "TextureSprite", "value": "" },
 	{ "fieldPath": "shellSkin.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
 	{ "fieldPath": "shellSkin.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
