@@ -20,7 +20,7 @@
     "bullets": 10,
     "angleRandom": 5,
     "angleSpread": 1,
-    "damage": 10,
+    "damage": 8,
     "distance": 3,
     "impulse": 30,
     "stopPower": 0.07,
@@ -232,6 +232,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": 300,
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 16,
+    "version": 17,
     "targetVersion": 209
 }
