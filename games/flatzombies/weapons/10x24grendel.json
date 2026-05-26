@@ -6,6 +6,7 @@
     "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAbCAYAAADrjggCAAAAAXNSR0IArs4c6QAAAx1JREFUaEPtmk9IFHEUx79vdoMuaeqpPe1JT2VHwVjssptChy5eOgXSHySiQxDl6pwMgujSIRZaN5IOSUG37CC7LJKH3QjMIkhKxOgPkpqa7sy8F7/ZXd3VdXXXhcCZBwvzm/f7s/Phze/35r1HHR0BXUTCInJB07xPAUDEuktE10VEVHsHESLivK6g78YYIlLX+Xa5uSACU62cm48AAhFos620UtAu0qtueZ26NgA1ny2WplHCMPhyMpn8VeZ5qlKRAghggJlhmtk1PR6P/Tsokn0W+WhZ6IrH419r+VyOAUhEyoLnmM1rmQy/Hh8f/1MLkI4CmN2e1C5BKyKSavPXRU/56yfB1vTyVGale2TEqhSq4wAWAgo2N+Kkr05h/QtgBoIPAqS8GkY/zxyavBSJqL20rLgAbYBbRJkp0SewPDO9eNB1a2jHw8fRAEPNjWgtBbCY5ywz+iY4Oqzr2PA68l0cDrAJrb4ju72l2Y2T6JWI0RsKP/lSOEABHACgH3Q3Rp3CW+VMSxNOHNsDwPxAkZ8W5EpnOPai0AJdgLvbYEEPMSF0JxiO9qubFAgEBjTNmRbY2dKE45VY4CZGtRf2BvuiD12A1QFUKA2Nud0FWD1Adbjcc/QpXPEhst1hnHI0wH3sgTmU8s4FuI9XmAi6C7B6gD8sk9tcgFUBlHlhDoX6H6cdDbCaQ0REpiySnq6+2ITtSDslIl3qUy7UvMdv4eyRsS7Ao1WTb5/TYwtuMAHAngCqQIJGKVhyI9g/lNjqyTjaAjcDqiU+hu0IDL4JZHBxfmWo+/6ICrpuExegr06l81iADIDfAKYJEgdodM30vj2rR1bLxRocBzCXqVWJkeV2f/1wu79h0iPy3mDMHga+n9Zja5UEZxwFUETWmTkC8MulpdVUOp1erATWrq+wYRh2Ytvr9aq88PYI5H5X+0/jc3nhWdOU84lEIlnLv5G3wJvMfHFhYem5mryh4egggKvlFypZaFDypqpQELErFMpUJ9gqO+e44SKU8j2KKxDsriIqV1FcRZGrirB1mqYliNZ7xsbezNUSnprrHyC/8uEyouH4AAAAAElFTkSuQmCC",
     "caliberName": "10x24",
     "uiName": "10x24 Pulse",
+    "arrowSample.WeaponRocket.objectExplode.Transform.localScale": "(0.5, 0.5, 0.5)",
     "arrowSample.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAXCAYAAADtNKTnAAAAAXNSR0IArs4c6QAAAWZJREFUOE+t1L9LQlEUB/DvNYP+nbagqUVJaGhxDIogxLmlVB4VNUVLQwjpi5oSGiObanOwCMogSEKE6AdSQZr53rvfuC8M00yfz7vdyzkfLodzjkAfjlDG4dLUMKSVf8/VysFUynLq2sjxygwBfgAogLgmkPV6kL4tDF7OxeNGJ7QBaQolCSFuILlverEZWEg+t8PaI78zilIikpGJPU2DbMa6RYDvnx2RRtgf3b1rhLpH6lnkkwWGxqP6Qf3JOWJn0gTFmi+aiKlbj4gtqdqEfZHElhtEQYZHylG3iCr4unsEzPUDuXCNCAHNLfJomXLEBcISpfT7YztnPSEkc5bgbCCiZ3pptk8C2xVTLk5q+quztlfD5xFZWJz3xZKnzqbYnlzcE1x9K5WTwY2UWlwt56cmApAEagBeAOQFeAKIdNX0nk9o8cp/281G0svToQHyypAoDgEPY5pe7bQSW/aJk4S/Yr8Af0jHziVx0jgAAAAASUVORK5CYII=",
     "author": "Dafyich",
     "authorURL": "",
@@ -16,7 +17,7 @@
     "iconButtonSprite.pivotPoint": "(0.2, 0.4)",
     "iconListSprite.pixelPerUnit": 150,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
-    "bullets": 20,
+    "bullets": 10,
     "angleRandom": 5,
     "angleSpread": 1,
     "damage": 6,
@@ -231,6 +232,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": 300,
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 4,
+    "version": 2,
     "targetVersion": 209
 }
