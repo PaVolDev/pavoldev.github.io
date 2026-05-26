@@ -16,8 +16,8 @@
     "iconListSprite.pixelPerUnit": 150,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
-    "angleRandom": 0,
-    "angleSpread": 0,
+    "angleRandom": 3.8,
+    "angleSpread": "0.85",
     "damage": 2,
     "distance": 5,
     "impulse": 15,
@@ -34,7 +34,7 @@
         {
             "materialName": "skin",
             "scaleFirst": 1,
-            "scaleThrough": "0.5",
+            "scaleThrough": 0.6,
             "stopBulletDamage": 0
         },
         {
@@ -46,11 +46,11 @@
         {
             "materialName": "metal",
             "scaleFirst": 1,
-            "scaleThrough": "0.5",
+            "scaleThrough": 1,
             "stopBulletDamage": 0
         }
     ],
-    "angleScatter": 3.6,
+    "angleScatter": 3,
     "evenlySpread": 0.8,
     "timeTriggers": 0.5,
     "distHitArrow": 25,
@@ -278,11 +278,11 @@
     "arrowSample.WeaponFireRocket.scaleGravity": 0.25,
     "arrowSample.WeaponFireRocket.distLivedEntity": 2,
     "arrowSample.WeaponFireRocket.slideExplode": "(-0.5, 0)",
-    "arrowSample.WeaponFireRocket.damage": 13,
+    "arrowSample.WeaponFireRocket.damage": 8,
     "arrowSample.WeaponFireRocket.speedMoveRotate": 0.2,
     "arrowSample.WeaponFireRocket.speedRotateFire": 10,
     "noiseVolume": 2,
     "shellSkin.scale": 1,
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
