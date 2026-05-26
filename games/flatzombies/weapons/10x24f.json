@@ -34,7 +34,7 @@
         {
             "materialName": "skin",
             "scaleFirst": 1,
-            "scaleThrough": 0.6,
+            "scaleThrough": "0.5",
             "stopBulletDamage": 0
         },
         {
@@ -46,7 +46,7 @@
         {
             "materialName": "metal",
             "scaleFirst": 1,
-            "scaleThrough": 1,
+            "scaleThrough": "0.5",
             "stopBulletDamage": 0
         }
     ],
@@ -283,6 +283,6 @@
     "arrowSample.WeaponFireRocket.speedRotateFire": 10,
     "noiseVolume": 2,
     "shellSkin.scale": 1,
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
