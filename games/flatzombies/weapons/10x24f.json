@@ -278,11 +278,11 @@
     "arrowSample.WeaponFireRocket.scaleGravity": 0.25,
     "arrowSample.WeaponFireRocket.distLivedEntity": 2,
     "arrowSample.WeaponFireRocket.slideExplode": "(-0.5, 0)",
-    "arrowSample.WeaponFireRocket.damage": 8,
+    "arrowSample.WeaponFireRocket.damage": 13,
     "arrowSample.WeaponFireRocket.speedMoveRotate": 0.2,
     "arrowSample.WeaponFireRocket.speedRotateFire": 10,
     "noiseVolume": 2,
     "shellSkin.scale": 1,
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
