@@ -114,7 +114,7 @@
         }
     ],
     "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.timeScale": 1,
-    "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.speed": 24,
+    "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.speed": 36,
     "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.reverse": false,
     "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.loop": false,
     "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.animations": [
@@ -226,11 +226,11 @@
     ],
     "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.initialAnimation": "animation",
     "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.playStart": true,
-    "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.speed": 15,
+    "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.speed": 24,
     "arrowSample.SpriteRenderer.enabled": true,
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": 300,
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1, 0.5)",
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
