@@ -47,7 +47,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 120,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.300, 0.420)",
-    "storeInfo.silencerGroup": "sniper",
+    "storeInfo.silencerGroup": "rifle",
     "weapon.magazine.Transform.localPosition": "(0.240, 0.03, 0)",
     "weapon.magazine.gameObject.SetActive": true,
     "weapon.magazine.SpriteRenderer.enabled": true,
@@ -96,6 +96,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 19,
+    "version": 20,
     "targetVersion": 209
 }
