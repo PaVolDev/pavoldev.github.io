@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 2,
+    "damage": 6,
     "distance": 24,
     "impulse": 15,
     "stopPower": 0.07,
@@ -39,11 +39,17 @@
         },
         {
             "materialName": "metal",
-            "scaleFirst": "0.5",
-            "scaleThrough": 0,
+            "scaleFirst": "0.3",
+            "scaleThrough": "0.2",
+            "stopBulletDamage": 0
+        },
+        {
+            "materialName": "armor",
+            "scaleFirst": "0.3",
+            "scaleThrough": "0.2",
             "stopBulletDamage": 0
         }
     ],
-    "version": 13,
+    "version": 14,
     "targetVersion": 209
 }
