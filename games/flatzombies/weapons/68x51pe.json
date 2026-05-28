@@ -8,7 +8,7 @@
     "uiName": "6.8x51pe",
     "author": "Dafyich",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAOCAYAAABzTn/UAAAAAXNSR0IArs4c6QAAAWdJREFUSEvlVzFOw0AQnDmfkwqhpAqiiCgQFRUfyBMIyE8gCJEGxA+QaBAUdEj8gcfQ8QhoIInkuyxaI8BJnMQIK1bIdj6tdnZ217dzBIDu0f4haC4JrOn3Yk0MSBaB6Z2/DgJzASDQeEKSAoIwhFzd3T/eKpDpdg5eSKwXAVpmjDh2CEObmYKIyGDoNxhFCBr19jvAapnJFoE9i3DS8dhtMoqioFHzPRCVIkDLjDGPcMzhFlutlt3dqfcAhGUmmxdbRKb+8s45WJs90hp/KQnPKswvCNf6AKeXJm/5S/bLNdKdzl5YQbNPfl7ly2y5OvyfCK9eh2MHO2UPf19a2uEqmwMVIMs8zgmhGcJjJQl757a/9vAbgIUrLd2pafurpJ7X4YSwAp4et8+N8Gx0pDNFPVWSp/0SGaACPWVC0RU3UkBV8ICMbYKsM0AS1T+WjYiZPP3xUa3s/fDG2kAfD5Mm8vD0/HryAd4okLRd6ArgAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": 300,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "150",
@@ -32,24 +32,24 @@
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "0.5",
-            "scaleThrough": "0.2",
+            "scaleFirst": "0.7",
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "materialName": "armor"
         },
         {
-            "scaleFirst": "0.5",
-            "scaleThrough": "0.2",
+            "scaleFirst": "0.7",
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "materialName": "metal"
         },
         {
-            "scaleFirst": "0.7",
-            "scaleThrough": "0.3",
+            "scaleFirst": "1",
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 13,
+    "version": 14,
     "targetVersion": 209
 }
