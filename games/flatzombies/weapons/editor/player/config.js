@@ -390,6 +390,16 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
 	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
 
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite", "comment": "Пальцы на рукоятке оружия, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: false, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+
 	{ fieldPath: "player.man.thigh.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
 	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: false, canChangePosition: false },
