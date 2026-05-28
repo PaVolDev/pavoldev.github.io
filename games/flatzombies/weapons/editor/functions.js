@@ -149,8 +149,13 @@ function removeRulesWindow(event = null) {
 	modRulesModal.style.display = 'none';
 	modRulesModal.innerHTML = '';
 	localStorage.setItem('agreedToRulesV2', 'true');
-	document.getElementById('page').classList.remove('hidden');
 	window.scrollTo(0, 0);
+	// Небольшой таймаут, чтобы браузер успел обновить элементы страницы
+	const pageElement = document.getElementById('page');
+	pageElement.classList.remove('hidden');
+	setTimeout(() => {
+		pageElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+	}, 10);
 }
 
 
