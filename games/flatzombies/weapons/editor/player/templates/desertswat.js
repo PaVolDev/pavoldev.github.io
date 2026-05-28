@@ -141,7 +141,7 @@ weapons.push({
 	"player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition": "(0.75, 0, 0)",
 	"player.man.body.weaponParent.arm.forearm.fingers.Transform.localEulerAngles.z": 307,
 	"player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive": true,
-	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite": "",
+	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAASCAYAAABFGc6jAAAA4UlEQVQ4Eb2T4Q2CMBSE0fgfN9ANdIOOgBswgmzgCI6CG7QbyAbtBuoEeJfURqqNEF+55Mt7hfbuNYGimEmLiTkK+w+erT9rUB3o3nigH2hM0A4nGsCA9eB0enHHqw4Y4Dwon+LkLbCgF+AGjyCaayBhHHvolY+pUC++z1EcTUvAq8VTSK1beCtQnDKEWHjWgJcIuqLrhdHB3TdL1H38UGBtYg8GzSIG8efKLgaZDClfPRWCJD8G/iqb1PBnwbA6FfJ6XqGxfwZy4NHiRLx+PxE9OiHayBvy8K9Aiz1HUIKknkSjzhCIc4g/AAAAAElFTkSuQmCC",
 	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pivotPoint": "(0.2, 0.4)",
 	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pixelPerUnit": "50",
 	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sortingOrder": 20,
