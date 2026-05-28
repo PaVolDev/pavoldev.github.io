@@ -198,6 +198,17 @@ weapons.push({
 	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled": true,
 	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.name": "girth2",
 	"player.man.body.weaponParent.arm2.forearm2.fingers2.name": "fingers2",
+
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAhCAYAAACr8emlAAAEAUlEQVRYCb2Y63HbMAzHLcd55y7dIO4EzQZRJkg2qDtBM4K7QTaoRnA2UCaos4H8OV/su7yf/f94gkPJlkw5D9zBJAEQhP4AaVFRq4J2dnZaV1dXrY2NDWfR6XRc+/r66tqtrS3XRlHUMhkC6yOHocfHx1a73W6trKw4PePV1dWpHhvmlX0x7mxvb6Mv0PX1tQsOIU6fn5+net+JBTBVqkMgLy8vUxHBiHbFsXhfPBYPJB+tra2pWyTzb74jQ8LMbm5uXPedCB5ogX1xLGcE1RUXSIgNpR9ICF/4CBKcjaMqBM0behC0FCNnMg+GI9EPjQkCjiWjbUqZfAw0N9HEC3+yC5AFDTlTLkDwpwLsyRaUvtmc97aKI5WPQ99Ph+BAwkeypgZJXV91BlK+n0/ru61JkEaGpCGYb5A96RNxLHYbgfYrqA0SMIHRGpIcMaJd7eK/qr9M/VjsiJ36VVSVp10heKIg4Jka42z8jCCVrfHt7W1Pa56JHc3bxT+F5Km0M4Hlc9wOtv5HtpTT/f09p0Qiv7/wXT4Hj4TMAEUVcXCvr69XqWvlHODUu8++rDQ51vi8Q9151Pf6c7vLpPbu7q7w7zLXcUmohziW6NwdM7kO9PZLdjPDpgE+PT01Di5fNKb1a/Cf0FwY4ObmptvtuZPahlSq6GttFiijdl4PRyHBUQ6lkqj1//DwUKsPUVoN9kOMm6SXHZkf8iGuK21AMAg9PIQGKJ9joZdUrtpAAYL9UPvQ9MrulNL5CGr0nxWSMgU2FP/5gOBSfBBgQieEQgIUej2Q1gE8DPFZY5Oia2vRQY3RjIpzrYqEHKm94MVD9TqusguR84D8y9g5GHQG4rjmry7TPYNzdIJdfhdZuhAFRFduRlaDiQZBVJVmyU+E2oSdngeHv2VRHOsVb8Q1gxRzXjVKM9CXaCBkz0AX9mjo9Zt0UzNu505H7D4TLmr9OtS8sRDrgZqxZPbGEuzTX1PzU/NhKUaf+EZ1/VKa+0rFhHTA+fucBZjW+anRTedF9uVAxntaIKuZVFAxT8dJKuGhr7i8vPSHvJmPfcGivpDLZPPd7CzF1E7jNCvAE848n7nTeDzRgoktFtie+nZ2zJjstxYrGJhCC/ElINOY88n6hUs2tqX0I2qSmbEua13NcUcVk/0UM8ZZAsx5MKk2RCb5iM0EUpA7QNW3G6DsZy7+zvDth3tO8jac7bGmpMfiwkNH3H/ZlQTA01PoLGjBoCvLLECW4ROI3aUZ2zz6JTrQOJbvnmy6vk6yRB8LTiSbImd6FyADOzrKwZi8DkFzxjFT9ZJaCpxgHcl/ps6Ie4tlBKBYDyrU4DIIOi/6sU9pBFiuQx7ayM8OMgAgGD63zKP/L/s6L6xmIN8AAAAASUVORK5CYII=",
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pixelPerUnit": "100",
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sortingOrder": 25,
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled": false,
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive": false,
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition": "(0.21, 0.05, 0)",
+	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localEulerAngles.z": -10,
+
+
 	"player.man.body.weaponParent.arm2.forearm2.name": "forearm2",
 	"player.man.body.weaponParent.arm2.name": "arm2",
 	"player.man.body.weaponParent.arm3.Transform.localPosition": "(0, 0, 0)",
