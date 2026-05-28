@@ -35,7 +35,7 @@ const ignoreExportFields = [
 	"player.man.thigh.shin.Transform.localPosition",
 	"player.man.thigh.Transform.localEulerAngles.z",
 	"player.man.thigh2.Transform.localEulerAngles.z",
-	//"player.man.body.head.Transform.localPosition",
+	"player.man.body.head.Transform.localPosition",
 	"player.man.thigh.shin.foot.gameObject.SetActive",
 	"player.man.thigh2.shin2.Transform.localPosition",
 	"player.man.body.head.Transform.localEulerAngles.z",
@@ -311,7 +311,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.body.head.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.body.head.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePosition: false },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", type: "float", value: 100 },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
