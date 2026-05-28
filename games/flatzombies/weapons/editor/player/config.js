@@ -88,6 +88,7 @@ const ignoreExportFields = [
 	"player.man.body.weaponParent.arm.gameObject.SetActive",
 	"player.man.body.weaponParent.arm.forearm.gameObject.SetActive",
 	"player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive",
+	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled",
 	"player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive",
 	"player.man.body.weaponParent.arm.forearm.fingers.magazine.gameObject.SetActive",
 	"player.man.body.weaponParent.arm2.gameObject.SetActive",
