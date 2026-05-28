@@ -75,6 +75,11 @@ input[type="text"] {
 	width: 100%;
 }
 
+input[type="color"] {
+	padding: 0;
+	width: 5em;
+	margin-left: 20%;
+}
 
 strong {
 	color: white;
@@ -729,6 +734,7 @@ img.tooltip {
 	cursor: pointer;
 	accent-color: #e74c3c;
 }
+
 
 .modal label {
 	color: #bdc3c7;
