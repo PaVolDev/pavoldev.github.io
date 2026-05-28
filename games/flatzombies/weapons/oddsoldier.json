@@ -24,7 +24,7 @@
     "author": "Dafyich",
     "authorURL": "",
     "uiName": "Odd Soldier",
-    "player.height": 175,
+    "player.height": 180,
     "player.man.SpriteRenderer.enabled": true,
     "player.man.SpriteRenderer.sortingOrder": 0,
     "player.man.SpriteRenderer.sprite.pixelPerUnit": "100",
@@ -100,6 +100,6 @@
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder": 1,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit": 50,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint": "(0.3, 0.1, 0)",
-    "version": 14,
+    "version": 15,
     "targetVersion": 209
 }
