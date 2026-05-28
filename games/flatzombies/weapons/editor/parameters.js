@@ -1015,6 +1015,8 @@ function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 		case 'AudioClip[]':
 		case 'Sprite[]':
 			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
+		case 'color':
+			return `<input type="color" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">`;
 		default:
 			if (stringIsObject(param.value)) { //Объект JavaScript
 				return `<textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(param.value)}</textarea>`;
@@ -1140,6 +1142,8 @@ function getInput(param, path) {
 			return `<input type="number" value="${currentValue}" placeholder="${param.placeholder || param.type}" onchange="updateValueByPath(this.value, ${pathString})" onfocusout="inputMinMax(this)" id="${idElement}" class="field-input" data-tooltip="${param.type}" ${param.min !== undefined ? `min="${param.min}"` : ''} ${param.max !== undefined ? `max="${param.max}"` : ''} />`;
 		case 'bool':
 			return `<input type="checkbox" ${(currentValue === 'true' || currentValue) ? 'checked' : ''} onchange="updateValueByPath(this.checked ? true : false, ${pathString})" id="${idElement}">`;
+		case 'color':
+			return `<input type="color" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}">`;
 		default:
 			if (currentValue?.length > 50) {
 				return `<textarea onchange="updateValueByPath(this.value, ${pathString})" id="${idElement}">${currentValue}</textarea>`;
