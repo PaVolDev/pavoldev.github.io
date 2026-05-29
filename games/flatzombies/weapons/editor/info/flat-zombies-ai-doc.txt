@@ -1,0 +1,1477 @@
+=== СТРУКТУРА ПРОЕКТА ===
+
+Мобильная 2D игра с видом сбоку на движке Unity Engine v6.4 от 2026 года + язык программирования C# v9.0.
+Управление персонажем происходит с помощью кнопок Влево/Вправо.
+Стрельба происходит нажатием на экран в любом месте. Персонаж получает угол наклона для рук и он стреляет в точку нажатия.
+Моды на оружие имеют поддержку Lua-скрипта, который подписывается на события.
+Lua работает с помощью плагина xLua от Tencent.
+В Lua есть два способа обращения к методам объектам - для вызова нестатических методов C# объекта нужно использовать двоеточие (:)
+Слушатели события добавляются при загрузке мода в игру в одном из классов, отвечающих за загрузку:
+
+public WeaponModHandler(Weapon weapon, ModMetaData jsonData) {
+	luaEnv = new LuaEnv();
+	AllowOnlyTheseNamespaces(luaEnv, whiteList); //Проверка на безопасность
+	luaEnv.DoString(jsonData.luaScript); //Выполняем Lua-скрипт
+	//Получить ссылку на функции из Lua
+	this.onStart = luaEnv.Global.GetInPath<LuaFunction>("onStart");
+	this.onKeyShot = luaEnv.Global.GetInPath<LuaFunction>("onKeyShot");
+	this.onShot = luaEnv.Global.GetInPath<LuaFunction>("onShot");
+	this.onReloadStart = luaEnv.Global.GetInPath<LuaFunction>("onReloadStart");
+	this.onReloadUpdate = luaEnv.Global.GetInPath<LuaFunction>("onReloadUpdate");
+	this.onReloadComplete = luaEnv.Global.GetInPath<LuaFunction>("onReloadComplete");
+	this.onBulletHit = luaEnv.Global.GetInPath<LuaFunction>("onBulletHit");
+	this.onSwitchWeapon = luaEnv.Global.GetInPath<LuaFunction>("onSwitchWeapon");
+	this.onSwitchEnable = luaEnv.Global.GetInPath<LuaFunction>("onSwitchEnable");
+	this.onSwitchDisable = luaEnv.Global.GetInPath<LuaFunction>("onSwitchDisable");
+	this.onDestroy = luaEnv.Global.GetInPath<LuaFunction>("onDestroy");
+	//Подписываемся на события оружия и при срабатывании события мы вызываем Lua-функции 
+	if (this.onStart != null) weapon.onStart.AddListener((Weapon weapon) => { this.CallLuaListener(onStart, weapon); });
+	if (this.onKeyShot != null) weapon.onKeyShot.AddListener((Weapon weapon) => { this.CallLuaListener(onKeyShot, weapon); });
+	if (this.onShot != null) weapon.onShot.AddListener((Weapon weapon) => { this.CallLuaListener(onShot, weapon); });
+	if (this.onReloadStart != null) weapon.onReloadStart.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadStart, weapon); });
+	if (this.onReloadUpdate != null) weapon.onReloadUpdate.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadUpdate, weapon); });
+	if (this.onReloadComplete != null) weapon.onReloadComplete.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadComplete, weapon); });
+	if (this.onBulletHit != null) weapon.onBulletHit.AddListener((BulletHit bulletHit) => { this.CallLuaListener(onBulletHit, bulletHit); });
+	if (this.onSwitchWeapon != null) weapon.onSwitchWeapon.AddListener((Weapon weapon, bool show) => { this.CallLuaListener(onSwitchWeapon, weapon, show); });
+	if (this.onSwitchEnable != null) weapon.onSwitchEnable.AddListener((Weapon weapon) => { this.CallLuaListener(onSwitchEnable, weapon); });
+	if (this.onSwitchDisable != null) weapon.onSwitchDisable.AddListener((Weapon weapon) => { this.CallLuaListener(onSwitchDisable, weapon); });
+	if (this.onDestroy != null) weapon.onDestroy.AddListener((Weapon weapon) => { this.CallLuaListener(onDestroy, weapon); }); if (this.onDestroy != null) weapon.onDestroy.AddListener((Weapon weapon) => { this.CallLuaListener(onDestroy, weapon); });
+}
+
+Таким образом в Lua-скрипте мы можем объявлять функции, например:
+function onStart(weapon)
+	CS.UnityEngine.Debug.Log("Lua.onStart: " .. weapon.id)
+	weapon:AddShotPause(0.1)
+end
+
+function onShot(weapon)
+	callCount = callCount + 1
+	CS.UnityEngine.Debug.Log("Lua.onReloadStart: onShot вызван " .. callCount .. " раз(а)")
+end
+
+function onReloadStart(weapon)
+	CS.UnityEngine.Debug.Log("Lua.onReloadStart: " .. weapon.id .. " - началась перезарядка оружия")
+end
+
+function onBulletHit(hitData)
+	CS.UnityEngine.Debug.Log("Lua.onHitBullet: попадание пули #" .. hitData.id .. ", выстрел: #" .. hitData.idShot)
+end
+
+
+Как загружается мод, возможности загрузчика и JSON-парсера:
+Мод изначально представлен в виде плоского JSON-файла ("object.property.data.name": "value")
+Мод содержит идентификатор префаба, который используется как родитеский базовый префаб.
+Для загрузки мода в руки персонажа создаём префаб имеющийся в игре и вносим изменения с помощью фукнции JsonToObject():
+Weapon weapon = Weapon.Instantiate(...);
+JsonParser.JsonToObject(weapon, jsonFullText, weapon.id, "weapon.") //Последнее значение "weapon." указывает, что мы будет искать все ключи, которые начинаются с "weapon."
+Алгоритм работы парсера: 
+Есть строка JSON: "weapon.magazine.SpriteRenderer.sprite": "data:image/png;base64..."
+В процессе чтения этой строки, парсер ищет "magazine" - сначала мы пытаемся найти компонент MonoBehaviour с таким именем, затем мы перебираем все дочерние объекты с таким именем.
+В итоге мы находим дочерний объект с именем "magazine". Внутри него мы ищем "SpriteRenderer", мы находим компонент<SpriteRenderer> и внутри него ищем свойство sprite.
+В результате мы получаем доступ к спрайту на дочернем объект и меняем этот спрайт. 
+Строка в json имеет такой формат: родитель.[дочернийОбъект/компонент/свойство].[дочернийОбъект/компонент/свойство]: [значение]
+Для изменения элемента массива можно указывать индекс элемента: "weapon.objectList[0].sounds[1].audioClip": "data:audio/wav;base64..." 
+Можно использовать вызов методов для получения ссылки на другой объект и вносить изменения в его свойства: "weapon.GetComponents<Collider2D>()[1].enabled": false - получаем массив и отключить второй Collider2D.
+Парсер умеет проходить путь к свойству не только по обычным публичным полям и свойствам, но и по компонентам с указанием их типа и по элементам массива с указанаем числового индекса, как было указано выше.
+Родительский объект указан при вызове JsonToObject()
+Для создания мода используется отдельная программа-редактор.
+В редакторе мода можно указать дополнительные поля в JSON, например, для добавления новых компонентов MonoBehaviour в дочерние объекты на сцене у оружия.
+json["removedComponents"] - список компонентов для удаления, должен иметь имя дочернего объекта и тип компонента: "child.SpriteRenderer, otherChild.Collider2D", несколько штук через запятую, здесь child и otherChild являются дочерними объектами к оружию Weapon
+json["removedGameObjects"] - имена GameObject для удаления: "child.other, otherChild", несколько штук через запятую, здесь child и otherChild являются дочерними объектами к оружию Weapon
+json["addedGameObjects"] - Добавить дочерние объекты, несколько штук через запятую
+json["addedComponents"] - Добавить компоненты, несколько штук через запятую, строки в формате "child.SpriteRenderer, otherChild.Collider2D", здесь child и otherChild являются дочерними объектами к оружию Weapon
+С помощью этих ключей из массива мы можем создавать дополнительные компоненеты и объекты для мода, для объекта Weapon на сцене.
+Если к моду нужно добавить текстуры, звуки и другие ассеты, то это можно делать с помощью создания компонентов MonoBehaviour к GameObject оружия и к его дочерним объектам.
+Как работает редактор:
+Все ключи из json отображаются в виде списка и у каждого свойства есть поле для изменения значения. 
+Если значение хранит координаты x и y, то на экране отображаются два поля ввода для x и для y.
+Если значение хранит массив спрайтов/текстур, то на экране отображается список текстовых полей в которых текстура записана как base64 и рядом кнопка Заменить, при нажатии на неё появляется файловый менеджер для загрузки другого файла.
+Редактор имеет отдельный список с мета-данными для всех основных свойств оружия. 
+В списке с мета-данными указан путь свойства, его тип и его описание, например часть списка:
+{ "fieldPath": "weapon.laserSight.Transform.localPosition", "comment": "Координаты объекта для расположения", "type": "Vector3", "value": "(1.1, 0.2, 0)" },
+{ "fieldPath": "weapon.laserSight.Transform.localEulerAngles.z", "comment": "Угол наклона", "type": "float", "value": 0 },
+{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", "type": "Sprite", suffix: ".SpriteRenderer.sprite", "value": "" },
+{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", "type": "Vector2", "value": "(0.5, 0.5)" },
+{ "fieldPath": "weapon.laserSight.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", "type": "float", "value": 100 },
+{ "fieldPath": "weapon.laserSight.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", "type": "int", "value": 0 },
+{ "fieldPath": "weapon.laserSight.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", "type": "bool", "value": true },
+{ "fieldPath": "weapon.laserSight.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", "type": "bool", "value": true },
+Для разных типов свойств на экране отображается интерфейс для редактирования значения.
+const typeFullForm = { 
+	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
+	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
+	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
+	'AnimationSprite[]': function (param, idx) { return renderAnimationSprite(param, idx, frameArrayMetaData); },
+	'NameAnimationFire[]': function (param, idx) { return renderObjectArray(param, idx, shotAnimationMetaData); },
+	'AnimationSounds[]': function (param, idx) { param.value = getSoundsByClip(param.value); return renderObjectArray(param, idx, animationSoundsMetaData); },
+}
+Мы можем добавить пользовательские свойства, которые ранее не были нигде указаны в мета-данных редактора, но есть в объектах у Unity Engine и в игровых классах.
+Редактор имеет на экране кнопку "Добавить параметр", который показывает поле для добавления нового свойства.
+Редактор HTML-форму для добавления нового свойства:
+	<div class="fields">
+		<span data-tooltip="Путь к свойству объекта">Свойство объекта:</span>
+		<span data-tooltip="Значение свойства">Значение:</span>
+		<input type="text" id="newFieldPath" class="panelInput" value="" placeholder="object.MonoBehaviour.field">
+		<input type="text" id="newFieldValue" class="panelInput" value="" placeholder="(0.5, 0.12, 0)">
+		<span>
+			<select id="newFieldType" class="panelInput" data-tooltip="Тип данных">
+				<option value="string">Обычная строка/число</option>
+				<option value="TextureSprite">Спрайт</option>
+				<option value="AudioClip">Звук</option>
+				<option value="Renderer">Renderer</option>
+				<option value="AnimationSprite[]">Анимация</option>
+				<option value="Sprite[]">Список спрайтов</option>
+				<option value="AudioClip[]">Список звуков</option>
+				<option value="NameAnimationFire[]">GunFlash[]</option>
+				<option value="Vector2">Vector2</option>
+				<option value="Vector3">Vector3</option>
+			</select>
+		</span>
+		<span><br><button onclick="createParam()" class="button add">Добавить</button></span>
+	</div>
+
+Таким образом мы можем добавлять новые ассеты, если это нужно для Lua-скриптов
+Для некоторых типов необязательно указывать значение, оно будет доступно для редактирования после нажатия Добавить, в общем списке полявится для него своё поле для редактирования.
+Если нужно добавлить текстуру или звук для Lua-скрипта, то напиши об этом в виде инструкции с пунктами для простого пользователя: нажми добавить новый параметр, укажи путь свойства и тип свойства.
+Для добавления ассета/текстуры нужен объект-компонент подключенный к GameObject, который будет хранить в себе этот ассет.
+
+Редактор так же имеет кнопку Добавить объект. 
+При нажатии Добавить объект появляется список для выбора компонента, который будет добавлен к объекту: 
+Transform, AnimatorSprite, SpriteRenderer.
+К ним так же можно добавить текстуры для Lua-скрипта.
+Выбираем компонент и нужно указать имя объекта. 
+Имя объекта и его компонент автоматически появятся в списках addedGameObjects и addedComponents - об этом можно не говорить пользователю, он это увидит сам.
+Для редактирования нового добавленного Unity-компонента следует добавить пользовательские свойства через кнопку "Добавить параметр", в пути свойства мы указываем имя нового объекта и тип данных.
+Если надо добавить компонент класса AnimatorSprite, то нужно нажать Добавить объект, затем выбрать AnimatorSprite, ввести имя объекта и нажать Подтвердить.
+В редакторе появится свойство "объект.AnimatorSprite.animations", которое содержит анимации и список спрайтов.
+При экспорте оно будет записано в формате JSON.
+
+Далее указаны основные классы как API документация проекта для работы через Lua:
+================================
+
+
+Class: AnimationClipData
+Base type: Object
+----------------------------------------
+  [Field] string clipName //Description: ---
+  [Field] float length //Description: ---
+  [Field] float frameRate //Description: ---
+  [Field] List<CurveBindingData> curves //Description: ---
+  [Field] List<AnimationEventData> events //Description: ---
+
+Class: AnimationClipInfo
+Base type: Object
+----------------------------------------
+  [Field] AnimationClip clip //Description: ---
+  [Field] List<ClipPropertyCurve> propertyInfo //Description: ---
+  [Field] List<ClipWeightEventRange> keyframes //Description: ---
+  [Method] Void AddPropertyInfo(CurveBindingData binding, AnimationCurve curve) //Description: ---
+  [Method] Void UpdateKeyframes(AnimationEvent[] events) //Description: ---
+
+Class: AnimationEventData
+Base type: Object
+----------------------------------------
+  [Field] float time //Description: ---
+  [Field] string functionName //Description: ---
+  [Field] string stringParameter //Description: ---
+  [Field] float floatParameter //Description: ---
+  [Field] int intParameter //Description: ---
+  [Field] string objectReferenceParameter //Description: ---
+
+Class: AnimationUtils
+Base type: Object
+Description: Инструменты для работы с анимациями
+----------------------------------------
+  [Static Method] Void OptimizeCurve(AnimationCurve& curve) //Description: Оптимизация анимации Функция удалит лишние ключевые кадры, которые не влияют на форму кривой, что может быть полезно для оптимизации анимаций в Unity.
+  [Static Method] AnimationCurve LinearCurve(AnimationCurve curve) //Description: Выпрямить кривые LinearCurve
+  [Static Method] Void OptimizeClip(AnimationClip clip, string[] objectNameToOptimize) //Description: Оптимизация анимации Функция удалит лишние ключевые кадры, которые не влияют на форму кривой, что может быть полезно для оптимизации анимаций в Unity.
+  [Static Method] Void ImportFromJSON(string json, AnimationClip clip) //Description: Импортирует данные из JSON-строки в существующий анимационный клип. Строка JSON с данными анимации. Существующий анимационный клип для импорта данных.
+  [Static Method] string ExportToJson(AnimationClip clip) //Description: Экспортирует анимационный клип в формат JSON. Анимационный клип для экспорта. Строка JSON с данными анимационного клипа.
+  [Static Method] AnimationClipInfo GetFromJSON(string json, string cacheId) //Description: No description
+  [Static Method] Object LoadByPartialName(string partialName, Object defaltValue) //Description: Поиск через ResourceLocators (для адресов)
+
+Class: AnimatorSprite
+Base type: MonoBehaviour
+Description: No description
+----------------------------------------
+  [Field] string initialAnimation //Description: Имя текущей анимации
+  [Field] bool playStart //Description: Воспроизвести при старте
+  [Field] AnimationSprite[] animations //Description: No description
+  [Field] float timeScale //Description: Множитель скорости анимаций
+  [Field] float speed //Description: Скорость/Частота кадров в секунду
+  [Field] bool reverse //Description: Воспроизвести в обратном порядке
+  [Field] bool loop //Description: Проигрывать повторно
+  [Field] AnimationSprite currentAnimation //Description: Проигрывать повторно
+  [Property] int currentFrame { get; } //Description: Текущий кадр [1 - TotalFrames]
+  [Property] float normalizedTime { get; } //Description: No description
+  [Property] bool isPlaying { get; } //Description: No description
+  [Property] int totalFrames { get; } //Description: No description
+  [Property] SpriteRenderer render { get; } //Description: No description
+  [Method] Void SwitchAnimation(string name, bool saveFrame) //Description: No description
+  [Method] Void SwitchAnimation(string name) //Description: No description
+  [Method] Void SwitchRandomAnimation() //Description: Переключение на случайную анимацию
+  [Method] Void SwitchNextAnimation() //Description: No description
+  [Method] AnimationSprite GetAnimationSprite(string name) //Description: No description
+  [Method] int GetTotalFrames(string name) //Description: No description
+  [Method] Void Play() //Description: No description
+  [Method] Void Play(string nameAnimation) //Description: No description
+  [Method] Void Stop() //Description: No description
+  [Method] Void GotoAndStop(int aFrame) //Description: aFrame - новый кадр от 1
+  [Method] Void GotoAndPlay(int aFrame) //Description: aFrame - новый кадр от 1
+  [Method] Void GotoAndPlay(Sprite sprite) //Description: aFrame - новый кадр от 1
+  [Method] Void PlayRandomFrame() //Description: No description
+  [Method] Void PlayRandomFrame(int totalFrames) //Description: No description
+  [Method] Void PlayRandomFrame(int start, int totalFrames) //Description: No description
+  [Method] Void StopRandomFrame() //Description: No description
+  [Method] Void StopRandomFrame(int totalFrames) //Description: No description
+  [Method] Void StopRandomFrame(int start, int totalFrames) //Description: No description
+  [Method] Void NextFrame(bool useSpeed) //Description: No description
+  [Method] Void NextFrame() //Description: No description
+  [Method] Void PrevFrame(bool useSpeed) //Description: No description
+  [Method] Void PrevFrame() //Description: No description
+  [Method] Void SetFrame(int frame) //Description: No description
+
+Class: Blood
+Base type: BloodBase
+Description: No description
+----------------------------------------
+  [Field] int dropsNum //Description: Количество капель крови
+  [Field] float dropsAngle //Description: Направление капель крови
+  [Field] float dropsSpeed //Description: Скорость капель крови
+  [Field] int dropsFrameRateMax //Description: Скорость капель крови при максимальной скорости
+  [Field] bool dropsScale //Description: Мастабирование 75-150%
+  [Field] float dropsTimeDelay //Description: Задержка капель. Запускать одну каплю за другой последовательно в течении времени
+  [Field] int angleHit //Description: Угол при попадании пули.\nБрызг крови будет наколняться на 50% ближе к углу angleHit
+  [Field] int speedHit //Description: Скорость брызга
+  [Field] Vector2 gravity //Description: Гравитация
+  [Field] MinMaxFloat gravityScale //Description: Гравитация
+  [Field] float frameRateGravity //Description: Ускорение/замедление частоты кадров у анимации в секунду
+  [Field] Vector2 gravityFrameRate //Description: Ускорение/замедление частоты кадров у анимации в секунду
+  [Field] float addSpeedInPoint //Description: Приумножить скорость
+  [Field] float maxDistSpeed //Description: радиус для увеличения скорости
+  [Field] float maxScaleSpeed //Description: радиус для увеличения скорости
+  [Field] float fluidForceRadius //Description: Радиус связывания нескольких капель друг к другу из разных брызгов
+  [Field] int fluidSourceMin //Description: Сколько капель должно быть в радиусе fluidForceRadius
+  [Field] int fluidNumReplace //Description: Сколько капель заменять в радиусе fluidForceRadius
+  [Field] int fluidMaxDrop //Description: Сколько капель притягивать к одной капле из другого брызга
+  [Field] bool fluidHide //Description: Скрыть каплю при огромном скоплении, когда есть рядом подходящая капля для связывания, но она уже имеет в себе другие капли
+  [Field] AnimationSprite[] fluidSkin //Description: No description
+  [Field] Color fadeColor //Description: Плавное исчезновение
+  [Field] float angleSpeed //Description: Вращение
+  [Field] float floor //Description: Земля в глобальных координатах
+  [Field] float randomGround //Description: Смещение земли в 20% случаях
+  [Field] int maxSpriteGround //Description: Макс кол-во крови в радиусе 1 метра юнити. Сразу отключать кровь при большом скоплении на земле
+  [Field] Sprite[] sprites //Description: No description
+  [Field] AnimationSprite[] floorSprites //Description: No description
+  [Field] string sortingLayerName //Description: Переключить слой на земле
+  [Field] int sortingOrder //Description: Переключить слой на земле
+  [Field] SpriteRenderer renderOnFloor //Description: Переключить слой на земле
+  [Property] int maxCache { get; } //Description: No description
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: Для всех попадний
+  [Method] Void OnExitBulletHit(BulletHit bulletHit) //Description: Для сквозного урона
+  [Method] Void OnHitRay(RaycastHit2D raycastHit, IWeaponCartridgeEntity entity) //Description: No description
+  [Method] Void RunDrop(Vector3 globalPosition, Vector3 lineSpeed, float maxDropsSpeed, float ground) //Description: globalPosition - координаты брызга крови lineSpeed - направление и скорость движения maxDropsSpeed - максимальная скорость движения отдельных капель ground - координаты земли
+  [Method] Void RunFromBody(MonoBehaviour entity, float totalPlayTime) //Description: Запустить длительные брызги крови, который был прикреплен к телу в редакторе totalPlayTime - общее время, в течении которого следует выпускать брызги крови без остановки entity - мутант/существо для запуска корутины с выплёскиванием брызгов speedBody - Тело для вычисления линейной скорости движения
+  [Method] Void OnGetBodyDrops(Transform body, Vector3 position, Vector3 lineMove, float ground) //Description: Брызг крови с учётом линейной скорости body - тело откуда течет кровь lineMove - линейная скорость для всех капель
+  [Method] Void OnGetDrops(Transform body, Vector3 position, Vector3 lineParentMove, float ground) //Description: Брызг крови из источника без с учёта линейной скорости body - тело откуда течет кровь lineParentMove - линейная скорость только для родительской капли maxDropsSpeed - скорость разброса капель из точки position
+
+Class: BloodBase
+Base type: MonoBehaviour
+Description: No description
+----------------------------------------
+  [Property] int maxCache { get; } //Description: No description
+  [Method] Void OnCreate() //Description: No description
+  [Method] Void OnGetDrops(Transform body, Vector3 globalHitPosition, Vector3 lineSpeed, float ground) //Description: No description
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: Для всех попадний
+  [Method] Void OnExitBulletHit(BulletHit bulletHit) //Description: Для сквозного урона
+  [Static Method] BloodBase Create(BloodBase prefab, Transform parent) //Description: Безопасный метод для создания брызгов и мяса При создании нужно записать ссылку на исходный префаб, чтобы отличать и группировать все созданные объекты между собой
+  [Static Method] BloodBase Create(BloodBase prefab) //Description: Безопасный метод для создания брызгов и мяса При создании нужно записать ссылку на исходный префаб, чтобы отличать и группировать все созданные объекты между собой
+  [Static Method] BloodBase GetCopy(BloodBase prefab, Transform parent, int maxCacheSize) //Description: No description
+  [Static Method] BloodBase GetCopy(BloodBase prefab, Transform parent, int maxCacheSize, Transform body, Vector3 globalHitPosition, Vector3 lineSpeed, float ground) //Description: No description
+
+Class: ClipPropertyCurve
+Base type: Object
+----------------------------------------
+  [Field] string relativePath //Description: ---
+  [Field] string typeName //Description: ---
+  [Field] string propertyName //Description: ---
+  [Field] AnimationCurve curve //Description: ---
+  [Field] ObjectReferenceKeyframeSerializable[] objectRefs //Description: ---
+  [Field] Transform cacheTransform //Description: ---
+  [Property] string fullPath { get; } //Description: ---
+  [Property] string objectName { get; set; } //Description: ---
+  [Property] Type type { get; } //Description: ---
+
+Class: ClipWeightCache
+Base type: Object
+----------------------------------------
+  [Field] string key //Description: ---
+  [Field] ClipWeightCombinations combinations //Description: ---
+
+Class: ClipWeightCombinations
+Base type: Object
+----------------------------------------
+  [Field] PlayerHandClipInfo[] clipsInfo //Description: ---
+  [Field] float[] weightInfo //Description: ---
+  [Field] float distance //Description: ---
+
+Class: CurveBindingData
+Base type: Object
+----------------------------------------
+  [Field] string propertyName //Description: ---
+  [Field] string path //Description: ---
+  [Field] string type //Description: ---
+  [Field] List<CurveData> keys //Description: ---
+
+Class: CurveData
+Base type: Object
+----------------------------------------
+  [Field] float time //Description: ---
+  [Field] float value //Description: ---
+  [Field] float inTangent //Description: ---
+  [Field] float outTangent //Description: ---
+
+Class: EffectHitMaterial
+Base type: Object
+----------------------------------------
+  [Field] PhysicsMaterial2D material //Description: ---
+  [Field] BloodBase drops //Description: ---
+  [Field] int dropsNumScale //Description: ---
+  [Field] int max //Description: ---
+  [Field] float scaleMax //Description: ---
+  [Method] Void ListUpdate(BloodBase[] objectsOnStage) //Description: ---
+  [Method] Void ListUpdate(Transform parent) //Description: ---
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: ---
+  [Method] BloodBase GetCurrentBlood(Transform headLegOrBody) //Description: ---
+
+Class: Entity
+Base type: MonoBehaviour
+Description: No description
+----------------------------------------
+  [Field] float health //Description: if (areasCache.Length == 0) { areasCache = this.gameObject.GetComponentsInChildren (true); } return areasCache; } }
+  [Field] Collider2D[] collidersBody //Description: No description
+  [Field] bool isDead //Description: No description
+  [Field] float timeDeath //Description: Время когда существо было убито, для снижения приоритета при попадании пуль
+  [Field] UnityEvent<Entity> onEntityDeath //Description: No description
+  [Field] UnityEvent<Entity> onEntityDestroy //Description: No description
+  [Field] UnityEvent<BulletHit> onBulletHit //Description: No description
+  [Property] AreaBodyList areas { get; } //Description: No description
+  [Method] bool IsHighPriorityBullet() //Description: No description
+  [Method] Void Death() //Description: No description
+  [Method] bool IsDeadFrame() //Description: Проверка для дробовиков, существо мертво и наступил новый кадр в игре
+  [Method] float GetMinHealth() //Description: No description
+  [Method] float GetMaxHealth() //Description: No description
+
+Class: EntityBehaviour
+Base type: MonoBehaviour
+----------------------------------------
+  [Method] Void OnStart(Zombie zombie) //Description: ---
+  [Method] Void OnUpdate() //Description: ---
+  [Method] bool OnPlayerStrike(string tag) //Description: ---
+  [Method] Void OnPlayerDeath() //Description: ---
+  [Method] Void OnRagdollEnable() //Description: ---
+  [Method] Void OnDeath() //Description: ---
+
+Class: EntityTriggers
+Base type: Object
+----------------------------------------
+  [Field] IWeaponCartridgeEntity entity //Description: ---
+  [Method] Void SetActiveTriggers(bool value) //Description: ---
+
+Class: FaceAnimation
+Base type: Object
+----------------------------------------
+  [Field] string name //Description: ---
+  [Field] AnimationCurve curve //Description: ---
+  [Field] AnimationCurve bodyRotationCurve //Description: ---
+  [Field] AnimationCurve bodyFadeCurve //Description: ---
+  [Field] float bodyMinAudioLength //Description: ---
+  [Field] Sprite[] frames //Description: ---
+  [Property] bool isPlaying { get; } //Description: ---
+  [Method] bool Contains(Sprite faceRenderSprite) //Description: ---
+  [Method] Void OnPlay(float soundTimeLength) //Description: ---
+  [Method] Void OnLateUpdate(float deltaTime, SpriteRenderer faceRender) //Description: ---
+  [Method] Void Stop(SpriteRenderer faceRender) //Description: ---
+  [Method] Sprite GetSprite(Sprite damagedSprite) //Description: ---
+  [Method] Sprite GetSprite() //Description: ---
+  [Method] Void OnLateUpdate(Transform headBody, float scaleValue, bool isHeadNoAnimation) //Description: ---
+
+Class: FaceAnimationTransformInfo
+Base type: Object
+----------------------------------------
+  [Field] Transform body //Description: ---
+  [Field] float startLocalAngle //Description: ---
+  [Field] float stopLocalAngle //Description: ---
+  [Field] float lastAngle //Description: ---
+  [Property] Vector3 startLocalEulerAngles { get; } //Description: ---
+  [Method] Void OnStop() //Description: ---
+
+Class: HandsStep
+Base type: Object
+----------------------------------------
+  [Field] string group //Description: ---
+  [Field] Transform transform //Description: ---
+  [Field] int step //Description: ---
+  [Field] int startAngle //Description: ---
+  [Field] int minAngle //Description: ---
+  [Field] int maxAngle //Description: ---
+
+Class: JsonParser
+Base type: Object
+Description: No description
+----------------------------------------
+  [Static Method] Void AddSynonym(string addNewKey, string sourceKey) //Description: No description
+  [Static Method] Void AddIgnoreKey(string removeKey, bool wholeWord) //Description: No description
+  [Static Method] Void AddLowPriority(string key, bool wholeWord) //Description: No description
+  [Static Method] Void AddParser(Type objectFieldType, ObjectParser parser) //Description: No description
+  [Static Method] Void AddParser(string jsonKey, ObjectParser parser) //Description: No description
+  [Static Method] bool JsonToObject(Object parent, string json, string cacheKey, string onlyPrefix, string skipPrefix) //Description: Парсим JSON как словарь с путями и загружаем значения свойств в объект parent
+  [Static Method] Void ParseFields(string json, List<KeyValuePair<string, string>> result) //Description: Чтение текста по одной букве. Запись всех параметров в массив с ключами и значением
+  [Static Method] Void RenameKey(List<KeyValuePair<string, string>> list, int index, string newKey) //Description: Переименовать ключ в списке по индексу
+  [Static Method] string GetFileLineValue(string key, string defaultValue) //Description: Получить значение из fileLine по ключу
+  [Static Method] string ParseString(string json, Int32& charIndex, Char quote, Char endQuote) //Description: Парсить любую строку в кавычках из файла
+  [Static Method] string ParseValue(string json, Int32& charIndex) //Description: Парсить строку в разных кавычках
+  [Static Method] float ParseFloat(string value) //Description: Парсим число
+  [Static Method] int ParseInt(string value) //Description: No description
+  [Static Method] Vector2 ParseVector2(string value) //Description: Парсим координаты "(0.95, 0.24)"
+  [Static Method] Vector3 ParseVector3(string value) //Description: Парсим координаты "(0.95, 0.24, 0.4)"
+  [Static Method] Color ParseColor(string value) //Description: Парсим цвет в формате HEX и RGB
+  [Static Method] Object ParseScriptableObject(Object fieldParent, string jsonValue, string cacheKey, string fieldName, Type fieldType, Object sourceFieldValue) //Description: Найти/Создать новый объект и внести в него изменения из JSON
+  [Static Method] Object ParseScriptableObject(Object fieldParent, string jsonValue, string fieldName, Type fieldType, Object sourceFieldValue) //Description: Найти/Создать новый объект и внести в него изменения из JSON
+  [Static Method] Void RemoveFlatData(string fieldName) //Description: Убрать ненужные строки
+  [Static Method] ScriptableObject CopyScriptableObject(ScriptableObject source, string cacheKey) //Description: Создать новый объект и внести в него изменения из JSON.
+  [Static Method] Void ClearCache() //Description: Очистить объекты и очисить кэш
+  [Static Method] Component CopyPrefab(Component prefab, string cacheKey) //Description: Клонирует GameObject как prefab-объект (не привязанный к сцене) для использования в других сценах.
+  [Static Method] Component CopyPrefabComponents(Component prefab, string cacheKey) //Description: Клонирует GameObject как "неактивный" prefab-объект без запуска событий Awake/Start.
+  [Static Method] T FindObjectByName(string name) //Description: No description
+  [Static Method] Sprite Base64ToSprite(string base64) //Description: Декодируем Base64 изображение Сразу ищем в json-коде другие параметры для загружаемого спрайта Если для спрайта найдены его настройки, то нужно удалить его параметр из списка, чтобы игра не пыталась искать его среди других объектов
+  [Static Method] Sprite Base64ToSprite(string base64, string newSpriteName, Vector2 pixelPivotPoint, float pixelPerUnit, float scaleTextureSize) //Description: Декодируем Base64 изображение Сразу ищем в json-коде другие параметры для загружаемого спрайта Если для спрайта найдены его настройки, то нужно удалить его параметр из списка, чтобы игра не пыталась искать его среди других объектов
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, String& value) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, Single& value, float defaultValue) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, Int32& value, int defaultValue) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, Boolean& value, bool defaultValue) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, Vector2& value, Vector2 defaultValue) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] bool TryGetMetaData(string jsonSourceValue, string key, Vector3& value, Vector3 defaultValue) //Description: Извлечь дополнительные данные, например, относящиеся к спрайту и содержат его дополнительную информацию для использования при создании новой текстуры Найти строки из JSON-массива и записать их в AddIgnoreKey, чтобы эти данные были проигнорированы
+  [Static Method] Texture2D ScaleTexture(Texture2D sourceTexture, float scaleSize) //Description: Масштабирует текстуру; scaleSize - множитель размера (0 < scaleSize <= 1)
+  [Static Method] Void SetValueByPath(Object root, string path, string value) //Description: Сканирование и полей (GetField()), и свойств (GetProperty()) на каждом уровне пути Отдельные методы SetFieldValue() и SetPropertyValue() устанавливают значение, основываясь на типе.
+  [Static Method] Object StructCopy(Object root, Object source, string filedName, string newValue) //Description: Копировать полностью структуру с внесёнными изменениями Для изменения данных внутри структуры, нужно извлечь её, внести в неё измения и записать эту структу обратно в объект Для каждой строки json происходит копирование и создание структуры, может оптимизировать обработку - заранее записать все поля и убрать их из массива flatData?
+  [Static Method] bool InvokeMethod(Object targetObj, Type targetType, string methodName, string parameters) //Description: Вызов метода по имени methodName и передаём значение параметров указаных в виде простой строки через ';'
+  [Static Method] Object InvokeMethodByPath(Object targetObj, Type targetType, string methodPath) //Description: object result = InvokeMethodByPath(gameObject, typeof(GameObject), "GetComponents(false)"); Rigidbody2D[] bodies = result as Rigidbody2D[]; Объект на котором вызывается метод Тип объекта Строка вида "MethodName(param1;param2)" Результат выполнения метода или null при ошибке
+  [Static Method] Component GetComponentByName(Component unityScript, string typeName) //Description: Найти компонент по имени
+  [Static Method] Component GetComponentByName(GameObject gameObject, string typeName) //Description: Найти компонент по имени
+  [Static Method] Transform GetChildByName(Transform parent, string childName) //Description: Найти объект по имени
+  [Static Method] Transform GetChildByName(Object fieldParent, string childName) //Description: Найти объект по имени
+  [Static Method] T GetChildComponentByName(Object fieldParent, string childName) //Description: Найти компонент по имени
+  [Static Method] string TryGetTextBase64(string value) //Description: No description
+  [Static Method] Object ParseArray(string json, Type type) //Description: Парсит JSON-массив и возвращает объект массива заданного типа
+  [Static Method] string[] SplitJsonObjects(string json) //Description: No description
+  [Static Method] string GetValueByKey(string json, string key, string defaultValue) //Description: Найти и получить значение по ключу из JSON
+  [Static Method] string ObjectToJson(Object obj, string pathPrefix, List<string> skipFields, string resultSuffix, ExportSettings[] whatExport, int maxDepth) //Description: No description
+  [Static Method] string AssetToJSON(Object asset) //Description: No description
+  [Static Method] string ObjectToFieldJson(Object obj, string pathPrefix, ExportSettings[] whatExport, int maxDepth) //Description: No description
+  [Static Method] string ObjectToFieldJson(Object[] objList, string pathPrefix, ExportSettings[] whatExport, int maxDepth) //Description: No description
+  [Static Method] Void AddFieldInfo(string fieldPath, FieldInfo fieldInfo) //Description: No description
+  [Static Method] string SpriteToBase64(Sprite sprite, Vector2& pivotPoint) //Description: Преобразовать  в строку Base64
+  [Static Method] AudioClip Base64ToClip(string base64, string clipName) //Description: Загрузка WAV (PCM 16-bit) из Base64 → AudioClip (синхронно)
+  [Static Method] string ClipDataToBase64(AudioClip audioClip) //Description: Этот метод сохраняет сырые PCM-данные (float[]), но не содержит заголовков WAV поэтому при декодировании ты должен знать: Частоту дискретизации (frequency), Моно/стерео(channels), Формат — это float PCM Если ты хочешь также хранить метаданные (частота, каналы и т.п.), то их тоже нужно сериализовать.
+  [Static Method] string ClipToBase64(AudioClip audioClip) //Description: Получает WAV-байты из AudioClip
+  [Static Method] string FloatToStr(float value) //Description: Округляем до нужного количества знаков
+  [Static Method] string VectorToString(Vector2 vector) //Description: No description
+  [Static Method] string VectorToString(Vector3 vector) //Description: No description
+  [Static Method] string VectorToString(Vector4 vector) //Description: No description
+  [Static Method] Vector2 PixelsToWorldPosition(Vector2 pixelPoint, Transform transform, Sprite sprite) //Description: Переводим координаты в пикслеях от верхнего левого угла в глобальные координаты
+  [Static Method] Vector2 PixelsToLocalPosition(Vector2 pixelPoint, Sprite sprite) //Description: Переводим координаты от верхнего левого в пикселях в игровые метры
+  [Static Method] Vector2 PixelsToLocalPosition(Vector2 pixelPoint, Vector2 pivot, float pixelsPerUnit) //Description: Переводим координаты от верхнего левого в пикселях в игровые метры
+  [Static Method] Vector2Int PositionToPixels(Vector2 localPosition, Sprite sprite) //Description: Переводим локальные координаты игровых метров в пиксели. Получаем координаты от нижнего левого угла Умножаем на Кол-во пикселей в единице и Добавляем смещение спрайта, записаного в пикселях
+  [Static Method] Vector2Int PositionToTexture(Vector2 localPosition, Sprite sprite) //Description: Для функций GetPixel/SetPixel нужны координаты от левого нижнего угла
+
+Class: ListenerDeath
+Base type: MulticastDelegate
+----------------------------------------
+  [Method] Void Invoke() //Description: ---
+  [Method] IAsyncResult BeginInvoke(AsyncCallback callback, Object object) //Description: ---
+  [Method] Void EndInvoke(IAsyncResult result) //Description: ---
+
+Class: MeleeWeapon
+Base type: Weapon
+Description: Холодное оружие типа топора
+----------------------------------------
+  [Field] string[] strikeAnimations //Description: No description
+  [Field] float delayBullet //Description: Задержка перед запуском пули после нажатия на курок, в скндх.
+  [Field] string boltParentName //Description: Родительский объект для запуска пули
+  [Field] ListDamagesSprites bloodySkinManager //Description: Следы крови на оружии после удачных попаданий
+  [Property] int magazineSize { get; set; } //Description: Следы крови на оружии после удачных попаданий
+  [Method] Void Shot(float distToAim) //Description: No description
+  [Method] Void OnShotPlayAnimation() //Description: No description
+  [Method] float GetNormalizedReloadMove() //Description: No description
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: No description
+  [Method] Void OnSwitchEnable() //Description: No description
+  [Method] Void OnStartReload() //Description: No description
+  [Method] Void ResetChamber() //Description: No description
+  [Method] float GetMagazineSize() //Description: No description
+
+Class: Musket
+Base type: Weapon
+Description: Ружьё без магазина, только с патронником
+----------------------------------------
+  [Field] int recoilSteps //Description: Скорость увеличения отдачи\nКоличесво шагов для достижения угла из recoilMax
+  [Field] float recoilMax //Description: Максимальный угол отдачи, в градусах
+  [Field] float recoilDecrease //Description: Скорость снижения отдачи до нуля, в градусы/секунду
+  [Field] float shotDirection //Description: Угол отклонения после выстрела
+  [Field] int chamberAnimationStep //Description: Число выстрелов для анимации
+  [Field] float timeFreezeShot //Description: Дополнительная задержка/заморозка оружия после выстрела на основе magazinePlayStep или chamberAnimationStep
+  [Field] bool playEmptyBoltAnimation //Description: Показать анимацию после последнего выстрела перед запуском перезарядки. Например для помповых дробовиков следует отключить параметр
+  [Field] AudioClip[] shotAudioList //Description: No description
+  [Field] List<NameAnimationFire> shotAnimations //Description: No description
+  [Field] SourceWeaponShell shellDrop //Description: Гильза.\nАнимация должна иметь событие WeaponShellDrop\nСобытие AnimationEvent с functionName='WeaponShellDrop'
+  [Field] float recoil //Description: Гильза.\nАнимация должна иметь событие WeaponShellDrop\nСобытие AnimationEvent с functionName='WeaponShellDrop'
+  [Field] LineRenderer laser //Description: ;  Лазер оружия
+  [Field] float distLaser //Description: ; Дистанция для лазера
+  [Property] bool laserEnabled { get; set; } //Description: No description
+  [Property] bool isEmptyMagazine { get; } //Description: No description
+  [Property] bool isReadyToReload { get; } //Description: No description
+  [Property] bool isReloadState { get; } //Description: No description
+  [Property] bool isIncorrectReload { get; } //Description: No description
+  [Property] bool isIncorrectMagazine { get; } //Description: No description
+  [Property] int magazineSize { get; set; } //Description: No description
+  [Property] bool isReadyToLaser { get; } //Description: No description
+  [Property] Vector2 laserPosition { get; set; } //Description: No description
+  [Property] int chamberReloadStepSlide { get; } //Description: No description
+  [Method] Void Update() //Description: No description
+  [Method] Void OnSwitchDisable() //Description: No description
+  [Method] Void OnSwitchEnable() //Description: No description
+  [Method] Void OnShotPlayAnimation() //Description: Анимация выстрела
+  [Method] float GetRecoil(float deltaTime) //Description: Получить величину отдачи
+  [Method] float GetNormalizedRecoil() //Description: No description
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: No description
+  [Method] Void OnStartReload() //Description: No description
+  [Method] Void LateUpdate() //Description: No description
+  [Method] Void OnReloadUpdate() //Description: Процесс перезрядки. Добавление патронов, когда анимация завершена
+  [Method] float GetNormalizedReloadMove() //Description: Получить движение во время перезарядки [0-1] для поворота головы и тела В начале перезарядки имеем 0f, затем в середине 1f и под конец перезарядки снижаем обратно к 0f Во время перезарядки запускаем плавный поворот
+  [Method] Void ResetChamber() //Description: No description
+  [Method] Void ResetMagazinePatron(int indexSlide) //Description: No description
+  [Method] int GetFireRate() //Description: No description
+  [Method] float GetReloadTime() //Description: No description
+  [Method] Void ShowTimeEfficiency() //Description: No description
+  [Method] Void OnDrawGizmosSelected() //Description: No description
+
+Class: NameAnimationFire
+Base type: Object
+----------------------------------------
+  [Field] string animation //Description: ---
+  [Field] WeaponShotEffect fire //Description: ---
+  [Field] float audioTimeRandom //Description: ---
+  [Field] int chamberStep //Description: ---
+  [Field] int magazineStep //Description: ---
+  [Field] float timeFreeze //Description: ---
+  [Field] bool playWhenEmpty //Description: ---
+
+Class: ObjectParser
+Base type: MulticastDelegate
+----------------------------------------
+  [Method] Object Invoke(string fieldValue) //Description: ---
+  [Method] IAsyncResult BeginInvoke(string fieldValue, AsyncCallback callback, Object object) //Description: ---
+  [Method] Object EndInvoke(IAsyncResult result) //Description: ---
+
+Class: Player
+Base type: MonoBehaviour
+Description: No description
+----------------------------------------
+  [Field] Weapon currentWeapon //Description: Текущее выбранное оружие
+  [Field] Weapon mainWeapon //Description: Основное оружие
+  [Field] Weapon backupWeapon //Description: Запасное оружие
+  [Field] SpriteRenderer handgripFingers //Description: Пальцы на рукоятке оружия
+  [Field] MinMaxFloat roomReverbScale //Description: Изменить звук оружий. Сгенерировать заглушенный звук без длинного эха, если игрок находится в тесной комнате
+  [Field] float radiusAimNoShot //Description: Радиус для свободного прицеливания без стрельбы\nЕсли в этом радиусе находится коллайдер со сцены, то совершаем выстрел
+  [Field] Collider2D wallColliderNoShot //Description: Игнорировать стену, если она попадает в радиус RadiusAimNoShot
+  [Field] Transform head //Description: Голова для вращения
+  [Field] Transform body //Description: Тело для отдачи от оружия
+  [Field] Transform hands //Description: Тело для отдачи от оружия
+  [Field] float startHealth //Description: Здоровье
+  [Field] float recoveryHealth //Description: Здоровье для восстановления
+  [Field] float recoveryHealthSize //Description: Размер одной доли при восстановлении здоровья. Округлять здоровье при восстановлении
+  [Field] AudioClip audioSourceDeath //Description: Время для возобновления еденицы здоровья
+  [Field] Text textScores //Description: Счетчик очков
+  [Field] Text textMoney //Description: Счетчик очков
+  [Field] Text textDamage //Description: Счетчик очков
+  [Field] RectTransform displayHealth //Description: Счетчик очков
+  [Field] TouchButton buttonAimShot //Description: Кнопка для прицела и стрельбы
+  [Field] Button buttonMainWeapon //Description: Кнопка для основного оружия
+  [Field] Button buttonAddonWeapon //Description: Кнопка дополтлн.оружия
+  [Field] Button buttonReload //Description: перезарядить
+  [Field] Button buttonUse //Description: Кнопка взаимодействия
+  [Field] UnityEvent onDeath //Description: Кнопка взаимодействия
+  [Field] UnityEvent onDeathLast //Description: Кнопка взаимодействия
+  [Field] UnityEvent<Weapon> onShotWeapon //Description: No description
+  [Field] UnityEvent<BulletHit> onBulletHit //Description: No description
+  [Field] UnityEvent<BulletHit, float> onDamageEntity //Description: No description
+  [Field] UnityEvent<Weapon> onReloadStart //Description: No description
+  [Field] UnityEvent<Weapon> onReloadPlaySound //Description: No description
+  [Field] UnityEvent<Weapon> onReloadComplete //Description: No description
+  [Field] UnityEvent<Weapon> onSwitchWeapon //Description: No description
+  [Field] UnityEvent<Weapon> onAimWeapon //Description: No description
+  [Field] UnityEvent onDestroy //Description: No description
+  [Field] bool isDead //Description: No description
+  [Field] int distanceMove //Description: ; Дистанция до точки в метрах, используемая в качестве смещения
+  [Field] AudioSource audioSource //Description: ; Источник звука для шагов
+  [Field] AudioSource weaponAudioSource //Description: ; Источник звука для стрельбы
+  [Field] Animator animator //Description: No description
+  [Field] PlayerHands handController //Description: No description
+  [Property] UnityEvent onFatalityComplete { get; } //Description: ; } } Игрок убит Дать время для завершения игры после анимации фаталити  Вызов слушателей для перехода в меню после фаталити
+  [Property] float globalAngleToMouse { get; } //Description: Локальный угол по оси Z
+  [Property] bool isReadyToShot { get; set; } //Description: No description
+  [Property] float health { get; set; } //Description: Запуск режима
+  [Property] PlayerMove mover { get; } //Description: No description
+  [Property] Musket mainMusket { get; } //Description: No description
+  [Property] Musket backupMusket { get; } //Description: No description
+  [Property] int systemFocusOutCounter { get; set; } //Description: Записывать сколько раз игра была свернута, чтобы защититься от багоюзеров, которые раньше времени выключают игру при потери здоровья Записываем число со строкой FOClick, чтобы посторонним хакерам сложно было понять что это такое Игрок много раз закрывал игру раньше времени для сохранения жизней
+  [Property] float damageTotal { get; set; } //Description: Общее количество нанесенного урона по здоровью
+  [Method] Void LoadScene(string sceneName) //Description: Загрузка сцены
+  [Method] Void OnApplicationFocus(bool hasFocus) //Description: В Android при включении экранной клавиатуры возникает событие OnApplicationFocus (false) Если вы нажимаете «Домой» при активной клавиатуры, событие OnApplicationFocus () не вызывается, вместо этого вызывается OnApplicationPause (). public void OnApplicationPause(bool pauseStatus) { this.ApplicationFocus(!pauseStatus); }
+  [Method] Void Damage(float damage) //Description: Функция при попаднии пуль public delegate void ListenerBulletHit (BulletHit bulletHit); internal static Player.ListenerBulletHit listenerBulletHit = null; internal static void SetListenerBulletHit (Player.ListenerBulletHit listener) { Player.listenerBulletHit = listener; }
+  [Method] Void UpdateIndicatorHealth() //Description: No description
+  [Method] Void UpdateIndicatorHealth(float healthScale) //Description: No description
+  [Method] Void Death() //Description: Смерть
+  [Method] Void WeaponFreeze(float time) //Description: Отключить оружие
+  [Method] Void PlayWeaponAngularMove(float startGlobalAngle, float targetGlobalAngle, float time) //Description: Запустить вращение оружия
+  [Method] Void PlayWeaponAngularMove(float targetAngle, float time) //Description: Запустить вращение оружия
+  [Method] Void PlayWeaponAngularMove(float time) //Description: Запустить вращение оружия
+  [Method] bool IsWeaponInAngularMotion() //Description: Оружие совершает угловое движение и происходит в процессе вращения
+  [Method] Void AimToPoint(PointerEventData eventData) //Description: No description
+  [Method] Void OnAimMouseMove(PointerEventData eventData) //Description: No description
+  [Method] Void AimTarget(float angle) //Description: No description
+  [Method] Void OnZombieDamage(BulletHit bulletHit, float damage) //Description: No description
+  [Method] Void ShotTriggerEnable(PointerEventData eventData) //Description: No description
+  [Method] Void ShotTriggerStop(PointerEventData eventData) //Description: No description
+  [Method] Void ReloadWeapon() //Description: Перезарядить оружие - сменить магазин
+  [Method] Void OnWeaponShot(Weapon weapon) //Description: No description
+  [Method] Void OnReloadStart(Weapon weapon) //Description: No description
+  [Method] Void OnReloadComplete(Weapon weapon) //Description: No description
+  [Method] Void SelectWeapon(Weapon weapon) //Description: Выбрать оружие. Выбрать можно только другое оружие
+  [Method] Void SelectWeapon(string idMain, string idBackup, WeaponCartridge[] mainMagazinePattern, WeaponCartridge[] backupMagazinePattern, SilencerStoreInfo mainSilencer, SilencerStoreInfo backSilencer) //Description: Выбрать оружие. Выбрать можно только другое оружие
+  [Method] Void SelectWeapon(string idMain, string idBackup, WeaponSceneState mainPatrons, WeaponSceneState backupPatrons, SilencerStoreInfo mainSilencer, SilencerStoreInfo backSilencer) //Description: Выбрать оружие. Выбрать можно только другое оружие
+  [Method] Weapon CreateNewWeapon(string prefab, Weapon defaultPrefab) //Description: No description
+  [Method] Void SwitchWeapon() //Description: No description
+  [Method] Void SwitchToMainWeapon() //Description: Взять основное оружие
+  [Method] Void SwitchToSpareWeapon() //Description: Взять дополнительное оружие
+  [Method] Void PlaySound(AudioClip clip) //Description: No description
+  [Method] Void PlayNewSound(AudioClip clip) //Description: No description
+  [Method] Void PlayStepSound(AudioClip clip) //Description: No description
+  [Method] Void PlayWeaponSound(AudioClip clip) //Description: No description
+  [Method] Void OnActiveArea(InteractionArea area) //Description: No description
+  [Method] Void OnInactiveArea(InteractionArea area) //Description: No description
+  [Method] Void OnStartMove() //Description: No description
+  [Static Method] Void OnGameOver() //Description: No description
+  [Static Method] Vector2 GetRayDirection(float angle, float angleToRotate) //Description: No description
+
+Class: PlayerHandClipGroup
+Base type: Object
+----------------------------------------
+  [Field] string weaponType //Description: ---
+  [Field] AnimationClip baseClip //Description: ---
+  [Field] string parentName //Description: ---
+  [Field] string weaponEditorName //Description: ---
+  [Field] List<ClipPropertyCurve> propertyInfo //Description: ---
+  [Field] List<ClipWeightEventRange> keyframes //Description: ---
+  [Field] AnimationClip resultClip //Description: ---
+  [Method] float GetStartTime(string keyframeName, float defaultValue) //Description: ---
+  [Method] float GetLastTime(string keyframeName) //Description: ---
+  [Method] float GetTimeLength(string keyframeName) //Description: ---
+  [Method] bool HasKeyframe(string keyframeName) //Description: ---
+  [Method] Void UpdatePropertyInfo() //Description: ---
+  [Method] Void AddPropertyInfo(CurveBindingData binding, AnimationCurve curve) //Description: ---
+  [Method] Void UpdateKeyframes(AnimationEvent[] events) //Description: ---
+
+Class: PlayerHandClipInfo
+Base type: Object
+----------------------------------------
+  [Field] AnimationClip clip //Description: ---
+  [Field] List<ClipPropertyCurve> propertyInfo //Description: ---
+  [Method] float GetCurveValue(float timeInSeconds, string propertyFullPath, float defaultValue) //Description: ---
+
+Class: PlayerHands
+Base type: MonoBehaviour
+Description: Генератор новой анимации на основе имеющихся клипов.
+----------------------------------------
+  [Field] bool testMode //Description: Управлять анимацией с помощью клавиатуры
+  [Field] Transform parent //Description: Корневой объект с руками для преобразования координат
+  [Field] Transform fingersRight //Description: Пальцы павой руки
+  [Field] SpriteRenderer fingersRenderRight //Description: Пальцы павой руки
+  [Field] SpriteRenderer fingersLeft //Description: Пальцы левой руки\nЦентральная точка рендера отображается в редакторе красной точкой
+  [Field] Transform fingersRifle //Description: Невидимая кость, как ещё одна рука используется для свободного перемещения оружия
+  [Field] Transform rightHandParent //Description: Объекты относящиеся к правой руке\nПравую руку нужно сместить только под приклад оружия
+  [Field] Transform leftHandParent //Description: Объекты относящиеся к левой руке
+  [Field] Transform rifleHandParent //Description: Кость для управления оружием\nНевидимая кость как ещё одна рука используется для свободного перемещения оружия, таким образом имитируем передачу оружия из правой руки в левую
+  [Field] SpriteRenderer weaponRender //Description: Оружие с отдельной костью
+  [Field] SpriteRenderer weaponRenderRight //Description: Оружие спереди
+  [Field] SpriteRenderer weaponRenderLeft //Description: Оружие позади
+  [Field] SpriteRenderer magazineRight //Description: Магазин в правой руке
+  [Field] SpriteRenderer magazineLeft //Description: Магазин в левой руке
+  [Field] SpriteRenderer magazineRifleRight //Description: Магазин в оружии правой руки
+  [Field] SpriteRenderer magazineRifleLeft //Description: Магазин в оружии левой руки
+  [Field] SpriteRenderer magazineRifle //Description: Магазин в оружии с отдельной костью как третья рука
+  [Field] Vector3 bodyButtstockPoint //Description: Координаты плеча для приклада оружия\nКоординаты будут использоваться для размещения оружия в руках
+  [Field] Vector3 bodyButtstockReload //Description: Координаты плеча для приклада оружия во время перезарядки\nКоординаты будут использоваться для размещения оружия в руках
+  [Field] Vector3 handLocalPoint //Description: Координаты ладони
+  [Field] Vector3 fingersLocalPoint //Description: Координаты пальцев для задёргивания затвора у винтовки
+  [Field] List<HandsStep> hands //Description: No description
+  [Field] float firstAngeStep //Description: Сколько градусов добавить для первой проверки, чтобы определить направление для поворта
+  [Field] float angleStep //Description: Сколько градусов добавлять/убавлять при вращении
+  [Field] int boneStep //Description: Сколько раз передвинуть все объекты
+  [Field] AudioSource audioSource //Description: Воспроизвести звук из анимации
+  [Field] float weightStepScale //Description: Сдвиг параметра, который используется как множитель для смешивания клипов (0-1)
+  [Field] float distanceToStop //Description: Остановить взвешивание клипов. Дистанция между точкой в ладони и на оружии. Когда дистнация слишком маленькая, то можно остановить смешивание и оставить смесь клипов с ближайшей точкой
+  [Field] float distanceError //Description: Показать ошибку, если дистанция слишком большая между точкой в ладони и на оружии
+  [Field] List<string> ignorePropertyName //Description: No description
+  [Field] WeaponAnimationCache animations //Description: Список анимаций
+  [Field] int debugFrame //Description: Показать в консоль подробную информацию для отдельного кадра
+  [Field] float debugPointTimeDist //Description: Дистанция по времени в секундах для отображения точек от смешивания
+  [Field] AnimatorRangeClip animator //Description: Дистанция по времени в секундах для отображения точек от смешивания
+  [Field] WeaponHandPoints weaponConfig //Description: ; Для тестирования записать сюда ссылку на конфиг
+  [Field] WeaponHandPoints weaponNext //Description: ; Для тестирования записать сюда ссылку на конфиг
+  [Field] List<ClipPropertyCurve> newClipProperty //Description: No description
+  [Method] Transform GetHandByName(string name, Transform defaultValue) //Description: Получить кисть руки по имени
+  [Method] Void RightRifleToHand() //Description: Зажать винтовку к предплечьях в точке ниже плеча
+  [Method] Void RightRifleToBody() //Description: Прижать винтовку к телу
+  [Method] Void RightHandOnBolt() //Description: Рычаг затвора
+  [Method] Void RightHandOnBoltMove() //Description: Рычаг затвора в заднем положении
+  [Method] Void RightHandOnBullet() //Description: Рука для вставки патрона во внутрь дробовика/ружья
+  [Method] Void RightHandOnGrip() //Description: Рука держит оружие
+  [Method] Void RightHandSaveOriginal() //Description: Сохранить кадр без изменений для правой руки. Пропустить смешивание и взвешивание клипов для этого кадра
+  [Method] Void KeyframeSaveOriginal() //Description: Сохранить кадр без изменений для всех анимированных свойств. Пропустить смешивание и взвешивание клипов для этого кадра
+  [Method] Void LeftHandSaveOriginal() //Description: Сохранить кадр без изменений для левой руки. Пропустить смешивание и взвешивание клипов для этого кадра
+  [Method] Void LeftHandOnHandguard() //Description: Рука на рукоятке под стволом
+  [Method] Void LeftHandOnMagazine() //Description: Когда рука находится в кадре на магазине, в этот момент нужно оценить все анимации и создать из них ключевой кадр для руки
+  [Method] Void LeftHandOnMagazineOut() //Description: Использованый магазин извлечён из оружия и вышел из корпуса
+  [Method] Void LeftHandOnMagazineInsert() //Description: Новый магазин плотно приподнесён к оружию и готов для резкой вставки
+  [Method] Void LeftHandOnMagazineReady() //Description: Новый магазин вставлен в оружие в его рендер из руки отключён
+  [Method] Void LeftHandOnBolt() //Description: Рычаг затвора
+  [Method] Void LeftHandOnBoltMove() //Description: Рычаг затвора в заднем положении
+  [Method] Void LeftHandOnBullet() //Description: Вставка патрона или другое движение рук
+  [Method] Void LeftHandOnClosedCover() //Description: Рука на закрытой крышке пулемёта
+  [Method] Void LeftHandOnOpenCover() //Description: Рука на открытой крышке пулемёта
+  [Method] Void LeftHandOnFree() //Description: Любая другая точка
+  [Method] Void PlaySound(AudioClip sound) //Description: No description
+  [Method] Void OnEnableSwitchWeapon(WeaponHandPoints weapon) //Description: Обновить текстуры и руки пероснажа
+  [Method] Void OnDisableSwitchWeapon() //Description: Отключить магазины после использованя разных оружий
+  [Method] AnimationClip GenerateNewClip(WeaponHandPoints config, PlayerHandClipGroup clipInfo, AnimationClip defaultValue) //Description: No description
+  [Method] Void LateUpdate() //Description: No description
+  [Method] bool CheckClipSaveToAsset() //Description: No description
+  [Method] string ClipSaveToAsset() //Description: No description
+  [Method] string ClipSaveToAsset(AnimationClip clip) //Description: No description
+  [Static Method] bool EventIsKeyframe(string clipEventFunctionName) //Description: No description
+  [Static Method] List<T[]> GetUniqueCombinations(T[] array, int length) //Description: No description
+  [Static Method] Void UpdateTransform(List<ClipPropertyCurve> propertyInfo, Transform parent, float timeInSeconds, float blendWeight) //Description: No description
+  [Static Method] Void SetFieldValue(Object target, string path, Object newValue) //Description: Устанавливает значение поля объекта по указанному пути. Целевой объект, поле которого будет изменено. Путь к полю. Новое значение для поля.
+  [Static Method] Void SetFieldValue(Object target, ClipPropertyCurve property, float timeInSeconds) //Description: Устанавливает значение поля объекта по указанному пути. Целевой объект, поле которого будет изменено. Путь к полю. Новое значение для поля.
+
+Class: PlayerStrikeListener
+Base type: MulticastDelegate
+----------------------------------------
+  [Method] Void Invoke() //Description: ---
+  [Method] IAsyncResult BeginInvoke(AsyncCallback callback, Object object) //Description: ---
+  [Method] Void EndInvoke(IAsyncResult result) //Description: ---
+
+Class: RaycastSortMethod
+Base type: MulticastDelegate
+----------------------------------------
+  [Method] RaycastHit2D[] Invoke(RaycastHit2D[] rayHits, float distToAim) //Description: ---
+  [Method] IAsyncResult BeginInvoke(RaycastHit2D[] rayHits, float distToAim, AsyncCallback callback, Object object) //Description: ---
+  [Method] RaycastHit2D[] EndInvoke(IAsyncResult result) //Description: ---
+
+Class: RifleWithMagazine
+Base type: Musket
+Description: Автоматическая винтовка с магазином и с патронником
+----------------------------------------
+  [Field] bool reloadBoltStop //Description: Винтовка имеет затворную задержку. При перезарядке использовать две анимации reloadEmpty и reload
+  [Field] bool beltFeeder //Description: Оружие устроено как пулемёт с лентой патронов.\nСбрасывать патронник при перезарядке и использовать только одну анимацию reloadEmpty
+  [Field] int magazineMax //Description: Кол-во патронов в одном магазине,\n0 - использовать cartridgesList для патронника chamberSize
+  [Field] int magazineStep //Description: Кол-во патронов из магазина для запуска анимации
+  [Field] bool magazineEmptyStep //Description: Запустить анимацию после полного опустошения одного отсека магазина
+  [Field] SourceWeaponShell magazineDrop //Description: Магазин. Выкидывать магазин при перезарядке\nАнимация должна иметь событие WeaponMagazineDrop\nСобытие AnimationEvent с functionName='WeaponMagazineDrop' 
+  [Property] WeaponCartridge[] magazineList { get; set; } //Description: No description
+  [Property] bool isReadyToReload { get; } //Description: Магазин. Выкидывать магазин при перезарядке\nАнимация должна иметь событие WeaponMagazineDrop\nСобытие AnimationEvent с functionName='WeaponMagazineDrop' 
+  [Property] bool isReloadState { get; } //Description: No description
+  [Property] bool isIncorrectReload { get; } //Description: No description
+  [Property] int magazineSize { get; set; } //Description: No description
+  [Property] int magazineAnimation { get; set; } //Description: У дробовиков типа SRM1216 учитываем magazineEmptyStep, чтобы анимация не запускалась сразу после первого одного выстрела
+  [Property] Sprite magazineSprite { get; } //Description: No description
+  [Method] SourceWeaponShell GetMagazineDrop(SourceWeaponShell magazine, string reloadTypeFrameLabel) //Description: Найти падение магазина в анимации Находим кадр, с которого начнется движение магазина Записываем кадр, когда движение магазина завершилось и он не имеет координат
+  [Method] Void SetAmmo(WeaponCartridge[] reloadNewMagazine, WeaponCartridge[] lastMagazine, WeaponCartridge[] lastChamber, int lastNumMagazine, int lastNumChamber) //Description: No description
+  [Method] Void OnShotPlayAnimation() //Description: Анимация после выстрела
+  [Method] Void OnStartReload() //Description: Перезарядка успешно началась
+  [Method] Void OnReloadUpdate() //Description: Процесс перезрядки. Добавление патронов, когда анимация завершена
+  [Method] Void ResetChamber() //Description: При остановке перезарядки нужно обновлять пустой патронник, иначе оружие не будет стрелять При множестве вызова патроны из общего запаса могут теряться
+  [Method] int AddChamberPatron() //Description: Обновить патроны в патроннике внтури оружия Извлечь патроны из магазина и поместить в патронник
+  [Method] int GetFireRate() //Description: No description
+  [Method] float GetReloadTime() //Description: No description
+  [Method] Void ShowTimeEfficiency() //Description: public override float GetMinReloadTime() { return base.GetMinReloadTime(); }
+  [Method] Void OnDrawGizmosSelected() //Description: No description
+
+Class: RigidbodyRender
+Base type: Object
+----------------------------------------
+  [Field] Rigidbody2D body //Description: ---
+  [Field] SpriteRenderer spriteRender //Description: ---
+  [Field] float impulseAngleDeath //Description: ---
+  [Property] Vector2 slideRagdoll2D { get; } //Description: ---
+  [Method] Void OnStartZombie(Zombie zombie) //Description: ---
+  [Method] Void Enable(int currentCode, int newCode) //Description: ---
+  [Method] Void SetVelocityMax(float maxVelocity, float maxAngular) //Description: ---
+  [Method] Void Disable(int currentCode, int newCode) //Description: ---
+  [Method] Void DisableToScene(int newCode) //Description: ---
+  [Method] Void Update() //Description: ---
+  [Method] Void SetTimeIgnoreImpulse(float timeIgnore) //Description: ---
+  [Method] Void AddImpulse(Vector2 force, Vector2 position, float velocityMax, float angularMax) //Description: ---
+
+Class: SafeSpriteConverter
+Base type: JsonConverter`1
+----------------------------------------
+  [Method] Void WriteJson(JsonWriter writer, Sprite value, JsonSerializer serializer) //Description: ---
+  [Method] Sprite ReadJson(JsonReader reader, Type objectType, Sprite existingValue, bool hasExistingValue, JsonSerializer serializer) //Description: ---
+
+Class: Shotgun
+Base type: Musket
+Description: Дробовик с возможность вставлять одиночные патроны при перезардке
+----------------------------------------
+  [Field] int magazineMax //Description: Кол-во патронов в одном магазине,\n0 - использовать cartridgesList для патронника chamberSize
+  [Field] int addBulletsReload //Description: Добавление патронов в магазин после анимации перезарядки
+  [Field] int magazinePlayStep //Description: Кол-во патронов из магазина для запуска анимации
+  [Field] bool canInterruptReload //Description: Прервать добавление патронов в любой момент
+  [Property] WeaponCartridge[] magazineList { get; set; } //Description: No description
+  [Property] int magazineSize { get; set; } //Description: No description
+  [Property] bool isEmptyMagazine { get; } //Description: No description
+  [Property] bool isReadyToReload { get; } //Description: No description
+  [Property] bool isReadyToLaser { get; } //Description: No description
+  [Property] bool isReloadState { get; } //Description: No description
+  [Property] int magazineAnimation { get; set; } //Description: No description
+  [Method] Void SetAmmo(WeaponCartridge[] reloadNewMagazine, WeaponCartridge[] lastMagazine, WeaponCartridge[] lastChamber, int lastNumMagazine, int lastNumChamber) //Description: No description
+  [Method] Void OnSwitchEnable() //Description: No description
+  [Method] Void OnKeyShot() //Description: No description
+  [Method] Void OnShotPlayAnimation() //Description: Анимация после выстрела
+  [Method] Void OnStartReload() //Description: Перезарядка дробовика. Вставить еще один патрон. Когда пустое оружие было перезаряжено, дергаем затвор и в дробовике появлется свободное место для еще одного патрона
+  [Method] Void OnReloadUpdate() //Description: Процесс перезрядки. Добавление патронов, когда анимация завершена
+  [Method] float GetNormalizedReloadMove() //Description: } Получить движение во время перезарядки [0-1] для поворота головы и тела В начале перезарядки имеем 0f, затем в середине 1f и под конец перезарядки снижаем обратно к 0f Дробовик. Во время перезарядки фиксируем переключение анимаций и запускаем плавный поворот
+  [Method] Void StopReload() //Description: No description
+  [Method] Void ResetChamber() //Description: При остановке перезарядки нужно обновлять пустой патронник, иначе оружие не будет стрелять
+  [Method] Void AddMagazinePatron(int addedPatronNum) //Description: Добавить патроны в магазин magazineCartridgeList по шаблону, для этого использовать cartridgesList в качестве образца addedPatronNum сколько патронов добавляются из магазина
+  [Method] int AddChamberPatron(int currentMagazine) //Description: Обновить патроны в патроннике внтури оружия Извлечь взятые патроны из магазина и поместить в патронник
+  [Method] int GetFireRate() //Description: No description
+  [Method] float GetReloadTime() //Description: Время для перезарядки пустого оружия
+  [Method] float GetMinReloadTime() //Description: Время для перезарядки, когда в оружии есть патрон
+  [Method] Void ShowTimeEfficiency() //Description: No description
+
+Class: SignalTextCounter
+Base type: Object
+----------------------------------------
+  [Method] Void Add(float added) //Description: ---
+  [Method] Void Update(float deltaTime) //Description: ---
+
+Class: SourceWeaponShell
+Base type: Object
+----------------------------------------
+  [Field] WeaponShell original //Description: ---
+  [Field] Vector2 position //Description: ---
+  [Field] int angleRotation //Description: ---
+  [Field] int angle //Description: ---
+  [Field] int angleScatter //Description: ---
+  [Field] MinMaxFloat impulse //Description: ---
+  [Field] MinMaxFloat angleSpeed //Description: ---
+  [Field] Sprite skin //Description: ---
+  [Field] int quantity //Description: ---
+  [Method] Void Awake(Weapon weapon, string eventClipName) //Description: ---
+  [Method] Void Reset(Transform parent, Transform weapon, Sprite newSkin) //Description: ---
+  [Method] Void OnShot(WeaponCartridge cartridge, bool fullReset) //Description: ---
+
+Class: TransformJsonConverter
+Base type: JsonConverter`1
+----------------------------------------
+  [Method] Component ReadJson(JsonReader reader, Type objectType, Component existingValue, bool hasExistingValue, JsonSerializer serializer) //Description: ---
+  [Method] Void WriteJson(JsonWriter writer, Component value, JsonSerializer serializer) //Description: ---
+  [Static Method] Void SetAsParent(Object parent) //Description: ---
+
+Class: TriggerRender
+Base type: Object
+----------------------------------------
+  [Field] SpriteRenderer spriteRender //Description: ---
+  [Field] SpriteRenderer meatRender //Description: ---
+  [Field] SpriteRenderer boneRender //Description: ---
+  [Field] Zombie zombie //Description: ---
+  [Method] Void ShowMeatLayer() //Description: ---
+  [Method] Void ShowBoneLayer() //Description: ---
+
+Class: UnityIgnoreHideInInspectorResolver
+Base type: DefaultContractResolver
+----------------------------------------
+
+Class: Weapon
+Base type: MonoBehaviour
+Description: Базовый класс для работы оружия
+----------------------------------------
+  [Field] Vector3 bolt //Description: Ствол для пули\nX, Y - Локальная позиция и Z - угол ствола
+  [Field] Vector3 flashlight //Description: Локальные координаты фонарика
+  [Field] Transform flashlightParent //Description: Родительский объект для фонарика\nДля холодного оружия использовать плечо для фонарика, т.к. возникает баг, когда оружие вращается и движется во время анимации, фонарик будет вертеться вместе с оружием
+  [Field] Sprite flashlightSkin //Description: Черная текстура света для оружия\nДля разных оружий использовать разные виды фонарика
+  [Field] WeaponCartridge cartridge //Description: Основной тип патрона
+  [Field] float scaleAngleScatter //Description: Множитель угола для разброса пуль, если ствол оружия длинный, то разброс должен быть меньше
+  [Field] float damageScale //Description: Множитель урона
+  [Field] AudioClip audioShot //Description: Звук выстрела
+  [Field] AnimationClip animationClip //Description: Анимация оружия
+  [Field] float reloadScaleTime //Description: Множитель времени/скорости перезарядки. Изменить скорость анимации для перезарядки
+  [Field] WeaponSoundKeyValue[] animationSounds //Description: No description
+  [Field] Vector3 cameraSnake //Description: Дистанция для смещения камеры в одну сторону во время тряски при стрельбе
+  [Field] float cameraShakeTime //Description: Длительность тряски (в секундах)
+  [Field] float cameraSizeScale //Description: Длительность тряски (в секундах)
+  [Field] SpriteRenderer renderInSpare //Description: Оружие за спиной (необязательно)
+  [Field] float playerScaleMove //Description: Множитель для скорости перемещения у игрока [0-1]
+  [Field] float noiseVolumeScale //Description: Громкость выстрела/шума
+  [Field] bool automat //Description: Автоматическое оружие
+  [Field] int fireRateInMinute //Description: Скорострельность без учёта Time.timeScale\nКол-во выстрелов в минуту
+  [Field] int bulletsPerShot //Description: Сколько пуль выпустить при одном выстреле
+  [Field] int chamberSize //Description: Кол-во патронов в патроннике внутри оружия
+  [Field] UnityEvent<Weapon> onStart //Description: No description
+  [Field] UnityEvent<Weapon> onShot //Description: No description
+  [Field] UnityEvent<Weapon> onKeyShot //Description: No description
+  [Field] UnityEvent<Weapon> onReloadStart //Description: No description
+  [Field] UnityEvent<Weapon> onUpdate //Description: No description
+  [Field] bool updateHasListeners //Description: No description
+  [Field] UnityEvent<Weapon> onReloadUpdate //Description: No description
+  [Field] UnityEvent<Weapon> onReloadComplete //Description: No description
+  [Field] UnityEvent<BulletHit> onBulletHit //Description: No description
+  [Field] UnityEvent<Weapon, bool> onSwitchWeapon //Description: No description
+  [Field] UnityEvent<Weapon> onSwitchEnable //Description: No description
+  [Field] UnityEvent<Weapon> onSwitchDisable //Description: No description
+  [Field] UnityEvent<Weapon> onDestroy //Description: No description
+  [Property] float noiseVolume { get; set; } //Description: Громкость выстрела/шума
+  [Property] Player player { get; } //Description: ; /Аналог для: public Player player => player_ ??= GetComponentInParent<Player>(true);
+  [Property] AudioSource audioSource { get; } //Description: Звук
+  [Property] string id { get; set; } //Description: No description
+  [Property] int currentMagazine { get; set; } //Description: No description
+  [Property] int currentChamber { get; set; } //Description: No description
+  [Property] WeaponCartridge[] magazineList { get; set; } //Description: No description
+  [Property] WeaponCartridge[] chamberList { get; set; } //Description: No description
+  [Property] bool isEmptyMagazine { get; } //Description: Пустое оружие для запуска перезарядки при стрельбе
+  [Property] bool isReloadState { get; } //Description: Оружие в состоянии перезарядки
+  [Property] bool isReadyToReload { get; } //Description: Разрешить перезрядку оружия
+  [Property] float shotFreezeTime { get; } //Description: Задержка в секундах с учётом Time.timeScale
+  [Property] bool isIncorrectReload { get; } //Description: Проверка на читы
+  [Property] int magazineSize { get; set; } //Description: Время для нанесения 1000 урона
+  [Property] bool isIncorrectMagazine { get; } //Description: Проверка мазазина. Если винтовка имеет слишком много патронов
+  [Property] int magazineAnimation { get; set; } //Description: Магазин для анимации
+  [Property] int chamberAnimation { get; set; } //Description: Патронник для анимации
+  [Property] Transform boltParent { get; set; } //Description: No description
+  [Property] string caliber { get; set; } //Description: Указать патрон
+  [Property] float reloadTime { get; set; } //Description: Время для нанесения 1000 урона
+  [Method] int GetFireRate() //Description: Скорострельность в минуту без учёта Тime.timеSсаle
+  [Method] float GetReloadTime() //Description: No description
+  [Method] float GetMagazineSize() //Description: No description
+  [Method] float GetMinReloadTime() //Description: Время короткой тактичесской перезарядки. Если это обычная винтовка, которая имеет несколько анимаций с перезарядкой
+  [Method] Void ParentShowTimeEfficiency() //Description: Преобразовать Время в Эффективность
+  [Method] Void ShowTimeEfficiency() //Description: Время для нанесения 1000 урона = колвоМагазинов * времяМагазина.
+  [Method] float GetMaxCartridgeDamage(float scaleFirst, float scaleThrough) //Description: return; } flashlight = laser.GetPosition (0); EditorUtility.SetDirty (this); } Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxCartridgeDamage() //Description: return; } flashlight = laser.GetPosition (0); EditorUtility.SetDirty (this); } Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxCartridgeDamage(PhysicsMaterial2D armor) //Description: return; } flashlight = laser.GetPosition (0); EditorUtility.SetDirty (this); } Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMinSkinCartridgeDamage() //Description: Минимальное повреждение при стрельбе по толпе в несольких зомби. Находим материал, имеющий самое низкое повреждение и выводим его урон
+  [Method] Void OnValidate() //Description: No description
+  [Method] Void OnDrawGizmos() //Description: No description
+  [Method] Void OnDrawGizmosSelected() //Description: No description
+  [Method] Void SetAmmo(WeaponCartridge[] reloadNewMagazine, WeaponCartridge[] lastMagazine, WeaponCartridge[] lastChamber, int lastNumMagazine, int lastNumChamber) //Description: Загрузить патроны между сценами
+  [Method] Void SetAmmo(WeaponCartridge[] reloadNewMagazine) //Description: Загрузить патроны между сценами
+  [Method] Void OnSwitchWeapon(bool show) //Description: Переключение оружия. При переключении останавливаем перезарядку, если есть патроны.
+  [Method] Void OnSwitchEnable() //Description: Переключение оружия
+  [Method] Void OnSwitchDisable() //Description: Переключение оружия
+  [Method] Void RecoverySpentCartridge(WeaponCartridge[] magazineList) //Description: Снижение патронов происходит при стрельбе, таким образом при выходе со сцены заряженные бронебойные патроны будут возвращены обратно в общий запас Вернуть бронебойные обратно в запас при смене магазина Обновить бронебойные патроны в запасе после изменений списка патронов в оружии
+  [Method] WeaponCartridge[] UpdateCartridge(WeaponCartridge[] lastMagazine, WeaponCartridge[] newMagazine, int chamberReloadSlide) //Description: No description
+  [Method] Void ResetMagazinePatron(int indexSlide) //Description: Обновить магазин и полностью взять все патроны из cartridgesList
+  [Method] Void SetCartridge(WeaponCartridge newTypeCartridge) //Description: Меняет текущий тип патрона и подготавливает его к использованию
+  [Method] Void Update() //Description: ; Событие каждого кадра, вызывается в начале кода в Update()
+  [Method] Void LateUpdate() //Description: Стандартное событие Unity
+  [Method] Void OnReloadUpdate() //Description: Процесс перезрядки. Здесь можно отследивать состояние работы анимации
+  [Method] bool IsReady(bool trigger) //Description: Можно ли совершить выстрел trigger - удерживание кнопки для стрельбы
+  [Method] Void AddShotPause(float time) //Description: Добавить задержку для выстрела к текущему таймеру pauseShot
+  [Method] Void SetShotPause(float time) //Description: Переписать задержку для выстрела (Time.time + time)
+  [Method] Void ActivateTriggers() //Description: Активировать все триггеры в сцене для поиска столкновении RaycastHit2D
+  [Method] Void DeactivateTriggers() //Description: Отключить все триггеры в сцене для поиска столкновении RaycastHit2D
+  [Method] Void OnKeyShot() //Description: Нажатие на кнопку для стрельбы. Прервать перезарядку оружия. Перезарядить оружие, если нет патронов
+  [Method] Void Shot(float distToAim, float timeBulletDelay) //Description: Метод, вызываемй при совершении выстрела WeaponLine, после задержки, если она есть
+  [Method] Void Shot(float distToAim) //Description: Метод, вызываемй при совершении выстрела WeaponLine, после задержки, если она есть
+  [Method] IEnumerator ShotDelay(float distToAim, float timeBulletDelay) //Description: Выстрел с задержкой
+  [Method] Void OnShotPlayAnimation() //Description: Анимация и событие выстрела
+  [Method] Void StartReload() //Description: Перезарядка при нажатии на кнопки Перезарядить
+  [Method] Void OnStartReload() //Description: No description
+  [Method] Void StopReload() //Description: Завершить перезарядку
+  [Method] Void ResetChamber() //Description: При остановке перезарядки нужно обновлять пустой патронник, иначе оружие не будет стрелять
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: Вызывается при попадании пули (передаёт событие игроку и подписчикам)
+  [Method] float GetNormalizedReloadMove() //Description: Получить движение во время перезарядки [0-1] для поворота головы и тела В начале перезарядки имеем 0f, затем в середине 1f и под конец перезарядки снижаем обратно к 0f
+  [Method] float GetReloadAngleMove(float lastValue, float newValue) //Description: No description
+  [Method] float GetRecoil(float deltaTime) //Description: Получить величину отдачи
+  [Method] float GetNormalizedRecoil() //Description: Получить величину отдачи [0-1], где 1 - максимальный угол отдачи
+  [Method] Vector3 GetPositionBolt() //Description: Получить позицию ствола для пули
+  [Method] float GetAngleBolt() //Description: Получить угол наклона ствола для пули
+  [Method] Vector2 GetBoltRayDirection() //Description: Направление ствола в виде вектора
+  [Method] Vector2 GetBoltRayDirection(float angleToRotate) //Description: Направление ствола в виде вектора
+  [Method] Void DestroyWeapon() //Description: Уничтожить объект оружия и все связанные компоненты
+  [Method] Void OnPlayerDestroy() //Description: Вызывается при уничтожении игрока, возвращает патроны в запас
+  [Method] Void OnAnimationEvent(AnimationEvent clipEvent) //Description: Принимаем события из анимации
+  [Method] AudioClip GetAudioClip(AudioClip original) //Description: Выдать звук для анимации
+  [Method] Void OnSendAnimationEvent() //Description: Проверяет, есть ли событие анимации на текущем кадре и вызывает его
+  [Static Method] float GetTimeEfficiency(float damage, float magazineSize, float shotSpeed, float reloadTime, bool automat) //Description: Время для нанесения 1000 урона
+  [Static Method] float GetTimeEfficiency(float damage, float magazineSize, float shotSpeed, float reloadTime, bool automat, float totalTargetDamage) //Description: Время для нанесения 1000 урона
+  [Static Method] float GetDamagePerMinute(float damage, float magazineSize, float fireRateInMinute, float reloadTime, bool automat) //Description: No description
+  [Static Method] float GetReloadTimeByClip(AnimationClip clip, float reloadScaleTime) //Description: Скорость перезарядки для оружия
+  [Static Method] float GetShotsTime(int totalNumShots, float magazineSize, float shotSpeed, float reloadTime) //Description: Время для 1000 выстрелов
+  [Static Method] T[] FillCircularly(T[] source, int targetSize) //Description: No description
+  [Static Method] Void SendAnimationEvent(GameObject player) //Description: No description
+  [Static Method] AudioClip SoundReverbCut(AudioClip original, float beginFadeTime, float fadeDurationTime) //Description: No description
+
+Class: WeaponAnimationCache
+Base type: ScriptableObject
+Description: Список анимаций для генерации новых анимаций к разным оружиям
+----------------------------------------
+  [Field] PlayerHands playerPattern //Description: Персонаж для генерирования анимаций в редакторе
+  [Field] List<PlayerHandClipGroup> list //Description: No description
+  [Field] List<WeaponHandPoints> prefabs //Description: No description
+  [Method] PlayerHandClipGroup GetClipGroup(string weaponType) //Description: Найти группу анимаций для выбранного оружия
+  [Method] bool HasClipGroup(string weaponType) //Description: No description
+  [Method] Void UpdateClipCache() //Description: [Tooltip("Имена объектов, которые используются как образец оружия при редактровании анимации\nОружие в игре будет иметь своё оригинальное имя, поэтому при генерации клипа находим свойство анимации с именем [weaponEditorName] и меняем имя на новый объект")] public string[] testWeaponName = new string[3] { "оружие", "оружие2", "винтовка" };
+  [Method] Void UpdateClipCache(AnimationClip clip) //Description: [Tooltip("Имена объектов, которые используются как образец оружия при редактровании анимации\nОружие в игре будет иметь своё оригинальное имя, поэтому при генерации клипа находим свойство анимации с именем [weaponEditorName] и меняем имя на новый объект")] public string[] testWeaponName = new string[3] { "оружие", "оружие2", "винтовка" };
+  [Method] Void UpdateClipCache(Predicate<PlayerHandClipGroup> match) //Description: [Tooltip("Имена объектов, которые используются как образец оружия при редактровании анимации\nОружие в игре будет иметь своё оригинальное имя, поэтому при генерации клипа находим свойство анимации с именем [weaponEditorName] и меняем имя на новый объект")] public string[] testWeaponName = new string[3] { "оружие", "оружие2", "винтовка" };
+  [Method] Void ReplaceClipCache(Predicate<PlayerHandClipGroup> match, AnimationClip newValue) //Description: No description
+  [Method] Void ShowNameList() //Description: No description
+  [Static Method] PlayerHandClipGroup ConvertFromClipInfo(AnimationClipInfo clipInfo, string weaponType, string parentName, string weaponClipName) //Description: No description
+  [Static Method] PlayerHandClipGroup GetFromJSON(string json, string weaponType, string parentName, string weaponClipName, string cacheId) //Description: No description
+
+Class: WeaponArrow
+Base type: WeaponBaseArrow
+Description: Класс для работы вылетающей стрелы от лука. Стрела выполняет проверку столкновений, затем она "проникает" в тело при попадании и остаётся торчать в теле, затем она может отвалиться от тела.
+----------------------------------------
+  [Field] SpriteRenderer render //Description: Спрайт со стрелой
+  [Field] PhysicsMaterial2D materialBody //Description: Материал для пробивания
+  [Field] float speed //Description: Скорость полёта
+  [Field] float scaleGravity //Description: Множитель для изменения гравитации и скорости падения
+  [Field] float floor //Description: Уровень земли, что бы воткнуть стрелу поглубже в тело
+  [Field] Vector2 pointTip //Description: Кончик стрелы, который будет упираться о землю\nА так же используем для поиска попадания
+  [Field] Vector2 pointFrontTip //Description: Кончик стрелы, который будет упираться о землю
+  [Field] Vector2 pointSpriteCheck //Description: Координаты для проверки спрайта. Отбрасываем стрелу, если в спрайте образуется дыра. Локальные координаты у стрелы
+  [Field] float angleTipSpeed //Description: Скорость вращения стрелы внутри тела, когда кончик упирает в землю.\nСкорость за 1 секунду
+  [Field] Sprite spriteHit //Description: Показать спрайт при успешном попадании
+  [Field] float scaleImpulse //Description: Множитель импульса, когда стрела ударяется об землю при падении тела
+  [Method] Void OnShot() //Description: No description
+  [Method] Void OnBulletHit(BulletHit hit) //Description: Попадание в существо Воткнуть стрелу в тело
+  [Method] bool OnDamageParentSprite(SpriteRenderer bulletRender, Vector2 impulse) //Description: No description
+  [Method] bool OnDamageParentSprite(SpriteRenderer bulletRender) //Description: No description
+  [Method] bool OnDamageParentSprite(Vector2 bodyVelocity) //Description: No description
+  [Static Method] Vector2Int PositionToPixels(Vector2 localPosition, Sprite sprite) //Description: Переводим локальные координаты игровых метров в пиксели Умножаем на Кол-во пикселей в единице и Добавляем смещение спрайта, записаного в пикселях
+
+Class: WeaponArrowBow
+Base type: Musket
+Description: Лук со стрелами
+----------------------------------------
+  [Property] float shotFreezeTime { get; } //Description: Задержка в секундах
+  [Method] Void OnShotPlayAnimation() //Description: Анимация выстрела
+
+Class: WeaponBaseArrow
+Base type: MonoBehaviour
+Description: Базовый класс для летящего снаряда
+----------------------------------------
+  [Field] UnityEvent<WeaponBaseArrow> onHitToTrigger //Description: No description
+  [Field] float damage //Description: Урон при попадании снаряда.\nДля поджгиающего патрона использовать урон в процессе горения
+  [Field] float timerLive //Description: Время жизни во время полёта. Время, в течении которого снаряд будет находится на сцене. За это время он дожен успеть попасть и успеть отыграть анимаци взрыва\n.Удалить стрелу, когда время закончится - стрела улетела далеко за экран
+  [Method] Void OnShot() //Description: No description
+  [Method] bool IsTriggerToShot(Collider2D trigger, IWeaponCartridgeEntity entityToHit) //Description: No description
+  [Method] Void OnBulletHit(BulletHit hit) //Description: No description
+  [Method] RaycastHit2D[] RaycastSort(RaycastHit2D[] rayHits, float distToAim) //Description: No description
+
+Class: WeaponBulletLine
+Base type: WeaponCartridge
+Description: Класс для работы винтовочного патрона с поиском попадания
+----------------------------------------
+  [Field] Sprite shellSkin //Description: Гильза для оружия
+  [Method] Void StartWeapon(Weapon weapon) //Description: No description
+  [Method] Void OnSwitchWeapon(Weapon weapon) //Description: No description
+  [Method] Void Shot(Weapon weapon, float distToAim) //Description: No description
+  [Method] Sprite GetShellSkin() //Description: No description
+
+Class: WeaponCartridge
+Base type: ScriptableObject
+Description: Базовый класс для снарядов оружия с поиском попадания
+----------------------------------------
+  [Field] string id //Description: Идентификатор, отличающиеся от других
+  [Field] string uiName //Description: Имя короткое для отображения в интрфейсе
+  [Field] string caliberName //Description: Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название
+  [Field] int version //Description: Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название
+  [Field] Sprite uiIcon //Description: Название калибра. Разные типы патрона одного калибра должны иметь одинаковое название
+  [Field] Sprite iconButtonSprite //Description: Иконка оружия для кнопки в интрфейсе
+  [Field] Sprite uiListIcon //Description: Иконка оружия для кнопки в интрфейсе
+  [Field] Sprite iconListSprite //Description: Иконка оружия для отображения в списке с магазином из автоматической винтовки
+  [Field] int totalStockNum //Description: Общее кол-во патронов в запасе у игрока\nПри значении -1 патроны бессконечные
+  [Field] int bullets //Description: Кол-в во пуль при одном выстреле
+  [Field] float angleRandom //Description: Максмлн отклонение пули в градусах, для создания разброса
+  [Field] float angleSpread //Description: Равномерное распределение пуль
+  [Field] float damage //Description: Наносимый урон от всех пуль \nБудет распределен между всеми пулями
+  [Field] float stopPower //Description: Останавливающий эффект\nСущество само решает как реагировать на этот параметр
+  [Field] float noiseVolume //Description: Громкость шума/выстрела
+  [Field] float impulse //Description: Импульс ForceMode2D.Impulse \nБудет распределен между всеми пулями
+  [Field] float velocityMax //Description: Ограничение скорости тела после импульса, чтобы тело не улетало далёко
+  [Field] float angularMax //Description: Ограничение скорости вращения тела после импульса, чтобы тело не улетало далёко
+  [Field] float distance //Description: Дистанция пули для поиска столкновений
+  [Field] HitsBullet penetrationSettings //Description: Дистанция пули для поиска столкновений
+  [Field] HitsBullet penetration //Description: Параметры проникновения для одной пули. Запись попадания пули, если оно проиcходит в разные игровые объекты, которые находятся в разных родительских объектах
+  [Field] PhysicsMaterialMultiply[] damageMultiply //Description: No description
+  [Field] PhysicsMaterialMultiply[] penetrationDamage //Description: No description
+  [Field] string entityTag //Description: Тег игровых объектов существ, с которыми искать попадание пуль (необязательно)
+  [Field] Object[] skillObjectTags //Description: No description
+  [Field] LayerMask layerMask //Description: Слои с физ.телами для столкновения пули/луча RaycastHit2D
+  [Field] WeaponEffectsHits hitEffects //Description: Эффекты попадания
+  [Property] string charName { get; } //Description: No description
+  [Method] Void OnWeaponDrawGizmos(Weapon weapon) //Description: No description
+  [Method] Void OnWeaponSelectedDrawGizmos(Weapon weapon) //Description: No description
+  [Method] float GetAngle(float globalAngleWeapon, float angleScatter, float evenlySpread, float currentArrow, float totalArrows) //Description: Угол разброса в радианах
+  [Method] Void StartWeapon(Weapon weapon) //Description: Функция выполняется несколько раз - при старте оружия и при смене патронов
+  [Method] Void OnSwitchWeapon(Weapon weapon) //Description: No description
+  [Method] Void Shot(Weapon weapon, float distToAim) //Description: No description
+  [Method] WeaponCartridge OnAddToWeapon(WeaponCartridge defaultCartridge) //Description: При добавлении патронов проверяем их количество в запасе Если бронебойные патроны закончились, то меняем их на другие патроны по умолчанию
+  [Method] Void OnRemoveFromWeapon() //Description: No description
+  [Method] Void OnBulletHit(BulletHit hit) //Description: No description
+  [Method] float GetScaleScoresBullet() //Description: No description
+  [Method] Void ShotBullet(Weapon weapon, Vector2 rayPosition, float globalAngle, float distToAim, RaycastSortMethod sortMethod) //Description: No description
+  [Method] Void ShotBullet(Weapon weapon, Vector2 rayPosition, float globalAngle, float distToAim) //Description: No description
+  [Method] Void ShotBullet(Weapon weapon, float distToAim) //Description: No description
+  [Method] RaycastHit2D[] DefaultRaycastSort(RaycastHit2D[] rayHits, float distToAim) //Description: No description
+  [Method] float GetMaxDamage(float scaleFirst, float scaleThrough, float stopBulletDamage) //Description: Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxDamage(PhysicsMaterial2D material, float defaultValue) //Description: Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxDamage(PhysicsMaterial2D material) //Description: Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxDamage(PhysicsMaterialMultiply materialScale) //Description: Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] float GetMaxDamage() //Description: Вычислить макисмальный урон. Урон уменьшается по геометрической прогрессии - вычисляем сумму геометрической прогрессии
+  [Method] Void GetMaxDamageList(PhysicsMaterial2D[]& materials, Single[]& damageList, Single& maxDamage) //Description: Получить список-последовательность материалов, от которых возникает наибольший урон при сквозном попадании materials - алфавит, множество допустимых символов
+  [Method] string GetListDamage(PhysicsMaterial2D material) //Description: No description
+  [Method] string GetListDamage(PhysicsMaterialMultiply materialScale, bool round) //Description: No description
+  [Method] string ToString() //Description: No description
+  [Method] Void Copy() //Description: No description
+  [Method] bool PasteValidate() //Description: No description
+  [Method] Void Paste() //Description: No description
+  [Method] Void OnPasteVariable(WeaponCartridge original) //Description: No description
+  [Static Method] Void ActivateTriggers(int idShot) //Description: Актвировать триггеры и заблокировать их в активном состоянии.
+  [Static Method] Void DeactivateTriggers(int idShot) //Description: No description
+  [Static Method] Void AddEntityTriggers(IWeaponCartridgeEntity entity) //Description: Добавить существо в свободное место в массиве. Если места нет, то увеличиваем массив
+  [Static Method] Void RemoveEntityTriggers(IWeaponCartridgeEntity entity) //Description: Удалить существо и сместить список, освободить последнее место в массиве
+  [Static Method] IWeaponCartridgeEntity GetEntity(Collider2D trigger) //Description: No description
+  [Static Method] RaycastHit2D[] RaycastRemove(RaycastHit2D[] arrayList, int removeIndex) //Description: No description
+  [Static Method] WeaponCartridge FindByName(string caliberGroupName, WeaponCartridge defaultValue) //Description: No description
+
+Class: WeaponCartridgeArrows
+Base type: WeaponCartridge
+Description: Класс для медленно летящих снарядов, типа стрелы от лука и 40мм взрывающиеся снаряды.
+----------------------------------------
+  [Field] WeaponBaseArrow arrowSample //Description: No description
+  [Field] int arrowsPerShot //Description: Кол-в во пуль при одном выстреле
+  [Field] float angleScatter //Description: Максмлн отклонение пули в градусах, для создания разброса
+  [Field] float evenlySpread //Description: Равномерное распределение снарядов
+  [Field] float timeTriggers //Description: Время активности триггеров для снаряда. За это время снаряд должен успеть попасть в цель
+  [Field] float distHitArrow //Description: Дистанция, в пределах которой снаряд будет фиксировать попадание
+  [Field] Sprite shellSkin //Description: Гильза для оружия
+  [Field] GameObject[] objectsHitStage //Description: No description
+  [Method] Void OnPasteVariable(WeaponCartridge original) //Description: No description
+  [Method] string GetListDamage(PhysicsMaterial2D material) //Description: No description
+  [Method] float GetMaxDamage() //Description: No description
+  [Method] float GetMaxDamage(PhysicsMaterial2D material) //Description: No description
+  [Method] float GetMaxDamage(PhysicsMaterial2D material, float defaultValue) //Description: No description
+  [Method] Void GetMaxDamageList(PhysicsMaterial2D[]& materials, Single[]& damageList, Single& maxDamage) //Description: No description
+  [Method] Void OnWeaponSelectedDrawGizmos(Weapon weapon) //Description: Рисуем линии для обозначения границ разброса
+  [Method] Void StartWeapon(Weapon weapon) //Description: No description
+  [Method] Void OnSwitchWeapon(Weapon weapon) //Description: No description
+  [Method] Void Shot(Weapon weapon, float distToAim) //Description: No description
+  [Method] Sprite GetShellSkin() //Description: No description
+  [Method] float GetScaleScoresBullet() //Description: No description
+  [Method] bool IsHitToTrigger(WeaponBaseArrow arrow, Vector3 position, float distArrowRayHit, float angle) //Description: Выпускаем луч для попадания и ищем попадание в физ.тело, не важно - существо или стены. Если попадине будет зафиксировано, то выпускаем пулю для нанесения повреждений В процессе полета снаряда поддерживать триггеры в активном состоянии
+  [Method] Void ShotArrow(WeaponBaseArrow arrow, float distArrowHit) //Description: Снаряд долетел до цели. Зафиксировать попадание. Все попадания будут сразу передены в снаряд
+  [Method] Void OnBulletHit(BulletHit hit) //Description: No description
+  [Method] IWeaponCartridgeEntity GetEntityByLaser(Vector3 startBoltPosition, float globalAngle, float weaponDistToAim) //Description: No description
+
+Class: WeaponEffectsHits
+Base type: ScriptableObject
+Description: Класс для запуска эффектов попадания. Содержит список эффектов для создания на сцене и запуск эффектов при попадании пуль.
+----------------------------------------
+  [Field] EffectHitMaterial[] materials //Description: No description
+  [Field] SoundBulletHit[] sounds //Description: No description
+  [Field] GameObject parent //Description: Звуки при попадании
+  [Method] Void StartWeapon() //Description: Брать со сцены уже созданные объекты с эффектами
+  [Method] BloodBase[] GetObjectsHits(BloodBase sample) //Description: No description
+  [Method] Void RunOnceBlood(Transform headLegBody, Vector3 globalPosition, Vector3 lineMove, float ground, PhysicsMaterial2D material) //Description: No description
+
+Class: WeaponFireRocket
+Base type: WeaponBaseArrow
+Description: Поджигающий снаряд, например поджигающие пули. При попадании на объектах появляется анимация огня.
+----------------------------------------
+  [Field] float speed //Description: Скорость полёта
+  [Field] float scaleGravity //Description: Множитель для изменения гравитации и скорости падения
+  [Field] float distLivedEntity //Description: Радиус/Дистанция для попадания в живых существ.\nЕсли в пределах этого расстояния нет живых, то фиксируем попадние в трупы
+  [Field] Vector2 slideExplode //Description: Сдвиг объекта перед запуском пуль. Сдвиг с учетом угла наклона и относительно точки, в котором произошло пересечение снаряда
+  [Field] Material renderMaterialHit //Description: Шейдер при попадании
+  [Field] PhysicsMaterial2D floorWall //Description: Физ.материал земли. При попадании в него сразу отключаем огонь
+  [Field] float speedMoveRotate //Description: Дистанция/Скорость для наклона на все 90 градусов
+  [Field] float speedRotateFire //Description: Скорость вращения огня для достижения необходимого угла
+  [Method] Void OnShot() //Description: No description
+  [Method] Void OnBulletHit(BulletHit hit) //Description: Попадание в существо. Параметры эффектов попадания указываем только при возникновении одного попадния
+
+Class: WeaponRocket
+Base type: WeaponBaseArrow
+Description: Летящий снаряд с анимацией взрыва при попадании
+----------------------------------------
+  [Field] float speed //Description: Скорость полёта
+  [Field] float scaleGravity //Description: Множитель для изменения гравитации и скорости падения
+  [Field] float distanceSnake //Description: Дистанция тряски в одну сторону
+  [Field] float timeSnake //Description: Длительность тряски
+  [Field] int periodSnake //Description: Количество колебаний
+  [Field] AudioClip soundHit //Description: Звук взрыва при попадании
+  [Field] Vector2 slideExplode //Description: Сдвиг объекта назад, относительно точки, в котором произошло попадние
+  [Field] AnimatorSprite objectExplode //Description: Объект с анимацией при попадании
+  [Method] Void OnShot() //Description: No description
+  [Method] Void OnBulletHit(BulletHit hit) //Description: No description
+
+Class: WeaponSceneState
+Base type: Object
+----------------------------------------
+  [Field] int currentChamber //Description: ---
+  [Field] int currentMagazine //Description: ---
+  [Field] WeaponCartridge[] reloadPattern //Description: ---
+  [Field] WeaponCartridge[] chamber //Description: ---
+  [Field] WeaponCartridge[] magazine //Description: ---
+  [Method] WeaponSceneState Clear() //Description: ---
+  [Method] WeaponSceneState Update(WeaponCartridge[] reloadPattern) //Description: ---
+  [Method] WeaponSceneState Update(Weapon weapon) //Description: ---
+  [Method] Void OnWeaponSelect(Weapon weapon) //Description: ---
+
+Class: WeaponShotEffect
+Base type: MonoBehaviour
+Description: Эффект/огонь от выстрела у ствола оружия
+----------------------------------------
+  [Field] bool randomRotate //Description: Случайный поворот
+  [Field] bool flipX //Description: Отражать случайно по горизонтали/вертикали
+  [Field] bool flipY //Description: Отражать случайно по горизонтали/вертикали
+  [Field] float direction //Description: Отражать случайно по горизонтали/вертикали
+  [Field] float directionRange //Description: Отклонение по обе стороны от направления 
+  [Field] float speedMin //Description: Скорость, метр/секунду
+  [Field] float speedMax //Description: Макси скорость, метр/секунду
+  [Field] WeaponShotEffect nextEffectShot //Description: Передать событие следующему эффекту 
+  [Method] Void OnShot() //Description: При совершении выстрела
+
+Class: WeaponSilencer
+Base type: MonoBehaviour
+Description: Префаб глушителя с его собственными параметрами
+----------------------------------------
+  [Field] float noiseScale //Description: Множитель громкости
+  [Field] float noiseLerp //Description: На сколько процентов заглушается выстрел\nНа сколько процентов снижать громкость до noiseScale
+  [Field] int coolingSpeed //Description: Скорость охлаждения в минуту
+  [Field] int serviceLifeShot //Description: Срок службы. Сколько всего выстрелов выдерживает глушитель
+  [Field] WeaponShotEffect shotEffect //Description: Эффект выстрела. Огонь от выстрела заменить на дым
+  [Field] AudioClip audioShot //Description: Звук выстрела
+  [Field] AnimationCurve soundVolume //Description: Смешивание двух звуков
+  [Field] float soundTimeShift //Description: Сместить звук оружия. Сдвиг в секундах
+  [Field] int soundCutoffFrequency //Description: Сместить звук оружия. Сдвиг в секундах
+  [Field] float lowpassResonanceQ //Description: резонанс нижних частот
+  [Field] Color heatColor //Description: Цвет нагревания
+  [Field] Color glowingMaxColor //Description: Цвет нагревания
+  [Field] int speedRotate //Description: Скорость вращения в градус за секунду
+  [Field] float angleDropMove //Description: Направление выброса
+  [Field] float impulseDrop //Description: Скорость выброса в метр/секунду
+  [Field] float timeGroundSlide //Description: Скорость плавный сдвиг при пересечении с землёй 
+  [Field] float slideOnGround //Description: Дистанция плавный сдвиг при пересечении с землёй 
+  [Field] UnityEvent<WeaponSilencer> onDeath //Description: No description
+  [Property] SpriteRenderer render { get; } //Description: Ссылка на рендер глушителя
+  [Method] Void Start() //Description: No description
+  [Method] float GetNoiseValue(float rifleNoise) //Description: No description
+  [Method] AudioClip GetAudioClip(AudioClip rifleShot) //Description: Создать звук Для звукового файла использовать спрайт в качестве имени
+  [Method] Void OnShotRifle(Weapon weapon) //Description: No description
+  [Method] Void Update() //Description: No description
+  [Method] Void Death() //Description: No description
+  [Method] IEnumerator RunEffectDropToGround() //Description: No description
+  [Method] Void HighPassFilter(float[] waveData, int channels, int audioSampleFrequency, int cutoffFrequency) //Description: No description
+  [Method] Void LowPassFilter(float[] waveData, int channels, int audioSampleFrequency, int cutoffFrequency) //Description: No description
+
+Class: WeaponSilencerMod
+Base type: MonoBehaviour
+Description: Контроллер для добавления глушителя к оружию на сцене. Изменяет звуки и эффекты оружия
+----------------------------------------
+  [Field] Vector3 localPoint //Description: Координаты кончика ствола
+  [Field] Transform bolt //Description: Родительский объект для глушителя\nПоместить глушитель в этот объект
+  [Field] Sprite debugSprite //Description: Спрайт для предпросмотра
+  [Field] WeaponShotEffect smoke //Description: Дым от выстрела
+  [Field] Transform doublePistol //Description: Второй пистолет
+  [Field] Musket weapon //Description: Второй пистолет
+  [Method] Void SkinUpdate(WeaponSilencer silencerSkin, float healthToDestroy) //Description: Прикрепить/поменять глушитель, обновляем sceneSilencer и настраиваем оружие
+  [Method] WeaponSilencer Create(WeaponSilencer original, Transform parent) //Description: Создаём глушитель из префаба и добавляем его в массив createdSilencer
+  [Method] Void SkinDisable() //Description: Отключить все глушители и снять их с оружия
+  [Method] Void OnShot(Weapon weapon) //Description: this.SkinUpdate (sceneList[findIndex]); return; } this.SkinDisable (); } Снижать здоровье глушителя
+  [Method] Void OnSilencerDeath(WeaponSilencer silencer) //Description: No description
+  [Method] Void OnDestroy() //Description: No description
+
+Class: Zombie
+Base type: Entity
+Description: Зомби в помещении, в доме
+----------------------------------------
+  [Field] float damageStrike //Description: Наносимый урон по игроку
+  [Field] float damageSitting //Description: Наносимый урон по игроку в сидячем положении
+  [Field] float damageLieDown //Description: Наносимый урон по игроку в лежачем положении
+  [Field] float damageBarricade //Description: Наносимый урон по баррикаде
+  [Field] float damageBatScale //Description: Множитель урона с битой в руках
+  [Field] float speedScale //Description: Скорость перемещения
+  [Field] float speedScaleMin //Description: Скорость перемещения
+  [Field] float speedScaleMax //Description: Скорость перемещения
+  [Field] float speedMove //Description: Текущая скорость перемещения. В метр/секунду
+  [Field] float playerDistMin //Description: Зомбаку и игроку не даем пройти сквозь друг друга
+  [Field] float playerDistStrike //Description: Расстояние для получения удара от игрока
+  [Field] float colorShadowTime //Description: Время для появления из черного цвета
+  [Field] SpriteRenderer[] spritesClothes //Description: No description
+  [Field] float bloodRadius //Description: Радиус капель крови при нанесении дыры от пули\nРадиус в мировых координатах
+  [Field] float stepMoveHoleToInside //Description: Смещение дырок вглубь текстуры\nРазмер шага для смещения дыры от попадания пули
+  [Field] Texture2D[] bloodList //Description: No description
+  [Field] Material materialHolesSkin //Description: Шейдер для следов крови
+  [Field] Material materialMeatHoles //Description: Шейдер с дырками для слоя с мышцами
+  [Field] Material materialClothes //Description: Шейдер с дырками для слоя с волосами и для объектов поверх одежды
+  [Field] PhysicsMaterial2D materialBody //Description: Материал при котором происходит нанесение урона
+  [Field] PhysicsMaterial2D materialMeat //Description: Материал для кусков мяса при попадании пули
+  [Field] float armorHoleRadius //Description: Радиус дыры в пробитом бронежелете
+  [Field] float floor //Description: Позиция земли, для вычисления смещения Ragdoll-физики
+  [Field] SpriteRenderer[] spritesRigidbodies //Description: No description
+  [Field] List<HandStrike> handStrikePoints //Description: No description
+  [Field] StateBodyTransfrom[] stateBodyTransfrom //Description: No description
+  [Field] AnimationCurve bodyMoveRagdollCurve //Description: Линия для движения тела при переходе из Ragdoll-физики в анимацию
+  [Field] Joint2D bat //Description: Бита/Палка в руках
+  [Field] Transform head //Description: Голова для вычисления положения всего туловища
+  [Field] Transform body //Description: Туловище для эффекта попаданий и для работы с физикой
+  [Field] Transform leftArmHand //Description: Рука спереди. Если рука была оторвана полностью, то в аниматоре для параметра кисти так же указываем значение true
+  [Field] Transform rightArmHand //Description: Рука позади. Если рука была оторвана полностью, то в аниматоре для параметра кисти так же указываем значение true
+  [Field] Transform leftHand //Description: Кисть руки ниже локтя
+  [Field] Transform rightHand //Description: Кисть руки позади
+  [Field] Transform leftLeg //Description: Нога спереди
+  [Field] Transform leftShin //Description: Голень спереди
+  [Field] Transform rightLeg //Description: Нога позади
+  [Field] Transform rightShin //Description: Голень позади
+  [Field] float ragdollHealth //Description: Здоровье для активации Ragdoll в процентах от общего здоровья
+  [Field] float ragdollAttackRandom //Description: Ждать игрока поближе и атаковать, когда зомби лежит на спине в режиме Ragdoll-физики
+  [Field] float ragdollAttackDistance //Description: Дистанция между игроком для отключения Ragdoll-физики, если зомби имеет ragdollAttack
+  [Field] Rigidbody2D headRigidbody //Description: Голова для вычисления скорости падения во время физики
+  [Field] Rigidbody2D bodyRigidbody //Description: Тело для вычисления импульса после бега и импульс при получении удара от игрока
+  [Field] AudioClip[] soundsAssault //Description: No description
+  [Field] AudioClip[] soundsPain //Description: No description
+  [Field] AudioClip[] soundsStrike //Description: No description
+  [Field] AudioClip[] soundsRage //Description: No description
+  [Field] AudioClip[] soundsDie //Description: No description
+  [Field] AudioClip[] soundsSliceJoints //Description: No description
+  [Field] string faceAreaDisableName //Description: Имя области для отключения лицевой анимации
+  [Field] Blood faceBloodFountain //Description: Брызги крови из горла во время криков, когда лицо в дырах
+  [Field] float faceFramePlay //Description: Кадр лицевой анимации для управления анимацией через Animator
+  [Field] List<FaceAnimation> faceAnimation //Description: No description
+  [Field] PartBodyDamage[] triggetHealth //Description: No description
+  [Field] AnimationColliderTrigger[] animationTriggers //Description: No description
+  [Field] AnimationAreaDamage[] playAnimationArea //Description: No description
+  [Field] AreaZombieRagdollPlay[] playRagdollArea //Description: No description
+  [Field] AreaAnimatorParameter[] areaAnimatorParameters //Description: No description
+  [Field] AreaCoverPlayAnimation[] playAgressionAnimation //Description: No description
+  [Field] AnimationCurve blendScaleCurve //Description: Смешивание дерева анимаций\nИзменяем параметр blendRandomScale у Аниматора от 0 до 1 туда-сюда
+  [Field] SortingGroup sortingGroup //Description: Смешивание дерева анимаций\nИзменяем параметр blendRandomScale у Аниматора от 0 до 1 туда-сюда
+  [Field] Animator animator //Description: Включить некоторые области
+  [Field] ZombieAnimatorPain painAnimator //Description: Компонент для запуска анимаций ЗаГолову/ЗаЖивот
+  [Field] bool isRagdoll //Description: Физика в активном состоянии
+  [Field] EntityBehaviour entityBehaviour //Description: Дистанция для нанесения удара [HideInInspector] public float attackDist = 3f; Поведение зомби
+  [Field] float aggressionScale //Description: Если условия совпадают, то что делать с область - включить или выключить?
+  [Field] UnityEvent<Entity> onSwitchStandBreakLeg //Description: No description
+  [Field] AudioSource sound //Description: Звук
+  [Field] bool ragdollAttack //Description: Ждать игрока
+  [Field] Rigidbody2D physBodyBat //Description: No description
+  [Field] float currentSpeed //Description: Скорость перемещения в секунду для импульса при активации Ragdoll
+  [Field] List<RigidbodyRender> ragdollRender //Description: No description
+  [Field] List<TriggerRender> triggerRenders //Description: No description
+  [Field] List<Collider2D> triggerList //Description: No description
+  [Property] static float killTime { get; } //Description: Время игры строго от первого зомби и до последнего убитого на основе Time.time
+  [Property] static float killUnscaledTime { get; } //Description: Время игры фактически как есть без множителей на основе Time.unscaledTime
+  [Property] Vector3 positionHeadBody { get; } //Description: Позиция зомби с учетом головы и тела. Вычислить позицию для движения игрока
+  [Property] Vector3 positionLegBody { get; } //Description: Позиция зомби с учетом ноги и тела. Вычислить правую позицию для стокновения с баррикадой
+  [Property] float playerDistanceClamp { get; } //Description: Насколько процентов зомби приблизился к игроку [0-1]
+  [Property] float playerDistanceScale { get; } //Description: Насколько процентов зомби приблизился к игроку [от 0 до 100500]
+  [Property] Vector2 distanceToPlayer { get; } //Description: No description
+  [Property] float timeAlive { get; } //Description: Продолжительность жизни зомби Сколько времени зомби остаётся живым
+  [Method] float GetMinHealth() //Description: No description
+  [Method] float GetMaxHealth() //Description: No description
+  [Method] Void RagdollObjectPositionsToRender() //Description: No description
+  [Method] Void ArrayClearNullObjects() //Description: Событие Unity Проверка парамтеров объекта
+  [Method] IEnumerator RunShadowColor() //Description: No description
+  [Method] Void SetScaleHealth(float scaleHealth) //Description: No description
+  [Method] Void SetScaleSpeed(float scale, float walkSpeedScale) //Description: No description
+  [Method] Void Stand() //Description: No description
+  [Method] Void ReadyMove() //Description: No description
+  [Method] float HealthDamage(BulletHit bulletHit, float damage, Transform damageBody) //Description: Нанесение вреда здоровью
+  [Method] bool IsHitToIdenticalTriggers(GameObject firstLeg, GameObject otherLeg) //Description: Два тела являются идентичными и между ними можно менять первое попадания пули
+  [Method] bool IsHitToNextGroup(Collider2D firstHit, Collider2D nextHit) //Description: Пуля попадает в другую группу триггеров Пуля попадает в руки
+  [Method] SpriteRenderer GetMeatRenderBySkin(GameObject renderHit) //Description: Найти рендер мяса для нанесения дыры Выдать ссылку на мясо, если тело имеет два слоя: мясо и кости Показать слой мяса при попаданий пули
+  [Method] Void OnMeatRenderHoleDamage(GameObject renderHit) //Description: No description
+  [Method] Void OnBulletHit(BulletHit bulletHit) //Description: Попадание одной пули - одно осколка - одной дробинки
+  [Method] Void OnHitArrow(WeaponArrow arrow) //Description: Попадание стрелы в тело. Вызов происходит из WeaponArrow.OnBulletHit()
+  [Method] bool IsArmorHole(Vector2 arrowLocalHitPosition, Collider2D trigger) //Description: Проверить. Стрела попадает в незащищенное тело или стрела попадает в дырку в броне
+  [Method] bool IsArmorHole(Vector2 arrowLocalHitPosition, Collider2D trigger, bool arrowUpdate) //Description: Проверить. Стрела попадает в незащищенное тело или стрела попадает в дырку в броне
+  [Method] Vector2 AddHole(GameObject render, Vector2 globalPoint, Vector3 weaponPosition, bool addArmorHole) //Description: Нанесение следов крови
+  [Method] Void OnFireRocketDamage(float damage, BulletHit hit) //Description: No description
+  [Method] Void Death() //Description: Смерть. Активация Ragdoll-физики
+  [Method] IEnumerator BatJointDestroy() //Description: Активировать физику для биты в руках Спустя несколько секунд полностью убрать биту из зомби и поместить её на сцену
+  [Method] IEnumerator ForceDropToGround() //Description: Активировать соединения в ногах, чтобы тело упало полностью на землю
+  [Method] Void ActivationRagdoll() //Description: Активация Ragdoll
+  [Method] Void ActivationRagdoll(float time, float maxBodySpeed, Rigidbody2D body) //Description: Активация Ragdoll
+  [Method] Void ActivationRagdoll(float time, float maxBodySpeed) //Description: Активация Ragdoll
+  [Method] Void OnRigidbodyEnabled(RigidbodyRender ragdollBody) //Description: При разрывании тела происходит вызов OnRigidbodyEnabled Например компоненты DestroyJoint активируют физику у одного тела и нужно вместе с этим телом запустить ActivationRagdoll
+  [Method] Void OnRigidbodyDisabled(RigidbodyRender ragdollBody) //Description: No description
+  [Method] Void RagdollDisableTry() //Description: Отключить физику или удалить физ.тела Ragdoll у мертвого зомби.
+  [Method] Void RagdollDisable(float time) //Description: Дать время перед отключением физики. Для живого и мертвого зомби продлить разные таймеры
+  [Method] Void RagdollDisable() //Description: Дать время перед отключением физики. Для живого и мертвого зомби продлить разные таймеры
+  [Method] Void RagdollDisable(string playStateAnimator) //Description: Дать время перед отключением физики. Для живого и мертвого зомби продлить разные таймеры
+  [Method] string GetStateBodyTransfrom() //Description: No description
+  [Method] Void OnDamageSprite(AreaBody area, DamageOfSprite areaComp) //Description: No description
+  [Method] Void OnBreakSpriteRender(AreaBody area, BreakSpriteRender areaComp) //Description: No description
+  [Method] Void OnLoadScene(AreaBody area, OrganRegeneration areaComp) //Description: No description
+  [Method] Void OnDestroyJoint(AreaBody area, DestroyJoint areaComp) //Description: Ограничить скорость angularVelocity в пределах основного тела bodyRigidbody
+  [Method] Void OnDestroyBodyJoints(AreaBody area, DestroyBodyJoints areaComp) //Description: Активировать физику для одной части тела и оставить зомби живым
+  [Method] Void OnSpliceBody(AreaBody area, SpliceBody spliceBodyArea) //Description: Разрыв тела на две части. Обновить список частей тела для физики Активировать физику для одной части тела или убить зомби полностью Записываем в массив новый объект со спрайтом Отключить триггер в списке triggetHealth. Зомби не должен получать урон через оторваный триггер
+  [Method] Void AttackStrike() //Description: No description
+  [Method] Void AttackHitSound(AudioClip sound) //Description: No description
+  [Method] Void OnAreaParameterSwitch(AreaBody area) //Description: Переключить режим ходьбы SwitchMoveBreakLeg SwitchMoveLame
+  [Method] Void OnAreaHitPlayAnimation(AreaBody area) //Description: No description
+  [Method] IEnumerator AnimatorResetParameter(AreaAnimatorTimeParameter parameter) //Description: No description
+  [Method] Void OnAreaPlayAnimation(AreaBody area) //Description: Запустить анимацию, если зомби жив и его физика отключена
+  [Method] Void OnActivationTransitionRagdoll() //Description: No description
+  [Method] Void OnHitAreaPlayRagdoll(AreaBody area) //Description: No description
+  [Method] Void OnAreaPlayRagdoll(AreaBody area) //Description: Область была активирована Запуск Ragdoll
+  [Method] Void UpdateFaceFrameList(SpriteRenderer faceRender) //Description: Найти анимацию лица для текущего спрайта головы
+  [Method] Void DisableFaceAnimation(AreaBody area) //Description: Выключить анимацию лица
+  [Method] Void PlaySound(AudioClip audio) //Description: Воспроизвести звук если зомби жив, звук включен, вопроизведение других звуков не происходит
+  [Method] Void PlaySoundReplace(AudioClip audio) //Description: No description
+  [Method] Void PlaySoundOnce(AudioClip audio) //Description: No description
+  [Method] Void PlaySoundOneClip(AudioClip audio) //Description: Воспроизвести один звук если произошло обновление кадра
+  [Method] Void PlaySoundAssault() //Description: Воспроизвести случайный звук во время нападения на игрока
+  [Method] Void PlaySoundStrike() //Description: No description
+  [Method] Void PlaySoundRage() //Description: No description
+  [Method] Void PlaySoundPain() //Description: Воспроизвести случайный звук боли
+  [Method] Void ShowMeat(Transform body) //Description: No description
+  [Method] Void AnimatorPlay(string state) //Description: } if (this.IsSitting () && this.IsVerticalBody ()) { animator.Play (state); } } Воспроизвести анимацию если зомби стоит или в сидячем положении
+  [Method] Void OnLegsBreak(GameObject leg, bool playRagdoll) //Description: Отрывание ноги и руки - Обрабатываем событие Зомби должен ползать, если полностью оторвана нога rightLeg или leftLeg Зомби должен бить головой, если оторваны руки Для разных оторванных ног отмечаем параметр destroyLegLeft и destroyLegRight. Для всех ног отмечаем destroyLegAny
+  [Method] float GetStandScale() //Description: No description
+  [Method] float GetBodyHorizontalScale() //Description: 0 - тело ровно вертикально, 1 - тело наклонилось на бок
+  [Method] float GetBodyVerticalScale() //Description: 1 - тело ровно вертикально, 0 - тело наклонилось на бок
+  [Method] bool IsStand() //Description: Тело зомби находится в стоячем положении
+  [Method] bool IsSitting() //Description: Зомби в сидячем положении - зомби не стоит и его тело в вертикальном положении
+  [Method] bool IsLieDown() //Description: Зомби в лежачем положении близко к земле
+  [Method] bool IsVerticalBody() //Description: Тело зомби находится в вертикальном положении
+  [Method] bool IsBackLieDown() //Description: Тело зомби находится на спине в лежачем положении. Когда красная стрелка вращения ближе к углу -90
+  [Method] bool IsDogMove() //Description: Зомби бежить на четверьках
+  [Method] bool IsRunning() //Description: Зомби в бегущем состоянии - зомби стоит и быстро движется
+  [Method] bool IsMove() //Description: No description
+  [Method] bool IsTornOffBody(GameObject hand) //Description: Часть тела было оторвано и валяется на земле
+  [Method] bool IsTornOffBody(Component hand) //Description: Часть тела было оторвано и валяется на земле
+  [Method] bool IsFrontCrowd() //Description: Зомби находится позади других
+  [Method] bool IsHitCurrentBodyMode(EntityPosition searchBodyMode) //Description: Проверить. Анимация из второго слоя соотвествует положению тела, когда зомби стоит/идёт/лежит на спине
+  [Method] bool IsHitCurrentBodyMode(BodyMoveState state) //Description: Проверить. Анимация из второго слоя соотвествует положению тела, когда зомби стоит/идёт/лежит на спине
+  [Method] Void StartMove(float speedMove) //Description: Функции для анимации Начать перемещение
+  [Method] Void OnSwitchTriggers(bool value) //Description: Активация триггеров для пуль + Активировать триггеры, привязанные к анимации
+  [Method] List<Collider2D> GetCollidersToBullet() //Description: No description
+  [Method] int GetHitBodyPriority(GameObject body) //Description: Проверка приоритета триггеров для пуль Без этой проверки зомби получает двойной урон от одной пули, когда рука и тело накладываются друг на друга
+  [Method] RigidbodyRender GetRigidbodyByTrasform(Transform headOrLeg) //Description: No description
+  [Method] Void OnStartFatality() //Description: No description
