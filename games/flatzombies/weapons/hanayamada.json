@@ -24,7 +24,7 @@
     "author": "findin",
     "authorURL": "https://t.me/findinflatzombies",
     "uiName": "Survivor | Hana Yamada",
-    "player.height": "176",
+    "player.height": 165,
     "player.man.SpriteRenderer.enabled": true,
     "player.man.SpriteRenderer.sortingOrder": 0,
     "player.man.SpriteRenderer.sprite.pixelPerUnit": "100",
@@ -107,6 +107,6 @@
     "player.man..SpriteRenderer.sortingOrder": 0,
     "player.man..SpriteRenderer.sprite.pixelPerUnit": "100",
     "player.man..SpriteRenderer.sprite.pivotPoint": "(0.000, 0.000)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
