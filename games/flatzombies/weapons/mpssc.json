@@ -110,6 +110,6 @@
     "player.man.body.backpack.SpriteRenderer.sortingOrder": 9,
     "player.man.body.backpack.SpriteRenderer.sprite.pixelPerUnit": 60,
     "player.man.body.backpack.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.000)",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
