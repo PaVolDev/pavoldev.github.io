@@ -11,11 +11,8 @@
     "weapon.addedComponents": "scope.SpriteRenderer,fon.SpriteRenderer,boltrender.SpriteRenderer",
     "weapon.addedGameObjects": "scope,fon,boltrender",
     "storeInfo.silencerSmall.SpriteRenderer.color": "#ffffff",
-    "storeInfo.silencerMedium.SpriteRenderer.color": "#ffffff",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit": 127,
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint": "(0, 0.5)",
-    "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": 122,
-    "storeInfo.silencerMedium.SpriteRenderer.sprite.pivotPoint": "(0, 0.5)",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -103,6 +100,6 @@
     "weapon.scope.SpriteRenderer.sortingOrder": "19",
     "weapon.scope.SpriteRenderer.sprite.pixelPerUnit": 130,
     "weapon.scope.SpriteRenderer.sprite.pivotPoint": "(0.480, 0.400)",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
