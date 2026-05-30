@@ -112,6 +112,6 @@
     "weapon.scope.SpriteRenderer.sortingOrder": "19",
     "weapon.scope.SpriteRenderer.sprite.pixelPerUnit": 130,
     "weapon.scope.SpriteRenderer.sprite.pivotPoint": "(0.480, 0.400)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
