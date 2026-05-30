@@ -264,6 +264,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "authorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", type: "string", value: "" },
 	{ fieldPath: "uiName", "comment": "Имя короткое для отображения в интерфейсе", type: "string", value: "" },
 	{ fieldPath: "player.height", "comment": "Рост персонажа", type: "int", value: 170, min: 160, max: 180 },
+	{ fieldPath: "interface.desciption", "comment": "Описание (необязательно)", type: "TextFile", value: "" },
 
 	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
