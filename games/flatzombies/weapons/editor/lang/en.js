@@ -468,4 +468,10 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4096: "Shovel - Лопата (id: lopata)",
 	4098: "Drag a file here from another window",
 	4100: "Weapon icon for UI, size: 320x120<br>If not specified, the icon will be generated automatically",
+	4101: "Compact silencer.",
+	4102: "Base silencer.",
+	4103: "Long silencer.",
+	4104: "Black and white texture multiplied by RGB color.",
+	4105: "Sprite color. This color is used in 'Multiply' mode.",
+
 });
