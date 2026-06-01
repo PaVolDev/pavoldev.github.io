@@ -9,7 +9,7 @@
     "storeInfo.silencerPosition": "(237, 12)",
     "storeInfo.silencerLarge.SpriteRenderer.color": "#ffffff",
     "storeInfo.silencerLarge.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAVCAYAAAAZ6IOkAAAAAXNSR0IArs4c6QAAAn5JREFUWEftlz2O00AUgN94xp4JYqUgKii5ACulwR6SiIaGE9DTU3ANbkC9N0DbEMVhQxZygJXYDiEKJNpF4NgzDz2LibxRYjleOygKI7mx5ue97/0z+L+AOQb9fv/edDr9DgC4jovW+sj3/R7n3N9Xbowxz/O8jrUWrbU/xuPxOemSQ9BaP1FKvQOABAB+0wZjzEWSJC/n8/m34XAYIuKpEKLL2JLbXrLgnDu5szRNj+M4vsg1iqLolVLqtVPQGAPWWmCM/QKAjwDwEBHvCiHoX2vK05uICJ7ntfZOAQLpGI5Go08Owlul1LM1EHJhSDhaZRBI+JssOk/wc/dkLAfhVh3wm85shKC1PpdShnUhkAJZlt2EQeNnSdkiSPdAKYQgCB65HIGIlDgYQaniCeQpzoqNa1PzwloQhBBLTyDL0lcVAsnZdDgULVaVg5PByb3uXJknnAkh+i4c6kCoKmjZvn+aGLXWcRAEQxcOVEcRsXI4NAFgV3eUeULMOV9CKGblKjlhVwo08U5ZiZwIIQZk+r9xRfXusDwhiqL3SimCkMOmcDDGHBYErfVUSvm4mBip7m9THZpw1V3cUZYTPkgp9aFDuOYJrvk5KE+IouiNUupFoW3eqmNsyo2LDVedeaGKHBvDIQzD551O58RVhyzLXHWg0foSER8AwO1NA1SVbnHTnuJ/N6itdnzbAqnbMd6XUp4CwE9E/GKMuULEqbX2bDabfR0MBk8B4MT3/TvraKdpSiNfezN2FRNf34NksNVFcDjnTs5ksVgcTyaTz5UF7/V6t7rd7hGVztXLCQINXNvL2s4Jz/PWzvVKKWWtdYa8iuP4Mh/d2xFjv279A12wnyXqWr43AAAAAElFTkSuQmCC",
-    "storeInfo.silencerLarge.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "storeInfo.silencerLarge.SpriteRenderer.sprite.pixelPerUnit": 122,
     "storeInfo.silencerLarge.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
     "weapon.addedGameObjects": "boltrender,fon",
     "weapon.addedComponents": "boltrender.SpriteRenderer,fon.SpriteRenderer",
@@ -102,6 +102,6 @@
     "weapon.boltrender.SpriteRenderer.sortingOrder": "17",
     "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": 122,
     "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.450)",
-    "version": 15,
+    "version": 16,
     "targetVersion": 209
 }
