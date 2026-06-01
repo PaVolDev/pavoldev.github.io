@@ -25,17 +25,18 @@ public WeaponModHandler(Weapon weapon, ModMetaData jsonData) {
 	this.onSwitchDisable = luaEnv.Global.GetInPath<LuaFunction>("onSwitchDisable");
 	this.onDestroy = luaEnv.Global.GetInPath<LuaFunction>("onDestroy");
 	//Подписываемся на события оружия и при срабатывании события мы вызываем Lua-функции 
-	if (this.onStart != null) weapon.onStart.AddListener((Weapon weapon) => { this.CallLuaListener(onStart, weapon); });
-	if (this.onKeyShot != null) weapon.onKeyShot.AddListener((Weapon weapon) => { this.CallLuaListener(onKeyShot, weapon); });
-	if (this.onShot != null) weapon.onShot.AddListener((Weapon weapon) => { this.CallLuaListener(onShot, weapon); });
-	if (this.onReloadStart != null) weapon.onReloadStart.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadStart, weapon); });
-	if (this.onReloadUpdate != null) weapon.onReloadUpdate.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadUpdate, weapon); });
-	if (this.onReloadComplete != null) weapon.onReloadComplete.AddListener((Weapon weapon) => { this.CallLuaListener(onReloadComplete, weapon); });
-	if (this.onBulletHit != null) weapon.onBulletHit.AddListener((BulletHit bulletHit) => { this.CallLuaListener(onBulletHit, bulletHit); });
-	if (this.onSwitchWeapon != null) weapon.onSwitchWeapon.AddListener((Weapon weapon, bool show) => { this.CallLuaListener(onSwitchWeapon, weapon, show); });
-	if (this.onSwitchEnable != null) weapon.onSwitchEnable.AddListener((Weapon weapon) => { this.CallLuaListener(onSwitchEnable, weapon); });
-	if (this.onSwitchDisable != null) weapon.onSwitchDisable.AddListener((Weapon weapon) => { this.CallLuaListener(onSwitchDisable, weapon); });
-	if (this.onDestroy != null) weapon.onDestroy.AddListener((Weapon weapon) => { this.CallLuaListener(onDestroy, weapon); }); if (this.onDestroy != null) weapon.onDestroy.AddListener((Weapon weapon) => { this.CallLuaListener(onDestroy, weapon); });
+	if (this.onStart != null) weapon.onStart.AddListener((Weapon weapon) => this.CallLuaListener(onStart, weapon));
+	if (this.onKeyShot != null) weapon.onKeyShot.AddListener((Weapon weapon) => this.CallLuaListener(onKeyShot, weapon));
+	if (this.onShot != null) weapon.onShot.AddListener((Weapon weapon) => this.CallLuaListener(onShot, weapon));
+	if (this.onUpdate != null) weapon.onUpdate.AddListener((Weapon weapon) => { this.CallLuaListener(onUpdate, weapon); weapon.updateHasListeners = true; });
+	if (this.onReloadStart != null) weapon.onReloadStart.AddListener((Weapon weapon) => this.CallLuaListener(onReloadStart, weapon));
+	if (this.onReloadUpdate != null) weapon.onReloadUpdate.AddListener((Weapon weapon) => this.CallLuaListener(onReloadUpdate, weapon));
+	if (this.onReloadComplete != null) weapon.onReloadComplete.AddListener((Weapon weapon) => this.CallLuaListener(onReloadComplete, weapon));
+	if (this.onBulletHit != null) weapon.onBulletHit.AddListener((BulletHit bulletHit) => this.CallLuaListener(onBulletHit, bulletHit));
+	if (this.onSwitchWeapon != null) weapon.onSwitchWeapon.AddListener((Weapon weapon, bool show) => this.CallLuaListener(onSwitchWeapon, weapon, show));
+	if (this.onSwitchEnable != null) weapon.onSwitchEnable.AddListener((Weapon weapon) => this.CallLuaListener(onSwitchEnable, weapon));
+	if (this.onSwitchDisable != null) weapon.onSwitchDisable.AddListener((Weapon weapon) => this.CallLuaListener(onSwitchDisable, weapon));
+	if (this.onDestroy != null) weapon.onDestroy.AddListener((Weapon weapon) => this.CallLuaListener(onDestroy, weapon));
 }
 
 Таким образом в Lua-скрипте мы можем объявлять функции, например:
@@ -107,7 +108,7 @@ const typeFullForm = {
 }
 Мы можем добавить пользовательские свойства, которые ранее не были нигде указаны в мета-данных редактора, но есть в объектах у Unity Engine и в игровых классах.
 Редактор имеет на экране кнопку "Добавить параметр", который показывает поле для добавления нового свойства.
-Редактор имеет HTML-форму для добавления нового свойства:
+Редактор HTML-форму для добавления нового свойства:
 	<div class="fields">
 		<span data-tooltip="Путь к свойству объекта">Свойство объекта:</span>
 		<span data-tooltip="Значение свойства">Значение:</span>
