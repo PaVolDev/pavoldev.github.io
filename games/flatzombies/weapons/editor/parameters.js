@@ -1585,7 +1585,7 @@ document.querySelector('.save').addEventListener('submit', async (event) => {
 	json['saveMode'] = document.getElementById('saveMode').value;
 	fetch(atob(data), {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json; charset=utf-8' },
 		body: JSON.stringify(json)
 	}).then(response => {
 		if (!response.ok) {
