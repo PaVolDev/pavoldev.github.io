@@ -131,10 +131,11 @@ async function onSelectWeapon(event) {
 
 		editedParams.length = 0;
 		//Обновить список
-		availableParams.forEach(field => {	//Добавить спрайты сразу в список
+		availableParams.forEach(field => {	//Добавить спрайты сразу в список //SpriteRenderer.sprite
 			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
 			let filterIndex = (filter.length != 0) ? filter.findIndex(data => field.value != data[1]) : -1;
 			if (filterIndex != -1) { //console.log(field.fieldPath + ": " + filter[filterIndex]);
+				if (sampleParams.find(s => s.startFieldPath == field.startFieldPath && s?.ignoreValue == field.value)) return;
 				if (filter[filterIndex].length == 3) {
 					addParam(filter[filterIndex][2], true);
 				} else {
@@ -1413,9 +1414,11 @@ function importFromJSON(jsonData) {
 			if ((index = editedParams.findIndex(p => p.fieldPath === field.key)) != -1) {
 				editedParams[index].value = field.value;
 			} else if ((index = availableParams.findIndex(p => p.fieldPath === field.key || p.displayName === field.key)) != -1) {
+				if (availableParams[index].value == field.value) return;  //Проигнорировать некоторые параметры
 				availableParams[index].value = field.value;
 				addParam(availableParams[index].fieldPath);
 			} else if ((index = sampleParams.findIndex(p => p.fieldPath === field.key || p.displayName === field.key)) != -1) {
+				if (sampleParams[index].value == field.value) return;  //Проигнорировать некоторые параметры
 				sampleParams[index].value = field.value;
 				addParam(sampleParams[index].fieldPath);
 			} else if (!mainParams.find(p => p.fieldPath === field.key)) { //Неизвестный параметр добавить в виде строки
