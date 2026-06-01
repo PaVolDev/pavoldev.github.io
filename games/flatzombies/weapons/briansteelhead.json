@@ -100,6 +100,6 @@
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder": 4,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit": 100,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint": "(0.300, 1.000)",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
