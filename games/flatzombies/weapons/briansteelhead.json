@@ -23,7 +23,7 @@
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAAAhCAYAAAC7kad5AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAXaADAAQAAAABAAAAIQAAAADn7CYiAAADXklEQVRoBe2aSWgUQRSG476CGy6gRAKKuHtTL4JB0IuCh4BHTx4EDyKighHUqygiiB5FEMGLICIKIRcVvInigh7UGGPivicat+8fUvim6Rm70z2ZYXgPPqa6ltdVf3ctXTUNDW6uQEYFTlH+DfyCj3ADdoFbhRS4id8/Mfwm7hvchZOwANwyKnCM8h8gTvC4uB/kfQFt4L0AEdLYNjI/g36IEzdJnIYh9YIncBm2w3CoGVtXIzXZSj3uw3dIImyaPPYhXMH/XmiEIbUW7nYROkGN7IU7cACG2nZzw8cgYdIImSXvT+6lnvAcNCkfh41QETuMV008b0ETUbTiiusD5WmFStk4HJ+HVxCtQzWu1W7NCe/hEVwFzSnDIJPtofQXSNMoPQC9hWdgM2S1HTi4DZ8gTT2qkTc8CNW1C/QiamhaDontHDkH24VVAQ1DWiN3QDschTXwP9tChmvQDYO9fzVEL3dPDU96gYosrltovbu6KFe2C934K7wDzQ098BlGw1RohJkwCUZBvdktGrTKNipO9KdkmGszeTiTAnrhJloP0TWploXTbQYPZ1ZgPB72WS9R0deSqG7vlp8CGk02WXdR0ReSONJm8HAuCiyxXqKiz7aJHs5NgQl4OhK8WdHHEunjeVAm318NMeuDSyt6M5HTQoL/5q7AfDwWhLeiryRSb7tbZRQYg9udcm1FX8Z1PX6cqJ21YoXvIit6EzUrRNZKDeusHh20RxuJRW/6rDprZC01Rydbp+G6rdQGLrRlWW7zxtMGp4/2ni5YscPw0kykfxRZZfIL38NVi3UXRF9EpI/nVpl8wq9xsz/qKoiuoUN72G75KaBDjbNwqZxLnfz0g4/d+WjQVk7skKav0Qeg0x8XPpsGD9FQhzOxNsLE9hJWl1gBU0y8B9MpoBOyQ9BeqlipyfMEBZaCjtNmgDbitUWgFU6pMiTVhWmJp+Vz3wAacpPMd9JFf9fQ8vAglLQkAjZRWm+/9trnDaChKDwMHXpUY7kpISRIEEdC6Vqm4VGmPCIcluuvHF3QDVpZCP3zQX+p0GG6wmFek/gaaoXK52ZJRC91szkk6EEsBj0MXWtreDKoZ4TeEXpIWCmRlMgkloSUGD0gsV6ChNIXnobDgEQLdBLWMOnmCvxT4C+NHHp/crZdRgAAAABJRU5ErkJggg==",
     "author": "findin",
     "authorURL": "https://t.me/findinflatzombies",
-    "uiName": "Brian \u00abSteel Head\u00bb",
+    "uiName": "Brian \u00abSteel Head\u00bb ",
     "player.height": 183,
     "player.man.SpriteRenderer.enabled": true,
     "player.man.SpriteRenderer.sortingOrder": 0,
@@ -100,6 +100,6 @@
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder": 4,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit": 100,
     "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint": "(0.300, 1.000)",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
