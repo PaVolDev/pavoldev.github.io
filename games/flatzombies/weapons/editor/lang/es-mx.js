@@ -470,4 +470,10 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	4096: "Shovel - Pala (id: lopata)",
 	4098: "Coloca aquí el archivo desde otra ventana",
 	4100: "Ícono del arma para la interfaz, tamaño: 320x120<br>Si no se indica, el ícono se generará automáticamente",
+	4101: "Silenciador compacto.",
+	4102: "Silenciador mediano base.",
+	4103: "Silenciador largo.",
+	4104: "Textura en blanco y negro para multiplicar por color RGB.",
+	4105: "Color del sprite. Este color se usa en el modo 'Multiplicar'.",
+
 });
