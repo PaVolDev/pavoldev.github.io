@@ -473,5 +473,6 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	4103: "Silenciador longo.",
 	4104: "Textura em preto e branco para multiplicar por cor RGB.",
 	4105: "Cor do sprite. Esta cor é usada no modo 'Multiplicar'.",
+	4106: "Ícone para a interface, tamanho aproximado 200x300<br>Use PPU para dimensionar.<br>Se não especificado, o ícone será gerado automaticamente.",
 
 });
