@@ -473,5 +473,6 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4103: "Long silencer.",
 	4104: "Black and white texture multiplied by RGB color.",
 	4105: "Sprite color. This color is used in 'Multiply' mode.",
+	4106: "Icon for UI, size approximately 200x300<br>Use PPU to scale.<br>If not specified, the icon will be generated automatically.",
 
 });
