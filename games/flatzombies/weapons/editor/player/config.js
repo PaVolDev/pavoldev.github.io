@@ -254,7 +254,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "uiName", "comment": "Имя короткое для отображения в интерфейсе", type: "string", value: "" },
 	{ fieldPath: "player.height", "comment": "Рост персонажа", type: "int", value: 170, min: 160, max: 190 },
 	{ fieldPath: "interface.desciption", "comment": "Описание (необязательно)", type: "TextFile", value: "" },
-	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка для интерфейса, размер: 160x260<br>Если не указано, то иконка будет сгенерирована автоматически", type: "TextureSprite", value: "" },
+	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка для интерфейса, размер около 200x300<br>Используйте PPU для масштабирования.<br>Если не указано, то иконка будет сгенерирована автоматически", type: "TextureSprite", value: "" },
 	{ fieldPath: "storeInfo.iconBase64.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "storeInfo.iconBase64.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
 
