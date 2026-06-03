@@ -257,7 +257,8 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка для интерфейса, размер около 200x300<br>Используйте PPU для масштабирования.<br>Если не указано, то иконка будет сгенерирована автоматически.", type: "TextureSprite", value: "" },
 	{ fieldPath: "storeInfo.iconBase64.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "storeInfo.iconBase64.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
-
+	{ fieldPath: "interface.iconImage.rectTransform.localScale", comment: "Масштаб иконки на кнопке в интерфейсе\nМенять только при использовании своего iconBase64", type: "Vector3", value: "(0.42, 0.42, 0.42)" },
+	
 	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", type: "float", value: 100 },
