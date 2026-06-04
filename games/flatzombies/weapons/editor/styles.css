@@ -7,14 +7,15 @@
 	--border-color: #333;
 	--border-hover: #444;
 	--success-color: #4caf50;
+	--text-show-tooltip: #c0d9ff;
 	--danger-color: #f44336;
 	--card-bg: #19191a;
 	--input-bg: #111;
 	--transition-speed: 0.2s;
 	--text-suffix: #3a3a3a;
 	--text: white;
+	
 }
-
 * {
 	box-sizing: border-box;
 }
@@ -41,6 +42,13 @@ a {
 a:hover {
 	color: #bad4ff;
 }
+
+.show-tooltip {
+	color: var(--text-show-tooltip);
+	cursor: help;
+}
+
+
 
 textarea {
 	width: 100%;
