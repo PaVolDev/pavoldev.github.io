@@ -538,7 +538,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "weapon.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
 	{ fieldPath: "weapon.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
 	{ fieldPath: "weapon.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
-	{ fieldPath: "interface.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 158x64 или 316x128", type: "TextureSprite", value: "" },
+	{ fieldPath: "storeInfo.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 158x64 или 316x128", type: "TextureSprite", value: "" },
 ]
 
 
