@@ -30,8 +30,8 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-0.970, 0.07, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.970, 0.07, 0)",
     "weapon.WeaponHandPoints.weaponType": "sniper",
-    "storeInfo.author": "",
-    "storeInfo.authorURL": "https://",
+    "storeInfo.author": "findin, pavoldev",
+    "storeInfo.authorURL": "",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.SpriteRenderer.sortingOrder": 17,
@@ -95,6 +95,6 @@
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.damageScale": "1.5",
     "cartridgeList": [],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
