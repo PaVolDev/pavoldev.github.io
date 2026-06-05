@@ -225,8 +225,13 @@ function handleSelectChange(select) {
 	var modType = select.getAttribute("modtype");
 
 	if (selectedValue === "download") {
-		if (url) window.open(url, "_blank");
-
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = url.split('/').pop(); // Имя файла при скачивании
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		
 	} else if (selectedValue === "edit") {
 		if (!url) { select.value = "action"; return; }
 
