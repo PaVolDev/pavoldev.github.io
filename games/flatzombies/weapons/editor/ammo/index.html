@@ -205,28 +205,28 @@
 					<div id="properties" style="display: none;">
 						<div>
 							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;" data-tooltip="Позиция объекта внутри родительского объекта">
-								<span style="text-align: center;">X:</span><input type="text" id="propPosX" step="0.01">
-								<span style="text-align: center;">Y:</span><input type="text" id="propPosY" step="0.01">
+								<span style="text-align: center;">X:</span><input type="number" id="propPosX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="number" id="propPosY" step="0.01">
 							</div>
 						</div>
 						<div>
 							<label for="propAngle" data-tooltip="Угол поворота в градусах">Local Angle:</label>
 							<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
 								<input type="range" min="-180" max="180" step="1" id="propAngleSlider">
-								<input type="text" min="-180" max="180" step="0.01" placeholder="[-180, 180]" id="propAngle" data-tooltip="Угол поворота в градусах">
+								<input type="number" min="-180" max="180" step="0.01" placeholder="[-180, 180]" id="propAngle" data-tooltip="Угол поворота в градусах">
 							</div>
 						</div>
 						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center; justify-content: space-between;">
 							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
-							<input type="text" id="propSortingOrder" step="1">
+							<input type="number" id="propSortingOrder" step="1">
 							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Пикселей на единицу расстояния<br>Pixels Per Unit">PPU:</label>
-							<input type="text" id="propPixelsPerUnit" step="5" min="10" max="300">
+							<input type="number" id="propPixelsPerUnit" step="20" min="10" max="99999">
 						</div>
 						<div>
 							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
 							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;">
-								<span style="text-align: center;">X:</span><input type="text" id="propPivotX" step="0.01">
-								<span style="text-align: center;">Y:</span><input type="text" id="propPivotY" step="0.01">
+								<span style="text-align: center;">X:</span><input type="number" id="propPivotX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="number" id="propPivotY" step="0.01">
 							</div>
 
 						</div>
