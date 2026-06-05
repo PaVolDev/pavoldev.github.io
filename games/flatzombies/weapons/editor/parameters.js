@@ -716,7 +716,7 @@ function forceRenderEditedParams(filter = '') {
 
 							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
                         ${ppu ? `<span class="title">PPU:</span>
-                                <input type="number" step="10" class="num" value="${ppu.value}" id="${ppu.startFieldPath}" min="10" max="300" onfocusout="inputMinMax(this); updateParam('${ppu.startFieldPath}', this.value); updateInputSpriteMillimetersByPPU('${param.startFieldPath}', '${ppu.startFieldPath}', 'mainlength')">` : ''}
+                                <input type="number" step="10" class="num" value="${ppu.value}" id="${ppu.startFieldPath}" min="10" max="99999" onfocusout="inputMinMax(this); updateParam('${ppu.startFieldPath}', this.value); updateInputSpriteMillimetersByPPU('${param.startFieldPath}', '${ppu.startFieldPath}', 'mainlength')">` : ''}
 							</div>
 
 							<div class="propertyBlock">
@@ -800,7 +800,7 @@ function forceRenderEditedParams(filter = '') {
 						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
 							${ppu ? `<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
 							<span class="title">PPU:</span>
-							<input type="number" step="10" style="width:100%" value="${ppu.value}" min="10" max="300" oninput="updateParam('${ppu.startFieldPath}', this.value)" onfocusout="inputMinMax(this)">
+							<input type="number" step="10" style="width:100%" value="${ppu.value}" min="10" max="99999" oninput="updateParam('${ppu.startFieldPath}', this.value)" onfocusout="inputMinMax(this)">
 							</div>` : ''}
 							
 							${pivot ? `<div class="propertyBlock" data-tooltip="Точка вращения объекта" >
@@ -1265,7 +1265,66 @@ Promise.all(
 });
 */
 
+
+
+
+
+//Сжатие текстуры
+function renderScaledImage(img, newWidth, newHeight) {
+	const srcCanvas = document.createElement('canvas');// Исходный canvas
+	const srcCtx = srcCanvas.getContext('2d', { willReadFrequently: true });
+	srcCanvas.width = img.width;
+	srcCanvas.height = img.height;
+	srcCtx.drawImage(img, 0, 0);
+	// Убираем чёрную кайму у прозрачных пикселей
+	const srcImageData = srcCtx.getImageData(0, 0, img.width, img.height);
+	const fixedImageData = bleedTransparentPixels(srcImageData, 20);
+	srcCtx.putImageData(fixedImageData, 0, 0);
+	// Масштабирование
+	const dstCanvas = document.createElement('canvas');
+	const dstCtx = dstCanvas.getContext('2d');
+	dstCanvas.width = newWidth;
+	dstCanvas.height = newHeight;
+	dstCtx.imageSmoothingEnabled = true;
+	dstCtx.imageSmoothingQuality = 'high';
+	dstCtx.drawImage(srcCanvas, 0, 0, newWidth, newHeight);
+	return dstCanvas.toDataURL('image/png');
+}
+//Сжатие текстуры в пределы maxSize.
 function compressImage(base64, maxSize) {
+	return new Promise((resolve) => {
+		const img = new Image();
+		img.src = base64;
+		img.onload = () => {
+			if (img.width <= maxSize && img.height <= maxSize) {
+				return resolve({ base64: base64, scale: 1 });
+			}
+			const scale = Math.min(maxSize / img.width, maxSize / img.height);
+			const newWidth = Math.round(img.width * scale);
+			const newHeight = Math.round(img.height * scale);
+			const resultBase64 = renderScaledImage(img, newWidth, newHeight);
+			resolve({ base64: resultBase64, scale: scale });
+		};
+		img.onerror = () => { resolve({ base64: base64, scale: 1 }); };
+	});
+}
+//Масштабирование и сжатие текстуры
+function compressImageByScale(base64, scale) {
+	return new Promise((resolve) => {
+		const img = new Image();
+		img.src = base64;
+		img.onload = () => {
+			const newWidth = Math.round(img.width * scale);
+			const newHeight = Math.round(img.height * scale);
+			const resultBase64 = renderScaledImage(img, newWidth, newHeight);
+			resolve({ base64: resultBase64, scale: scale });
+		};
+		img.onerror = () => { resolve({ base64: base64, scale: 1 }); };
+	});
+}
+
+
+/* function compressImage(base64, maxSize) {
 	return new Promise((resolve) => {
 		const img = new Image();
 		img.src = base64;
@@ -1283,16 +1342,13 @@ function compressImage(base64, maxSize) {
 			const ctx = canvas.getContext('2d');
 			canvas.width = newWidth;
 			canvas.height = newHeight;
-			// Улучшаем качество
-			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-			// Рисуем уменьшенное изображение
-			ctx.drawImage(img, 0, 0, newWidth, newHeight);
-			// Возвращаем новый base64 и коэффициент масштабирования
-			resolve({ base64: canvas.toDataURL('image/png'), scale: scale });
+			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';// Улучшаем качество
+			ctx.drawImage(img, 0, 0, newWidth, newHeight);// Рисуем уменьшенное изображение
+			resolve({ base64: canvas.toDataURL('image/png'), scale: scale });// Возвращаем новый base64 и коэффициент масштабирования
 		};
 		img.onerror = () => { resolve({ base64: base64, scale: 1 }); }; //При ошибке — возвращаем оригинал и scale = 1
 	});
-}
+} */
 
 
 
@@ -1544,6 +1600,19 @@ function convertTextValueToJsonFile(value) {
 	return value;
 }
 
+async function runCompressSpritesByPPU(maxPPU = 200) {
+	for (const param of editedParams) {
+		if (param.type === "Sprite" || param.type === "TextureSprite") {
+			const ppuParam = findByPath(param.startFieldPath + ".pixelPerUnit");
+			if (ppuParam && ppuParam.value > maxPPU) {
+				const result = await compressImageByScale(param.value, maxPPU / ppuParam.value);
+				param.value = result.base64;
+				ppuParam.value = maxPPU;
+			}
+		}
+	}
+}
+
 
 
 //Запись JSON в файл - показать окно для загрузки/сохранения файла на компьютер
@@ -1575,6 +1644,7 @@ const saveState = document.getElementById('saveState');
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
 	if (!editedParams || editedParams.length == 0) { return; }
+	await runCompressSpritesByPPU();
 	const json = getExportResultJSON();
 	if (!json) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
