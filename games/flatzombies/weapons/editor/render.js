@@ -477,7 +477,7 @@ propertyInputs.posY.addEventListener('input', () => { if (selectedObject) { scen
 propertyInputs.angle.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = parseFloat(propertyInputs.angle.value); propertyInputs.angleSlider.value = sceneObjects[objectId].localAngle; renderScene(); } });
 propertyInputs.angleSlider.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = Math.round(parseFloat(propertyInputs.angleSlider.value)); propertyInputs.angle.value = sceneObjects[objectId].localAngle; renderScene(); } });
 propertyInputs.sortingOrder.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].sortingOrder = parseInt(propertyInputs.sortingOrder.value); renderScene(); } });
-propertyInputs.pixelsPerUnit.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(300, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
+propertyInputs.pixelsPerUnit.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(99999, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
 propertyInputs.pivotX.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.x = parseFloat(propertyInputs.pivotX.value); renderScene(); } });
 propertyInputs.pivotY.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.y = parseFloat(propertyInputs.pivotY.value); renderScene(); } });
 propertyInputs.texture.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].texture = propertyInputs.texture.value; renderScene(); } });
@@ -552,9 +552,73 @@ function trimTransparentEdges(base64, maxSize, step, padding, callback) {
 		trimmed.height = bottom - top;
 		// Рисуем с отступом: исходное изображение вставляется внутрь нового canvas
 		tctx.drawImage(canvas, left, top, right - left, bottom - top, 0, 0, trimmed.width, trimmed.height);
+		// Убираем чёрную кайму у прозрачных пикселей
+		const srcImageData = tctx.getImageData(0, 0, trimmed.width, trimmed.height);
+		const fixedImageData = bleedTransparentPixels(srcImageData, 20);
+		tctx.putImageData(fixedImageData, 0, 0);
 		callback(trimmed.toDataURL('image/png'));
 	};
 	img.onerror = () => callback(base64);
+}
+
+
+//ищет ближайший непрозрачный пиксель по +.
+function findClosestOpaquePixel(data, x, y, width, height, alphaThreshold = 20) {
+	const maxDist = Math.max(Math.max(x, width - 1 - x), Math.max(y, height - 1 - y));
+	for (let dist = 1; dist <= maxDist; dist++) {
+		// Влево
+		let nx = x - dist;
+		if (nx >= 0) {
+			let i = (y * width + nx) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вправо
+		nx = x + dist;
+		if (nx < width) {
+			let i = (y * width + nx) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вверх
+		let ny = y - dist;
+		if (ny >= 0) {
+			let i = (ny * width + x) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вниз
+		ny = y + dist;
+		if (ny < height) {
+			let i = (ny * width + x) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+	}
+	return [0, 0, 0, 0];
+}
+//у прозрачных пикселей копирует RGB ближайшего непрозрачного, но alpha не меняет.
+function bleedTransparentPixels(imageData, alphaThreshold = 20) {
+	const { data, width, height } = imageData;
+	const result = new Uint8ClampedArray(data);
+	for (let y = 0; y < height; y++) {
+		for (let x = 0; x < width; x++) {
+			const i = (y * width + x) * 4;
+			const a = data[i + 3];
+			if (a <= alphaThreshold) {
+				const [r, g, b] = findClosestOpaquePixel(data, x, y, width, height, alphaThreshold);
+				result[i] = r;
+				result[i + 1] = g;
+				result[i + 2] = b;
+				result[i + 3] = data[i + 3];// Альфу оставляем как есть, чтобы пиксель остался прозрачным
+			}
+		}
+	}
+	return new ImageData(result, width, height);
 }
 
 
