@@ -207,7 +207,7 @@ function getPrefix(fieldPath, suffix = 'SpriteRenderer.sprite') { //parent.child
 }
 
 //Найти дочерний параметр
-function getChildDepPath(parentParam, depFieldPath) {
+function getChildDepPath(parentParam, depFieldPath) { 
 	const prefix = getPrefix(parentParam.fieldPath, parentParam.suffix);
 	const childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
 	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
@@ -216,13 +216,25 @@ function getChildDepPath(parentParam, depFieldPath) {
 		availableParams.push(sampleParams[index]);
 		return childPath;
 	}
+	if ((index = baseParams.findIndex(p => p.fieldPath === childPath)) != -1) { //Параметр может быть не найден в availableParams, ищем его в baseParams
+		availableParams.push(baseParams[index]);
+		return childPath;
+	}
 	const childPath2 = parentParam.fieldPath + '.' + depFieldPath;
 	if (availableParams.find(p => p.fieldPath == childPath2)) { return childPath2; }
 	if ((index = sampleParams.findIndex(p => p.fieldPath === childPath2)) != -1) { //Параметр может быть не найден в availableParams, ищем его в sampleParams
 		availableParams.push(sampleParams[index]);
-		return childPath;
+		return childPath2;
 	}
-	console.warn("getChildDepPath: не удалось найти параметр [" + childPath + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
+	if ((index = baseParams.findIndex(p => p.fieldPath === childPath2)) != -1) { //Параметр может быть не найден в availableParams, ищем его в baseParams
+		availableParams.push(baseParams[index]);
+		return childPath2;
+	}
+	if ((index = editedParams.findIndex(p => p.fieldPath === childPath2 || p.startFieldPath === childPath2)) != -1) { //Параметр может быть не найден в availableParams, ищем его в editedParams
+		availableParams.push(editedParams[index]);
+		return childPath2;
+	}
+	console.warn("getChildDepPath: не удалось найти параметр [" + childPath2 + "], который был указан в массиве typeDependencies для [" + parentParam.fieldPath + "]");
 	return childPath;
 }
 
@@ -625,6 +637,7 @@ function getImageFromBase64(base64String) {
 }
 
 function forceRenderEditedParams(filter = '') {
+	filter = (filter == '') ? searchInput?.value : filter;
 	const processed = new Set();
 	const hiddenPaths = new Set(); //Чтобы не рендерить повторно параметры из группы
 	const list = document.getElementById('editedParamsList'); list.innerHTML = '';
