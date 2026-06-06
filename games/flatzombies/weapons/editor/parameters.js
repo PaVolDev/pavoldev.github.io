@@ -329,6 +329,7 @@ function syncParamsToScene() {
 			isActive: param.hasOwnProperty('isActive') ? param.isActive : true,
 			canChangePivot: false,
 			canChangeLocalAngle: renderPoint && renderPoint.angle,
+			canChangePosition: true,
 			parameter: param.startFieldPath
 		});
 		const newObj = sceneObjects[sceneObjects.length - 1];
