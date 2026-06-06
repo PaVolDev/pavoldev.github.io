@@ -636,14 +636,14 @@ function selectObject(obj) {
 	propertiesDiv.style.display = 'block';
 	// Обновляем значения полей
 	propertyInputs.name.innerHTML = obj.name || '';
-	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = !obj.canChangePosition;
-	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = !obj.canChangePosition
-	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = !obj.canChangeLocalAngle;
-	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = !obj.canChangeLocalAngle;
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = "canChangePosition" in obj && !obj.canChangePosition;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = "canChangePosition" in obj && !obj.canChangePosition
+	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
+	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
 	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
 	propertyInputs.pixelsPerUnit.value = obj.pixelPerUnit || 100;
-	propertyInputs.pivotX.value = obj.pivotPoint?.x || 0; propertyInputs.pivotX.disabled = !obj.canChangePivot;
-	propertyInputs.pivotY.value = obj.pivotPoint?.y || 0; propertyInputs.pivotY.disabled = !obj.canChangePivot;
+	propertyInputs.pivotX.value = obj.pivotPoint?.x || 0; propertyInputs.pivotX.disabled = "canChangePivot" in obj && !obj.canChangePivot;
+	propertyInputs.pivotY.value = obj.pivotPoint?.y || 0; propertyInputs.pivotY.disabled = "canChangePivot" in obj && !obj.canChangePivot;
 	propertyInputs.texture.value = obj.texture || '';
 	propertyInputs.enabled.checked = obj.enabled
 	propertyInputs.isActive.checked = obj.isActive;
