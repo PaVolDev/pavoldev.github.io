@@ -385,7 +385,9 @@ function setPointField(fieldPath, property, newValue) {
 
 
 // ——— СИНХРОНИЗАЦИЯ ИЗ sceneObjects В ПАРАМЕТРЫ ———
-document.getElementById('scene').addEventListener('mouseup', scheduleSync); //Синхронизация при отпускании мыши, когда перемещение обънета завершено
+document.getElementById('scene').addEventListener('mouseup', scheduleSync); //Синхронизация при отпускании мыши, когда перемещение объекта завершено
+document.getElementById('scene').addEventListener('touchcancel', scheduleSync, { passive: false }); //Синхронизация при отпускании мыши, когда перемещение объекта завершено
+document.getElementById('scene').addEventListener('touchend', scheduleSync, { passive: false });
 document.getElementById('propName').addEventListener('input', scheduleSync);
 document.getElementById('propPosX').addEventListener('input', scheduleSync);
 document.getElementById('propPosY').addEventListener('input', scheduleSync);
