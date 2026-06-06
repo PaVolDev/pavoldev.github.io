@@ -659,7 +659,7 @@ function renderRecentModsSelect() {
 	if (!select) {
 		return;
 	}
-	let optionsHtml = '<option value="">Другие моды</option>';
+	let optionsHtml = '<option value="">Список модов</option>';
 	recentMods.forEach(function (modId) {
 		optionsHtml += `<option value="${escapeHtml(String(modId))}">${escapeHtml(String(modId))}</option>`;
 	});
@@ -683,7 +683,7 @@ function resetRecentModsSelect() {
 	if (!select) {
 		return;
 	}
-	select.innerHTML = '<option value="">Другие моды</option>';
+	select.innerHTML = '<option value="">Список модов</option>';
 	select.disabled = true;
 }
 
