@@ -1,5 +1,5 @@
 const server = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvd2VhcG9uLWVkaXRvci9saXN0L3VzZXItbGlzdC5waHA=';
-const ITEMS_PER_PAGE = 8; // Количество модов на странице
+const ITEMS_PER_PAGE = 12; // Количество модов на странице
 const VISIBLE_PAGES = 5; // Количество видимых кнопок страниц
 const AllowedMods = [
 	{ type: "playerskin", editor: "player", title: "Игровой персонаж" },
