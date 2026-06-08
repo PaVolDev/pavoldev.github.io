@@ -263,7 +263,10 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "player.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
 	{ fieldPath: "player.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
 	{ fieldPath: "player.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
-
+	
+	{ fieldPath: "player.painSound", comment: "Звук получения удара от зомби, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "player.startDeathSound", comment: "Звук при смерти и падании на спину, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "player.deathSound", comment: "Звук при отрывании головы, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pixelPerUnit", "comment": "Плотность пикселей", type: "float", value: 100 },
