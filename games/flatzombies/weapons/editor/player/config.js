@@ -265,7 +265,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "player.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
 	
 	{ fieldPath: "player.painSound", comment: "Звук получения удара от зомби, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
-	{ fieldPath: "player.startDeathSound", comment: "Звук при смерти и падании на спину, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "player.startDeathSound", comment: "Звук при падании на спину перед фаталити, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	{ fieldPath: "player.deathSound", comment: "Звук при отрывании головы, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
 	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
