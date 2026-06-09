@@ -1,16 +1,19 @@
 
 function onLoadNewJson(json) {
-	json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
-	delete json["weapon.LineRenderer.startColor"];
-	delete json["weapon.LineRenderer.endColor"];
-	console.log("weapon.laserColor: " + json["weapon.laserColor"]);
+	if (json["weapon.LineRenderer.startColor"]) {
+		json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
+		delete json["weapon.LineRenderer.startColor"];
+		delete json["weapon.LineRenderer.endColor"];
+	}
 	return json;
 }
 
 function onSaveJson(json) {
-	json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
-	json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
-	delete json["weapon.laserColor"];
+	if (json["weapon.laserColor"]) {
+		json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
+		json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
+		delete json["weapon.laserColor"];
+	}
 	return json;
 }
 
