@@ -1032,7 +1032,7 @@ function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 		case 'AudioClip[]':
 		case 'Sprite[]':
 			return `<span data-tooltip="${param.type}" ><small>Массив объектов в формате JSON:</small><textarea onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">${htmlspecialchars(JSON.stringify(param.value, null, 2))}</textarea></span>`;
-		case 'color':
+		case 'Color':
 			return `<input type="color" value="${htmlspecialchars(param.value)}" data-tooltip="${param.type}" onchange="updateParam('${param.startFieldPath}', this.value, false, '${objKey || ''}')" id="${param.startFieldPath}">`;
 		default:
 			if (stringIsObject(param.value)) { //Объект JavaScript
@@ -1451,6 +1451,7 @@ document.getElementById('importJsonFile').addEventListener('click', () => {
 
 function importFromJSON(jsonData) {
 	if (!jsonData.idTemplate) { alert(tr('Файл не имеет идентификатора idTemplate')); return; }
+	jsonData = onLoadNewJson(jsonData);
 	// Очищаем текущие редактируемые параметры
 	editedParams.length = 0;
 	document.getElementById("idWeapon").value = jsonData.id;
@@ -1603,6 +1604,8 @@ function getExportResultJSON() {
 			json[fullKeyPath] = convertTextValueToJsonFile(param.value);
 		}
 	});
+
+	json = onSaveJson(json);
 	// const img = document.createElement('img'); //Предпросмотр сгенерированого изображения
 	// img.src = json['storeInfo.iconBase64'];
 	// document.getElementById('centerPanel').appendChild(img);
