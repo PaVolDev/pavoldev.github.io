@@ -1,3 +1,10 @@
+function onLoadNewJson(json) {
+	return json;
+}
+
+function onSaveJson(json) {
+	return json;
+}
 
 
 const weapons = new Array();
