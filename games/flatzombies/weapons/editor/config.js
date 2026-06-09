@@ -624,6 +624,7 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "weapon.audioShot", comment: "Звук выстрела, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	{ fieldPath: "weapon.WeaponSilencerMod.localPoint", comment: "Координаты глушителя на стволе", type: "Vector3", value: "(0, 0, 0)", spritePreview: "images/silencer.png", spritePivotPoint: { x: 0, y: 0.5 }, spritePixelPerUnit: 100 },
 	{ fieldPath: "weapon.laserPosition", comment: "Позиция лазера от точки вращения оружия", type: "Vector2", value: "(0, 0)", spritePreview: "images/laser.png", spritePivotPoint: { x: 0, y: 0.5 }, spritePixelPerUnit: 100, sortingOrder: 1 },
+	{ fieldPath: "weapon.laserEnabled", comment: "Оружие имеет лазерный прицел?", type: "bool", value: true },
 	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite", comment: "Огонь от выстрела", type: "Renderer", value: "", suffix: ".SpriteRenderer.sprite" },
 	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
