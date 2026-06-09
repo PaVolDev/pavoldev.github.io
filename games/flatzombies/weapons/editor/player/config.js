@@ -1,4 +1,10 @@
+function onLoadNewJson(json) {
+	return json;
+}
 
+function onSaveJson(json) {
+	return json;
+}
 
 const weapons = new Array();
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
