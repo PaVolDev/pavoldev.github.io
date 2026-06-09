@@ -1,3 +1,23 @@
+
+function onLoadNewJson(json) {
+	json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
+	delete json["weapon.LineRenderer.startColor"];
+	delete json["weapon.LineRenderer.endColor"];
+	console.log("weapon.laserColor: " + json["weapon.laserColor"]);
+	return json;
+}
+
+function onSaveJson(json) {
+	json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
+	json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
+	delete json["weapon.laserColor"];
+	return json;
+}
+
+
+
+
+
 //Функции для работы с точками в окне предпросмотра
 class SpriteScreenListener {
 	onSelect(spriteRender) { }
@@ -480,6 +500,7 @@ function onRemoveParameter(param) {
 	}
 }
 
+
 const spriteArrayMetaData = [
 	{ fieldPath: "sprite", comment: "Спрайт, PNG-файл", type: "Sprite", value: "" },
 	{ fieldPath: "pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
@@ -540,6 +561,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "weapon.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
 	{ fieldPath: "weapon.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
 	{ fieldPath: "weapon.laserEnabled", comment: "Оружие имеет лазерный прицел?", type: "bool", value: true },
+	{ fieldPath: "weapon.laserColor", comment: "Цвет лазера", type: "Color", value: "#FF0000" },
 ]
 
 
@@ -821,15 +843,15 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite", comment: "Укороченный глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAWCAYAAABDhYU9AAAA20lEQVR4AeySMQrCQBBFhyUeIBBSBhtr2/TpvYGdVe4gBLxFwMYb2Nt4AwOp7EyRMnWaBOcLu5h2qx9Y2AczAwuPP2NEZGNpmqZgwPoYLX6vbdtDkiQPBuACKScXx/EZAwasi5NTqX0URcIAXBT5l5M0TSmAGDB1XR+VNxo2jK7xqmzZxOCzWCsGTAQ5322E5EJyvgn4/lvPzY3jKAzYpE3XdTsVumEwDIMwABdgqqr6lGV5QsPGOm5umqY7S3LWxSXX9/1Fh08G4IKgIDdrMed5/sqyrGAALnD6AgAA//86okXkAAAABklEQVQDAHJ/B8D83HhjAAAAAElFTkSuQmCC" },
 	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
 	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
-	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "color", value: "#434343" },
+	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
 	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite", comment: "Стандартный глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAATCAYAAAAwE0VbAAABD0lEQVR4AezSP2qEQBTH8ecIKwgKlla5wGJnu1gmIOYY24k5RiqrrT1EirCNVS6x7VbWiv9A2bzfg80d3hDwCzNW85k3hohc2wLKVFUVtG17QV3XXbTWNE3AAzJAUVEUJ9/3z8gYc9ZamqYnRpGgHMd5w0Z7QRCIQ1CHw+FVOwjnfzoE5brui+d5pD04gDN1XX/wwomiiFAYhqQ1ODgyPLJPLGxKnp9NIFj+UbgFDf1Nqu97QuM4ktaeF272ff/GZpom0h4cyJRl+Y6FTcnzW9d1sAHFr04cgmLQD2fDJw5Bbdv2ZYNoWRZxCGqe5yv/uCEe4U1rwzBcMRygHnme37MsO6I4jo9aS5LkzqjHLwAAAP//n0b8ywAAAAZJREFUAwBAFtsZM3pYhQAAAABJRU5ErkJggg==" },
 	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
 	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
-	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "color", value: "#434343" },
+	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
 	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite", comment: "Удлиненный глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAUCAYAAAA9djs/AAABJUlEQVR4AeyUoW6EQBCGNwsNOBqSYhpS0UPXkBSNgKQSUdOkL1BbxQOgautQlSdKSJM+A7ZBXkNyor4IBALa+TfhcnePsHNkP5jdUd+/E6QQ4myfoigu6rpe6c7iLKlQqyzLKxBF0UcYhhvdadv2BuIqgKqqHoMg2ADDMG7R0B3btjM4SpK/dF33BRtOWJZ1D1/pOM4rFecEq0WTfg1hScUdCq6of4DneYIby4WrAEzTFNw4CGDZcPyqCeAovjifAkASwzAIbsAbqAno+15wA/JABYCCK6cApml643T7x66yaZpnCuHnuKH7npy/4CjzPP+l54kOtgCHHBjH8R2eEq8syz7jOA4ANdbzPG91p+u6NdwRwB8VO5IkefB9f6U7aZp+w/sfAAD//+yP3r4AAAAGSURBVAMADgd8VlJwyOMAAAAASUVORK5CYII=" },
 	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
 	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite.pixelPerUnit", comment: "Плотность пикселей", type: "float", value: 100 },
-	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "color", value: "#434343" },
+	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
 
 
 	{ fieldPath: "weapon.WeaponHandPoints.clip", comment: "Базовая анимация для использования в качестве шаблона", type: "JsonFile", value: "" },
