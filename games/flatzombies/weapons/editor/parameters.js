@@ -1533,7 +1533,7 @@ function typeByValue(value) {
 
 // ——— СОХРАНЕНИЕ ———
 function getExportResultJSON() {
-	const json = {};
+	let json = {};
 	const empty = new Array();
 	mainParams.forEach(param => {
 		let index = -1;
