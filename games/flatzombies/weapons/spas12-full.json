@@ -34,7 +34,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(1.030, 0.11, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.660, 0.34, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.780, 0.24, 0)",
-    "weapon.WeaponHandPoints.weaponType": "benelli-m4",
+    "weapon.WeaponHandPoints.weaponType": "mossberg590",
     "storeInfo.author": "findin",
     "storeInfo.authorURL": "https://t.me/findinflatzombies",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
@@ -81,6 +81,6 @@
     "weapon.boltspas.SpriteRenderer.sortingOrder": 18,
     "weapon.boltspas.SpriteRenderer.sprite.pixelPerUnit": "131",
     "weapon.boltspas.SpriteRenderer.sprite.pivotPoint": "(0.164, 0.541)",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
