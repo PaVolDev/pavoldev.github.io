@@ -41,7 +41,7 @@
     "weapon.barrel.lasersight.SpriteRenderer.sortingOrder": 17,
     "weapon.barrel.lasersight.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.barrel.lasersight.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
-    "version": 4,
+    "version": 5,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
