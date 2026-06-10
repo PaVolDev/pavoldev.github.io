@@ -1,8 +1,14 @@
 function onLoadNewJson(json) {
+	delete json["storeInfo.iconBase64"];
+	delete json["storeInfo.silencerPosition"];
+	delete json["targetVersion"];
+	delete json["version"];
+	delete json["selspriteupd"];
 	return json;
 }
 
 function onSaveJson(json) {
+	delete json["storeInfo.iconBase64"];
 	return json;
 }
 
@@ -19,8 +25,6 @@ const mainIconHeight = 120; //Размеры иконки для генерац�
 const mainIconWidth = 600; //Размеры иконки для генерации
 const mainIconSceneScale = 1;
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'targetVersion', 'version', 'selspriteupd', 'storeInfo.silencerPosition'];
-const ignoreExportFields = ['storeInfo.iconBase64', 'gunFlash.SpriteRenderer.', 'gunFlash2.SpriteRenderer.'];
 const prefixHide = ['cartridge.'];
 const prefixExport = 'cartridge.'; //Вернуть приставку при экспорте
 //Слушатель события
