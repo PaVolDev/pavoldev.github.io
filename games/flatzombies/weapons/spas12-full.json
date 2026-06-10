@@ -56,7 +56,7 @@
     "weapon.gunFlash.Transform.localPosition": "(1.770, 0.19, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
-    "weapon.shotAnimations[0].animation": "fire",
+    "weapon.shotAnimations[0].animation": "LabelShotFire",
     "weapon.addBulletsReload": 2,
     "weapon.magazineMax": 8,
     "weapon.chamberAnimationStep": 0,
@@ -81,6 +81,6 @@
     "weapon.boltspas.SpriteRenderer.sortingOrder": 18,
     "weapon.boltspas.SpriteRenderer.sprite.pixelPerUnit": "131",
     "weapon.boltspas.SpriteRenderer.sprite.pivotPoint": "(0.164, 0.541)",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
