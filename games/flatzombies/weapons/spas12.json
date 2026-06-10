@@ -61,7 +61,7 @@
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": "2",
-    "weapon.recoilMax": "7",
+    "weapon.recoilMax": 4,
     "weapon.recoilDecrease": "6",
     "weapon.bolt": "(0.000, 0.18, 0)",
     "weapon.flashlight": "(1.500, 0.07, 0)",
@@ -77,6 +77,6 @@
     "weapon.boltspas.SpriteRenderer.sortingOrder": 18,
     "weapon.boltspas.SpriteRenderer.sprite.pixelPerUnit": "131",
     "weapon.boltspas.SpriteRenderer.sprite.pivotPoint": "(0.164, 0.541)",
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
