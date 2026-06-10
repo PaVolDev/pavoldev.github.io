@@ -1,5 +1,12 @@
 
 function onLoadNewJson(json) {
+	delete json["storeInfo.iconBase64"];
+	delete json["storeInfo.silencerPosition"];
+	delete json["storeInfo.magazineSize"];
+	delete json["targetVersion"];
+	delete json["version"];
+	delete json["selspriteupd"];
+
 	if (json["weapon.LineRenderer.startColor"]) {
 		json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
 		delete json["weapon.LineRenderer.startColor"];
@@ -9,6 +16,16 @@ function onLoadNewJson(json) {
 }
 
 function onSaveJson(json) {
+	Object.keys(json).forEach(key => {
+		if (key.startsWith("weapon.player") && (key.endsWith("Position") || key.endsWith(".z") ||  key.endsWith("sortingOrder") || key.endsWith("SetActive") || key.endsWith("enabled"))) { //Защита персонажа, удаление строки типа weapon.player.man.body.weaponParent.arm.Transform.localPosition
+			delete json[key];
+		} else if (key.startsWith("weapon.gunFlash.SpriteRenderer.")  || key.endsWith("weapon.gunFlash2.SpriteRenderer.")){
+			delete json[key];
+		}
+	});
+	delete json["weapon.gameObject.SetActive"];
+	delete json["weapon.WeaponHandPoints.WeaponAnimation"];
+	delete json["weapon.Transform.localEulerAngles.z"];
 	if (json["weapon.laserColor"]) {
 		json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
 		json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
@@ -177,145 +194,7 @@ const mainIconHeight = 120; //Размеры иконки для генерац�
 const mainIconWidth = 600; //Размеры иконки для генерации
 const mainIconSceneScale = 1;
 const ignoreIconSprites = ['gunFlash', ".player", ".player.man"]; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['storeInfo.iconBase64', 'storeInfo.silencerPosition', 'storeInfo.magazineSize', 'targetVersion', 'version', 'selspriteupd']; //
-const ignoreExportFields = ['.gunFlash.SpriteRenderer.', '.gunFlash2.SpriteRenderer.', 'weapon.gameObject.SetActive', 'weapon.WeaponHandPoints.WeaponAnimation',
-	"weapon.player.Transform.localPosition",
-	"weapon.player.man.Transform.localPosition",
-	"weapon.player.man.body.Transform.localPosition",
-	"weapon.player.man.body.head.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm3.Transform.localPosition",
-	"weapon.player.man.thigh.Transform.localPosition",
-	"weapon.player.man.thigh.shin.Transform.localPosition",
-	"weapon.player.man.thigh.shin.foot.Transform.localPosition",
-	"weapon.player.man.thigh2.Transform.localPosition",
-	"weapon.player.man.thigh2.shin2.Transform.localPosition",
-	"weapon.player.man.thigh2.shin2.foot2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.forearm.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.magazine.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.magazine2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm3.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.Transform.localPosition",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localPosition",
-	"weapon.Transform.localEulerAngles.z",
-	"weapon.player.Transform.localEulerAngles.z",
-	"weapon.player.man.Transform.localEulerAngles.z",
-	"weapon.player.man.body.Transform.localEulerAngles.z",
-	"weapon.player.man.body.head.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm3.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh.shin.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh.shin.foot.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh2.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh2.shin2.Transform.localEulerAngles.z",
-	"weapon.player.man.thigh2.shin2.foot2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.forearm.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.magazine.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.magazine2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm3.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.Transform.localEulerAngles.z",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localEulerAngles.z",
-	"weapon.player.gameObject.SetActive",
-	"weapon.player.man.gameObject.SetActive",
-	"weapon.player.man.body.gameObject.SetActive",
-	"weapon.player.man.body.head.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm3.gameObject.SetActive",
-	"weapon.player.man.thigh.gameObject.SetActive",
-	"weapon.player.man.thigh.shin.gameObject.SetActive",
-	"weapon.player.man.thigh.shin.foot.gameObject.SetActive",
-	"weapon.player.man.thigh2.gameObject.SetActive",
-	"weapon.player.man.thigh2.shin2.gameObject.SetActive",
-	"weapon.player.man.thigh2.shin2.foot2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.forearm.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.magazine.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.magazine2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm3.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.gameObject.SetActive",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.fingers3.gameObject.SetActive",
-	"weapon.player.SpriteRenderer.sortingOrder",
-	"weapon.player.man.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.head.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm3.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh.shin.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh.shin.foot.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh2.shin2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.magazine.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.magazine2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm3.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.SpriteRenderer.sortingOrder",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.fingers3.SpriteRenderer.sortingOrder",
-	"weapon.player.SpriteRenderer.enabled",
-	"weapon.player.man.SpriteRenderer.enabled",
-	"weapon.player.man.body.SpriteRenderer.enabled",
-	"weapon.player.man.body.head.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm3.SpriteRenderer.enabled",
-	"weapon.player.man.thigh.SpriteRenderer.enabled",
-	"weapon.player.man.thigh.shin.SpriteRenderer.enabled",
-	"weapon.player.man.thigh.shin.foot.SpriteRenderer.enabled",
-	"weapon.player.man.thigh2.SpriteRenderer.enabled",
-	"weapon.player.man.thigh2.shin2.SpriteRenderer.enabled",
-	"weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm.forearm.fingers.magazine.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.magazine2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm3.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.SpriteRenderer.enabled",
-	"weapon.player.man.body.weaponParent.arm3.forearm3.fingers3.SpriteRenderer.enabled",
-];
+
 const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
 const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
 
