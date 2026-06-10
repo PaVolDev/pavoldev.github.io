@@ -112,7 +112,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 150,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.360, 0.560)",
-    "storeInfo.silencerGroup": "",
+    "storeInfo.silencerGroup": "shotgun",
     "weapon.sight.Transform.localPosition": "(1.308, 0.043, 0)",
     "weapon.sight.gameObject.SetActive": true,
     "weapon.sight.SpriteRenderer.enabled": true,
@@ -143,6 +143,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.141)",
     "weapon.WeaponHandPoints.fingerAngle": -22,
-    "version": 1,
+    "version": 2,
     "targetVersion": 209
 }
