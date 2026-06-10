@@ -1,10 +1,66 @@
 function onLoadNewJson(json) {
+	delete json["storeInfo.silencerPosition"];
+	delete json["targetVersion"];
+	delete json["version"];
+	delete json["selspriteupd"];
 	return json;
 }
 
 function onSaveJson(json) {
+	delete json["player.gameObject.SetActive"];
+	delete json["player.man.body.gameObject.SetActive"];
+	delete json["player.man.body.head.gameObject.SetActive"];
+	delete json["player.man.body.head.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.fingers3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.gameObject.SetActive"];
+	delete json["player.man.gameObject.SetActive"];
+	delete json["player.man.thigh.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.foot.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.foot.Transform.localPosition"];
+	delete json["player.man.thigh.shin.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.Transform.localPosition"];
+	delete json["player.man.thigh2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.foot2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.foot2.Transform.localPosition"];
+	delete json["player.man.thigh2.shin2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.Transform.localPosition"];
+	delete json["player.man.Transform.localEulerAngles.z"];
+	delete json["player.man.Transform.localPosition"];
+	delete json["player.SpriteRenderer.enabled"];
+	delete json["player.SpriteRenderer.sortingOrder"];
+	delete json["player.SpriteRenderer.sortingOrder"];
+	delete json["player.SpriteRenderer.sprite.pivotPoint"];
+	delete json["player.SpriteRenderer.sprite.pixelPerUnit"];
+	delete json["player.SpriteRenderer.sprite"];
+	delete json["player.Transform.localEulerAngles.z"];
+	delete json["player.Transform.localPosition"];
 	return json;
 }
+
 
 const weapons = new Array();
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
@@ -19,137 +75,6 @@ const mainIconHeight = 600; //Размеры иконки для генерац�
 const mainIconWidth = 600; //Размеры иконки для генерации
 const mainIconSceneScale = 0.5;
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
-const ignoreImportFields = ['targetVersion', 'version', 'selspriteupd']; //'storeInfo.iconBase64', 
-const ignoreExportFields = [
-	"player.SpriteRenderer.sprite", "player.Transform.localPosition", "player.gameObject.SetActive", "player.SpriteRenderer.enabled", "player.Transform.localEulerAngles.z",
-	"player.SpriteRenderer.sortingOrder", "player.SpriteRenderer.sprite.pixelPerUnit", "player.SpriteRenderer.sprite.pivotPoint",
-	"player.gameObject.SetActive",
-	"player.Transform.localPosition",
-	"player.man.gameObject.SetActive",
-	"player.man.Transform.localPosition",
-	"player.SpriteRenderer.sortingOrder",
-	"player.Transform.localEulerAngles.z",
-	"player.man.body.gameObject.SetActive",
-	"player.man.thigh.gameObject.SetActive",
-	"player.man.thigh2.gameObject.SetActive",
-	"player.man.Transform.localEulerAngles.z",
-	"player.man.body.head.gameObject.SetActive",
-	"player.man.thigh.shin.gameObject.SetActive",
-	//"player.man.body.Transform.localEulerAngles.z",
-	"player.man.thigh2.shin2.gameObject.SetActive",
-	"player.man.thigh.shin.Transform.localPosition",
-	//"player.man.thigh.Transform.localEulerAngles.z",
-	//"player.man.thigh2.Transform.localEulerAngles.z",
-	"player.man.body.head.Transform.localPosition",
-	"player.man.thigh.shin.foot.gameObject.SetActive",
-	"player.man.thigh2.shin2.Transform.localPosition",
-	//"player.man.body.head.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.gameObject.SetActive",
-	"player.man.thigh.shin.foot.Transform.localPosition",
-	//"player.man.thigh.shin.Transform.localEulerAngles.z",
-	"player.man.thigh2.shin2.foot2.gameObject.SetActive",
-	//"player.man.thigh2.shin2.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.gameObject.SetActive",
-	"player.man.body.weaponParent.arm.gameObject.SetActive",
-	"player.man.thigh2.shin2.foot2.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.gameObject.SetActive",
-	"player.man.body.weaponParent.arm2.gameObject.SetActive",
-	"player.man.body.weaponParent.arm3.gameObject.SetActive",
-	"player.man.body.weaponParent.arm3.gameObject.SetActive",
-	//"player.man.thigh.shin.foot.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.Transform.localPosition",
-	"player.man.body.weaponParent.arm.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.Transform.localPosition",
-	"player.man.body.weaponParent.arm3.Transform.localPosition",
-	"player.man.body.weaponParent.arm3.Transform.localPosition",
-	//"player.man.body.weaponParent.Transform.localEulerAngles.z",
-	//"player.man.thigh2.shin2.foot2.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.forearm.gameObject.SetActive",
-	// "player.man.body.weaponParent.arm.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm2.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm2.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm3.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm3.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive",
-	"player.man.body.weaponParent.arm3.forearm3.gameObject.SetActive",
-	"player.man.body.weaponParent.arm.forearm.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.forearm2.Transform.localPosition",
-	"player.man.body.weaponParent.arm3.forearm3.Transform.localPosition",
-	"player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive",
-	// "player.man.body.weaponParent.arm.forearm.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.forearm2.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm3.forearm3.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive",
-	"player.man.body.weaponParent.arm3.forearm3.fingers3.gameObject.SetActive",
-	"player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition",
-	"player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localPosition",
-	"player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive",
-	// "player.man.body.weaponParent.arm.forearm.fingers.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition",
-	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive",
-	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localEulerAngles.z",
-	"player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition",
-	"player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z",
-	// "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localEulerAngles.z",
-	//"player.man.body.Transform.localPosition",
-	//"player.man.body.weaponParent.Transform.localPosition",
-	//"player.man.thigh.Transform.localPosition",
-	// "player.man.SpriteRenderer.sortingOrder",
-	// "player.man.body.SpriteRenderer.sortingOrder",
-	// "player.man.body.head.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm3.SpriteRenderer.sortingOrder",
-	// "player.man.thigh.SpriteRenderer.sortingOrder",
-	// "player.man.thigh.shin.SpriteRenderer.sortingOrder",
-	// "player.man.thigh.shin.foot.SpriteRenderer.sortingOrder",
-	// "player.man.thigh2.SpriteRenderer.sortingOrder",
-	// "player.man.thigh2.shin2.SpriteRenderer.sortingOrder",
-	// "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm.forearm.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm3.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm3.forearm3.SpriteRenderer.sortingOrder",
-	// "player.man.body.weaponParent.arm3.forearm3.fingers3.SpriteRenderer.sortingOrder",
-	// "player.SpriteRenderer.enabled",
-	// "player.man.SpriteRenderer.enabled",
-	// "player.man.body.SpriteRenderer.enabled",
-	// "player.man.body.head.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm3.SpriteRenderer.enabled",
-	// "player.man.thigh.SpriteRenderer.enabled",
-	// "player.man.thigh.shin.SpriteRenderer.enabled",
-	// "player.man.thigh.shin.foot.SpriteRenderer.enabled",
-	// "player.man.thigh2.SpriteRenderer.enabled",
-	// "player.man.thigh2.shin2.SpriteRenderer.enabled",
-	// "player.man.thigh2.shin2.foot2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm.forearm.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm3.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm3.forearm3.SpriteRenderer.enabled",
-	// "player.man.body.weaponParent.arm3.forearm3.fingers3.SpriteRenderer.enabled",
-
-];
 const prefixHide = ['player.'];
 const prefixExport = 'player.'; //Вернуть приставку при экспорте
 
@@ -269,7 +194,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "player.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
 	{ fieldPath: "player.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
 	{ fieldPath: "player.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
-	
+
 	{ fieldPath: "player.painSound", comment: "Звук получения удара от зомби, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	{ fieldPath: "player.startDeathSound", comment: "Звук при падании на спину перед фаталити, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
 	{ fieldPath: "player.deathSound", comment: "Звук при отрывании головы, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
