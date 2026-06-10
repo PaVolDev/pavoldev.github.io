@@ -62,7 +62,7 @@
     "weapon.gunFlash.Transform.localPosition": "(2.000, 1.13, 0)",
     "weapon.gunFlash.gameObject.SetActive": false,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
-    "weapon.shotAnimations[0].animation": "fire",
+    "weapon.shotAnimations[0].animation": "LabelShotFire",
     "weapon.magazineMax": "20",
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
@@ -94,6 +94,6 @@
     "weapon.findin.SpriteRenderer.sortingOrder": 17,
     "weapon.findin.SpriteRenderer.sprite.pixelPerUnit": 165,
     "weapon.findin.SpriteRenderer.sprite.pivotPoint": "(0.380, 0.460)",
-    "version": 19,
+    "version": 20,
     "targetVersion": 209
 }
