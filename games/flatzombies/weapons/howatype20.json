@@ -11,7 +11,7 @@
     "storeInfo.donateURL": "https://t.me/findinflatzombies",
     "weapon.addedGameObjects": "back,boltrender",
     "weapon.addedComponents": "back.SpriteRenderer,boltrender.SpriteRenderer",
-    "weapon.reloadBoltStop": true,
+    "weapon.reloadBoltStop": false,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(-0.16, 0.04, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(-0.15, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -92,6 +92,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 16,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": 150,
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.350, 0.370)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
