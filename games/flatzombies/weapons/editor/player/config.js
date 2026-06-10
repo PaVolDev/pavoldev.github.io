@@ -1,4 +1,5 @@
 function onLoadNewJson(json) {
+	delete json["player.man.thigh.SpriteRenderer.flipX"];
 	delete json["storeInfo.silencerPosition"];
 	delete json["targetVersion"];
 	delete json["version"];
@@ -7,6 +8,7 @@ function onLoadNewJson(json) {
 }
 
 function onSaveJson(json) {
+	json["player.man.thigh.SpriteRenderer.flipX"] = "false";
 	delete json["player.gameObject.SetActive"];
 	delete json["player.man.body.gameObject.SetActive"];
 	delete json["player.man.body.head.gameObject.SetActive"];
