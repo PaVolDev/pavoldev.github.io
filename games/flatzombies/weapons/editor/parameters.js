@@ -1481,7 +1481,7 @@ function importFromJSON(jsonData) {
 
 		json.forEach(field => { //Перенос параметров в список отредактированных
 			let index = null;
-			if (defaultAddedFields.find(p => p[0] === field.key && p[1] == field.value) || ignoreImportFields.includes(field.key)) {
+			if (defaultAddedFields.find(p => p[0] === field.key && p[1] == field.value)) {
 				return; //Проигнорировать некоторые параметры
 			}
 			if ((index = editedParams.findIndex(p => p.fieldPath === field.key)) != -1) {
@@ -1591,14 +1591,14 @@ function getExportResultJSON() {
 			return false; //Останавливаем функцию
 		}
 	} */
-	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') && !ignoreExportFields.find(word => word == 'storeInfo.iconBase64')) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64')) {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
 		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
 	}
 	editedParams.forEach(param => {
-		if (!ignoreExportFields.find(word => param.startFieldPath.includes(word)) && param.fieldPath != param.type) {
+		if (param.fieldPath != param.type) {
 			let fullKeyPath = param.startFieldPath || param.fieldPath;
 			exportReplace.forEach(field => { if (fullKeyPath.includes(field.fieldPath)) { fullKeyPath = fullKeyPath.replace(field.fieldPath, field.newPath); } });   //Заменить имена параметров
 			json[fullKeyPath] = convertTextValueToJsonFile(param.value);
