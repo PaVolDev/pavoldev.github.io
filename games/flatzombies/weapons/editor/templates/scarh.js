@@ -34,7 +34,7 @@ export default {
 "weapon.RifleWithMagazine.shellDrop.quantity": 1,
 "weapon.RifleWithMagazine.bolt":"(0, 0.26, 0)",
 "weapon.RifleWithMagazine.flashlight":"(0.98, 0.21, 0)",
-"weapon.RifleWithMagazine.flashlightParent":"",
+"weapon.RifleWithMagazine.flashlightParent":"", "weapon.RifleWithMagazine.laserEnabled":true, "weapon.LineRenderer.color":"#FF0000",
 "weapon.RifleWithMagazine.flashlightSkin.name": "!СветУзкий",
 "weapon.RifleWithMagazine.flashlightSkin.hideFlags.value__": 0,
 "weapon.RifleWithMagazine.cartridge":"76251",
