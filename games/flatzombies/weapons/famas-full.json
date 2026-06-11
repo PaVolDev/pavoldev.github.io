@@ -102,6 +102,6 @@
     "weapon.background.SpriteRenderer.sortingOrder": 16,
     "weapon.background.SpriteRenderer.sprite.pixelPerUnit": 155,
     "weapon.background.SpriteRenderer.sprite.pivotPoint": "(0.500, 0.360)",
-    "version": 25,
+    "version": 27,
     "targetVersion": 209
 }
