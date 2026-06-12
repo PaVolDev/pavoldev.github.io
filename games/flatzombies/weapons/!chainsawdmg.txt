@@ -1,1 +1,1 @@
-chainsawdmgfull&10;
+chainsawdmgfull&10;chainsawdmg&6;
