@@ -19,7 +19,7 @@
     "angleRandom": 2,
     "angleSpread": 0.8,
     "damage": 3.5,
-    "distance": 4,
+    "distance": 6,
     "impulse": "12",
     "stopPower": "0.5",
     "penetration": {
@@ -51,6 +51,6 @@
         }
     ],
     "noiseVolume": "1.5",
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
