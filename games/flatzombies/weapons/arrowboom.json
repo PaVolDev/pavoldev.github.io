@@ -12,9 +12,9 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAABqADAAQAAAABAAAABAAAAAARUG7FAAAAG0lEQVQIHWPcvn37fwY0cPz4cQYmNDE4l3QJAOmzBYHg5MzvAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": 100,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": 100,
+    "iconButtonSprite.pixelPerUnit": 50,
     "iconButtonSprite.pivotPoint": "(0.2, 0.4)",
-    "iconListSprite.pixelPerUnit": 100,
+    "iconListSprite.pixelPerUnit": 50,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0,
@@ -227,6 +227,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(1.000, 0.500)",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
