@@ -245,7 +245,9 @@ baseParams.forEach(field => {
 });
 //Добавить параметры для наследумых классов от WeaponCartridge
 sampleParams.forEach(field => {
-	defaultAddedFields.push([field.fieldPath, "NULL"]);
+	if (!field.fieldPath.includes('.AnimatorSprite.')) {
+		defaultAddedFields.push([field.fieldPath, "NULL"]);
+	}
 });
 
 
