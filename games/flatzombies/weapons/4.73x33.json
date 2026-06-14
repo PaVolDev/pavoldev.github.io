@@ -1,0 +1,55 @@
+{
+    "id": "4.73x33",
+    "idTemplate": "5.56x45A",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAAAUCAYAAADMfWCyAAAFWElEQVR4AcyYzXIbRRDH+z+zknkIoCDGAVIQY0hih+KcC8VLcAEuwJ0LxYkL8ApcgDsninMo/BHKSajKl2OoCjwEtrS79G9Ws9rYspFkyvZard7p6e7p/s9Mz1jh+68/qX/45tNzTcT47Zcf1Z+9f6P+/IN36y8+fO9/I/zhF/+MMwmL7776uKZ/9+aP9ZONn+q/t36uzZ+wv79vw+HQrE5tF53vT1lWHmpt/J0kUuxrzxl/8/gBwLDzaNfKsrSh0zxOTsNGksUYbeniolVVaUw4MVf1CEgHASCmJeywxw/+8It/STbLE0KIlgFk8FmMT1O3cPCiE4kuvbyYJnwwGNj+YH9mwg7w8IM//OJ/1nxCjOEpGwDM5Huj6fMdnWXw/5RjNbJJuqN3bKEkQ+cgjfRS/+gdfchMVhSF9fv9dhWS+Ekoxpj84ddmXHXmT5DJWfNhNljKmQbDQaov8CyD0yYhOO1MtJGT/LAcGrUUjjzrwGknvWbY9E0bfVbFcTbSGESAPAkBmjTOPwUy5dezV2+oXXaS0lZYv/3YNu7uGryqKiMZOO1p5ABQO3pMxPrtneRzkj16rtaGWvqhVXo9+3V7OhtJJp2M2sHnfGnBYwkDkEKwa5cXDU47eBuO/2PlUgs4wKEvnxvsN+48ptn47egBMh2susqLPuMQB8Q7MXTHZBKyDXZnTS14kizE6AlesGcWFhIneIC4vrJk71x5xRa83ly7fMGyfO2NlwwKkq0uL3otKowHG5KHk/Dq8mQ9dCGpWUH4kuR+YiLGGsciO29PyAGl2ffrysadXftnb8/gtW9b+um7eeuB7fmdsCun3gCodDixGIsGWF+5x+nhH2K1wVmpbF+A37z7RxOLl5Kq8hMEhXNELXiSrx5fSSS6ff+vdAqteltqgJFk2/fG8pzDwGtV5SCvO+ilHxJZXhQxvWZQjtJLSv4lNeOY83JYJuCZPAD07nP5acFjdW34DHMarrz6nMFpIydy+MqlsRwZRT8DR5ttx0rkfegAwCWlU/egHitMJlQmEifh229etFUvE0xiew/zBUgs3cNmooNTELbgSUo1j9pFnYFT28wfSW3NQ07iLvbbfpUOCUm2lmpeTFu7qXf+L58rlV4KEnA+MVKjhz3gdLFLgLi+342MfsoEdrwniN2W7nQp9vIx9BV/SgAy7ERqwSP4yhNlm1Dz4Gwbth3XB5Kh5iEnqQU/VAAp+sWVwo53gILneoctsoN62CNHN1NuDz0GBRl+UynwkkCdLR0sSgq+IOriWZ+8LXgEz7YDsE2/58Fpkyjc/OnK9/xQcVHaklte2H+798S2fv/Top/YdV3Sld7Ti3+xUrIeE8BkQd7li81hGF1VkP1y66Fdee0F8w7bJBbvIwZKCfpdQn9e6vqZ5z142MmOAEicIFf9ngdny/R6PYPT7spjCKmoX/dDhZX31qXn7errL6atvLa8lIBju2WfXT30JZmkNLakzhgXkl96Do8ZUx+1EL+AeRJiQsnb5njSryqV/8STbQmIrZGpV/RSgvAsg9MuvI/3gwTYRa+wwq8qbpz4QR3aqT8P7Jw28qMIvwaiTuyGB/cfpR80+FFjXmK3AT4gsso9jJk+gdrBP9cAJ8mkMZlGvpxLMqkhk8udJJk0mUyuw8e5JJOeJhOdHfK2JJMmEwmS7M7DXYOIF0D7vb7NSthhjx+Axy+1thPNVK8hA9deBaYyO10lthYJkmgIMd1Bo9fWoHAk2NLkSZBk2GHf9/+Y8Idf/DOOzfAEHBR+YpqOsvKLVboTnCUfxxbjCLCjAx4rH/Mmt5fktTnY5Keb72ENflX5FwAA//9QgTRXAAAABklEQVQDANwpNElZVhrjAAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAAAUCAYAAADMfWCyAAAFWElEQVR4AcyYzXIbRRDH+z+zknkIoCDGAVIQY0hih+KcC8VLcAEuwJ0LxYkL8ApcgDsninMo/BHKSajKl2OoCjwEtrS79G9Ws9rYspFkyvZard7p6e7p/s9Mz1jh+68/qX/45tNzTcT47Zcf1Z+9f6P+/IN36y8+fO9/I/zhF/+MMwmL7776uKZ/9+aP9ZONn+q/t36uzZ+wv79vw+HQrE5tF53vT1lWHmpt/J0kUuxrzxl/8/gBwLDzaNfKsrSh0zxOTsNGksUYbeniolVVaUw4MVf1CEgHASCmJeywxw/+8It/STbLE0KIlgFk8FmMT1O3cPCiE4kuvbyYJnwwGNj+YH9mwg7w8IM//OJ/1nxCjOEpGwDM5Huj6fMdnWXw/5RjNbJJuqN3bKEkQ+cgjfRS/+gdfchMVhSF9fv9dhWS+Ekoxpj84ddmXHXmT5DJWfNhNljKmQbDQaov8CyD0yYhOO1MtJGT/LAcGrUUjjzrwGknvWbY9E0bfVbFcTbSGESAPAkBmjTOPwUy5dezV2+oXXaS0lZYv/3YNu7uGryqKiMZOO1p5ABQO3pMxPrtneRzkj16rtaGWvqhVXo9+3V7OhtJJp2M2sHnfGnBYwkDkEKwa5cXDU47eBuO/2PlUgs4wKEvnxvsN+48ptn47egBMh2susqLPuMQB8Q7MXTHZBKyDXZnTS14kizE6AlesGcWFhIneIC4vrJk71x5xRa83ly7fMGyfO2NlwwKkq0uL3otKowHG5KHk/Dq8mQ9dCGpWUH4kuR+YiLGGsciO29PyAGl2ffrysadXftnb8/gtW9b+um7eeuB7fmdsCun3gCodDixGIsGWF+5x+nhH2K1wVmpbF+A37z7RxOLl5Kq8hMEhXNELXiSrx5fSSS6ff+vdAqteltqgJFk2/fG8pzDwGtV5SCvO+ilHxJZXhQxvWZQjtJLSv4lNeOY83JYJuCZPAD07nP5acFjdW34DHMarrz6nMFpIydy+MqlsRwZRT8DR5ttx0rkfegAwCWlU/egHitMJlQmEifh229etFUvE0xiew/zBUgs3cNmooNTELbgSUo1j9pFnYFT28wfSW3NQ07iLvbbfpUOCUm2lmpeTFu7qXf+L58rlV4KEnA+MVKjhz3gdLFLgLi+342MfsoEdrwniN2W7nQp9vIx9BV/SgAy7ERqwSP4yhNlm1Dz4Gwbth3XB5Kh5iEnqQU/VAAp+sWVwo53gILneoctsoN62CNHN1NuDz0GBRl+UynwkkCdLR0sSgq+IOriWZ+8LXgEz7YDsE2/58Fpkyjc/OnK9/xQcVHaklte2H+798S2fv/Top/YdV3Sld7Ti3+xUrIeE8BkQd7li81hGF1VkP1y66Fdee0F8w7bJBbvIwZKCfpdQn9e6vqZ5z142MmOAEicIFf9ngdny/R6PYPT7spjCKmoX/dDhZX31qXn7errL6atvLa8lIBju2WfXT30JZmkNLakzhgXkl96Do8ZUx+1EL+AeRJiQsnb5njSryqV/8STbQmIrZGpV/RSgvAsg9MuvI/3gwTYRa+wwq8qbpz4QR3aqT8P7Jw28qMIvwaiTuyGB/cfpR80+FFjXmK3AT4gsso9jJk+gdrBP9cAJ8mkMZlGvpxLMqkhk8udJJk0mUyuw8e5JJOeJhOdHfK2JJMmEwmS7M7DXYOIF0D7vb7NSthhjx+Axy+1thPNVK8hA9deBaYyO10lthYJkmgIMd1Bo9fWoHAk2NLkSZBk2GHf9/+Y8Idf/DOOzfAEHBR+YpqOsvKLVboTnCUfxxbjCLCjAx4rH/Mmt5fktTnY5Keb72ENflX5FwAA//9QgTRXAAAABklEQVQDANwpNElZVhrjAAAAAElFTkSuQmCC",
+    "caliberName": "4.73x33",
+    "uiName": "4.73 Caseless",
+    "author": "",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": "1",
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 2.2,
+    "distance": 24,
+    "impulse": 20,
+    "stopPower": 0.05,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "scaleFirst": "1.5",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": "1.5",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 10,
+    "targetVersion": 209
+}
