@@ -51,7 +51,7 @@ export default {
 	"weapon.Musket.noiseVolume": 6,
 	"weapon.Musket.id": "hk69",
 	"weapon.Musket.boltParent": "hk69",
-	"weapon.Musket.caliber": "40mm",
+	"weapon.Musket.caliber": "40x46",
 	"weapon.Musket.useGUILayout": true,
 	"weapon.Musket.runInEditMode": false,
 	"weapon.Musket.enabled": true,
@@ -191,6 +191,8 @@ export default {
 	"weapon.barrel.name": "barrel",
 	"weapon.name": "hk69",
 	"storeInfo.silencerGroup": "",
+	"storeInfo.ammoListLimit": 8,
+	"storeInfo.ammoListStep": 0,
 	"weapon.shotAnimations[0].animation": "fire",
 	"weapon.shotAnimations": [
 		{
