@@ -14,7 +14,7 @@
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": 50,
     "iconButtonSprite.pivotPoint": "(0.85, 0.5, 0)",
-    "iconListSprite.pixelPerUnit": 50,
+    "iconListSprite.pixelPerUnit": 100,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0,
@@ -64,6 +64,6 @@
     "arrowSample.SpriteRenderer.sortingOrder": 0,
     "arrowSample.SpriteRenderer.sprite.pixelPerUnit": "50",
     "arrowSample.SpriteRenderer.sprite.pivotPoint": "(0.54, 0.50)",
-    "version": 14,
+    "version": 15,
     "targetVersion": 209
 }
