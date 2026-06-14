@@ -72,7 +72,8 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	1128: "Aplicar cambios",
 	1129: "Abrir ventana para editar",
 	1130: "¡Se perderán algunos cambios!\n¿Cambiar arma?",
-	
+	1131: "Abrir panel de edición",
+
 	
 	1500: "❌ Se prohíben los assets robados (texturas, modelos, sonidos)",
 	1501: "❌ Se prohíbe recolorear texturas y duplicar armas del juego",
@@ -475,6 +476,23 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	4103: "Silenciador largo.",
 	4104: "Textura en blanco y negro para multiplicar por color RGB.",
 	4105: "Color del sprite. Este color se usa en el modo 'Multiplicar'.",
-	4106: "Icono para la interfaz, tamaño aproximado 200x300<br>Usa PPU para escalar.<br>Si no se indica, el icono se generará automáticamente.",
+	4106: "Icono para la interfaz, tamaño aproximado 200x300<br>Si no se indica, el icono se generará automáticamente.",
+	4107: "Parámetros del skin",
+	4108: "Nuevo skin",
+	4109: "Crea e indica un identificador para el skin",
+	4110: "Selecciona el skin que se usará como Prefab padre base",
+	4111: "Seleccionar skin",
+	4113: "Métricas del juego.<br>Abrir imagen",
+	4114: "Altura del personaje",
+	4115: "Descripción (opcional)",
+	4117: "Imagen de fondo para el botón en la interfaz",
+	4118: "sin canal alfa.",
+	4119: "El botón tiene alternancia de color y este color se superpone a la textura en modo 'Multiplicar': los píxeles blancos de la textura se colorearán completamente con el color del botón.",
+	4120: "Dedos en la empuñadura del arma, archivo PNG",
+	4122: "Imagen de fondo para el botón en la interfaz, 180x264px,",
+	4123: "Sonido al recibir un golpe de un zombie",
+	4124: "Sonido al caer de espaldas antes de la fatality",
+	4125: "Sonido al arrancar la cabeza",
+	4126: "Escala del icono en el botón de la interfaz<br>Cambiar solo al usar iconBase64 propio",
 
 });
