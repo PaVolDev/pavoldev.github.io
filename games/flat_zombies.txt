@@ -1,18 +1,18 @@
 v2.1.0:
-• Added support for modded skins for the player character;  
-• Mods: weapon search by stats and name;  
-• Mods/Ammo: added an Update Mod button;  
-• Mods: added auto-update — check the version and download a new mod from the server;  
-• Mods/Weapons: added switching of color and texture for suppressors;  
-• Mods/Editor: added switching between templates; 
-• Mods/Bug: weapons sometimes could not load ammo;  
-• Mods: fixed various bugs in data loading;
-• Weapons/Bug: the revolver reloaded when entering a room; 
-• Zombie/Mutant: added one new fatality;  
-• Graphics: fixed the black outline around modded textures;
-• Graphics/UI: fixed bugs in the display of ammo icons;  
-• Graphics/Bug: some blood splatters did not work;  
-• Added translations: Bahasa Jawa and Indonesian;  
+• Player: Added support for modded character skins.
+• Mods: Added weapon search by stats and name.
+• Ammo Mods: Added an Update button.
+• Mods: Added auto-update (checks version and downloads new mods from the server).
+• Weapons: Added color and texture switching for suppressors.
+• Editor: Added switching between templates.
+• Fixes: Weapons sometimes failed to load ammo.
+• Fixes: Various bugs in data loading solved.
+• Fixes: The revolver no longer reloads when entering a room.
+• Zombies: Added a new fatality for the Mutant.
+• Graphics: Fixed a black outline around modded textures.
+• UI: Fixed visual bugs in ammo icons display.
+• Fixes: Some blood splatters did not render.
+• Localization: Added Javanese and Indonesian languages.
 
 v2.0.9:
 • Increased difficulty of game modes;
@@ -22,17 +22,17 @@ v2.0.9:
 • Android 8.0+
 
 v2.0.8:
-• Mod support with new weapons;
-• Settings: option to increase brightness;
-• Mode/Rooms: difficulty increased by ≈ 2 times;
-• Zombies are slower/weaker with low aggression on first levels; 
-• UI/Player: stamina indicator is now displayed on the leg button;
-• Modes/Bug: bullet hits were not awarding any money;
-• Graphics/HK69: fixed an animation bug;
-• Graphics/Mode/Street: slightly adjusted the background;
-• Shotgun: immediately begin reloading when the weapon is empty after firing;
-• Player/Audio/Bug: weapon sounds sometimes failed to play while walking;
-• Weapons: current ammo lists will be reset;
+• Mods: Added mod support with new weapons.
+• Settings: Added an option to increase brightness.
+• Game Modes: Room difficulty increased by approximately 2 times.
+• Zombies: Zombies are now slower, weaker, and less aggressive on the first levels.
+• UI: The stamina indicator is now displayed on the leg button.
+• Fixes: Bullet hits now correctly award money.
+• Graphics: Fixed an animation bug for the HK69.
+• Graphics: Slightly adjusted the street background.
+• Weapons: The shotgun now immediately begins reloading when the weapon is empty after firing.
+• Fixes: Fixed an issue where weapon sounds sometimes failed to play while walking.
+• Weapons: Current ammo lists will be reset.
 
 v2.0.7:
 • Weapons: M110 and MK48;
