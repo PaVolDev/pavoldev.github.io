@@ -1,3 +1,19 @@
+v2.1.0:
+• Added support for modded skins for the player character;  
+• Mods: weapon search by stats and name;  
+• Mods/Ammo: added an Update Mod button;  
+• Mods: added auto-update — check the version and download a new mod from the server;  
+• Mods/Weapons: added switching of color and texture for suppressors;  
+• Mods/Editor: added switching between templates; 
+• Mods/Bug: weapons sometimes could not load ammo;  
+• Mods: fixed various bugs in data loading;
+• Weapons/Bug: the revolver reloaded when entering a room; 
+• Zombie/Mutant: added one new fatality;  
+• Graphics: fixed the black outline around modded textures;
+• Graphics/UI: fixed bugs in the display of ammo icons;  
+• Graphics/Bug: some blood splatters did not work;  
+• Added translations: Bahasa Jawa and Indonesian;  
+
 v2.0.9:
 • Increased difficulty of game modes;
 • Player can now only perform one action at a time: shoot or kick;
@@ -94,7 +110,6 @@ v2.0.3:
 • Zombies: face animation;
 • Fixed minor bugs;
 • Updated game engine components;
-APK: <Deleted>
 
 v2.0.2:
 • Weapons: Silencers and MP5;
@@ -103,7 +118,6 @@ v2.0.2:
 • Office mode has weapons purchase;
 • Fixed zombie bugs;
 • Zombie: When shooting a rifle/SMG in the head for a long time, his hand movements will stop and thus, with accurate shooting, you can kill a zombie in his head
-APK: <Deleted>
 
 v2.0.1:
 • Weapons: M200 sniper rifle;
@@ -120,7 +134,6 @@ v2.0.1:
 • The zoom of the game camera has been increased and the overall picture looks larger;
 • Main menu: changed images with red background;
 • Saving the game at the end of a level before launching the menu and if the application crashes, the game must load the completed level;
-APK: <Deleted>
 
 v2.0.0:
 • New "Dark Office" mode with a flashlight;
@@ -135,7 +148,6 @@ v2.0.0:
 • Fixed bugs with bow arrows;
 • Fixed zombie animation bugs;
 • Fixed graphic bugs;
-APK: <Deleted>
 
 v1.9.9:
 • Fixed zombie movement at low FPS;
