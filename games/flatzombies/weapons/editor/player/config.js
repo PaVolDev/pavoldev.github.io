@@ -9,7 +9,7 @@ function onLoadNewJson(json) {
 
 function onSaveJson(json) {
 	json["player.man.thigh.SpriteRenderer.flipX"] = "false";
-	json["storeInfo.iconBase64.pixelPerUnit"] = 150;
+	json["storeInfo.iconBase64.pixelPerUnit"] = json["storeInfo.iconBase64.pixelPerUnit"] || 150;
 	delete json["player.gameObject.SetActive"];
 	delete json["player.man.body.gameObject.SetActive"];
 	delete json["player.man.body.head.gameObject.SetActive"];
