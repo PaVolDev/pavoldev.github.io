@@ -74,13 +74,13 @@
     "weapon.bolt": "(0.849, 0.182, 0)",
     "weapon.flashlight": "(1.085, -0.04, 0)",
     "weapon.automat": false,
-    "weapon.fireRateInMinute": "1800",
+    "weapon.fireRateInMinute": 7200,
     "weapon.chamberSize": "3",
     "weapon.WeaponSilencerMod.bolt": "barrel",
     "weapon.WeaponHandPoints.fingerPoint": "(-0.023, 0.128)",
     "weapon.WeaponHandPoints.fingerAngle": -20,
     "cartridgeList": [],
-    "version": 1,
+    "version": 2,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
