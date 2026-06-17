@@ -8,7 +8,7 @@
     "uiName": "6.8x43 Rem",
     "author": "Dafyich",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAKCAYAAADPcbwqAAAAAXNSR0IArs4c6QAAAThJREFUOE/VlL1KA1EQhc/c3dko0RS+hb1gJ5uXUAt7O9/CB7DyAbIvEC0CWlsKQoKC2CkSrPwhkGTvzMi6EXbVVQsTybT3cs83Z84d6ibNexO5cswbAAJMv6goQQRzxNfk6CBQnKCBO9x8hniqPeja7nlKvaRpUA+E0fRRKxR4om2Gvqi/VFUtNQUjFTpzCyv71G3FpuIRRLV/Aw4cgyg3XsTDUOJFdmQp2nWR7TkG5kIkSimrNt6+mQnhl49kH8cx3q9/5bDLgp5Suy6+4PBH4IzmB80/AyYGXN59FbCM6WhZ/dbcRMKndtwQ3ZxD4CQ2iICKkZjxvggdgzlAmspQVPpm5bWWhVMFp4uP0R71WvGzmdxSyKt4WyCzr9DxwAyHZNSRUC9CP5okOmcZDIXG0dJofafz8grZGLZFb7UY9QAAAABJRU5ErkJggg==",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAHCAYAAADwK5bPAAAAAXNSR0IArs4c6QAAAOdJREFUOE/FkTFOAzEQRf8f24mEEA0SRwG6BC5HyxlYTkDNKQjcIAUFG1KFXXvHg5yI1UqBzhIjufGM/tO84UtzsxahB3mBOsUSQ5YX3oW4c+Rz7L/iT/wwn2n6bNd8fVzaYVLqoCcp3gUE79DFtDPTNLYMGxf1lquHhUEIiqsOd1KECnJWZNMxn8CHdrg6wFngk8334o7Lfvkj/hgG4BgAwTHc2OYel/+yOQxtRoE3CytqMN280gGK9vnMo+sTzHT0ns021vOaq2a5pey9n1VijjHehQHgveb8ZDp0pZESID7qyfnp2zfWq2O3cV47vQAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": 200,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "150",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
