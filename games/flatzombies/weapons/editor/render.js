@@ -26,6 +26,7 @@ let dragStartWorldPos = { x: 0, y: 0 };
 let dragStartTopLeft = { x: 0, y: 0 };
 let dragStartWorldAngle = 0;
 let dragStartSize = { w: 0, h: 0 };
+let dragStartLocalPos = { x: 0, y: 0 }; // Исходная локальная позицияpivot-drag для canChangePosition===false
 let lastMouseClickPoint = { x: 0, y: 0 };
 
 const canvas = document.getElementById('scene');
@@ -736,8 +737,9 @@ function startMove(event, parentMove) {
 		const worldSize = { w: img.width / ppu, h: img.height / ppu };
 		dragStartSize = worldSize;
 		const offset = { x: -o.pivotPoint.x * worldSize.w, y: -(1 - o.pivotPoint.y) * worldSize.h };
-		const rotatedOffset = rotateVec(offset, -dragStartWorldAngle); // Since forward is rotate(worldAngle)
+		const rotatedOffset = rotateVec(offset, dragStartWorldAngle); // Локальное смещение текстуры преобразуем в мировое с учетом угла объекта
 		dragStartTopLeft = { x: dragStartWorldPos.x + rotatedOffset.x, y: dragStartWorldPos.y + rotatedOffset.y };
+		dragStartLocalPos = { x: o.localPosition.x, y: o.localPosition.y }; // Сохраняем исходную локальную позицию для canChangePosition===false
 		sceneObjects.forEach(child => {
 			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointStartDrag(event, selectedObject); }
 		});
@@ -814,7 +816,7 @@ function mouseMove(event, shiftKey = false) {
 			x: dragStartTopLeft.x - newWorldPos.x,
 			y: dragStartTopLeft.y - newWorldPos.y
 		};
-		const newOffset = rotateVec(deltaToTopLeft, dragStartWorldAngle);
+		const newOffset = rotateVec(deltaToTopLeft, -dragStartWorldAngle);
 
 		let newPivotX = -newOffset.x / dragStartSize.w;
 		let newPivotY = 1 + newOffset.y / dragStartSize.h;
@@ -831,16 +833,27 @@ function mouseMove(event, shiftKey = false) {
 			y: newWorldPos.y - parentPos.y
 		};
 		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
-		if (dragObject.localAngle == 0 && !shiftKey) { //Оставлять объекты на месте, только если родительский объект не имеет угла наклона
-			sceneObjects.forEach(child => { //Двигать дочерние объекты в обратную сторону, когда курсор мыши перемещает точку вращения у родительского объекта
-				if (child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name) { //Таким образом объекты на экране остаются на месте, когда мы двигаем опорную точку
-					child.localPosition.x = Math.round((parseFloat(child.localPosition.x) + parseFloat(dragObject.localPosition.x) - newLocalPos.x) / 0.0001) * 0.0001;
-					child.localPosition.y = Math.round((parseFloat(child.localPosition.y) + parseFloat(dragObject.localPosition.y) - newLocalPos.y) / 0.0001) * 0.0001;
-				}
+		if (!shiftKey) { // Оставлять дочерние объекты на месте при переносе pivotPoint, даже если родитель повернут
+			const fixedChildWorldPositions = sceneObjects
+				.filter(child => child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name)
+				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) })); // Запоминаем мировые координаты дочерних объектов до переноса pivotPoint
+			o.localPosition.x = newLocalPos.x;
+			o.localPosition.y = newLocalPos.y;
+			const newParentWorldPos = getWorldPosition(o.name); // Новая мировая позиция pivotPoint родителя после пересчета localPosition
+			const newParentWorldAngle = getWorldAngle(o.name); // Новый мировой угол родителя нужен для перевода мирового смещения ребенка в локальное
+			fixedChildWorldPositions.forEach(item => { // Двигаем дочерние объекты в обратную сторону через мировые и локальные координаты
+				const childDeltaWorld = {
+					x: item.worldPosition.x - newParentWorldPos.x,
+					y: item.worldPosition.y - newParentWorldPos.y
+				}; // Мировое смещение ребенка относительно нового pivotPoint родителя
+				const childLocalPosition = rotateVec(childDeltaWorld, -newParentWorldAngle); // Переводим мировое смещение в локальные координаты повернутого родителя
+				item.child.localPosition.x = Math.round(childLocalPosition.x / 0.0001) * 0.0001;
+				item.child.localPosition.y = Math.round(childLocalPosition.y / 0.0001) * 0.0001;
 			});
+		} else {
+			o.localPosition.x = newLocalPos.x;
+			o.localPosition.y = newLocalPos.y;
 		}
-		o.localPosition.x = newLocalPos.x;
-		o.localPosition.y = newLocalPos.y;
 
 		renderScene();
 		if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onDrag(event, selectedObject);
@@ -863,8 +876,28 @@ function mouseUp(event) {
 			});
 		}
 	} else if (isDraggingPivot) {
+		const pivotDragObj = dragObject; // Сохраняем ссылку на объект до сброса dragObject
 		isDraggingPivot = false;
 		dragObject = null;
+		// Восстановление localPosition для объектов, которым запрещено менять позицию
+		if (pivotDragObj && pivotDragObj.canChangePosition === false) {
+			const fixedChildWorldPositions = sceneObjects // Мировые позиции дочерних объектов до восстановления позиции родителя
+				.filter(child => child.parent != "" && child.parent == pivotDragObj.name && child.name != pivotDragObj.name)
+				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) }));
+			pivotDragObj.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию
+			pivotDragObj.localPosition.y = dragStartLocalPos.y;
+			const restoredParentWorldPos = getWorldPosition(pivotDragObj.name); // Мировая позиция после восстановления
+			const restoredParentWorldAngle = getWorldAngle(pivotDragObj.name); // Мировой угол после восстановления
+			fixedChildWorldPositions.forEach(item => { // Пересчитываем дочерние объекты, чтобы их мировые позиции не изменились
+				const childDeltaWorld = {
+					x: item.worldPosition.x - restoredParentWorldPos.x,
+					y: item.worldPosition.y - restoredParentWorldPos.y
+				};
+				const childLocalPosition = rotateVec(childDeltaWorld, -restoredParentWorldAngle);
+				item.child.localPosition.x = Math.round(childLocalPosition.x / 0.0001) * 0.0001;
+				item.child.localPosition.y = Math.round(childLocalPosition.y / 0.0001) * 0.0001;
+			});
+		}
 		sceneObjects.forEach(child => {
 			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointEndDrag(event, selectedObject); }
 		});
