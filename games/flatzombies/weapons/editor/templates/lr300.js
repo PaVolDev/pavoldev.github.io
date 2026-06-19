@@ -145,7 +145,7 @@ export default {
 "weapon.gunFlash.Transform.localPosition": "(1.43, 0.2, 0)",
 "weapon.gunFlash.Transform.localEulerAngles.z": 0,
 "weapon.gunFlash.gameObject.SetActive": true,
-"weapon.gunFlash.AnimatorSprite.initialAnimation": "",
+"weapon.gunFlash.AnimatorSprite.initialAnimation": "", "weapon.gunFlash.AnimatorSprite.animations": "",
 "weapon.gunFlash.AnimatorSprite.playStart": false,
 "weapon.gunFlash.AnimatorSprite.timeScale": 1,
 "weapon.gunFlash.AnimatorSprite.speed": 30,
