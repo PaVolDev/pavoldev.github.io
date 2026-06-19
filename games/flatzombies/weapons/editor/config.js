@@ -17,9 +17,9 @@ function onLoadNewJson(json) {
 
 function onSaveJson(json) {
 	Object.keys(json).forEach(key => {
-		if (key.startsWith("weapon.player") && (key.endsWith("Position") || key.endsWith(".z") ||  key.endsWith("sortingOrder") || key.endsWith("SetActive") || key.endsWith("enabled"))) { //Защита персонажа, удаление строки типа weapon.player.man.body.weaponParent.arm.Transform.localPosition
+		if (key.startsWith("weapon.player") && (key.endsWith("Position") || key.endsWith(".z") || key.endsWith("sortingOrder") || key.endsWith("SetActive") || key.endsWith("enabled"))) { //Защита персонажа, удаление строки типа weapon.player.man.body.weaponParent.arm.Transform.localPosition
 			delete json[key];
-		} else if (key.startsWith("weapon.gunFlash.SpriteRenderer.")  || key.endsWith("weapon.gunFlash2.SpriteRenderer.")){
+		} else if (key.startsWith("weapon.gunFlash.SpriteRenderer.") || key.endsWith("weapon.gunFlash2.SpriteRenderer.")) {
 			delete json[key];
 		}
 	});
@@ -537,25 +537,24 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "weapon.gunFlash.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
 	{ fieldPath: "weapon.gunFlash.Transform.localPosition", comment: "Координаты огня от выстрела", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "weapon.gunFlash.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "weapon.gunFlash.AnimatorSprite.animations", comment: "Список анимаций", type: "AnimationSprite[]", value: "" },
 	//{ fieldPath: "weapon.shotAnimations", comment: "Анимация выстрела", type: "NameAnimationFire[]", value: "" },
 	{ fieldPath: "weapon.shotAnimations[0].animation", comment: "Анимация выстрела", type: "string", value: "fire", options: ["fire", "LabelShotFire"] },
 	{ fieldPath: "weapon.strikeAnimations[0]", comment: "Анимация выстрела", type: "string", value: "fire", options: ["fire", "LabelShotFire"] },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.animations", comment: "Список анимаций", type: "AnimationSprite[]", value: "" },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.timeScale", comment: "Множитель скорости анимаций", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.reverse", comment: "Воспроизвести в обратном порядке", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.AnimatorSprite.loop", comment: "Проигрывать повторно", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.randomRotate", comment: "Случайный поворот", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.flipX", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.flipY", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.direction", comment: "Направление движения", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.directionRange", comment: "Отклонение по обе стороны от направления ", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMin", comment: "Скорость, метр/секунду", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMax", comment: "Макси скорость, метр/секунду", type: "float", value: 0 },
-	// { fieldPath: "weapon.gunFlash.WeaponShotEffect.nextEffectShot", comment: "Передать событие следующему эффекту ", type: "WeaponShotEffect", value: "" },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.animations", comment: "Список анимаций", type: "AnimationSprite[]", value: "" },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.timeScale", comment: "Множитель скорости анимаций", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.reverse", comment: "Воспроизвести в обратном порядке", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.loop", comment: "Проигрывать повторно", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.randomRotate", comment: "Случайный поворот", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.flipX", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.flipY", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.direction", comment: "Направление движения", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.directionRange", comment: "Отклонение по обе стороны от направления ", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMin", comment: "Скорость, метр/секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMax", comment: "Макси скорость, метр/секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.nextEffectShot", comment: "Передать событие следующему эффекту ", type: "WeaponShotEffect", value: "" },
 	// { fieldPath: "weapon.gunFlash2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	// { fieldPath: "weapon.gunFlash2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
 	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
