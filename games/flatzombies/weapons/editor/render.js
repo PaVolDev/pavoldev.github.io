@@ -175,9 +175,9 @@ function renderScene() {
 		const wp = getWorldPosition(o.name);
 		const sx = wp.x;
 		const sy = wp.y;
-		ctx.fillStyle = (o === selectedObject) ? 'red' : 'blue';
+		ctx.fillStyle = (o === selectedObject) ? 'red' : 'DodgerBlue';
 		ctx.beginPath();
-		ctx.arc(sx, sy, ((o === selectedObject) ? 6 : 4) / viewPPU, 0, Math.PI * 2);
+		ctx.arc(sx, sy, ((o === selectedObject) ? 6 : 3) / viewPPU, 0, Math.PI * 2);
 		ctx.fill();
 	});
 	// ctx.fillStyle = 'green';
