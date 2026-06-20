@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", onLoaded);
 //Подготовка данных
 let templateInput = null; let lastTemplateIndex = 0;
 let selectedWeapon = null; //Выбранный шаблон для нового оружия
+sampleParams = baseParams.concat(sampleParams);
+let availableParams = new Array();
+let editedParams = new Array();
 function onLoaded() {
 	//Вырезать из параметров приставки из массива prefixHide
 	sampleParams.forEach(element => {
@@ -184,9 +187,6 @@ function hideLoadingNewWeapon() {
 }
 
 
-sampleParams = baseParams.concat(sampleParams);
-let availableParams = new Array();
-let editedParams = new Array();
 
 // ——— UTILS ———
 function parseVector(value) {
@@ -207,7 +207,7 @@ function getPrefix(fieldPath, suffix = 'SpriteRenderer.sprite') { //parent.child
 }
 
 //Найти дочерний параметр
-function getChildDepPath(parentParam, depFieldPath) { 
+function getChildDepPath(parentParam, depFieldPath) {
 	const prefix = getPrefix(parentParam.fieldPath, parentParam.suffix);
 	const childPath = parentParam.suffix ? ((prefix ? prefix + '.' : '') + depFieldPath) : depFieldPath;
 	if (availableParams.find(p => p.fieldPath == childPath)) { return childPath; }
@@ -957,6 +957,7 @@ function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 				childObjParam = objMetaData.find(p => p?.fieldPath === key);
 				if (!childObjParam) { console.warn(`Массив objMetaData должен иметь данные для свойства ${key}`); continue; }
 				childObjParam.value = obj[key];
+				if (!('startFieldPath' in childObjParam)) childObjParam.startFieldPath = param.startFieldPath + '.' + childObjParam.fieldPath;
 				asd += `<div class="param-group-field">
 						<div>
 							<div class="field-label">${key}</div>
