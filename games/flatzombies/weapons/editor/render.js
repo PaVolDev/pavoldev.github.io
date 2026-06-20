@@ -756,6 +756,16 @@ function startMove(event, parentMove) {
 		dragObject = hit;
 		dragStartMouseWorld = { x: wx, y: wy };
 		dragStartWorldPos = getWorldPosition(hit.name);
+		dragStartLocalPos = { x: hit.localPosition.x, y: hit.localPosition.y }; // Сохраняем исходную локальную позицию перед drag для объектов с canChangePosition===false
+		const dragImg = images[hit.name]; // Изображение объекта для вычисления стартового top-left текстуры при обычном drag
+		if (dragImg && dragImg.complete) {
+			const dragWorldSize = { w: dragImg.width / hit.pixelPerUnit, h: dragImg.height / hit.pixelPerUnit }; // Размер спрайта в мировых координатах на старте обычного drag
+			dragStartSize = dragWorldSize;
+			const dragOffset = { x: -hit.pivotPoint.x * dragWorldSize.w, y: -(1 - hit.pivotPoint.y) * dragWorldSize.h }; // Смещение top-left от pivot в локальных координатах
+			const dragAngle = getWorldAngle(hit.name); // Мировой угол объекта для преобразования локального смещения в мировое
+			const dragRotatedOffset = rotateVec(dragOffset, dragAngle); // Мировое смещение top-left на старте обычного drag
+			dragStartTopLeft = { x: dragStartWorldPos.x + dragRotatedOffset.x, y: dragStartWorldPos.y + dragRotatedOffset.y };
+		}
 		if (selectedObject) {
 			if (spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onStartDrag(event, selectedObject);
 			sceneObjects.forEach(child => {
@@ -784,9 +794,6 @@ function mouseMove(event, shiftKey = false) {
 	const wy = (mouseSy - canvas.height / 2) / viewPPU;
 
 	if (isDragging) {
-		if ("canChangePosition" in dragObject && dragObject.canChangePosition === false) {
-			return;
-		}
 		const mouseDeltaX = wx - dragStartMouseWorld.x;
 		const mouseDeltaY = wy - dragStartMouseWorld.y;
 		const newWorldPos = {
@@ -867,6 +874,24 @@ canvas.addEventListener('touchcancel', mouseUp, { passive: false });
 canvas.addEventListener('touchend', mouseUp, { passive: false });
 function mouseUp(event) {
 	if (isDragging) {
+		const dragEndObj = dragObject; // Сохраняем объект перетаскивания до сброса состояния drag
+		if (dragEndObj && dragEndObj.canChangePosition === false) {
+			const currentWorldPos = getWorldPosition(dragEndObj.name); // Текущая мировая позиция pivot после временного перемещения мышью
+			const dragDeltaWorld = { x: currentWorldPos.x - dragStartWorldPos.x, y: currentWorldPos.y - dragStartWorldPos.y }; // Мировое смещение объекта за время drag
+			const desiredTopLeftWorld = { x: dragStartTopLeft.x + dragDeltaWorld.x, y: dragStartTopLeft.y + dragDeltaWorld.y }; // Новый top-left, где должна остаться текстура после отпускания
+			//const pivotWorldAfterReset = getWorldPosition(dragEndObj.parent); // База для пересчета pivot в мировых координатах после восстановления localPosition
+			//const parentWorldAngleAfterReset = getWorldAngle(dragEndObj.parent); // Базовый мировой угол родителя после восстановления localPosition
+			dragEndObj.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию, чтобы pivot вернулся в стартовую точку
+			dragEndObj.localPosition.y = dragStartLocalPos.y;
+			const restoredWorldPos = getWorldPosition(dragEndObj.name); // Подтвержденная мировая позиция pivot после восстановления localPosition
+			const restoredWorldAngle = getWorldAngle(dragEndObj.name); // Мировой угол объекта для перевода мирового смещения top-left в локальное
+			const deltaToDesiredTopLeft = { x: desiredTopLeftWorld.x - restoredWorldPos.x, y: desiredTopLeftWorld.y - restoredWorldPos.y }; // Мировое смещение от восстановленного pivot до желаемого top-left
+			const newLocalOffset = rotateVec(deltaToDesiredTopLeft, -restoredWorldAngle); // Локальное смещение top-left относительно pivot после отпускания
+			const sizeW = dragStartSize.w || 0.000001; // Безопасная ширина для преобразования offset->pivotX
+			const sizeH = dragStartSize.h || 0.000001; // Безопасная высота для преобразования offset->pivotY
+			dragEndObj.pivotPoint.x = -newLocalOffset.x / sizeW; // Новый нормализованный pivotX из локального смещения
+			dragEndObj.pivotPoint.y = 1 + newLocalOffset.y / sizeH; // Новый нормализованный pivotY из локального смещения
+		}
 		isDragging = false;
 		dragObject = null;
 		if (selectedObject) {
