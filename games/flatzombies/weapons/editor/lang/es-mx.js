@@ -494,5 +494,17 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	4124: "Sonido al caer de espaldas antes de la fatality",
 	4125: "Sonido al arrancar la cabeza",
 	4126: "Escala del icono en el botón de la interfaz<br>Cambiar solo al usar iconBase64 propio",
+	4127: "Archivo de texto",
+	4128: "Archivo JSON",
+	4130: "¿El arma tiene mira láser?",
+	4131: "Color del láser",
+	4132: "Rotación aleatoria",
+	4133: "Voltear aleatoriamente horizontal/verticalmente",
+	4134: "Voltear aleatoriamente horizontal/verticalmente",
+	4135: "Dirección de movimiento",
+	4136: "Desviación a ambos lados de la dirección",
+	4137: "Velocidad, metro/segundo",
+	4138: "Velocidad máxima, metro/segundo",
+	4139: "Pasar evento al siguiente efecto",
 
 });
