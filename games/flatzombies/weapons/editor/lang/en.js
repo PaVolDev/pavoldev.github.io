@@ -492,5 +492,17 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4124: "Sound when falling on back before fatality",
 	4125: "Sound when head is ripped off",
 	4126: "Icon scale on the UI button<br>Change only when using custom iconBase64",
+	4127: "Text file",
+	4128: "JSON file",
+	4130: "Weapon has laser sight?",
+	4131: "Laser color",
+	4132: "Random rotation",
+	4133: "Randomly flip horizontally/vertically",
+	4134: "Randomly flip horizontally/vertically",
+	4135: "Movement direction",
+	4136: "Deviation on both sides from direction",
+	4137: "Speed, meter/second",
+	4138: "Max speed, meter/second",
+	4139: "Pass event to next effect",
 
 });
