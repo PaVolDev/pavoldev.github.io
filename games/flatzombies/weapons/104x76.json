@@ -1,0 +1,43 @@
+{
+    "id": "104x76",
+    "idTemplate": "12x70",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAABLCAYAAAAicppkAAAKK0lEQVR4AdyaS2wcRRrHv57xZB5OnMWOWUyyMQL2IUE2DrK1S3YllNWu2Hs2fsS7XDlw3nsOSEi8Dtw4RnAhN0JiiHhfSIBwQRAwD0Xh/RCEQIDYnunm/6+emunu6e70q3pCrKrpmq+rp7769fd9Vf21K3J1/lUxrTpqDdU7xyg5ug0W74WDZ3+dEgKYheqXUNdRt6NynkH5jq4ch/DCi8LP/Hqlu6D6KVRdPkJjCjUoPwfZdaiR5WqEQ0sJTphWMx0U4jvlOISXqwkOJ8o48wGm+hCqLgfQOI/6PurDqLrMo/EdajAuQeSWKxrOEZHqIyL1R0Vqh0Qqrsqhn1VI51AZZ97F8QXU/6H+A/Vb1O9R30Z9HpXyf+L4DSrl3rgEUb/EDdjvNYQWwWBWe2AKnPA6gsaOGEC3QcWTqLocR+M11B9RCQQHVShnv5/xzSvXcQnifrki4RAM/GDWEnm9r6qciwH0O08/3fwJDVyCT3+hpWzzi9Q3Wp9q6I8rDg7BXBChi3hXHK3vuUmR7SEW9BY63IeqywIajCeMM974s9SVv4ejV67jUg3yHpNeA8KhFw3GFqHph+ozIvIRzCHoYmfR+XHUZVTGmS9x/AGVccYbf76CjHHmHRzD5LSqnTinuKgPfBl66YKZiQPjUTLoYhs4R2t4EkfGqJdw1IVx5lV8CcYZyum27P8yzutC0OAvsSuA7mz8SDCMMQBzOsVgQRdr41oG4N/iGCy0iLA4Q2BhG0EVf4ZuOQTDVQmzCYsxEEcXuhhIqLvs6XUG7QdRdTmIBoYQxp8H0NaF+xzcE1mFwNt/P75/jjpcyyEYaBdclahX4oq7q+6y5wK6xWF81/Hna7QZZ7j/eRFt7nP+haPe5zAuPYfvlDNenUCbbloiHIzoLRoMZKktBteo4oj07rISuB+cGK1Bx59nXbH6XMEn4wyXee8+5xnIuQi8giNdE4chxRyCgZ3vgQZ5wCy2RE7cLUIY+ClfoYyThNf55PzCOBMmZ8xaYwddYZW6Wc6RYPK6EiyGYI7dJUIAcYoz/nj3P4wzjCd0JW+c4T7ns+APlQpHg4ESmS3GElmAxSQBg2GE8Ufvf+6A4GlUWhXl3rhEt6Icp/ulNDgEE7Pz7WsU06LFNESOJ7AY/SucsN7/8IZc7J6gXMclxhkt7552D6XAIRi6EvYxDHruyOk/51NYjPfXGUvoftzreOUERLkvzng7GIdDMLCYGQzKO4dDpjLfFFlJYTGZBgleZBQOwXQtJs3ON6jjUMBQCWNwCCbvcg0FhwYGY5vZBBIMLQYrCzdcHCdLHSoYKly45Wgw+PHMMQZQl4YRY6CzrxQKpwgw0G4Zy0jSfQy6myuFwSkKDNbdo/eIhO47isBAPRMm7YuJORyQMQbKZ3YlXDtfBhjqqZP2eMDaGZJyhSpuyW05BIN9TFTO1x3l8p8q+BZkMaGjUU+CwcneDcTkz8YBwnl0z1j0gHl2vgi+C6aDr9YT0+yBQVsVAIgEhHOqT+oPDljEPibls5IRPQHhLNKJwaR9tphDMHQl3PXM+xhca3y5pp50JYyVRM9g0j49HD1gHlfC7Te+XGs9MdaAK0EWVXyAYFFR/QblHBAWk/chcrmsVQkzSAMG3VXhW41r2UoMh2BoorCYzA+RMO+FMsAUEAv55jOZW2kwoJnlTuAyVeYZfMtYrnETksQYpVTwAwm1/Xjl8wXll7WcIwek+kNL9liW5AJTxnJdgMUwodZL2sfCOXLkQHXq5t/PXvvv61+vbgFP3BISTVnVBs9kokpbNtTLbDG4dmD1jIRDMDdd+HCuvrN5auwPo7L11jEZSQkIA5aywStikQh72A2FQzA3XlyddSz7ZGWkIo3tDZnYe42M3bpFRjYnsyD47iJjjGmLIZg8iwS8IHL1HIBDMLCYGbErboyxRKqNqrRuaMm2veOydVciC6LvGk070JUAZi4nmNiH3R4cQll55Ob6Dd+9fxssxr9cWyLVugto4vZrZGuMi9Fiygi+AJP031Uk7E/rGbd6KjgEM/XZ6uyo07y0vm6/5uDKgR+0xA/oz7CggItZ6V64DQyRRNC1GILx38AkF/f7JLJsBWfy07d32Zaj3Mi2HWm3bdGA+r+HFmavXWzir3Cx3WNSG3NjEE4tlRFjitiIJrVsBacyMnJBHLkX01dQ2m0nEaDxv4zLtjsmpDnVLOVZCa6UO2+U5gYqOKObap/YlvUE7v79BGQjyilAHVvBosxX0bFar8jodBOBevNS4zebjac2CQZqZX5jCpVTbysUnNm739jY0qitdsR6DD/SB7ThKAuCp/nYqC/oWK1Xl6vj9WPzZ742mvPtulJmMAihmbYVCg4n6wUkYql/z9AW1AmxIMtyFprt9aP7Dp0xCoYWI5L90YVgMr5jlx4cKCAaEMz3sCOW+r8WBWjQguZHas7xW+4xC4bPStAls8VgTolWJfQLLT447KEBVazO4/CcvoshSG8AUqdtH6xtsld23/Um/0OBlxReuVwTDMbP/KzkiCwmXZWiJjAAhx0JqPPt5HvBGAQwsm47r5oGA1eayQsmqytx/rqGwuHJfYdeageDtCPO/mZ108c8b6LSYgjGFjG+wUuifyQcXkwL0oAcW/ZeWqucoIzniq5dMLmflfK6kndesXDYkTAIaPJC5407/28mzhBMEct1kWA498vCYScCuuXQmeC/jfFU7kowcKVcO18G3yJiTHAyieAELyrqO8HktRgE7iUTYDjHocHRYKCEeuDFMXWBxRwMy+Cl/qGIC4YCh0n7802Z9SftIzSMEAPMYkfkqbh8TMSlicWlw1G5o5v+NHP9nVOnqqNuuiOxtv2Oy3Qlk2A4VKlwCAYp2Ln69KbTW/64WbYyYZY+ab/EF4Mmc9MEw1oanC6YGaRgVdK+uaMhKuVKQIGMIhWLqCpvZNpi9NilwOmCmQMYd+drSS9pP3H7uPtW4/IWFJsM1xMq8mgUDqGsIGl/43n3NY9PcUtcQNMt2fa3cdfFIizIElEv3MqyGOn+GYNDMDppf2lDTkXmpJFR5GsfWpB67TMISLlSGTGmy6R3MAbnuk9XdweT9swN9UbWDZgFMorSggUxBo3xxWHfxSJfuOnLTR6NwXFG5LwEkvbMKEYDqiAf3UKQHpfJbtKeq1LZruSFbQyOTto73owiEmYEFOlieLM6ijerrenmYsNw0t4LIaptDA4fVvk0z4xiEFA75r1YpWEtdabHjCbto2AE5cbgcCACYkaRgBBafCnXdkjSHtcstzbax0ylRvD7qYpRONSEGUUC6uC1j3jfaiAfTQvyvPZZbq6tHzWZtJeUf8bhUB8Coosh/XlYvIAQg5i0R5D+75UGRvBXChyM43vt43UxJu3X2p2TZVoM9UlSS4NDZRiDaEF0MR2kxbb+YzJpz3Gz1lLhUEkNSAXpiv33Tq1tLGnP8fLU0uFQWQJikL7orJ3eZ/CtKcfKU38BAAD//34v3ekAAAAGSURBVAMAINjPuvIcMcsAAAAASUVORK5CYII=",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAMCAYAAAAppE4WAAAAZ0lEQVR4AeySsQnAIBBFv86SNpAiC2SXQCbIFKlSBrKL2Fs4gLuclaBgYenpCQ8s7907bd+VEhjo6dzF/RvVMPdCH8CKQiyX5P4XMW4FpZgU62QDcoqdhGgeY45i++lVjeMJ6gJYEQEAAP//EutnlwAAAAZJREFUAwDX53uTBIFOqAAAAABJRU5ErkJggg==",
+    "caliberName": "10.4x76",
+    "uiName": ".410",
+    "author": "",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAFCAYAAAC0CJe+AAAAKklEQVR4AeyQsQkAAAjDSi/yXcGT/KnuzupkIHMgzDB1HdCGxCEfG5ldAAAA///KmXMPAAAABklEQVQDAN+YMA4DqzAdAAAAAElFTkSuQmCC",
+    "shellSkin.pixelPerUnit": "90",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": "20",
+    "angleRandom": 2,
+    "angleSpread": 0.9,
+    "damage": 11,
+    "distance": 24,
+    "impulse": 35,
+    "stopPower": 0.6,
+    "penetration": {
+        "modeHit": "RANDOM_FIRST",
+        "minHits": 2,
+        "maxHits": 2,
+        "minDist": 0.5,
+        "maxDist": 4,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "skin",
+            "scaleFirst": "1.5",
+            "scaleThrough": 0.01,
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 2,
+    "targetVersion": 209
+}
