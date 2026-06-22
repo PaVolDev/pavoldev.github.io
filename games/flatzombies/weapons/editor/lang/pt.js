@@ -492,5 +492,17 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	4124: "Som ao cair de costas antes do fatality",
 	4125: "Som ao arrancar a cabeça",
 	4126: "Escala do ícone no botão da interface<br>Alterar apenas ao usar iconBase64 próprio",
+	4127: "Arquivo de texto",
+	4128: "Arquivo JSON",
+	4130: "A arma tem mira a laser?",
+	4131: "Cor do laser",
+	4132: "Rotação aleatória",
+	4133: "Virar aleatoriamente horizontal/verticalmente",
+	4134: "Virar aleatoriamente horizontal/verticalmente",
+	4135: "Direção do movimento",
+	4136: "Desvio em ambos os lados da direção",
+	4137: "Velocidade, metro/segundo",
+	4138: "Velocidade máxima, metro/segundo",
+	4139: "Passar evento para o próximo efeito",
 
 });
