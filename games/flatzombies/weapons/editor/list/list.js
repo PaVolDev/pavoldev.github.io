@@ -675,7 +675,7 @@ function applySortSelectValue() {
 
 // Функция нормализации значения сортировки.
 function normalizeSortMode(sortMode) {
-	const allowedSortModes = ['update', 'time', 'raiting', 'likes', 'report', 'id']; // Допустимые режимы сортировки
+	const allowedSortModes = ['update', 'time', 'raiting', 'likes', 'dislikes', 'id']; // Допустимые режимы сортировки
 	const mode = String(sortMode || '').trim().toLowerCase(); // Режим сортировки в нижнем регистре
 	if (!allowedSortModes.includes(mode)) {
 		return 'update';
