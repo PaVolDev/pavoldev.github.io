@@ -16,6 +16,7 @@ let selectedRecentModId = ''; // Идентификатор мода из вер
 let isPageLoading = false; // Признак активной загрузки страницы
 let recentModCache = {}; // Кэш загруженных модов из выпадающего списка
 let selectedModsType = getSelectedModsTypeFromUrl(); // Тип модов из GET-параметра
+let selectedSortMode = 'update'; // Текущий режим сортировки списка
 
 const statusTooltip = {
 	'✅': 'Опубликовано',
@@ -30,6 +31,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 	renderModsTypeSelectOptions();
 	bindModsTypeEvents();
 	applyModsTypeSelectValue();
+	bindSortEvents();
+	applySortSelectValue();
 	if (!token) {
 		hideLoadingNewWeapon();
 		resetRecentModsSelect();
@@ -41,7 +44,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 		const data = await requestServer({
 			action: 'auto_login',
 			token: token,
-			modType: selectedModsType
+			modType: selectedModsType,
+			sort: selectedSortMode
 		});
 		if (data.success) {
 			handleAuthSuccess(data);
@@ -78,7 +82,8 @@ async function doLogin(login, password) {
 			action: 'login',
 			login: login,
 			password: password,
-			modType: selectedModsType
+			modType: selectedModsType,
+			sort: selectedSortMode
 		});
 		if (data.success) {
 			handleAuthSuccess(data);
@@ -207,7 +212,8 @@ async function loadPage(page, forceReload) {
 			action: 'get_mod_page',
 			token: token,
 			ids: idsForPage,
-			modType: selectedModsType
+			modType: selectedModsType,
+			sort: selectedSortMode
 		});
 		if (!data.success) {
 			showError(data.message || 'Не удалось загрузить список модов');
@@ -241,7 +247,8 @@ async function loadRecentMod(modId) {
 			action: 'get_mod_page',
 			token: token,
 			ids: [selectedRecentModId],
-			modType: selectedModsType
+			modType: selectedModsType,
+			sort: selectedSortMode
 		});
 		if (!data.success || !Array.isArray(data.weapons) || data.weapons.length === 0) {
 			clearSelectedRecentMod();
@@ -652,6 +659,76 @@ function bindModsTypeEvents() {
 		const modsType = this.value; // Новый выбранный тип модов
 		updateModsTypeInUrl(modsType);
 	});
+}
+
+// Функция применения значения сортировки из интерфейса.
+function applySortSelectValue() {
+	const select = document.getElementById('sort'); // Выпадающий список режимов сортировки
+	if (!select) {
+		selectedSortMode = 'update';
+		return;
+	}
+	const normalizedSortMode = normalizeSortMode(select.value); // Нормализованный режим сортировки из интерфейса
+	select.value = normalizedSortMode;
+	selectedSortMode = normalizedSortMode;
+}
+
+// Функция нормализации значения сортировки.
+function normalizeSortMode(sortMode) {
+	const allowedSortModes = ['update', 'time', 'raiting', 'likes', 'report', 'id']; // Допустимые режимы сортировки
+	const mode = String(sortMode || '').trim().toLowerCase(); // Режим сортировки в нижнем регистре
+	if (!allowedSortModes.includes(mode)) {
+		return 'update';
+	}
+	return mode;
+}
+
+// Функция подключения событий выпадающего списка сортировки.
+function bindSortEvents() {
+	const select = document.getElementById('sort'); // Выпадающий список режимов сортировки
+	if (!select) {
+		selectedSortMode = 'update';
+		return;
+	}
+	select.addEventListener('change', function () {
+		const newSortMode = normalizeSortMode(this.value); // Новый выбранный режим сортировки
+		this.value = newSortMode;
+		if (selectedSortMode === newSortMode) {
+			return;
+		}
+		selectedSortMode = newSortMode;
+		refreshListWithCurrentSort();
+	});
+}
+
+// Функция перезагрузки списка по текущему режиму сортировки.
+async function refreshListWithCurrentSort() {
+	if (!token) {
+		return;
+	}
+	showLoadingNewWeapon();
+	try {
+		const data = await requestServer({
+			action: 'auto_login',
+			token: token,
+			modType: selectedModsType,
+			sort: selectedSortMode
+		});
+		if (!data.success) {
+			showError(data.message || 'Не удалось обновить список модов');
+			return;
+		}
+		setModIds(data.modIds);
+		setRecentMods(data.recentMods);
+		recentModCache = {};
+		clearSelectedRecentMod();
+		await loadPage(1, true);
+	} catch (error) {
+		console.error(error);
+		showInlineError('Ошибка загрузки списка модов');
+	} finally {
+		hideLoadingNewWeapon();
+	}
 }
 
 // Функция отрисовки списка последних модов.
