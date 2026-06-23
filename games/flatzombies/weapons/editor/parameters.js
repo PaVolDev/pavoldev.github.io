@@ -513,34 +513,53 @@ function addParam(fieldPath, addAsFirst = true) {
 	syncParamsToScene();
 }
 
+function subtractByTokens(s1, s2) {
+	const arr1 = s1.split('.'); // ['renderInSpare', 'SpriteRenderer', 'sprite']
+	const arr2 = s2.split('.'); // ['SpriteRenderer', 'sprite', 'pivotPoint']
+	const filtered = arr1.filter(item => !arr2.includes(item)); // Фильтруем массив: оставляем только те элементы, которых НЕТ в arr2
+	return filtered.join('.'); // Собираем обратно
+}
+
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
-function createParam(newFieldPath = null, newFieldType = null, newFieldValue = null, newFieldComment = null) {
+function createParam(newFullFieldPath = null, newFieldType = null, newFieldValue = null, newFieldComment = null) {
 	closeAddNewField();
-	newFieldPath = newFieldPath ?? document.getElementById('newFieldPath')?.value;
+	newFullFieldPath = newFullFieldPath ?? document.getElementById('newFieldPath')?.value;
+	if (!newFullFieldPath) return;
 	newFieldValue = newFieldValue ?? document.getElementById('newFieldValue')?.value;
 	newFieldType = newFieldType ?? document.getElementById('newFieldType')?.value;
-	if (!newFieldPath) return;
+	newShortFieldPath = newFullFieldPath.replace(prefixExport, '');
 	if (newFieldType in typeDependencies) {
+		let spriteName = newShortFieldPath; //Получить имя спрайта: "renderInSpare.SpriteRenderer.sprite" -> "renderInSpare."
 		typeDependencies[newFieldType].forEach(filed => {
-			sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
-			const newSpriteInfo = { "fieldPath": newFieldPath + '.' + filed, "startFieldPath": newFieldPath + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
-			editedParams.unshift(newSpriteInfo);
-			availableParams.unshift(newSpriteInfo);
+			spriteName = subtractByTokens(spriteName, filed);
+		});
+		console.log("spriteName: " + spriteName);
+		typeDependencies[newFieldType].forEach(filed => {
+			let sample = sampleParams.find(s => s.fieldPath.endsWith(filed));
+			if (sample) {
+				const newSpriteInfo = { "fieldPath": spriteName + '.' + filed, "startFieldPath": prefixExport + spriteName + '.' + filed, "comment": sample.comment, "type": sample.type, "value": sample.value }
+				editedParams.push(newSpriteInfo);
+				availableParams.push(newSpriteInfo);
+			} else {
+				console.warn(`createParam(${newFullFieldPath}): sample == NULL, filed: ${filed}`);
+			}
 		});
 	}
-
-	const newProperty = { fieldPath: newFieldPath, startFieldPath: newFieldPath, comment: newFieldComment, type: newFieldType, value: newFieldValue };
+	const sample = sampleParams.findLast(filed => filed.type == newFieldType && "suffix" in filed && filed.fieldPath.replace(prefixExport, '') != filed.suffix);
+	const newProperty = { "fieldPath": newShortFieldPath, "startFieldPath": newFullFieldPath, "suffix": sample?.suffix, "comment": newFieldComment, "type": newFieldType, "value": newFieldValue };
 	editedParams.unshift(newProperty);
 	availableParams.unshift(newProperty);
 	if (newFieldType == "Vector3" || newFieldType == "Vector2") {
-		editedPoint.unshift({ name: newFieldPath, angle: null, parent: null });
+		editedPoint.unshift({ name: newFullFieldPath, angle: null, parent: null });
 		editedParams[0].spritePreview = "images/point.png";
 	}
 
-	newFieldPath = ''; newFieldValue = '';
 	renderEditedParams();
 	syncParamsToScene();
 }
+
+
+
 
 // ——— УДАЛЕНИЕ ПАРАМЕТРА ———
 function removeParam(path, showConfirm = true) {
