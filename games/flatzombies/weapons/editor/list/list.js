@@ -245,6 +245,7 @@ async function loadRecentMod(modId) {
 		});
 		if (!data.success || !Array.isArray(data.weapons) || data.weapons.length === 0) {
 			clearSelectedRecentMod();
+			console.warn(data.message);
 			return;
 		}
 		recentModCache[selectedRecentModId] = data.weapons[0];
@@ -310,7 +311,7 @@ function renderWeaponCard(weapon) {
 	const id = weapon.id; // Идентификатор мода
 	const modType = weapon.modType ?? ''; // Тип мода
 	const icon = weapon.iconBase64 ?? ''; // Иконка мода
-	const fileUrl = weapon.fileUrl ?? ''; // Ссылка на json-файл мода
+	//const fileUrl = weapon.fileUrl ?? ''; // Ссылка на json-файл мода
 	const likes = weapon.likes ?? 0; // Количество лайков
 	const dislikes = weapon.dislikes ?? 0; // Количество дизлайков
 	const rating = weapon.raiting ?? 0; // Количество запусков
@@ -318,16 +319,16 @@ function renderWeaponCard(weapon) {
 	return `
 		<div class="item">
 			<img src="${icon}" alt="Иконка ${escapeHtml(String(id))}" id="image${escapeHtml(String(id))}" class="preview">
-			<div class="actions" id="actions${escapeHtml(String(id))}">
+			<div id="actions${id}" class="actions" id="actions${escapeHtml(String(id))}">
 				<select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
 					<option value="action">${tr('Действия...')}</option>
-					<option value="download" data-url="${escapeHtml(fileUrl)}">📄 ${tr('Скачать файл')}</option>
-					<option value="edit" data-url="${escapeHtml(fileUrl)}">📝 ${tr('Редактировать')}</option>
+					<option value="download">📄 ${tr('Скачать файл')}</option>
+					<option value="edit">📝 ${tr('Редактировать')}</option>
 					<option value="remove">❌ ${tr('Удалить')}</option>
 				</select>
 			</div>
 			<div class="filename">${escapeHtml(String(id))}</div>
-			<div class="info">
+			<div id="info${id}" class="info">
 				<span class="rating-item" data-tooltip="${rating} ${tr('этажей было сыграно')}">
 					<img src="images/plays.png">
 					<span class="count">${rating}</span>
@@ -336,7 +337,7 @@ function renderWeaponCard(weapon) {
 					<img src="images/like.png" alt="Лайк">
 					<span class="count">${likes}</span>
 				</span>
-				<span class="rating-item" data-tooltip=" ${tr(statusTooltip[status])}">
+				<span class="rating-item" data-tooltip=" ${tr(statusTooltip[status])}" id="status${id}">
 					${status}
 				</span>
 				<span class="rating-item">
@@ -353,7 +354,7 @@ function renderRecentModCard(weapon) {
 	const id = weapon.id; // Идентификатор выбранного мода
 	const modType = weapon.modType ?? ''; // Тип выбранного мода
 	const icon = weapon.iconBase64 ?? ''; // Иконка выбранного мода
-	const fileUrl = weapon.fileUrl ?? ''; // Ссылка на json-файл выбранного мода
+	//const fileUrl = weapon.fileUrl ?? ''; // Ссылка на json-файл выбранного мода
 	const likes = weapon.likes ?? 0; // Количество лайков выбранного мода
 	const dislikes = weapon.dislikes ?? 0; // Количество дизлайков выбранного мода
 	const rating = weapon.raiting ?? 0; // Количество запусков выбранного мода
@@ -368,8 +369,8 @@ function renderRecentModCard(weapon) {
 				<div class="actions recent-selected-actions" id="actions${escapeHtml(String(id))}">
 					<select name="options" onchange="handleSelectChange(this)" modname="${escapeHtml(String(id))}" modtype="${escapeHtml(modType)}">
 						<option value="action">${tr('Действия...')}</option>
-						<option value="download" data-url="${escapeHtml(fileUrl)}">📄 ${tr('Скачать файл')}</option>
-						<option value="edit" data-url="${escapeHtml(fileUrl)}">📝 ${tr('Редактировать')}</option>
+						<option value="download" >📄 ${tr('Скачать файл')}</option>
+						<option value="edit">📝 ${tr('Редактировать')}</option>
 						<option value="remove">❌ ${tr('Удалить')}</option>
 					</select>
 				</div>
@@ -705,24 +706,68 @@ function escapeHtml(str) {
 	return String(str).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
 }
 
-async function downloadAndSaveJSON(modName, url, localStorageKey, openURL) {
+async function loadWeaponById(modId, modType) {
+	const normalizedModType = modType || selectedModsType || ''; // Тип мода для запроса JSON
+	if (!modId || !token) {
+		return null;
+	}
+	try {
+		const responseData = await requestServer({
+			action: 'get_mod_json',
+			token: token,
+			id: modId,
+			modType: normalizedModType
+		});
+		// Ответ с JSON мода по id
+		if (!responseData.success || !responseData.weapon || typeof responseData.weapon !== 'object') {
+			alert(responseData.message);
+			return null;
+		}
+		return responseData.weapon;
+	} catch (error) {
+		console.error('#1661: Ошибка загрузки мода по id:', error);
+		return null;
+	}
+}
+
+
+async function downloadJSONFileById(modId, modType) {
+	const weaponJSON = await loadWeaponById(modId, modType); // JSON-данные мода для скачивания
+	if (!weaponJSON) {
+		alert('#1642: Не удалось получить JSON-файл с сервера');
+		return false;
+	}
+	const jsonString = JSON.stringify(weaponJSON, null, 2); // Сериализованный JSON мода
+	const jsonBlob = new Blob([jsonString], { type: 'application/json' }); // Blob-объект для скачивания
+	const objectUrl = URL.createObjectURL(jsonBlob); // Временный URL для blob
+	const link = document.createElement('a'); // Ссылка для скачивания файла
+	link.href = objectUrl;
+	link.download = String(modId) + '.json';
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(objectUrl);
+	return true;
+}
+
+async function downloadAndSaveJSON(modName, weaponJSON, localStorageKey, openURL) {
 	try {
 		const image = document.getElementById('image' + modName); // Превью мода для индикации загрузки
 		const lastImage = image ? image.src : null; // Сохранённое превью до загрузки
 		if (image) {
 			image.src = 'images/loadingblack.png';
 		}
-		const response = await fetch(url);
+		if (!weaponJSON) {
+			if (image && lastImage) {
+				image.src = lastImage;
+			}
+			alert('#1542: Не удалось получить JSON-файл с сервера');
+			return false;
+		}
+		localStorage.setItem(localStorageKey, JSON.stringify(weaponJSON));
 		if (image && lastImage) {
 			image.src = lastImage;
 		}
-		if (!response.ok) {
-			console.error(`Ошибка загрузки: ${response.status}`);
-			alert(`Ошибка загрузки: ${response.status}`);
-			return false;
-		}
-		const data = await response.json(); // Загруженные данные json-файла
-		localStorage.setItem(localStorageKey, JSON.stringify(data));
 		if (openURL) {
 			window.open(openURL, '_blank');
 		}
@@ -734,37 +779,28 @@ async function downloadAndSaveJSON(modName, url, localStorageKey, openURL) {
 	}
 }
 
-function handleSelectChange(select) {
+async function handleSelectChange(select) {
 	var selectedValue = select.value; // Выбранное действие пользователя
 	if (selectedValue === 'action') {
 		return;
 	}
-	var selectedOption = select.options[select.selectedIndex]; // Выбранный пункт списка действий
-	var url = selectedOption.getAttribute('data-url'); // Адрес json-файла мода
 	var modName = select.getAttribute('modname'); // Идентификатор мода
 	var modType = select.getAttribute('modtype'); // Тип мода
 
 	if (selectedValue === 'download') {
-		const link = document.createElement('a'); // Временная ссылка для скачивания
-		link.href = url;
-		link.download = url.split('/').pop();
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
+		await downloadJSONFileById(modName, modType);
 	} else if (selectedValue === 'edit') {
-		if (!url) {
-			select.value = 'action';
-			return;
-		}
 		const selectedModConfig = AllowedMods.find(function (mod) {
 			return mod.type === modType;
-		}); // Конфигурация выбранного типа мода
+		});
+		// Конфигурация выбранного типа мода
 		if (!selectedModConfig) {
 			alert('Error #811: ' + modType);
 			select.value = 'action';
 			return;
 		}
-		downloadAndSaveJSON(modName, url, 'editedWeapon', window.location.href.replace('/list', '/' + selectedModConfig.editor));
+		const weaponJSON = await loadWeaponById(modName, modType); // JSON-данные выбранного мода
+		await downloadAndSaveJSON(modName, weaponJSON, 'editedWeapon', window.location.href.replace('/list', '/' + selectedModConfig.editor));
 	} else if (selectedValue === 'remove') {
 		const confirmed = confirm(modName + ' - ' + tr('Удалить мод?')); // Подтверждение удаления мода
 		if (!confirmed) {
@@ -778,9 +814,7 @@ function handleSelectChange(select) {
 		}
 		const image = document.getElementById('image' + modName); // Превью удаляемого мода
 		const lastImage = image ? image.src : null; // Сохранённое превью удаляемого мода
-		if (image) {
-			image.src = 'images/loadingblack.png';
-		}
+		if (image) image.src = 'images/loadingblack.png';
 		fetch(atob(server), {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -818,7 +852,11 @@ function handleSelectChange(select) {
 				if (currentPage > totalPages) {
 					currentPage = totalPages;
 				}
-				loadPage(currentPage, true);
+				if (image) image.src = 'images/removed.png';
+				document.getElementById("status" + modName).innerHTML = '❌';
+				document.getElementById("actions" + modName).style.display = 'none';
+				document.getElementById("info" + modName).style.display = 'none';
+				//loadPage(currentPage, true);
 			} else {
 				if (image && lastImage) {
 					image.src = lastImage;
