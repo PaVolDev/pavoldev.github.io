@@ -468,7 +468,7 @@ window.translate = Object.assign(window.translate, { //zh-CN, Simplified Chinese
 	4095: "Bow - 弓 (id: bow)",
 	4096: "Shovel - 铲 (id: lopata)",
 	4098: "从其他窗口拖拽文件到这里",
-	4100: "界面武器图标，尺寸：320x120<br>如果未指定，图标将自动生成",
+	4100: "界面武器图标",
 	4101: "紧凑型消音器。",
 	4102: "基础中型消音器。",
 	4103: "加长型消音器。",

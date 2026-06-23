@@ -468,7 +468,7 @@ window.translate = Object.assign(window.translate, { //Norwegian, Norsk
 	4095: "Bow - Bue (id: bow)",
 	4096: "Shovel - Spade (id: lopata)",
 	4098: "Plasser filen her fra et annet vindu",
-	4100: "Våpenikon for grensesnittet, størrelse: 320x120<br>Hvis ikke spesifisert, vil ikonet bli generert automatisk",
+	4100: "Våpenikon for grensesnittet",
 	4101: "Kort lyddemper.",
 	4102: "Grunnleggende middels lyddemper.",
 	4103: "Forlenget lyddemper.",

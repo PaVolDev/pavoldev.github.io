@@ -18,6 +18,7 @@ function onLoaded() {
 		});
 	});
 
+
 	sampleParams = sampleParams.filter((obj, index, self) => index === self.findIndex(item => item.fieldPath === obj.fieldPath));
 	document.getElementById("loading").classList.add('hidden');
 	document.getElementById("startFields").classList.remove('hidden');
@@ -461,10 +462,10 @@ function syncSceneObjectToParams(obj) {
 	setPointField(obj.parameter, 'angle', obj.localAngle);
 	//Другие данные
 	if (spriteScreenListeners[obj.name]) spriteScreenListeners[obj.name].onSyncSceneToParams(obj);
+	//Слушатель из конфига
+	onSceneUpdate();
 	//Показать изменения на странице
 	renderEditedParams();
-
-
 }
 
 
@@ -472,7 +473,7 @@ function syncSceneObjectToParams(obj) {
 
 
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
-function addParam(fieldPath, addAsFirst = true) {
+function addParam(fieldPath, addAsFirst = true, scrollToElement = false) {
 	if (editedParams.some(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath)) return;
 	let param = availableParams.find(p => p.startFieldPath === fieldPath) || availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.startFieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
 	if (!param) { console.error(`addParam(${fieldPath}) == NULL - параметр не найден`); return; }
@@ -492,7 +493,10 @@ function addParam(fieldPath, addAsFirst = true) {
 	const dependencies = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	editedPoint.forEach(p => {
 		if (p.angle && fieldPath.endsWith(p.name)) { //"shellDrop.position".endsWith(".position")
-			dependencies.push(fieldPath.replace(p.name, p.angle)); //shellDrop.position => shellDrop.angle
+			const newPath = fieldPath.replace(p.name, p.angle);
+			if (!dependencies.includes(newPath)) {
+				dependencies.push(newPath); //shellDrop.position => shellDrop.angle
+			}
 			return;
 		}
 	});
@@ -509,8 +513,24 @@ function addParam(fieldPath, addAsFirst = true) {
 			editedParams.splice(spliceIndex, 0, sample); //console.log(sample.fieldPath + ': ' + sample.value);
 		}
 	});
-	renderEditedParams();
-	syncParamsToScene();
+
+
+
+	if (scrollToElement) {
+		forceRenderEditedParams();
+		setTimeout(scrollToField, 100, fieldPath + 'List');
+	} else {
+		renderEditedParams();
+	}
+}
+
+function scrollToField(fieldPath) {
+	const element = document.getElementById(fieldPath);
+	history.replaceState(null, null, '#' + fieldPath); // Добавляем #id в адресную строку без перезагрузки
+	element.scrollIntoView({ // Выполняем переход/прокрутку к элементу
+		behavior: 'auto', // 'smooth' для плавной прокрутки, 'auto' для мгновенной
+		block: 'center'      // выравнивание по верхнему краю
+	});
 }
 
 function subtractByTokens(s1, s2) {
@@ -597,7 +617,7 @@ function renderAvailableParams(filter = '') {
 		const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
 		li.style = "position: relative;";
 		li.innerHTML = `
-				<button onclick="addParam('${param.fieldPath}')" class="add">Изменить</button>
+				<button onclick="addParam('${param.fieldPath}', true, true)" class="add">Изменить</button>
                 <div ><span class="fieldpath">${param.displayName || param.fieldPath}</span> 
 				${param.comment ? `<br><small class="fieldcomment">${param.comment}</small>` : ''}
 				<br><small class="fieldtype">${param.type}</small><br>
@@ -673,11 +693,10 @@ function forceRenderEditedParams(filter = '') {
 		if (processed.has(param.fieldPath)) return;
 		const lightFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 		const fullFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];
-		const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath];
+		let typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath];
 		if (typeDeps) {
 			const prefix = getPrefix(param.fieldPath, param.suffix); //const name = prefix || 'sprite';
 			const groupPaths = new Array();
-			groupPaths.push(param.fieldPath);
 			typeDeps.forEach(path => groupPaths.push(getChildDepPath(param, path)));
 			// Помечаем все пути группы как обработанные
 			groupPaths.forEach(fp => processed.add(fp));
@@ -870,6 +889,30 @@ function forceRenderEditedParams(filter = '') {
                 <strong>${param.displayName}</strong><br><small>${param.comment}</small><br>
 				<div class="param-group-list">` + innerHTML + `</div>`;
 				list.appendChild(li);
+			} else {
+				//console.warn("[" + param.fieldPath + "] параметр не имеет формы для редактирования");
+				const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); //li.className = 'sprite-block';
+				let innerHTML = '';
+				groupPaths.forEach(path => {
+					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
+					child = editedParams.find(p => p.fieldPath === path); if (!child) { console.warn('editedParams[' + path + '] == NULL'); return; }
+					if (availableByField[child.fieldPath] && !editedParams.find(p => (p.value === availableByField[child.fieldPath].value || Array.isArray(availableByField[child.fieldPath].value) && availableByField[child.fieldPath].value.includes(p.value)) && p.fieldPath.endsWith(availableByField[child.fieldPath].parent))) { return; }
+					innerHTML += `<div class="param-group-field">
+					 	<span><strong>${child.fieldPath.replace(param.type + '.', '')}</strong><br><small>${child.comment}</small></span>
+						<div> ${getInputForType(child)} </div>
+						</div>`;
+				});
+				let mainForm = `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>`;
+				if (!param?.isCover) {
+					mainForm +=
+						`<div class="param-block">
+							<span><strong>${param.displayName || param.fieldPath}</strong><br><small>${param.comment}</small></span>
+							<div> ${(param?.isCover) ? '' : getInputForType(param)} </div>
+						</div>`;
+				}
+				mainForm += `<br><div class="param-group-list">` + innerHTML + `</div>`;
+				li.innerHTML = mainForm;
+				list.appendChild(li);
 			}
 
 		} else if (fullFormByType) {
@@ -926,6 +969,7 @@ function forceRenderEditedParams(filter = '') {
 
 	renderAvailableParams(document.getElementById('searchInput').value); //Обновить на экране список доступных парамтеров
 	translateNode(list);
+	syncParamsToScene();
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
@@ -1206,6 +1250,7 @@ function updateParam(path, value, updateParamList = false, objKey = null) {
 	let index = parseInt(path) ?? editedParams.findIndex(p => p.fieldPath === path || p.startFieldPath === path);
 	if (isNaN(index) && typeof path === "string") {
 		const param = updateValueByPath(value, path);
+		onUpdateParameter(param);
 		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
 		return param;
@@ -1218,6 +1263,7 @@ function updateParam(path, value, updateParamList = false, objKey = null) {
 		} else {
 			editedParams[index].value = value;
 		}
+		onUpdateParameter(editedParams[index]);
 		if (updateParamList) { renderEditedParams(); }
 		syncParamsToScene();
 		return editedParams[index];
@@ -1611,9 +1657,10 @@ function getExportResultJSON() {
 			return false; //Останавливаем функцию
 		}
 	} */
-	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64')) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
 		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
 		json['storeInfo.iconBase64'] = imageInfo.base64;
+		json["storeInfo.editorIconUpdateMode"] = "onSave";
 		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
 		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
 	}
@@ -1631,6 +1678,7 @@ function getExportResultJSON() {
 	// document.getElementById('centerPanel').appendChild(img);
 	return json;
 }
+
 
 function convertTextValueToJsonFile(value) {
 	if (stringIsObject(value)) {

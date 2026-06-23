@@ -459,7 +459,7 @@ window.translate = Object.assign(window.translate, { //German, Deutsch
 	4095: "Bow - Bogen (id: bow)",
 	4096: "Shovel - Schaufel (id: lopata)",
 	4098: "Ziehen Sie eine Datei aus einem anderen Fenster hierher",
-	4100: "Waffen-Symbol für das Interface, Größe: 320x120<br>Wenn nicht angegeben, wird das Symbol automatisch generiert",
+	4100: "Waffen-Symbol für das Interface",
 	4101: "Verkürzter Schalldämpfer.",
 	4102: "Standard-Mittelschalldämpfer.",
 	4103: "Verlängerter Schalldämpfer.",

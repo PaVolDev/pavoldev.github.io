@@ -470,7 +470,7 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	4095: "Bow - Arco (id: bow)",
 	4096: "Shovel - Pala (id: lopata)",
 	4098: "Coloca aquí el archivo desde otra ventana",
-	4100: "Ícono del arma para la interfaz, tamaño: 320x120<br>Si no se indica, el ícono se generará automáticamente",
+	4100: "Ícono del arma para la interfaz",
 	4101: "Silenciador compacto.",
 	4102: "Silenciador mediano base.",
 	4103: "Silenciador largo.",

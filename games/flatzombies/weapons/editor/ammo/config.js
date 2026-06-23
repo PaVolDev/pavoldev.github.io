@@ -1,3 +1,4 @@
+//Слушатели событий
 function onLoadNewJson(json) {
 	delete json["storeInfo.iconBase64"];
 	delete json["storeInfo.silencerPosition"];
@@ -12,6 +13,9 @@ function onSaveJson(json) {
 	return json;
 }
 
+function onRemoveParameter(param) { }
+function onSceneUpdate() { }
+function onUpdateParameter(param) {}
 
 const weapons = new Array();
 
@@ -27,8 +31,6 @@ const mainIconSceneScale = 1;
 const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
 const prefixHide = ['cartridge.'];
 const prefixExport = 'cartridge.'; //Вернуть приставку при экспорте
-//Слушатель события
-function onRemoveParameter(param) { }
 
 const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
 	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом

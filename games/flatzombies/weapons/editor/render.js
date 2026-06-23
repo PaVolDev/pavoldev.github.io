@@ -229,6 +229,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 	const w = canvas.width * 2;
 	const h = canvas.height * 2;
 	const parentSprite = sceneObjects.find(sprite => sprite.parent == "");
+	const lastParentPosition = { x: parentSprite?.localPosition.x, y: parentSprite?.localPosition.y };
 	if (parentSprite) { parentSprite.localPosition.x = 0; parentSprite.localPosition.y = 0; }// Сбросить сдвиг родительского спрайта
 	const viewPPU = 100 * sceneScale; // Сбросить масштаб просмотра
 	const off = document.createElement('canvas');
@@ -302,6 +303,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 	convertedPoint = convertedPoint.map(p => ({ name: p.name, x: Math.round(p.rawX - minX), y: Math.round(p.rawY - minY) }));
 	const pointsAsObject = {};// --- ВАЖНО: Скорректировать сохранённые точки под обрезку ---
 	convertedPoint.forEach(p => { pointsAsObject[p.name] = { x: p.x, y: p.y }; });// --- Преобразуем в объект с ключами по имени ---
+	if (parentSprite) { parentSprite.localPosition.x = lastParentPosition.x; parentSprite.localPosition.y = lastParentPosition.y; }// Сбросить сдвиг родительского спрайта
 	return { base64: out.toDataURL('image/png'), points: pointsAsObject };
 }
 

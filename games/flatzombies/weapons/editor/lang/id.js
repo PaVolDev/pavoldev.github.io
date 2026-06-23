@@ -469,7 +469,7 @@ window.translate = Object.assign(window.translate, { //Индонезийски�
 	4095: "Bow - Busur (id: bow)",
 	4096: "Shovel - Sekop (id: lopata)",
 	4098: "Letakkan file dari jendela lain di sini",
-	4100: "Ikon senjata untuk interface, ukuran: 320x120<br>Jika tidak ditentukan, ikon akan dibuat otomatis",
+	4100: "Ikon senjata untuk interface",
 	4101: "Suppressor pendek.",
 	4102: "Suppressor medium dasar.",
 	4103: "Suppressor panjang.",

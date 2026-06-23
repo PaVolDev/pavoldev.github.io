@@ -468,7 +468,7 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4095: "Bow - Лук (id: bow)",
 	4096: "Shovel - Лопата (id: lopata)",
 	4098: "Drag a file here from another window",
-	4100: "Weapon icon for UI, size: 320x120<br>If not specified, the icon will be generated automatically",
+	4100: "Weapon icon for UI",
 	4101: "Compact silencer.",
 	4102: "Base silencer.",
 	4103: "Long silencer.",

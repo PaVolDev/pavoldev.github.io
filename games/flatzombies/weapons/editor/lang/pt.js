@@ -468,7 +468,7 @@ window.translate = Object.assign(window.translate, { //Brazilian Portuguese
 	4095: "Bow - Arco (id: bow)",
 	4096: "Shovel - Pá (id: lopata)",
 	4098: "Coloque aqui o arquivo de outra janela",
-	4100: "Ícone da arma para interface, tamanho: 320x120<br>Se não especificado, o ícone será gerado automaticamente",
+	4100: "Ícone da arma para interface",
 	4101: "Silenciador compacto.",
 	4102: "Silenciador médio base.",
 	4103: "Silenciador longo.",

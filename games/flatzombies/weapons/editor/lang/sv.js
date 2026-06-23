@@ -459,7 +459,7 @@ window.translate = Object.assign(window.translate, { //Swedish, Svenska
 	4095: "Bow - Båge (id: bow)",
 	4096: "Shovel - Spade (id: lopata)",
 	4098: "Dra en fil hit från ett annat fönster",
-	4100: "Vapensymbol för gränssnittet, storlek: 320x120<br>Om inte angivet, kommer symbolen att genereras automatiskt",
+	4100: "Vapensymbol för gränssnittet",
 	4101: "Förkortad ljuddämpare.",
 	4102: "Standard ljuddämpare.",
 	4103: "Förlängd ljuddämpare.",
