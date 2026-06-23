@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 12,
+    "damage": 14,
     "distance": 24,
     "impulse": 50,
     "stopPower": 0.4,
