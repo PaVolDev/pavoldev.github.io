@@ -18,9 +18,9 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 8,
+    "damage": 12,
     "distance": 24,
-    "impulse": 30,
+    "impulse": 35,
     "stopPower": 0.35,
     "penetration": {
         "modeHit": "FIRST",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 6,
+    "version": 2,
     "targetVersion": 209
 }
