@@ -20,8 +20,8 @@
     "angleSpread": 0,
     "damage": 4,
     "distance": 24,
-    "impulse": 20,
-    "stopPower": 0.1,
+    "impulse": 26,
+    "stopPower": 0.15,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
@@ -38,13 +38,13 @@
             "stopBulletDamage": 0
         },
         {
-            "materialName": "skin",
+            "materialName": "armor",
             "scaleFirst": "1.5",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
-            "materialName": "skin",
+            "materialName": "metal",
             "scaleFirst": "1.5",
             "scaleThrough": "0",
             "stopBulletDamage": 0
