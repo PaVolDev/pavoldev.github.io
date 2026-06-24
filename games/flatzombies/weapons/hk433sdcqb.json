@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.010, 0.16, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "Namahage",
-    "storeInfo.authorURL": "https://",
+    "storeInfo.authorURL": "",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.SpriteRenderer.sortingOrder": 17,
@@ -70,6 +70,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0.013, -0.030)",
     "weapon.WeaponHandPoints.fingerAngle": 5,
-    "version": 11,
+    "version": 12,
     "targetVersion": 209
 }
