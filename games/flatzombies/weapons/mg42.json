@@ -72,7 +72,7 @@
     "weapon.chamberSize": 150,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 4,
+    "version": 5,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
