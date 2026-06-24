@@ -475,17 +475,17 @@ const propertyInputs = {
 };
 // Настройка обработчиков событий один раз
 let objectId = -1;
-propertyInputs.posX.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localPosition.x = parseFloat(propertyInputs.posX.value); renderScene(); } });
-propertyInputs.posY.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localPosition.y = -parseFloat(propertyInputs.posY.value); renderScene(); } });
-propertyInputs.angle.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = parseFloat(propertyInputs.angle.value); propertyInputs.angleSlider.value = sceneObjects[objectId].localAngle; renderScene(); } });
-propertyInputs.angleSlider.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].localAngle = Math.round(parseFloat(propertyInputs.angleSlider.value)); propertyInputs.angle.value = sceneObjects[objectId].localAngle; renderScene(); } });
-propertyInputs.sortingOrder.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].sortingOrder = parseInt(propertyInputs.sortingOrder.value); renderScene(); } });
-propertyInputs.pixelsPerUnit.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(99999, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
-propertyInputs.pivotX.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.x = parseFloat(propertyInputs.pivotX.value); renderScene(); } });
-propertyInputs.pivotY.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].pivotPoint.y = parseFloat(propertyInputs.pivotY.value); renderScene(); } });
-propertyInputs.texture.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].texture = propertyInputs.texture.value; renderScene(); } });
-propertyInputs.enabled.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].enabled = propertyInputs.enabled.checked; renderScene(); } });
-propertyInputs.isActive.addEventListener('input', () => { if (selectedObject) { sceneObjects[objectId].isActive = propertyInputs.isActive.checked; renderScene(); } });
+propertyInputs.posX.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localPosition.x = parseFloat(propertyInputs.posX.value); renderScene(); } });
+propertyInputs.posY.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localPosition.y = -parseFloat(propertyInputs.posY.value); renderScene(); } });
+propertyInputs.angle.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localAngle = parseFloat(propertyInputs.angle.value); propertyInputs.angleSlider.value = sceneObjects[objectId].localAngle; renderScene(); } });
+propertyInputs.angleSlider.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localAngle = Math.round(parseFloat(propertyInputs.angleSlider.value)); propertyInputs.angle.value = sceneObjects[objectId].localAngle; renderScene(); } });
+propertyInputs.sortingOrder.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].sortingOrder = parseInt(propertyInputs.sortingOrder.value); renderScene(); } });
+propertyInputs.pixelsPerUnit.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(99999, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
+propertyInputs.pivotX.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pivotPoint.x = parseFloat(propertyInputs.pivotX.value); renderScene(); } });
+propertyInputs.pivotY.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pivotPoint.y = parseFloat(propertyInputs.pivotY.value); renderScene(); } });
+propertyInputs.texture.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].texture = propertyInputs.texture.value; renderScene(); } });
+propertyInputs.enabled.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].enabled = propertyInputs.enabled.checked; renderScene(); } });
+propertyInputs.isActive.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].isActive = propertyInputs.isActive.checked; renderScene(); } });
 
 document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) => {
 	const file = fileEvent.target.files[0];
