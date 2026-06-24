@@ -85,7 +85,7 @@
     "weapon.WeaponHandPoints.fingerPoint": "(0.000, 0.000)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.handgrip.Transform.localPosition": "(1.830, 0.33, 0)",
-    "version": 55,
+    "version": 56,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
