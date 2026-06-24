@@ -522,6 +522,7 @@ function addParam(fieldPath, addAsFirst = true, scrollToElement = false) {
 	} else {
 		renderEditedParams();
 	}
+	syncParamsToScene();
 }
 
 function scrollToField(fieldPath) {
@@ -969,7 +970,6 @@ function forceRenderEditedParams(filter = '') {
 
 	renderAvailableParams(document.getElementById('searchInput').value); //Обновить на экране список доступных парамтеров
 	translateNode(list);
-	syncParamsToScene();
 }
 
 // ——— ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ UI ———
