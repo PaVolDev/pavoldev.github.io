@@ -5,6 +5,7 @@ let selectedWeapon = null; //Выбранный шаблон для нового
 sampleParams = baseParams.concat(sampleParams);
 let availableParams = new Array();
 let editedParams = new Array();
+let editedParamsHistory = new Array(); //История состояний editedParams для Undo.
 function onLoaded() {
 	//Вырезать из параметров приставки из массива prefixHide
 	sampleParams.forEach(element => {
@@ -172,6 +173,7 @@ async function onSelectWeapon(event) {
 		editedParams.sort((a, b) => (b.type === 'Sprite') - (a.type === 'Sprite'));
 		renderEditedParams();
 		syncParamsToScene();
+		resetHistoryChanges();
 	}).catch(err => {
 		// Можно логировать или игнорировать — но промис будет отклонён
 		console.error('onSelectWeapon failed:', err);
@@ -415,6 +417,11 @@ function syncAllSceneObjectsToParams() {
 	sceneObjects.forEach(obj => { syncSceneObjectToParams(obj); });
 }
 
+function mathRound(value, grid = 100) {
+	value = parseFloat(value);
+	return Math.round(value * grid) / grid;
+}
+
 // ПЕРЕНОС ДАННЫХ ИЗ СЦЕНЫ в список параметров
 // Функция синхронизации одного объекта
 function syncSceneObjectToParams(obj) {
@@ -428,14 +435,14 @@ function syncSceneObjectToParams(obj) {
 	if (prefix) {
 		const posPath = prefix + '.Transform.localPosition';
 		const posParam = findByPath(posPath);
-		const newPosValue = `(${parseFloat(obj.localPosition.x).toFixed(3)}, ${-parseFloat(obj.localPosition.y).toFixed(3)}, 0)`; //отразить по оси Y
+		const newPosValue = `(${mathRound(obj.localPosition.x)}, ${mathRound(obj.localPosition.y) * -1}, 0)`; //отразить по оси Y
 		if (posParam && posParam.value !== newPosValue) {
 			posParam.value = newPosValue;
 		}
 		//Синхронизация отдельной точки
 		const pointParam = findByPath(obj.parameter);
 		if (pointParam?.spritePreview) {
-			const newPointValue = `(${parseFloat(obj.localPosition.x).toFixed(3)}, ${-parseFloat(obj.localPosition.y).toFixed(3)}, 0)`;  //отразить по оси Y
+			const newPointValue = `(${mathRound(obj.localPosition.x)}, ${mathRound(obj.localPosition.y) * -1}, 0)`;  //отразить по оси Y
 			if (pointParam && pointParam.value !== newPointValue) {
 				pointParam.value = newPointValue;
 			}
@@ -446,7 +453,7 @@ function syncSceneObjectToParams(obj) {
 	if (angleParam && angleParam.value != obj.localAngle) angleParam.value = obj.localAngle;
 	// Синхронизация точки вращения
 	const pivotParam = findByPath(prefix ? prefix + '.SpriteRenderer.sprite.pivotPoint' : 'SpriteRenderer.sprite.pivotPoint');
-	const newPivotValue = `(${parseFloat(obj.pivotPoint.x).toFixed(3)}, ${parseFloat(obj.pivotPoint.y).toFixed(3)})`;
+	const newPivotValue = `(${mathRound(obj.pivotPoint.x)}, ${mathRound(obj.pivotPoint.y)})`;
 	if (pivotParam && pivotParam.value !== newPivotValue) { pivotParam.value = newPivotValue; }
 	// Синхронизация PPU
 	const ppuParam = findByPath(prefix ? prefix + '.SpriteRenderer.sprite.pixelPerUnit' : 'SpriteRenderer.sprite.pixelPerUnit');
@@ -467,15 +474,71 @@ function syncSceneObjectToParams(obj) {
 	onSceneUpdate();
 	//Показать изменения на странице
 	renderEditedParams();
+	saveHistoryChanges();
 }
 
 
+//Хеш текущего состояния параметров для создания снимка
+function getStateHash(editedData, fieldPath = '') {
+	let values = "";
+	editedData.forEach(param => {
+		const type = typeof param.value;
+		if ((type != 'object' && type != 'string') || (type == 'string' && !param.value.startsWith('data:')) || (fieldPath != '' && (param.fieldPath == fieldPath || param.startFieldPath == fieldPath))) {
+			values += (type == 'object') ? JSON.stringify(type) : param.value;
+		}
+	});
+	return values;
+}
 
+
+//Сохранить текущее состояние editedParams в историю Undo
+let lastCall = 0; // Время последнего вызова в миллисекундах
+const undoButton = document.getElementById("undoButton");
+function saveHistoryChanges(fieldPath = '') {
+	if ((Date.now() - lastCall) < 50 || editedParams.length <= 3) return; // Текущее время в миллисекундах
+	lastCall = Date.now();
+	const currentStateHash = getStateHash(editedParams, fieldPath); //Хеш текущего состояния параметров.
+	const lastSnapshot = editedParamsHistory[editedParamsHistory.length - 1] || null; //Последний сохранённый снимок.
+	const lastStateHash = lastSnapshot ? getStateHash(lastSnapshot, fieldPath) : null; //Хеш последнего снимка.
+	if (lastStateHash === currentStateHash) return;
+	const snapshot = structuredClone(editedParams); //Снимок текущего состояния параметров.
+	console.warn(currentStateHash);
+	editedParamsHistory.push(snapshot);
+	if (editedParamsHistory.length > 20) {
+		editedParamsHistory.shift();
+	}
+	undoButton.setAttribute("data-tooltip", tr("Отменить изменения"))
+}
+
+function resetHistoryChanges() {
+	editedParamsHistory = new Array();
+	lastCall = 0;
+	saveHistoryChanges();
+}
+
+//Отменить последние изменения
+function undoLastChange() {
+	if (editedParamsHistory.length == 0 || editedParams.length <= 3) return;
+	const previousState = editedParamsHistory[editedParamsHistory.length - 1]; //Предыдущее состояние параметров.
+	editedParamsHistory.pop(); //Удаляем текущее состояние.
+	editedParams.length = 0;
+	previousState.forEach(param => {
+		editedParams.push(structuredClone(param));
+	});
+
+	renderEditedParams();
+	syncParamsToScene();
+
+	if (editedParamsHistory.length == 0) {
+		undoButton.setAttribute("data-tooltip", tr("Нет данных"));
+	}
+}
 
 
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
 function addParam(fieldPath, addAsFirst = true, scrollToElement = false) {
 	if (editedParams.some(p => p.fieldPath === fieldPath || p.startFieldPath === fieldPath)) return;
+	saveHistoryChanges();
 	let param = availableParams.find(p => p.startFieldPath === fieldPath) || availableParams.find(p => p.fieldPath === fieldPath) || sampleParams.find(p => p.startFieldPath === fieldPath) || sampleParams.find(p => p.fieldPath === fieldPath);
 	if (!param) { console.error(`addParam(${fieldPath}) == NULL - параметр не найден`); return; }
 	param.value = availableParams.find(p => p.startFieldPath === fieldPath || p.fieldPath === fieldPath)?.value || param.value;
@@ -545,6 +608,7 @@ function subtractByTokens(s1, s2) {
 // ——— ДОБАВЛЕНИЕ ПАРАМЕТРА ———
 function createParam(newFullFieldPath = null, newFieldType = null, newFieldValue = null, newFieldComment = null) {
 	closeAddNewField();
+	saveHistoryChanges();
 	newFullFieldPath = newFullFieldPath ?? document.getElementById('newFieldPath')?.value;
 	if (!newFullFieldPath) return;
 	newFieldValue = newFieldValue ?? document.getElementById('newFieldValue')?.value;
@@ -590,6 +654,7 @@ function removeParam(path, showConfirm = true) {
 		const confirmed = confirm(tr("Удалить параметр из списка?\nЕсли параметр не будет указан, то он будет взят из оружия ") + templateInput.value + "\n" + param.fieldPath); //Показываем диалог подтверждения
 		if (!confirmed) return; //Если пользователь нажал "Отмена", ничего не делаем
 	}
+	saveHistoryChanges();
 	const typeDeps = typeDependencies[param.startFieldPath] || typeDependencies[param.type] || typeDependencies[param.fieldPath] || [];
 	const basePaths = new Set();
 	basePaths.add(param.fieldPath); // Добавляем основной путь
@@ -1248,6 +1313,7 @@ function stringIsObject(value) {
 
 // ——— РЕДАКТИРОВАНИЕ ———
 function updateParam(path, value, updateParamList = false, objKey = null) {
+	saveHistoryChanges();
 	let index = parseInt(path) ?? editedParams.findIndex(p => p.fieldPath === path || p.startFieldPath === path);
 	if (isNaN(index) && typeof path === "string") {
 		const param = updateValueByPath(value, path);
@@ -1281,6 +1347,7 @@ function updateFieldHTML(index, value) {
 
 
 function updateVector(index, coordIndex, value, syncToScene = true) {
+	saveHistoryChanges();
 	const param = findByPath(index);
 	if (param) {
 		param.value = updateVectorValue(param.value, coordIndex, value);
@@ -1310,6 +1377,7 @@ function updateSprite(idInputElement, input) {
 				textInput.value = trimmedBase64;
 				textInput.dispatchEvent(new Event('change'));
 			} else {
+				saveHistoryChanges(editedParams[idInputElement].fieldPath);
 				editedParams[idInputElement].value = trimmedBase64;
 			}
 			input.value = '';
