@@ -1,7 +1,7 @@
 //——— ФУНКЦИИ РЕДАКТОРА ТОЧКИ ВРАЩЕНИЯ ———
 //Показать редактор точки вращения
 function showPivotPointEditor(pivotParamPath, spriteParamPath) {
-	saveHistoryChanges();
+	saveHistoryChanges(pivotParamPath);
 	pivotEditorParam = pivotParamPath; //Сохраняем путь к параметру
 	const pivotParam = findByPath(pivotParamPath);
 	if (!pivotParam) {
