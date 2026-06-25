@@ -484,17 +484,19 @@ function getStateHash(editedData, fieldPath = '') {
 	editedData.forEach(param => {
 		const type = typeof param.value;
 		if ((type != 'object' && type != 'string') || (type == 'string' && !param.value.startsWith('data:')) || (fieldPath != '' && (param.fieldPath == fieldPath || param.startFieldPath == fieldPath))) {
-			values += (type == 'object') ? JSON.stringify(type) : param.value;
+			values += (type == 'object') ? JSON.stringify(param.value) : param.value;
 		}
 	});
 	return values;
 }
 
 
+
 //Сохранить текущее состояние editedParams в историю Undo
 let lastCall = 0; // Время последнего вызова в миллисекундах
 const undoButton = document.getElementById("undoButton");
 function saveHistoryChanges(fieldPath = '') {
+	console.log('saveHistoryChanges', fieldPath);
 	if ((Date.now() - lastCall) < 50 || editedParams.length <= 3) return; // Текущее время в миллисекундах
 	lastCall = Date.now();
 	const currentStateHash = getStateHash(editedParams, fieldPath); //Хеш текущего состояния параметров.
@@ -770,6 +772,7 @@ function forceRenderEditedParams(filter = '') {
 
 			if (fullFormByType || lightFormByType) {
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				groupPaths.forEach(path => {
 					child = editedParams.findIndex(p => p.fieldPath === path); if (child == -1) { console.warn('editedParams[' + path + '] == NULL'); return; }
 					childParam = editedParams[child];
@@ -797,6 +800,7 @@ function forceRenderEditedParams(filter = '') {
 				const objectActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('gameObject')) && p.fieldPath.endsWith('.gameObject.SetActive'));
 				const position = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localPosition'));
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				li.onmouseenter = () => selectObjectByName(prefix);
 				//<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить как PNG-файл")}<br><img src='${param.value || ''}' class='tooltip'></div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + prefix}.png')"><img src="images/download.png" ></div>
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>` : ''}
@@ -875,6 +879,7 @@ function forceRenderEditedParams(filter = '') {
 				const objectActive = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('gameObject')) && p.fieldPath.endsWith('.gameObject.SetActive'));
 				const position = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('Transform')) && p.fieldPath.endsWith('.localPosition'));
 				const li = document.createElement('li'); li.className = 'sprite-block'; li.setAttribute('id', param.fieldPath + "List");
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				if (!spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(prefix);
 				li.innerHTML = ` ${prefix ? `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>` : ''}
                 <strong data-tooltip="${param.startFieldPath}">${param.fieldPath.replace('.SpriteRenderer.sprite', '<span style="color: var(--text-suffix);">.SpriteRenderer.sprite</span>')}</strong>
@@ -910,6 +915,7 @@ function forceRenderEditedParams(filter = '') {
 				const pivot = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('.pivotPoint'));
 				const ppu = editedParams.find(p => (prefix ? p.fieldPath.includes(prefix) : p.fieldPath.startsWith('SpriteRenderer')) && p.fieldPath.endsWith('pixelPerUnit'));
 				const li = document.createElement('li'); li.className = 'param-block'; li.setAttribute('id', param.fieldPath + "List");
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				if (param.type && param.spritePreview && !spriteScreenListeners[param.fieldPath]) li.onmouseenter = () => selectObjectByName(param.fieldPath);
 				li.innerHTML = `
 				<div>
@@ -941,6 +947,7 @@ function forceRenderEditedParams(filter = '') {
 
 			} else if (param.type === 'WeaponHandPoints') {
 				const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); //li.className = 'sprite-block';
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				let innerHTML = '';
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
@@ -958,6 +965,7 @@ function forceRenderEditedParams(filter = '') {
 			} else {
 				//console.warn("[" + param.fieldPath + "] параметр не имеет формы для редактирования");
 				const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List"); //li.className = 'sprite-block';
+				li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 				let innerHTML = '';
 				groupPaths.forEach(path => {
 					if (path == param.fieldPath) return; //убрать парамтер, который не содержит переменной и использовался как заглушка
@@ -983,6 +991,7 @@ function forceRenderEditedParams(filter = '') {
 
 		} else if (fullFormByType) {
 			const li = document.createElement('li'); li.setAttribute('id', param.fieldPath + "List");
+			li.addEventListener('mousedown', () => { saveHistoryChanges(param.fieldPath); });
 			li.innerHTML = `<button class="remove-btn" onclick="removeParam('${param.startFieldPath}')" data-tooltip="Удалить параметр">✕</button>`
 			li.innerHTML += fullFormByType(param, idx, null);
 			list.appendChild(li);
