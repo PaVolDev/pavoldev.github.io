@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { // 简体中文
+window.translate = { // 简体中文
 	1004: "模组列表",
 	1005: "连接服务器错误",
 	1006: "正在登录...",
@@ -17,4 +17,4 @@ window.translate = Object.assign(window.translate, { // 简体中文
 	1401: "审核中",
 	1402: "私人测试",
 	1403: "层已游玩",
-});
+};
