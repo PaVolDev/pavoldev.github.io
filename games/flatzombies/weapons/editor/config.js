@@ -111,7 +111,7 @@ class HandRenderListener extends SpriteScreenListener {
 		const pivotPoint = parseVector(pivotPointParam.value);
 		const distanceX = (dragObject.localPosition.x * pixelPerUnit) / imageInfo.naturalWidth;
 		const distanceY = (dragObject.localPosition.y * pixelPerUnit) / imageInfo.naturalHeight;
-		pivotPointParam.value = '(' + (pivotPoint[0] + distanceX).toFixed(2) + ', ' + (pivotPoint[1] - distanceY).toFixed(2) + ')';
+		pivotPointParam.value = '(' + mathRound(pivotPoint[0] + distanceX) + ', ' + mathRound(pivotPoint[1] - distanceY) + ')';
 		//Двигать дочерние объекты в обратную сторону
 		if (!event.shiftKey) {
 			sceneObjects.forEach(child => {
@@ -136,7 +136,7 @@ class HandRenderListener extends SpriteScreenListener {
 		const y = (this.rifleY - (point.y - sceneParent.localPosition.y));
 		const paramId = editedParams.findIndex(p => p.startFieldPath == spriteRender.parameter);
 		if (paramId == -1) { console.warn('HandRenderListener: paramId == -1 - ' + spriteRender.parameter); return; } //Параметр должен быть найден
-		editedParams[paramId].value = '(' + x.toFixed(3) + ', ' + y.toFixed(3) + ')'; //Меняем координаты в парамтерах. Для обновления угла используются настройки из массива editedPoint
+		editedParams[paramId].value = '(' + mathRound(x) + ', ' + mathRound(y) + ')'; //Меняем координаты в парамтерах. Для обновления угла используются настройки из массива editedPoint
 		//sceneObjects.find(s => s.name == 'bolt').localPosition = { x: point.x, y: point.y }; //Тестирование
 	}
 	//Копирование параметров В сцену
