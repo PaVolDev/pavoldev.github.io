@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //Swedish, Svenska
+window.translate = { //Swedish, Svenska
 	1000: "Lägg till ny parameter",
 	1001: "Stäng",
 	1002: "Sökväg till objektegenskap",
@@ -194,9 +194,6 @@ window.translate = Object.assign(window.translate, { //Swedish, Svenska
 	3010: "Lutningsvinkel",
 	3011: "Vapenkaliber. Huvudsakligpatrontyp<br>Alla skadeinställningar finns i patronen",
 	3012: "Ange patronens ID.<br>Skapa patronen i en separat<br><a href='ammo/' target='_blank' title='Öppna i ny flik'>Ammunitionsredigerare</a> och skicka till servern",
-	3176: "Ytterligare skript i LUA-språk.",
-	3177: "Textfil med projektbeskrivning för neurala nätverk (AI).<br>Ge denna fil till ditt AI och be den att skriva koden",
-	3178: "Dokumentation för AI",
 	3014: "Vilken ljuddämpar-kategori som ska användas",
 	3015: "UI-mellanrum på skärmen med patronlistan",
 	3016: "Storlek på patronlistan för dubbelpipigt hagelgevär",
@@ -325,7 +322,6 @@ window.translate = Object.assign(window.translate, { //Swedish, Svenska
 	3139: "Lista över objekt att ta bort",
 	3140: "Lista över MonoBehaviour-komponenter att ta bort",
 	3141: "Patron-ID för att skilja den från alla andra",
-	3541: "Patron-ID",
 	3142: "Total skada från alla kulor.<br>Kommer att fördelas mellan alla kulor",
 	3143: "Stoppeffekt [0–1]<br>Zombien bestämmer själv hur den ska reagera på denna parameter",
 	3144: "Impuls ForceMode2D.Impulse.<br>Kommer att fördelas mellan alla kulor",
@@ -360,6 +356,19 @@ window.translate = Object.assign(window.translate, { //Swedish, Svenska
 	3173: "Starta animeringen när ett segment av magasinet är helt tomt",
 	3174: "Kasta bort magasinet vid omladdning. Lokala koordinater",
 	3175: "Rekylens minskningshastighet, i grader/sekund",
+	3176: "Ytterligare skript i LUA-språk.",
+	3177: "Textfil med projektbeskrivning för neurala nätverk (AI).<br>Ge denna fil till ditt AI och be den att skriva koden",
+	3178: "Dokumentation för AI",
+	3541: "Patron-ID",
+	3777: "Koordinater för mynningsflamma",
+	3778: "Animationslista",
+	3779: "Slumpmässig skottanimation",
+	3780: "Fördröjning innan kulan avfyras efter att avtryckaren tryckts in, i sek.",
+	3781: "Överordnat objekt för att avfyra kulan",
+	3782: "Blodspår på vapnet efter lyckade träffar",
+	3783: "Författare till modifieringen. Nickname för visning i gränssnittet (valfritt)",
+	3784: "Länk till din sida i sociala nätverk (valfritt)",
+	3790: "Skottanimation",
 
 	4000: "Kort namn för visning i gränssnittet",
 	4001: "Patronkaliber. Olika patrontyper av samma kaliber måste ha samma namn.<br>Strängen används som en sekundär identifierare för att länka med vapen",
@@ -497,4 +506,4 @@ window.translate = Object.assign(window.translate, { //Swedish, Svenska
 	4137: "Hastighet, meter/sekund",
 	4138: "Max hastighet, meter/sekund",
 	4139: "Skicka händelse till nästa effekt",
-});
+};
