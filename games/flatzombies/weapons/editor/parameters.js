@@ -37,7 +37,8 @@ function onLoaded() {
 document.addEventListener("DOMLanguageLoaded", onLanguageLoaded);
 function onLanguageLoaded() {
 	console.log('onLanguageLoaded');
-	sampleParams.forEach(element => { element.comment = tr(element.comment); });
+	sampleParams.forEach(param => { param.comment = tr(param.comment); });
+	baseParams.forEach(param => { param.comment = tr(param.comment); });
 }
 
 
