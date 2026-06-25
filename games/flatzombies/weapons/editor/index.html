@@ -70,7 +70,12 @@
 
 		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
 		<div class="panel" id="centerPanel">
-			<div class="titlePanel panelName hidden" id="centerTitle">Параметры оружия</div>
+			<div class="titlePanel panelName hidden" id="centerTitle">
+				<span style="display: block;position: relative;width: 100%;">
+					Параметры оружия
+					<img src="images/undo.png" style="position: absolute; top: -2px; right: 6px; z-index: 10; height: 32px; cursor: pointer;" id="undoButton" data-tooltip="Отменить изменения" onclick="undoLastChange()">
+				</span>
+			</div>
 			<div class="titlePanel panelName " id="startCenterTitle">Новое оружие</div>
 			<!-- <div id="startCenterTitle" style="display: grid; grid-template-columns: 1fr 1fr;">
 				<div class="titlePanel panelName">Новое оружие</div>
