@@ -63,7 +63,12 @@
 
 		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
 		<div class="panel" id="centerPanel">
-			<div class="titlePanel panelName hidden" id="centerTitle">Параметры патрона</div>
+			<div class="titlePanel panelName hidden" id="centerTitle">
+				<span style="display: block;position: relative;width: 100%;">
+					Параметры патрона
+					<img src="../images/undo.png" style="position: absolute; top: -2px; right: 6px; z-index: 10; height: 32px; cursor: pointer;" id="undoButton" data-tooltip="Отменить изменения" onclick="undoLastChange()">
+				</span>
+			</div>
 			<div class="titlePanel panelName " id="startCenterTitle">Новый патрон</div>
 			<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
 			<div class="fields hidden" id="startFields">
