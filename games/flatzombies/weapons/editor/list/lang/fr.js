@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //Français
+window.translate = { //Français
 	1004: "Liste des mods",
 	1005: "Erreur de connexion au serveur",
 	1006: "Connexion en cours...",
@@ -17,4 +17,4 @@ window.translate = Object.assign(window.translate, { //Français
 	1401: "En cours de révision",
 	1402: "Test privé",
 	1403: "étages joués",
-});
+};
