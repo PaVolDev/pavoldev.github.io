@@ -5,6 +5,7 @@ let showCloseConfirm = false;
 
 //Открывает окно текстового редактора для base64-текста.
 function openTextEditor(paramPath) {
+	saveHistoryChanges();
 	const resolvedPath = paramPath || ''; //Путь к параметру, переданный из интерфейса.
 	const param = findByPath(resolvedPath); //Ищем параметр в общем списке изменений.
 	if (!param) {
