@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //zh-CN, Simplified Chinese (简体中文) 
+window.translate = { //zh-CN, Simplified Chinese (简体中文) 
 	1000: "添加新参数",
 	1001: "关闭",
 	1002: "对象属性路径",
@@ -507,4 +507,4 @@ window.translate = Object.assign(window.translate, { //zh-CN, Simplified Chinese
 	4138: "最大速度，米/秒",
 	4139: "将事件传递给下一个效果",
 
-});
+};
