@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //English (USA|British)
+window.translate = { //English (USA|British)
 	1000: "Add new parameter",
 	1001: "Close",
 	1002: "Object property path",
@@ -194,9 +194,6 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	3010: "Tilt angle",
 	3011: "Weapon caliber. Main cartridge type<br>All damage settings are defined in the cartridge",
 	3012: "Specify the ammo ID.<br>Create the ammo in a separate<br><a href='ammo/' target='_blank' title='Open in new tab'>Ammo Editor</a> and send it to the server", //"List of different cartridge types.<br>Create a cartridge in the separate <a href='ammo/' target='_blank' title='Open in new tab'>Ammo Editor</a><br>Click Export file and load it into the list:",
-	3176: "Additional script in LUA language.",
-	3177: "Text file with project description for neural network.<br>Give this file to your AI and ask it to write the code",
-	3178: "Documentation for AI",
 	3014: "Which silencer category to use",
 	3015: "UI spacing for cartridge list screen",
 	3016: "Cartridge list size for double-barrel shotgun",
@@ -325,7 +322,6 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	3139: "List of objects to delete",
 	3140: "List of MonoBehaviour components to delete",
 	3141: "Cartridge ID to distinguish it from others",
-	3541: "Cartridge ID",
 	3142: "Total damage from all bullets.<br>Will be distributed among all bullets",
 	3143: "Stopping power [0–1]<br>Zombie decides how to react to this parameter",
 	3144: "Impulse ForceMode2D.Impulse.<br>Will be distributed among all bullets",
@@ -360,6 +356,10 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	3173: "Trigger animation after fully emptying one magazine segment",
 	3174: "Eject magazine on reload. Local coordinates",
 	3175: "Recoil decay speed, in degrees/second",
+	3176: "Additional script in LUA language.",
+	3177: "Text file with project description for neural network.<br>Give this file to your AI and ask it to write the code",
+	3178: "Documentation for AI",
+	3541: "Cartridge ID",
 	3777: "Muzzle flash coordinates",
 	3778: "Animation list",
 	3779: "Random shot animation",
@@ -506,4 +506,4 @@ window.translate = Object.assign(window.translate, { //English (USA|British)
 	4138: "Max speed, meter/second",
 	4139: "Pass event to next effect",
 
-});
+};
