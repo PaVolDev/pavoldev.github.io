@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //Danish, Dansk
+window.translate = { //Danish, Dansk
 	1000: "Tilføj ny parameter",
 	1001: "Luk",
 	1002: "Objektegenskabssti",
@@ -506,4 +506,4 @@ window.translate = Object.assign(window.translate, { //Danish, Dansk
 	4137: "Hastighed, meter/sekund",
 	4138: "Maks. hastighed, meter/sekund",
 	4139: "Send hændelse til næste effekt",
-});
+};
