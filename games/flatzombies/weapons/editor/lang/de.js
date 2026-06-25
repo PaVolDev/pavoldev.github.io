@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //German, Deutsch
+window.translate = { //German, Deutsch
 	1000: "Neuen Parameter hinzufügen",
 	1001: "Schließen",
 	1002: "Pfad zur Objekteigenschaft",
@@ -194,9 +194,6 @@ window.translate = Object.assign(window.translate, { //German, Deutsch
 	3010: "Neigungswinkel",
 	3011: "Waffenkaliber. Hauptpatronentyp<br>Alle Schadenseinstellungen befinden sich in der Patrone",
 	3012: "Geben Sie die Patronen-ID an.<br>Erstellen Sie die Patrone in einem separaten<br><a href='ammo/' target='_blank' title='In neuem Tab öffnen'>Munitions-Editor</a> und senden Sie sie an den Server",
-	3176: "Zusätzliches Skript in der Sprache LUA.",
-	3177: "Textdatei mit Projektbeschreibung für neuronale Netze.<br>Geben Sie diese Datei Ihrer KI und bitten Sie sie, den Code zu schreiben",
-	3178: "Dokumentation für KI",
 	3014: "Kategorie für Schalldämpfer auswählen",
 	3015: "Abstand im Interface auf dem Bildschirm mit der Patronenliste",
 	3016: "Größe der Patronenliste für die doppelläufige Schrotflinte",
@@ -325,7 +322,7 @@ window.translate = Object.assign(window.translate, { //German, Deutsch
 	3139: "Liste der zu löschenden Objekte",
 	3140: "Liste der zu löschenden MonoBehaviour-Komponenten",
 	3141: "Patronen-ID, um sie von anderen zu unterscheiden",
-	5541: "Patronen-ID",
+	3541: "Patronen-ID",
 	3142: "Gesamtschaden aller Kugeln.<br>Wird auf alle Kugeln aufgeteilt",
 	3143: "Stoppwirkung [0–1]<br>Zombie entscheidet selbst, wie er auf diesen Parameter reagiert",
 	3144: "Impuls ForceMode2D.Impulse.<br>Wird auf alle Kugeln aufgeteilt",
@@ -360,6 +357,18 @@ window.translate = Object.assign(window.translate, { //German, Deutsch
 	3173: "Animation nach dem vollständigen Entleeren eines Magazinsegments starten",
 	3174: "Magazin beim Nachladen wegwerfen. Lokale Koordinaten",
 	3175: "Rückstoß-Abklinggeschwindigkeit in Grad/Sekunde",
+	3176: "Zusätzliches Skript in der Sprache LUA.",
+	3177: "Textdatei mit Projektbeschreibung für neuronale Netze.<br>Geben Sie diese Datei Ihrer KI und bitten Sie sie, den Code zu schreiben",
+	3178: "Dokumentation für KI",
+	3777: "Koordinaten des Mündungsfeuers",
+	3778: "Animationsliste",
+	3779: "Zufällige Schussanimation",
+	3780: "Verzögerung vor dem Start des Projektils nach dem Drücken des Abzugs, in Sek.",
+	3781: "Übergeordnetes Objekt für den Projektilstart",
+	3782: "Blutspuren auf der Waffe nach erfolgreichen Treffern",
+	3783: "Autor der Modifikation. Nickname zur Anzeige in der Benutzeroberfläche (optional)",
+	3784: "Link zu deiner Seite in sozialen Netzwerken (optional)",
+	3790: "Schussanimation",
 
 	4000: "Kurzer Name für die Anzeige im Interface",
 	4001: "Patronenkaliber. Verschiedene Patronentypen des gleichen Kalibers müssen den gleichen Namen haben.<br>Der String wird als zweite ID für die Verbindung mit der Waffe verwendet",
@@ -497,4 +506,4 @@ window.translate = Object.assign(window.translate, { //German, Deutsch
 	4137: "Geschwindigkeit, Meter/Sekunde",
 	4138: "Höchstgeschwindigkeit, Meter/Sekunde",
 	4139: "Ereignis an nächsten Effekt weitergeben",
-});
+};
