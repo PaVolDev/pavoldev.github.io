@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //Индонезийский, Bahasa Indonesia
+window.translate = { //Индонезийский, Bahasa Indonesia
 	1000: "Tambahkan parameter baru",
 	1001: "Tutup",
 	1002: "Path ke properti objek",
@@ -507,4 +507,4 @@ window.translate = Object.assign(window.translate, { //Индонезийски�
 	4137: "Kecepatan, meter/detik",
 	4138: "Kecepatan maks, meter/detik",
 	4139: "Teruskan event ke efek berikutnya",
-});
+};
