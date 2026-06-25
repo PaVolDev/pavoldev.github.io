@@ -289,7 +289,7 @@ function renderListLoading() {
 function showInlineError(message) {
 	const totalPages = getTotalPages(); // Общее число страниц при ошибке
 	document.getElementById('list').innerHTML = `
-		<div class="list-inline-error">${escapeHtml(message)}</div>
+		<div class="list-inline-error">${escapeHtml(tr(message))}</div>
 		${renderPagination(totalPages)}
 	`;
 	updatePaginationControls(totalPages);
@@ -737,7 +737,7 @@ function renderRecentModsSelect() {
 	if (!select) {
 		return;
 	}
-	let optionsHtml = '<option value="">Список модов</option>';
+	let optionsHtml = '<option value="">' + tr("Список модов") + '</option>';
 	recentMods.forEach(function (modId) {
 		optionsHtml += `<option value="${escapeHtml(String(modId))}">${escapeHtml(String(modId))}</option>`;
 	});
