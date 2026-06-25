@@ -507,7 +507,7 @@ function saveHistoryChanges(fieldPath = '') {
 	if (editedParamsHistory.length > 20) {
 		editedParamsHistory.shift();
 	}
-	undoButton.setAttribute("data-tooltip", tr("Отменить изменения"))
+	//undoButton.setAttribute("data-tooltip", tr("Отменить изменения"))
 }
 
 function resetHistoryChanges() {
@@ -528,10 +528,9 @@ function undoLastChange() {
 
 	renderEditedParams();
 	syncParamsToScene();
-
-	if (editedParamsHistory.length == 0) {
-		undoButton.setAttribute("data-tooltip", tr("Нет данных"));
-	}
+	// if (editedParamsHistory.length == 0) {
+	// 	undoButton.setAttribute("data-tooltip", tr("Нет данных"));
+	// }
 }
 
 
