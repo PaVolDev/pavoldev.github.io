@@ -33,6 +33,11 @@ function translateNode(node) {
 		node.textContent = tr(text);
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
 		if (node.tagName === 'SCRIPT' || node.tagName === 'STYLE') return;
+		// Специфичная обработка для OPTION, чтобы избежать проблем с форматированием HTML
+		if (node.tagName === 'OPTION') {
+			node.textContent = tr(node.textContent);
+			return; // Остановить обход детей
+		}
 		//Переводим атрибуты типа data-tooltip, если он есть
 		for (const attr of window.attrsToTranslate) {
 			const tooltip = node.getAttribute(attr);
