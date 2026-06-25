@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //French, français
+window.translate = { //French, français
 	1000: "Ajouter un nouveau paramètre",
 	1001: "Fermer",
 	1002: "Chemin d'accès à la propriété de l'objet",
@@ -497,4 +497,4 @@ window.translate = Object.assign(window.translate, { //French, français
 	4137: "Vitesse, mètre/seconde",
 	4138: "Vitesse max, mètre/seconde",
 	4139: "Transmettre l'événement à l'effet suivant",
-});
+};
