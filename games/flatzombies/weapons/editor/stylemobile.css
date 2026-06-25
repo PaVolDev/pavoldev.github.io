@@ -27,4 +27,12 @@
 	.window {
 		max-width: 100%;
 	}
+
+	.onlyMobile {
+		display: block;
+	}
+
+	.onlyPC {
+		display: none;
+	}
 }
