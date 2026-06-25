@@ -58,9 +58,9 @@ function tr(text) {
 		const from = window.sourceText[key];
 		const to = window.translate[key]; //перевод по тому же ключу
 		if (from && to !== undefined && text === from) {
-			return to; //просто возвращаем перевод
+			return to; //возвращаем перевод
 		} else if (key == text) {
-			return to; //просто возвращаем перевод
+			return to; //возвращаем перевод
 		}
 	}
 	//Частичная замена
@@ -69,7 +69,7 @@ function tr(text) {
 		const from = window.sourceText[key];
 		const to = window.translate[key]; //перевод по тому же ключу
 		if (from && to !== undefined && text.includes(from)) { //console.log(from + " -> " + to);
-			return text.replace(from, to); //просто возвращаем перевод
+			return text.replace(from, to); //возвращаем перевод
 		}
 	}
 	if (text.match(/^.*[А-ЯЁ].+$/i)) {
@@ -154,11 +154,11 @@ async function loadTranslation() {
 			window.sourceTextIds = Object.keys(window.sourceText).sort((a, b) => {
 				return window.sourceText[b].length - window.sourceText[a].length; //отсортировать массив по длине строк из sourceText — от самых длинных к самым коротким
 			});
-			window.sourceTextIds.forEach(id => maxIndex = (id < 7000) ? Math.max(maxIndex, id) : maxIndex);
+			window.sourceTextIds.forEach(id => maxIndex = Math.max(maxIndex, id));
 			applyTranslation(); //Применяем перевод
 			document.dispatchEvent(new Event('DOMLanguageLoaded'));
 		} catch (error) {
-			alert(`Не удалось загрузить файл перевода для языка ${directory + savedLang}\n` + error);
+			alert(`Ошибка сервера: Не удалось загрузить файл перевода для языка ${directory + savedLang}\n` + error);
 		}
 	}
 }
