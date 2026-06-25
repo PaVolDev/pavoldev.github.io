@@ -1,4 +1,4 @@
-window.translate = Object.assign(window.translate, { //Español mexicano
+window.translate = { //Español mexicano
 	1000: "Agregar nuevo parámetro",
 	1001: "Cerrar",
 	1002: "Ruta de la propiedad del objeto",
@@ -196,9 +196,6 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	3010: "Ángulo de inclinación",
 	3011: "Calibre del arma. Tipo principal de cartucho<br>Toda la configuración de daño está en el cartucho",
 	3012: "Indica el identificador del cartucho.<br>Crea el cartucho en el <br><a href='ammo/' target='_blank' title='Abrir en una pestaña nueva'>Editor de munición</a> y envíalo al servidor",
-	3176: "Script adicional en lenguaje LUA.",
-	3177: "Archivo de texto con la descripción del proyecto para la red neuronal.<br>Entregue este archivo a su IA y pídale que escriba el código",
-	3178: "Documentación para la IA",
 	3014: "De qué categoría tomar los silenciadores",
 	3015: "Espaciado en la interfaz en la pantalla con la lista de cartuchos",
 	3016: "Tamaño de la lista de cartuchos para una escopeta de dos cañones",
@@ -327,7 +324,6 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	3139: "Lista de objetos para eliminar",
 	3140: "Lista de componentes MonoBehaviour para eliminar",
 	3141: "Identificador del cartucho para diferenciarlo de todos los demás",
-	3541: "Identificador del cartucho",
 	3142: "Daño total de todas las balas.<br>Se distribuirá entre todas las balas",
 	3143: "Efecto de detención [0-1]<br>El zombi decide por sí mismo cómo reaccionar a este parámetro",
 	3144: "Impulso ForceMode2D.Impulse.<br>Se distribuirá entre todas las balas",
@@ -362,6 +358,10 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	3173: "Lanzar la animación después de vaciar por completo un compartimento del cargador",
 	3174: "Expulsar el cargador al recargar. Coordenadas locales",
 	3175: "Velocidad de reducción del retroceso, en grados/segundo",
+	3176: "Script adicional en lenguaje LUA.",
+	3177: "Archivo de texto con la descripción del proyecto para la red neuronal.<br>Entregue este archivo a su IA y pídale que escriba el código",
+	3178: "Documentación para la IA",
+	3541: "Identificador del cartucho",
 	3777: "Coordenadas del fuego del disparo",
 	3778: "Lista de animaciones",
 	3779: "Animación aleatoria de disparo",
@@ -509,4 +509,4 @@ window.translate = Object.assign(window.translate, { //Español mexicano
 	4138: "Velocidad máxima, metro/segundo",
 	4139: "Pasar evento al siguiente efecto",
 
-});
+};
