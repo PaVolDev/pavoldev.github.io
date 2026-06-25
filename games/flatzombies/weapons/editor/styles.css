@@ -48,6 +48,13 @@ a:hover {
 	cursor: help;
 }
 
+.onlyMobile {
+	display: none;
+}
+
+.onlyPC {
+	display: block;
+}
 
 
 textarea {
