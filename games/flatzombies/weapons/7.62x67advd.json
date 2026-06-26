@@ -39,7 +39,7 @@
             "materialName": "armor"
         },
         {
-            "scaleFirst": "0.09",
+            "scaleFirst": "0.091",
             "scaleThrough": 0,
             "stopBulletDamage": 0,
             "materialName": "metal"
@@ -51,6 +51,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
