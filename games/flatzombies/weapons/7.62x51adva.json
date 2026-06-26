@@ -12,16 +12,16 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAIAAACjN0L0AAAAK0lEQVQYGWNcksxACWAxMjKiRD/j/7ddlOhn+XvuHCX6GSn0PxMllgP1AgAyLwfBLz6rPAAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "150",
+    "iconButtonSprite.pixelPerUnit": 125,
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
-    "iconListSprite.pixelPerUnit": "150",
+    "iconListSprite.pixelPerUnit": 125,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
-    "angleRandom": "180",
-    "angleSpread": "1",
+    "angleRandom": "0",
+    "angleSpread": "0",
     "damage": 8,
     "distance": 24,
-    "impulse": 40,
+    "impulse": 41,
     "stopPower": 0.25,
     "penetration": {
         "modeHit": "FIRST",
@@ -54,6 +54,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
