@@ -1,0 +1,56 @@
+{
+    "id": "fishmodst",
+    "idTemplate": "shovel",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4AWJiYGBgAAAAAP//XRcpzQAAAAZJREFUAwAADwADJDd96QAAAABJRU5ErkJggg==",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAALElEQVQYGWOUk5NjIAYwEaMIpIb6ClmgVv8n4ARGoq2GmchIwEQaeIZoNwIAks0Bc1ni/D8AAAAASUVORK5CYII=",
+    "caliberName": "shovel",
+    "uiName": "fish",
+    "storeInfo.editorIconUpdateMode": "onSave",
+    "author": "Statrec",
+    "authorURL": "",
+    "shellSkin": "",
+    "shellSkin.pixelPerUnit": 100,
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "50",
+    "iconButtonSprite.pivotPoint": "(0.2, 0.4)",
+    "iconListSprite.pixelPerUnit": "50",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 2,
+    "angleSpread": 0.9,
+    "damage": 8,
+    "distance": 4.5,
+    "impulse": 40,
+    "stopPower": 0.5,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 2,
+        "maxHits": 2,
+        "minDist": 0,
+        "maxDist": 10,
+        "findExitPoint": false
+    },
+    "penetrationDamage": [
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.25,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 4,
+    "targetVersion": 209
+}
