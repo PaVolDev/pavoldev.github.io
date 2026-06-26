@@ -19,38 +19,38 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 22,
+    "damage": 20,
     "distance": 16,
     "impulse": 55,
     "stopPower": 0.7,
     "penetration": {
         "modeHit": "FIRST",
-        "minHits": "2",
-        "maxHits": "2",
+        "minHits": "1",
+        "maxHits": "1",
         "minDist": 2,
         "maxDist": 100,
         "findExitPoint": true
     },
     "penetrationDamage": [
         {
-            "scaleFirst": "0.76",
-            "scaleThrough": 0.01,
-            "stopBulletDamage": 0,
+            "scaleFirst": "0.6",
+            "scaleThrough": "0.1",
+            "stopBulletDamage": "0.3",
             "materialName": "armor"
         },
         {
-            "scaleFirst": "0.76",
-            "scaleThrough": 0.01,
-            "stopBulletDamage": 0,
+            "scaleFirst": "0.6",
+            "scaleThrough": "0.1",
+            "stopBulletDamage": "0.3",
             "materialName": "metal"
         },
         {
             "scaleFirst": "1",
-            "scaleThrough": "0.5",
+            "scaleThrough": "0.6",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
