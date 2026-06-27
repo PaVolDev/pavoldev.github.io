@@ -1,6 +1,7 @@
 //Слушатель события
 function onLoadNewJson(json) {
 	delete json["player.man.thigh.SpriteRenderer.flipX"];
+	delete json["player.man.thigh2.SpriteRenderer.flipX"];
 	delete json["storeInfo.silencerPosition"];
 	delete json["targetVersion"];
 	delete json["version"];
@@ -10,6 +11,7 @@ function onLoadNewJson(json) {
 
 function onSaveJson(json) {
 	json["player.man.thigh.SpriteRenderer.flipX"] = "false";
+	json["player.man.thigh2.SpriteRenderer.flipX"] = "false";
 	json["storeInfo.iconBase64.pixelPerUnit"] = json["storeInfo.iconBase64.pixelPerUnit"] || 150;
 	delete json["player.gameObject.SetActive"];
 	delete json["player.man.body.gameObject.SetActive"];
