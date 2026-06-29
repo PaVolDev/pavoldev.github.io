@@ -1735,13 +1735,6 @@ function getExportResultJSON() {
 			return false; //Останавливаем функцию
 		}
 	} */
-	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
-		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
-		json['storeInfo.iconBase64'] = imageInfo.base64;
-		json["storeInfo.editorIconUpdateMode"] = "onSave";
-		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
-		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
-	}
 	editedParams.forEach(param => {
 		if (param.fieldPath != param.type) {
 			let fullKeyPath = param.startFieldPath || param.fieldPath;
