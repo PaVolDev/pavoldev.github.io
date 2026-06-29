@@ -1,10 +1,10 @@
 //Слушатели событий
 function onLoadNewJson(json) {
-	// if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
-	// 	delete json["storeInfo.iconBase64"];
-	// 	delete json["storeInfo.editorIconUpdateMode"];
-	// 	delete json["storeInfo.silencerPosition"];
-	// }
+	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
+		delete json["storeInfo.iconBase64"];
+		delete json["storeInfo.editorIconUpdateMode"];
+		delete json["storeInfo.silencerPosition"];
+	}
 	delete json["storeInfo.magazineSize"];
 	delete json["targetVersion"];
 	delete json["version"];
@@ -19,6 +19,13 @@ function onLoadNewJson(json) {
 }
 
 function onSaveJson(json) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
+		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+		json['storeInfo.iconBase64'] = imageInfo.base64;
+		json["storeInfo.editorIconUpdateMode"] = "onSave";
+		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
+		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
+	}
 	Object.keys(json).forEach(key => {
 		if (key.startsWith("weapon.player") && (key.endsWith("Position") || key.endsWith(".z") || key.endsWith("sortingOrder") || key.endsWith("SetActive") || key.endsWith("enabled"))) { //Защита персонажа, удаление строки типа weapon.player.man.body.weaponParent.arm.Transform.localPosition
 			delete json[key];
