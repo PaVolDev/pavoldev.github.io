@@ -115,6 +115,7 @@ async function onSelectWeapon(event) {
 		document.getElementById("rightPanel").classList.remove('panelHidden');
 		document.getElementById("startCenterTitle").classList.add('hidden');
 		document.getElementById("centerTitle").classList.remove('hidden');
+		if ("idTemplate" in selectedWeapon) templateInput.selectedIndex = Array.from(templateInput.options).findIndex(s => s.value == selectedWeapon.idTemplate);
 		availableParams.length = 0;
 		availableParams = availableParams.concat(baseParams);
 		availableParams.forEach((field, idx) => { //Обновить значения, взять из оружия
