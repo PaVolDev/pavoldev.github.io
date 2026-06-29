@@ -1,5 +1,9 @@
 //Слушатель события
 function onLoadNewJson(json) {
+	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
+		delete json["storeInfo.iconBase64"];
+		delete json["storeInfo.editorIconUpdateMode"];
+	}
 	delete json["player.man.thigh.SpriteRenderer.flipX"];
 	delete json["player.man.thigh2.SpriteRenderer.flipX"];
 	delete json["storeInfo.silencerPosition"];
@@ -10,9 +14,14 @@ function onLoadNewJson(json) {
 }
 
 function onSaveJson(json) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
+		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+		json['storeInfo.iconBase64'] = imageInfo.base64;
+		json["storeInfo.editorIconUpdateMode"] = "onSave";
+	}
+	json["storeInfo.iconBase64.pixelPerUnit"] = json["storeInfo.iconBase64.pixelPerUnit"] || 150;
 	json["player.man.thigh.SpriteRenderer.flipX"] = "false";
 	json["player.man.thigh2.SpriteRenderer.flipX"] = "false";
-	json["storeInfo.iconBase64.pixelPerUnit"] = json["storeInfo.iconBase64.pixelPerUnit"] || 150;
 	delete json["player.gameObject.SetActive"];
 	delete json["player.man.body.gameObject.SetActive"];
 	delete json["player.man.body.head.gameObject.SetActive"];
@@ -133,7 +142,6 @@ const typeDependencies = { //Для параметров указаного ти
 	'storeInfo.iconBase64': [
 		'storeInfo.editorIconUpdateMode',
 		'storeInfo.iconBase64.pixelPerUnit',
-		'interface.iconImage.rectTransform.localScale',
 	]
 };
 
