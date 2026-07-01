@@ -8,6 +8,7 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 	1006: "Animation",
 	1007: "精灵列表",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "添加",
 	9011: "改变",
 	9013: "String/Number",
@@ -47,7 +48,7 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 	1108: "Local Angle：",
 	1109: "渲染顺序<br>SpriteRenderer.sortingOrder",
 	1110: "Sort：",
-	1111: "每单位距离的像素数<br>Pixels Per Unit",
+	
 	1112: "PPU：",
 	1113: "对象旋转中心点",
 	1114: "Pivot point：",
@@ -154,7 +155,7 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 	2005: "Pivot：",
 	2006: "载入游戏时显示/隐藏渲染\nobject.SpriteRenderer.enabled = false/true",
 	2007: "显示/隐藏对象及其子精灵\nobject.gameObject.SetActive(false/true)",
-	2008: "每单位距离的像素数 (Pixels Per Unit)",
+	
 	2009: "渲染顺序 - SpriteRenderer.sortingOrder",
 	2010: "旋转角度 (度)",
 	2011: "Angle：",
@@ -183,7 +184,7 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 
 	3000: "精灵, PNG 文件",
 	3001: "精灵的旋转中心点",
-	3002: "像素密度",
+	3002: "像素密度<br>Pixels Per Unit (PPU)",
 	3003: "武器动画设置",
 	3004: "界面中显示的武器名称",
 	3005: "武器主精灵/纹理, PNG 文件",
@@ -374,7 +375,7 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 	4001: "口径名称.相同口径的不同弹药类型必须使用相同的名称.<br>该字符串作为与武器关联的第二个标识符.",
 	4002: "射击时抛出的弹壳",
 	4003: "精灵的旋转中心点",
-	4004: "像素密度",
+	
 	4005: "界面按钮图像<br>应为 100x100 的正方形图像, 或宽度较大的长条形弹药图像",
 	4006: "武器弹匣中已装填弹药列表所用的弹药图像",
 	4007: "单次射击发射的子弹数量",
@@ -400,14 +401,14 @@ window.translate = { //zh-CN, Simplified Chinese (简体中文)
 	4027: "箭矢尖端接触地面后, 在目标体内旋转的速度.\n每秒旋转角度",
 	4028: "精灵/纹理, PNG 文件",
 	4029: "精灵的旋转中心点",
-	4030: "像素密度",
+	
 	4031: "箭矢撞击地面时 (如目标死亡倒地)的冲量倍率",
 	4032: "用于定位的对象坐标",
 	4033: "倾斜角度",
 	4034: "显示/隐藏对象及其子精灵",
 	4035: "带箭矢的精灵, PNG 文件",
 	4036: "精灵的旋转中心点",
-	4037: "像素密度",
+	
 	4038: "渲染绘制顺序",
 	4039: "渲染时显示/隐藏精灵",
 	4040: "当前动画名称",
