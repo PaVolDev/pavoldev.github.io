@@ -1,4 +1,4 @@
-window.translate = { //English (USA|British)
+window.translate = { //English (USA)
 	1000: "Add new parameter",
 	1001: "Close",
 	1002: "Object property path",
@@ -8,6 +8,7 @@ window.translate = { //English (USA|British)
 	1006: "Animation",
 	1007: "Sprite list",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Add",
 	9011: "Change",
 	9013: "String/Number",
@@ -47,7 +48,7 @@ window.translate = { //English (USA|British)
 	1108: "Local Angle:",
 	1109: "Sorting Order<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Pixels Per Unit<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Pivot point",
 	1114: "Pivot point:",
@@ -154,7 +155,7 @@ window.translate = { //English (USA|British)
 	2005: "Pivot:",
 	2006: "Show/hide renderer on game load\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Show/hide object with all child sprites\nobject.gameObject.SetActive(false/true)",
-	2008: "Pixels Per Unit",
+	
 	2009: "Sorting Order – SpriteRenderer.sortingOrder",
 	2010: "Rotation angle in degrees",
 	2011: "Angle:",
@@ -183,7 +184,7 @@ window.translate = { //English (USA|British)
 
 	3000: "Sprite, PNG file",
 	3001: "Sprite pivot point",
-	3002: "Pixels per unit",
+	3002: "Texture scaling<br>Pixels Per Unit (PPU)",
 	3003: "Weapon animation settings",
 	3004: "Weapon name in UI",
 	3005: "Main sprite/texture for the weapon, PNG file",
@@ -374,7 +375,7 @@ window.translate = { //English (USA|British)
 	4001: "Caliber name. Different cartridge types of the same caliber must share this name.<br>This string is used as a secondary identifier to link with weapons",
 	4002: "Shell casing during firing",
 	4003: "Sprite pivot point",
-	4004: "Pixels per unit",
+	
 	4005: "Button image in UI<br>Square 100x100 image or long cartridge with large width",
 	4006: "Cartridge image for UI in the list of loaded cartridges in weapon magazine",
 	4007: "Number of bullets per shot",
@@ -400,14 +401,14 @@ window.translate = { //English (USA|British)
 	4027: "Arrow rotation speed inside body when tip hits ground.\nRotation per second",
 	4028: "Sprite/texture, PNG file",
 	4029: "Sprite pivot point",
-	4030: "Pixels per unit",
+	
 	4031: "Impulse multiplier when arrow hits ground during body fall",
 	4032: "Object position for placement",
 	4033: "Tilt angle",
 	4034: "Show/hide object with all child sprites",
 	4035: "Arrow sprite, PNG file",
 	4036: "Sprite pivot point",
-	4037: "Pixels per unit",
+	
 	4038: "Renderer sorting order",
 	4039: "Show/hide sprite during rendering",
 	4040: "Current animation name",
