@@ -8,6 +8,7 @@ window.translate = { //Swedish, Svenska
 	1006: "Animering",
 	1007: "Spritellista",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Lägg till",
 	9011: "Ändra",
 	9013: "Sträng/Nummer",
@@ -47,7 +48,7 @@ window.translate = { //Swedish, Svenska
 	1108: "Local Angle:",
 	1109: "Renderingordning<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Pixlar per enhet<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Objektets rotationspunkt (Pivot)",
 	1114: "Pivot point:",
@@ -154,7 +155,7 @@ window.translate = { //Swedish, Svenska
 	2005: "Pivot:",
 	2006: "Visa/dölj renderare vid laddning i spelet\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Visa/dölj objektet tillsammans med dess underordnade sprites\nobject.gameObject.SetActive(false/true)",
-	2008: "Pixlar per enhet (Pixels Per Unit)",
+	
 	2009: "Genomritningsordning - SpriteRenderer.sortingOrder",
 	2010: "Rotationsvinkel i grader",
 	2011: "Angle:",
@@ -183,7 +184,7 @@ window.translate = { //Swedish, Svenska
 
 	3000: "Sprite, PNG-fil",
 	3001: "Rotationspunkt för spriten",
-	3002: "Pixel skala (PPU)",
+	3002: "Pixel skala<br>Pixels Per Unit (PPU)",
 	3003: "Vapenanimering inställningar",
 	3004: "Vapnets namn i gränssnittet",
 	3005: "Huvudsprite/textur för vapnet, PNG-fil",
@@ -374,7 +375,7 @@ window.translate = { //Swedish, Svenska
 	4001: "Patronkaliber. Olika patrontyper av samma kaliber måste ha samma namn.<br>Strängen används som en sekundär identifierare för att länka med vapen",
 	4002: "Hylsa vid skytte",
 	4003: "Rotationspunkt för spriten",
-	4004: "Pixel skala (PPU)",
+	
 	4005: "Bild för knapp i gränssnittet<br>Kvadratisk bild 100x100 eller lång patron",
 	4006: "Patronbild för gränssnittet i listan över laddade patroner i vapenmagasinet",
 	4007: "Antal kulor vid ett skott",
@@ -400,14 +401,14 @@ window.translate = { //Swedish, Svenska
 	4027: "Rotationshastighet för pilen inuti kroppen när spetsen vilar på marken.\nRotationshastighet på 1 sekund",
 	4028: "Sprite/textur, PNG-fil",
 	4029: "Rotationspunkt för spriten",
-	4030: "Pixel skala (PPU)",
+	
 	4031: "Impulsmultiplikator när pilen träffar marken när kroppen faller",
 	4032: "Objektkoordinater för placering",
 	4033: "Lutningsvinkel",
 	4034: "Visa/dölj objektet tillsammans med dess underordnade sprites",
 	4035: "Sprite med pil, PNG-fil",
 	4036: "Rotationspunkt för spriten",
-	4037: "Pixel skala (PPU)",
+	
 	4038: "Renderingordning för renderaren",
 	4039: "Visa/dölj sprite under rendering",
 	4040: "Namn på aktuell animering",
