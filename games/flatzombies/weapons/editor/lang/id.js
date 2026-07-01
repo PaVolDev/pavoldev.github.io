@@ -8,6 +8,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	1006: "Animasi",
 	1007: "Daftar sprite",
 	1008: "Daftar suara",
+	1009: "Undo last change",
 	1011: "Tambahkan",
 	9011: "Ubah",
 	9013: "String/angka biasa",
@@ -47,7 +48,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	1108: "Local Angle:",
 	1109: "Urutan penggambaran<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Piksel per satuan jarak<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Pivot point objek",
 	1114: "Pivot point:",
@@ -155,7 +156,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	2005: "Pivot:",
 	2006: "Tampilkan/sembunyikan renderer saat dimuat ke game\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Tampilkan/sembunyikan objek bersama sprite child\nobject.gameObject.SetActive(false/true)",
-	2008: "Piksel per satuan jarak (Pixels Per Unit)",
+	
 	2009: "Urutan penggambaran - SpriteRenderer.sortingOrder",
 	2010: "Sudut rotasi dalam derajat",
 	2011: "Angle:",
@@ -184,7 +185,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 
 	3000: "Sprite, file PNG",
 	3001: "Pivot point untuk sprite",
-	3002: "Skala piksel",
+	3002: "Skala piksel<br>Pixels Per Unit (PPU)",
 	3003: "Pengaturan animasi senjata",
 	3004: "Nama senjata di interface",
 	3005: "Sprite/tekstur utama untuk senjata, file PNG",
@@ -375,7 +376,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	4001: "Caliber peluru. Jenis peluru berbeda dengan caliber sama harus memiliki nama yang sama.<br>String digunakan sebagai pengenal kedua untuk menghubungkan dengan senjata",
 	4002: "Shell saat menembak",
 	4003: "Pivot point untuk sprite",
-	4004: "Skala piksel",
+	
 	4005: "Gambar untuk tombol di interface<br>Gambar persegi 100x100 atau peluru panjang dengan lebar besar",
 	4006: "Gambar peluru untuk interface pada daftar peluru yang dimuat di magazine senjata",
 	4007: "Jumlah bullet per tembakan",
@@ -401,14 +402,14 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	4027: "Kecepatan rotasi arrow di dalam tubuh saat ujungnya menancap ke tanah.\nKecepatan per 1 detik",
 	4028: "Sprite/tekstur, file PNG",
 	4029: "Pivot point untuk sprite",
-	4030: "Skala piksel",
+	
 	4031: "Impulse multiplier saat arrow mengenai tanah ketika tubuh jatuh",
 	4032: "Koordinat objek untuk penempatan",
 	4033: "Sudut kemiringan",
 	4034: "Tampilkan/sembunyikan objek bersama sprite child",
 	4035: "Sprite arrow, file PNG",
 	4036: "Pivot point untuk sprite",
-	4037: "Skala piksel",
+	
 	4038: "Urutan gambar untuk renderer",
 	4039: "Tampilkan/sembunyikan sprite saat rendering",
 	4040: "Nama animasi saat ini",
