@@ -8,6 +8,7 @@ window.translate = { //Danish, Dansk
 	1006: "Animation",
 	1007: "Sprite-liste",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Tilføj",
 	9011: "Rediger",
 	9013: "Streng/Tal",
@@ -47,7 +48,7 @@ window.translate = { //Danish, Dansk
 	1108: "Local Angle:",
 	1109: "Sorteringsrækkefølge<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Pixels per enhed<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Objektets omdrejningspunkt",
 	1114: "Pivot point:",
@@ -154,7 +155,7 @@ window.translate = { //Danish, Dansk
 	2005: "Pivot:",
 	2006: "Vis/skjul renderer ved indlæsning i spillet\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Vis/skjul objekt sammen med underordnede sprites\nobject.gameObject.SetActive(false/true)",
-	2008: "Piksler per enhed (Pixels Per Unit)",
+	
 	2009: "Sorteringsrækkefølge - SpriteRenderer.sortingOrder",
 	2010: "Rotationsvinkel i grader",
 	2011: "Angle:",
@@ -183,7 +184,7 @@ window.translate = { //Danish, Dansk
 
 	3000: "Sprite, PNG-fil",
 	3001: "Omdrejningspunkt for sprite",
-	3002: "Pixelmålestok",
+	3002: "Pixelmålestok<br>Pixels Per Unit (PPU)",
 	3003: "Våbenanimationsindstillinger",
 	3004: "Våbennavn i interface",
 	3005: "Hovedsprite/tekstur til våben, PNG-fil",
@@ -374,7 +375,7 @@ window.translate = { //Danish, Dansk
 	4001: "Patronkaliber. Forskellige typer patroner af samme kaliber skal have samme navn.<br>Strengen bruges som en sekundær identifikator til at forbinde med våben",
 	4002: "Hylster ved skydning",
 	4003: "Omdrejningspunkt for sprite",
-	4004: "Pixelmålestok",
+	
 	4005: "Billede til knappen i grænsefladen<br>Firkantet billede 100x100 eller lang patron med stor bredde",
 	4006: "Patronbillede til grænsefladen i listen over ladte patroner i våbenmagasinet",
 	4007: "Antal kugler per skud",
@@ -400,14 +401,14 @@ window.translate = { //Danish, Dansk
 	4027: "Pildrejningshastighed inde i kroppen, når spidsen hviler mod jorden.\nHastighed pr. 1 sekund",
 	4028: "Sprite/tekstur, PNG-fil",
 	4029: "Omdrejningspunkt for sprite",
-	4030: "Pixelmålestok",
+	
 	4031: "Impulsmultiplikator, når pilen rammer jorden, når kroppen falder",
 	4032: "Objektkoordinater til placering",
 	4033: "Vinklingsvinkel",
 	4034: "Vis/skjul objekt sammen med underordnede sprites",
 	4035: "Sprite med pil, PNG-fil",
 	4036: "Omdrejningspunkt for sprite",
-	4037: "Pixelmålestok",
+	
 	4038: "Tegningsrækkefølge for renderer",
 	4039: "Vis/skjul sprite under rendering",
 	4040: "Navn på nuværende animation",
