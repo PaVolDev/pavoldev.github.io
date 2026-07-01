@@ -8,6 +8,7 @@ window.translate = { //Хинди, हिंदी
 	1006: "Animation",
 	1007: "Sprite List",
 	1008: "Sound List",
+	1009: "Undo last change",
 	1011: "जोड़ें",
 	9011: "संपादित करें",
 	9013: "सामान्य स्ट्रिंग/संख्या",
@@ -47,7 +48,7 @@ window.translate = { //Хинди, हिंदी
 	1108: "Local Angle:",
 	1109: "render order<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "प्रति यूनिट पिक्सल<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "ऑब्जेक्ट का pivot point",
 	1114: "Pivot point:",
@@ -155,7 +156,7 @@ window.translate = { //Хинди, हिंदी
 	2005: "Pivot:",
 	2006: "गेम में लोड करते समय render दिखाएं/छिपाएं\nobject.SpriteRenderer.enabled = false/true",
 	2007: "child sprite के साथ ऑब्जेक्ट दिखाएं/छिपाएं\nobject.gameObject.SetActive(false/true)",
-	2008: "प्रति यूनिट पिक्सल (Pixels Per Unit)",
+	
 	2009: "render order - SpriteRenderer.sortingOrder",
 	2010: "डिग्री में रोटेशन Angle",
 	2011: "Angle:",
@@ -184,7 +185,7 @@ window.translate = { //Хинди, हिंदी
 
 	3000: "Sprite, PNG फ़ाइल",
 	3001: "Sprite के लिए Pivot Point",
-	3002: "Pixel Scale",
+	3002: "Pixel Scale<br>Pixels Per Unit (PPU)",
 	3003: "हथियार Animation Setups",
 	3004: "इंटरफ़ेस में हथियार का नाम",
 	3005: "हथियार के लिए मुख्य Sprite/Texture, PNG फ़ाइल",
@@ -375,7 +376,7 @@ window.translate = { //Хинди, हिंदी
 	4001: "Cartridge Caliber। एक ही Caliber के विभिन्न Cartridge Type का नाम समान होना चाहिए।<br>स्ट्रिंग का उपयोग हथियार के साथ लिंक करने के लिए दूसरे ID के रूप में किया जाता है",
 	4002: "फायरिंग करते समय Casing",
 	4003: "Sprite के लिए Pivot Point",
-	4004: "Pixel Scale",
+	
 	4005: "इंटरफ़ेस में बटन के लिए Image<br>100x100 वर्ग image या बड़ी चौड़ाई वाला एक लंबा cartridge",
 	4006: "हथियार Magazine में भरे हुए cartridge की सूची में इंटरफ़ेस के लिए Cartridge Image",
 	4007: "एक Shot में गोलियों की संख्या",
@@ -401,14 +402,14 @@ window.translate = { //Хинди, हिंदी
 	4027: "शरीर के अंदर Arrow घुमाने की Speed, जब टिप जमीन से टकराती है।\n1 सेकंड में Speed",
 	4028: "Sprite/Texture, PNG फ़ाइल",
 	4029: "Sprite के लिए Pivot Point",
-	4030: "Pixel Scale",
+	
 	4031: "Impulse का Multiplier, जब Arrow शरीर गिरने पर जमीन से टकराता है",
 	4032: "स्थिति के लिए ऑब्जेक्ट के Coordinates",
 	4033: "झुकाव Angle",
 	4034: "child sprite के साथ ऑब्जेक्ट दिखाएं/छिपाएं",
 	4035: "Arrow के साथ Sprite, PNG फ़ाइल",
 	4036: "Sprite के लिए Pivot Point",
-	4037: "Pixel Scale",
+	
 	4038: "render के लिए Drawing Order",
 	4039: "render करते समय Sprite दिखाएं/छिपाएं",
 	4040: "वर्तमान Animation का नाम",
