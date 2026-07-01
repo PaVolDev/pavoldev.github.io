@@ -8,6 +8,7 @@ window.translate = { //German, Deutsch
 	1006: "Animation",
 	1007: "Spritelliste",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Hinzufügen",
 	9011: "Ändern",
 	9013: "Zeichenkette/Zahl",
@@ -47,7 +48,7 @@ window.translate = { //German, Deutsch
 	1108: "Local Angle:",
 	1109: "Sortierreihenfolge beim Rendern<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Pixel pro Einheit<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Drehpunkt (Pivot-Punkt) des Objekts",
 	1114: "Pivot point:",
@@ -154,7 +155,7 @@ window.translate = { //German, Deutsch
 	2005: "Pivot:",
 	2006: "Renderer beim Laden ins Spiel anzeigen/ausblenden\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Objekt zusammen mit untergeordneten Sprites anzeigen/ausblenden\nobject.gameObject.SetActive(false/true)",
-	2008: "Pixels Per Unit (Pixel pro Einheit)",
+	
 	2009: "Sortierreihenfolge - SpriteRenderer.sortingOrder",
 	2010: "Rotationswinkel in Grad",
 	2011: "Angle:",
@@ -183,7 +184,7 @@ window.translate = { //German, Deutsch
 
 	3000: "Sprite, PNG-Datei",
 	3001: "Drehpunkt für das Sprite",
-	3002: "Pixels Per Unit (Pixelmaßstab)",
+	3002: "Pixels Per Unit (Pixelmaßstab)<br>Pixels Per Unit (PPU)",
 	3003: "Waffenanimationseinstellungen",
 	3004: "Waffenname im Interface",
 	3005: "Hauptsprite/Haupttextur für die Waffe, PNG-Datei",
@@ -374,7 +375,7 @@ window.translate = { //German, Deutsch
 	4001: "Patronenkaliber. Verschiedene Patronentypen des gleichen Kalibers müssen den gleichen Namen haben.<br>Der String wird als zweite ID für die Verbindung mit der Waffe verwendet",
 	4002: "Hülse beim Schießen",
 	4003: "Drehpunkt für das Sprite",
-	4004: "Pixelmaßstab (PPU)",
+	
 	4005: "Bild für Interface-Button<br>Quadratisches Bild 100x100 oder längliche Patrone",
 	4006: "Patronen-Bild für die Liste geladener Patronen im Waffenmagazin",
 	4007: "Anzahl der Kugeln bei einem Schuss",
@@ -400,14 +401,14 @@ window.translate = { //German, Deutsch
 	4027: "Rotationsgeschwindigkeit des Pfeils im Körper, wenn die Spitze auf dem Boden aufliegt.\nDrehung pro Sekunde",
 	4028: "Sprite/Textur, PNG-Datei",
 	4029: "Drehpunkt für das Sprite",
-	4030: "Pixelmaßstab (PPU)",
+	
 	4031: "Impulsmultiplikator, wenn der Pfeil beim Herunterfallen des Körpers auf den Boden schlägt",
 	4032: "Objektkoordinaten für die Platzierung",
 	4033: "Neigungswinkel",
 	4034: "Objekt zusammen mit untergeordneten Sprites anzeigen/ausblenden",
 	4035: "Sprite mit Pfeil, PNG-Datei",
 	4036: "Drehpunkt für das Sprite",
-	4037: "Pixelmaßstab (PPU)",
+	
 	4038: "Sortierreihenfolge beim Rendern",
 	4039: "Sprite beim Rendern anzeigen/ausblenden",
 	4040: "Name der aktuellen Animation",
