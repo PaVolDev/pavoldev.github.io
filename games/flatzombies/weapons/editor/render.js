@@ -236,7 +236,7 @@ function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaTh
 	off.width = w; off.height = h;
 	const c = off.getContext('2d');
 	c.clearRect(0, 0, w, h); c.save(); c.translate(w / 2, h / 2); // Центр канваса — центр мира (как в Unity)
-	c.scale(viewPPU, viewPPU); // Масштаб пикселей на юнит
+	c.scale(viewPPU, viewPPU); // Размер пикселей на юнит
 
 	// 1. Создаем карту для быстрого доступа к объектам по имени
 	// 2. Функция для рекурсивного или итеративного получения пути
