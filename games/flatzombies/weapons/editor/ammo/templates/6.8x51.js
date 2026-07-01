@@ -1,4 +1,4 @@
-export default {
+﻿export default {
 	"id": "6.8x51",
 	"type": "cartridge",
 	"idTemplate": "7.62x51",
@@ -56,4 +56,5 @@ export default {
 	"version": 3,
 	"targetVersion": 208
 }
+
 

@@ -1,4 +1,4 @@
-export default {
+﻿export default {
 "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAIAAACaUPOvAAAALklEQVQIHWO8MtmKAS9gkVHjw6uAgYWB6R0BFVdPnieg4u9f/AoYWG7c+I1fCQDP6QoJa6X/jQAAAABJRU5ErkJggg==",
 "shellSkin.pivotPoint": "(0.5, 0.5)",
 "shellSkin.pixelPerUnit": "100",
@@ -56,6 +56,7 @@ export default {
 
 
 }
+
 
 
 

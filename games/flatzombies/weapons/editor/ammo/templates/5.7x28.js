@@ -2,7 +2,7 @@
 "shellSkin":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAIAAACaUPOvAAAALklEQVQIHWO8MtmKAS9gkVHjw6uAgYWB6R0BFVdPnieg4u9f/AoYWG7c+I1fCQDP6QoJa6X/jQAAAABJRU5ErkJggg==",
 "shellSkin.pivotPoint": "(0.5, 0.5)",
 "shellSkin.pixelPerUnit": "100",
-"id": "15.7x28",
+"id": "5.7x28",
 "uiName": "5.7x28",
 "caliberName": "5.7x28",
 "iconButtonSprite":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAACHElEQVRYCe2YQU7CUBCGZyos0BCIegAWHsAjcBO5gR6hG9dyA+vWlZxAuIEH0KQcQCVpAgug4z/v9WGhlDasGu0kZvrmzavTz7/vTeXnx/tbEhqSNSY2F+lYMlUNN4/mIUr0Uc2TVtRqn6krtHb0nskRlt9YrA9ux8wWgpuXmICFSRo27q1jipGqsWarQQ0S8XWo9vk1e1V/cd65djEdV8qYe6g/0LpRtY/awjL1Re2ryT6QZq0BmH8X9jAHkGq8MkTJwy8XyxwQibt2WjO4b68t1E28ihcOZqKeohLb0Ye/J2dsYp5M6ABIq0S7Whoe8UaJNgaI/8OgGj/zpJIRyzjJ2fJQIiDbmRwlJstqBwL2TQTwvsGRQBaSGXAHiA2hxOmuEvVtr62AAA4Q3fLueCUhlKjnxo3uic5qiI5Eac99EQ5wOn9jyQN+Ov9mTyzNqGSiU+dyserVSiwJLS8NLeVbrcQ8OsXxFzTjAVrFUQ2xGFYqAwcLYz884QDBKa2F0DVqs11bCQJGdcgbuUMZJzVpBxSj2a8hGoIyVgeVGY/X1HiEtr5kzKd2QtF8R/8dJW4eGM98wDz9H0HGtiBlZnc+BVV5e5WIjTHERE9vgL9A33h05y6m42qaBE2P/OV8MW2eto4rcQdS5iYe6KRycpWIfmeATF9vcNntTAhbJWzgYjqolkmo8FDTVOs6GqAu3oGkoS1LAdR4nhJ/AAOkuf58hoTPAAAAAElFTkSuQmCC",
@@ -36,3 +36,4 @@
 "hitEffects.materials": "EffectHitMaterial[]",
 "hitEffects.sounds": "SoundBulletHit[]"
 };
+
