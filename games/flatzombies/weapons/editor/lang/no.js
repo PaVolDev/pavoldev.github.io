@@ -8,6 +8,7 @@ window.translate = { //Norwegian, Norsk
 	1006: "Animasjon",
 	1007: "Sprite-liste",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Legg til",
 	9011: "Endre",
 	9013: "Streng/Tall",
@@ -47,7 +48,7 @@ window.translate = { //Norwegian, Norsk
 	1108: "Local Angle:",
 	1109: "Rekkefølge for rendering<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Piksler per avstandsenhet<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Objektets rotasjonspunkt",
 	1114: "Pivot point:",
@@ -154,7 +155,7 @@ window.translate = { //Norwegian, Norsk
 	2005: "Pivot:",
 	2006: "Vis/skjul rendering når du laster inn i spillet\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Vis/skjul objektet sammen med underordnede sprites\nobject.gameObject.SetActive(false/true)",
-	2008: "Piksler per avstandsenhet (Pixels Per Unit)",
+	
 	2009: "Rekkefølge for rendering - SpriteRenderer.sortingOrder",
 	2010: "Rotasjonsvinkel i grader",
 	2011: "Angle:",
@@ -183,7 +184,7 @@ window.translate = { //Norwegian, Norsk
 
 	3000: "Sprite, PNG-fil",
 	3001: "Rotasjonspunkt for sprite",
-	3002: "Pikselstørrelse",
+	3002: "Pikselstørrelse<br>Pixels Per Unit (PPU)",
 	3003: "Våpenanimasjonsinnstillinger",
 	3004: "Våpennavn i grensesnittet",
 	3005: "Hovedsprite/tekstur for våpenet, PNG-fil",
@@ -374,7 +375,7 @@ window.translate = { //Norwegian, Norsk
 	4001: "Patronkaliber. Ulike typer patroner med samme kaliber skal ha samme navn.<br>Strengen brukes som en annen identifikator for å koble til våpenet",
 	4002: "Hylse ved skyting",
 	4003: "Rotasjonspunkt for sprite",
-	4004: "Pikselstørrelse",
+	
 	4005: "Bilde for knappen i grensesnittet<br>Firkantet bilde 100x100 eller lang patron med stor bredde",
 	4006: "Patronbilde for grensesnittet i listen over ladede patroner i magasin for automatisk rifle",
 	4007: "Antall kuler per skudd",
@@ -400,14 +401,14 @@ window.translate = { //Norwegian, Norsk
 	4027: "Rotasjonsfart for pilen inne i kroppen når tuppen hviler mot bakken.\nFart på 1 sekund",
 	4028: "Sprite/tekstur, PNG-fil",
 	4029: "Rotasjonspunkt for sprite",
-	4030: "Pikselstørrelse",
+	
 	4031: "Impulsmultiplikator når pilen treffer bakken når kroppen faller",
 	4032: "Objektkoordinater for plassering",
 	4033: "Vinklingsvinkel",
 	4034: "Vis/skjul objektet sammen med underordnede sprites",
 	4035: "Sprite med pil, PNG-fil",
 	4036: "Rotasjonspunkt for sprite",
-	4037: "Pikselstørrelse",
+	
 	4038: "Rekkefølge for rendering",
 	4039: "Vis/skjul sprite under rendering",
 	4040: "Navn på gjeldende animasjon",
