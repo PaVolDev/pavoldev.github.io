@@ -8,6 +8,7 @@ window.translate = { //Español mexicano
 	1006: "Animación",
 	1007: "Lista de sprites",
 	1008: "Lista de sonidos",
+	1009: "Undo last change",
 	1011: "Agregar",
 	9011: "Cambiar",
 	9013: "Texto/Número",
@@ -47,7 +48,7 @@ window.translate = { //Español mexicano
 	1108: "Local Angle:",
 	1109: "Orden de dibujo<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "Píxeles por unidad de distancia<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "Punto de pivote del objeto",
 	1114: "Pivot point:",
@@ -156,7 +157,7 @@ window.translate = { //Español mexicano
 	2005: "Pivot:",
 	2006: "Mostrar/ocultar render al cargar en el juego\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Mostrar/ocultar objeto junto con los sprites hijos\nobject.gameObject.SetActive(false/true)",
-	2008: "Píxeles por unidad de distancia (Pixels Per Unit)",
+	
 	2009: "Orden de dibujo - SpriteRenderer.sortingOrder",
 	2010: "Ángulo de rotación en grados",
 	2011: "Angle:",
@@ -185,7 +186,7 @@ window.translate = { //Español mexicano
 
 	3000: "Sprite, archivo PNG",
 	3001: "Punto de pivote del sprite",
-	3002: "Densidad de píxeles",
+	3002: "Densidad de píxeles<br>Pixels Per Unit (PPU)",
 	3003: "Configuración de la animación del arma",
 	3004: "Nombre del arma en la interfaz",
 	3005: "Sprite/textura principal del arma, archivo PNG",
@@ -376,7 +377,7 @@ window.translate = { //Español mexicano
 	4001: "Nombre del calibre. Los diferentes tipos de cartucho del mismo calibre deben tener el mismo nombre.<br>La cadena se usa como segundo identificador para vincularlo con el arma",
 	4002: "Vaina al disparar",
 	4003: "Punto de pivote del sprite",
-	4004: "Densidad de píxeles",
+	
 	4005: "Imagen para el botón en la interfaz<br>Imagen cuadrada 100x100 o cartucho largo con gran ancho",
 	4006: "Imagen del cartucho para la interfaz en la lista de cartuchos cargados en el cargador del arma",
 	4007: "Cant. de balas por disparo",
@@ -402,14 +403,14 @@ window.translate = { //Español mexicano
 	4027: "Velocidad de rotación de la flecha dentro del cuerpo cuando la punta toca el suelo.\nVelocidad por 1 segundo",
 	4028: "Sprite/textura, archivo PNG",
 	4029: "Punto de pivote del sprite",
-	4030: "Densidad de píxeles",
+	
 	4031: "Multiplicador de impulso cuando la flecha golpea el suelo durante la caída del cuerpo",
 	4032: "Coordenadas del objeto para su colocación",
 	4033: "Ángulo de inclinación",
 	4034: "Mostrar/ocultar objeto junto con los sprites hijos",
 	4035: "Sprite con la flecha, archivo PNG",
 	4036: "Punto de pivote del sprite",
-	4037: "Densidad de píxeles",
+	
 	4038: "Orden de dibujo del render",
 	4039: "Mostrar/ocultar sprite durante el renderizado",
 	4040: "Nombre de la animación actual",
