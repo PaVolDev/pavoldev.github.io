@@ -1,3 +1,4 @@
+
 //Слушатели событий
 function onLoadNewJson(json) {
 	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
