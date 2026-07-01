@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Редактор патронов</title>
+	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="../stylemobile.css">
+
+
+</head>
+
+<body>
+	<div class="container" id="page">
+		<!-- Левая панель: Доступные параметры -->
+		<div class="panel panelHidden" id="leftPanel">
+			<span style="position: relative;">
+				<div class="titlePanel panelName">Доступные параметры</div>
+				<div onclick="showAddNewField()" data-tooltip="Добавить новый параметр" class="addNewField" id="addNewField">
+					<img src="../images/add.png" width="100%" height="100%">
+				</div>
+
+				<div onclick="closeAddNewField()" data-tooltip="Закрыть" style="display: none;" class="addNewField" id="closeNewField">
+					<img src="../images/close.png" width="100%" height="100%">
+				</div>
+
+
+			</span>
+
+			<div id="newFieldPanel" style="display: none;">
+				<div class="fields newParamFields">
+					<span data-tooltip="Путь к свойству объекта">Свойство объекта:</span>
+					<span data-tooltip="Значение свойства">Значение:</span>
+					<input type="text" id="newFieldPath" class="panelInput" value="" placeholder="object.MonoBehaviour.field">
+					<input type="text" id="newFieldValue" class="panelInput" value="" placeholder="(0.5, 0.12, 0)">
+					<span>
+						<select id="newFieldType" class="panelInput" data-tooltip="Тип данных">
+							<option value="string">Обычная строка/число</option>
+							<option value="TextureSprite">Спрайт</option>
+							<option value="AudioClip">Звук</option>
+							<option value="AnimationSprite[]">Анимация</option>
+							<option value="Sprite[]">Список спрайтов</option>
+							<option value="AudioClip[]">Список звуков</option>
+							<option value="Vector2">Vector2</option>
+							<option value="Vector3">Vector3</option>
+						</select>
+					</span>
+					<span><br><button onclick="createParam()" class="button add">Добавить</button></span>
+				</div>
+
+				<br>
+			</div>
+
+			<span style="position: relative;">
+				<input type="text" id="searchInput" class="panelInput" placeholder="Поиск параметров...">
+				<button class="clearInput" id="clearInput" style="display: none;">
+					<img src="../images/close.png" width="100%" height="100%">
+				</button>
+			</span>
+			<ul id="availableParamsList"></ul>
+		</div>
+
+		<!-- Центральная панель: Добавленные/Отредактированные параметры -->
+		<div class="panel" id="centerPanel">
+			<div class="titlePanel panelName hidden" id="centerTitle">
+				<span style="display: block;position: relative;width: 100%;">
+					Параметры патрона
+					<img src="../images/undo.png" style="position: absolute; top: -2px; right: 6px; z-index: 10; height: 32px; cursor: pointer;" id="undoButton" data-tooltip="Отменить изменения" onclick="undoLastChange()">
+				</span>
+			</div>
+			<div class="titlePanel panelName " id="startCenterTitle">Новый патрон</div>
+			<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
+			<div class="fields hidden" id="startFields">
+				<label for="idWeapon">ID:</label>
+				<label for="idTemplate">Шаблон:</label>
+				<input type="text" id="idWeapon" maxlength="12" class="panelInput" placeholder="[0-9.]x[0-9.][a-z]" data-tooltip="Придумайте и укажите идентификатор патрона">
+				<select id="idTemplate" class="panelInput" data-tooltip="Выберите патрон, который будет использоваться как базовый родительский Prefab">
+					<option value="">Выберите патрон</option>
+					<option value="5.7x28">5.7x28</option>
+					<option value="5.7x28A">5.7x28A</option>
+					<option value="5.7x28D">5.7x28D</option>
+					<option value="5.7x28S">5.7x28S</option>
+					<option value="5.56x45">5.56x45</option>
+					<option value="5.56x45A">5.56x45A</option>
+					<option value="5.56x45D">5.56x45D</option>
+					<option value="5.56x45S">5.56x45S</option>
+					<option value="7.62x39">7.62x39</option>
+					<option value="7.62x51">7.62x51- .308W</option>
+					<option value="7.62x51A">7.62x51A</option>
+					<option value="7.62x51D">7.62x51D</option>
+					<option value="7.62x51S">7.62x51S</option>
+					<option value="7.62x51Sniper">7.62x51Sniper - .308W</option>
+					<option value="7.62x51SA">7.62x51SA</option>
+					<option value="7.62x51SD">7.62x51SD</option>
+					<option value="7.62x51SS">7.62x51SS</option>
+					<option value="7.62x54">7.62x54</option>
+					<option value="7.62x54A">7.62x54A</option>
+					<option value="7.62x54D">7.62x54D</option>
+					<option value="7.62x54S">7.62x54S</option>
+					<option value=".300">7.62x67 - .300 WM</option>
+					<option value="7.62x67A">7.62x67A</option>
+					<option value="7.62x67D">7.62x67D</option>
+					<option value="7.62x67S">7.62x67S</option>
+					<option value=".338LM">8.6x70 - .338 LM</option>
+					<option value="8.6x70A">8.6x70A</option>
+					<option value="8.6x70D">8.6x70D</option>
+					<option value="8.6x70S">8.6x70S</option>
+					<option value="9x19">9x19</option>
+					<option value="9x19A">9x19A</option>
+					<option value="9x19D">9x19D</option>
+					<option value="9x19S">9x19S</option>
+					<option value="9x39">9x39</option>
+					<option value=".40S&W">10x22 - .40 SW</option>
+					<option value=".44Mag">11.18x33R - .44 Magnum</option>
+					<option value=".408CT">10.3x77 - .408 CT</option>
+					<option value="10.3x77A">10.3x77A</option>
+					<option value="10.3x77D">10.3x77D</option>
+					<option value="10.3x77S">10.3x77S</option>
+					<option value="10x22A">10x22A</option>
+					<option value="10x22D">10x22D</option>
+					<option value="11.43x23">11.43x23 - .45 ACP</option>
+					<option value="11.43x23A">11.43x23A</option>
+					<option value="11.43x23D">11.43x23D</option>
+					<option value="11.43x23S">11.43x23S</option>
+					<option value="12.7x55">12.7x55</option>
+					<option value="12.7x55A">12.7x55A</option>
+					<option value="12.7x55D">12.7x55D</option>
+					<option value="12.7x55F">12.7x55F</option>
+					<option value="12.7x55S">12.7x55S</option>
+					<option value="12.7x55W">12.7x55W</option>
+					<option value=".50BMG">12.7x99 - .50 BMG</option>
+					<option value="12.7x99A">12.7x99A</option>
+					<option value="12.7x99D">12.7x99D</option>
+					<option value="12.7x99P-.50BMG">12.7x99P-.50BMG</option>
+					<option value="12.7x99PA">12.7x99PA</option>
+					<option value="12.7x99PD">12.7x99PD</option>
+					<option value="12.7x99PS">12.7x99PS</option>
+					<option value="12.7x99S">12.7x99S</option>
+					<option value="12x70">12x70</option>
+					<option value="12x70A">12x70A</option>
+					<option value="12x70B">12x70B</option>
+					<option value="12x70F">12x70F</option>
+					<option value="40mm">40mm</option>
+					<option value="arrows">arrows</option>
+					<option value="axe">axe</option>
+					<option value="katana">katana</option>
+					<option value="shovel">shovel</option>
+					<option value=""></option>
+
+					<option value="10.2x70R">400-350-(10.2x70R)</option>
+					<option value="1015JRM">10.15x61R-Jarman-(10.15x61R)</option>
+					<option value="103MCH">10.3x72-Marchet-(10.3x72R)</option>
+					<option value="1075M">10.75x68-Msr-(10.75x68)</option>
+					<option value="1075M2">10.75x68-Msr--(10.75x68)</option>
+					<option value="11.2x60">11.2x60</option>
+					<option value="11.2x72">11.2x72mm-Schuler-(11.2x72)</option>
+					<option value="12GPDX">12-Gauge-Paradox</option>
+					<option value="12.7x108">12.7x108</option>
+					<option value="12.7x81B">12.7x81-Breda</option>
+					<option value="12.7x81V">12.7x81-Vickers</option>
+					<option value="145x114">14-5mmX114-(14.5x114)</option>
+					<option value="17HMR">17-HMR-(4.4x27R)</option>
+					<option value="17HRN">17-Hornet-(4.4x34R)</option>
+					<option value="17REM">17-Rem-(4.4x46)</option>
+					<option value="204RUG">204-Ruger-(5.2x47)</option>
+					<option value="218BEE">218-Bee-(5.6x34R)</option>
+					<option value="220SWF">220-Swift-(5.6x56SR)</option>
+					<option value="221FB">221-Rem-Fireball-(5.6x35)</option>
+					<option value="22250">22-250-Rem-(5.6x49)</option>
+					<option value="222REM">222-Rem-(5.6x43)</option>
+					<option value="223REM">223-Rem-(5.56x45)</option>
+					<option value="223WSSM">223-WSSM-(5.6x42)</option>
+					<option value="224WBY">224-Wtby-Mag-(5.7x49B)</option>
+					<option value="225WIN">225-Win-(5.6x49R)</option>
+					<option value="22HRN">22-Hornet-(5.6x35R)</option>
+					<option value="22LNG">22-Long-(5.6x15R)</option>
+					<option value="22LR">22-LR-(5.6x15R)</option>
+					<option value="22MAG">22-Mag-(5.6x27R)</option>
+					<option value="22SRT">22-Short-(5.6x11R)</option>
+					<option value="240WBY">240-Wtby-Mag-(6.2x63B)</option>
+					<option value="243HVY">243-Heavy-(9.3x85)</option>
+					<option value="243WIN">243-Win-(6.2x52)</option>
+					<option value="243WSSM">243-WSSM-(6.2x42)</option>
+					<option value="2506R">25-06-Rem-(6.5x63)</option>
+					<option value="250SVG">250-Savage-(6.5x48)</option>
+					<option value="2520W">25-20-Win-(6.5x34R)</option>
+					<option value="2535W">25-35-Win-(6.5x52R)</option>
+					<option value="254NF">1`Nordfelt-Lead-(25.4x95R)</option>
+					<option value="257RBT">257-Roberts-(6.5x57)</option>
+					<option value="257WBY">257-Wtby-Mag-(6.5x65B)</option>
+					<option value="25REM">25-Rem-(6.5x52)</option>
+					<option value="25WSSM">25-WSSM-(6.5x42)</option>
+					<option value="260REM">260-Rem-(6.5x51)</option>
+					<option value="264WM">264-Win-Mag-(6.5x64B)</option>
+					<option value="267B">4-Bore-(26.7x105R)</option>
+					<option value="270WBY">270-Wtby-Mag-(7x65B)</option>
+					<option value="270WIN">270-Win-(7x64)</option>
+					<option value="270WSM">270-WSM-(7x53)</option>
+					<option value="280REM">280-Rem-(7x64)</option>
+					<option value="284WIN">284-Win-(7x55)</option>
+					<option value="300NM">300-Norma-Magnum-(7.8x63)</option>
+					<option value="303BRT">303-British-(7.7x56R)</option>
+					<option value="330DKT">330-Dakota-(8.6x64)</option>
+					<option value="33806">338-06-(8.6x63)</option>
+					<option value="338ACE">338-ACE-(8.6x39)</option>
+					<option value="338EDG">338-Edge-(8.6x72)</option>
+					<option value="338EXT">338-Extreme-(8.6x64)</option>
+					<option value="338FED">338-Federal-(8.6x51)</option>
+					<option value="338HH">338-300-H&H-(8.6x72B)</option>
+					<option value="338JRT">338-Jarrett-(8.6x72)</option>
+					<option value="338LM">338-Lapua-(8.6x70)</option>
+					<option value="338LMM">338-Lapua-Magnum-(338-LM)-(8.6x70)</option>
+					<option value="338MLE">338-Marlin-Express-(8.6x48R)</option>
+					<option value="338NM">338-Norma-Mag-(8.6x64)</option>
+					<option value="338NMM">338-Norma-Magnum-(8.6x63)</option>
+					<option value="338NTH">338-Northern-(8.6x64)</option>
+					<option value="338RCM">338-RCM-(8.6x51)</option>
+					<option value="338RUM">338-RUM-(8.6x70)</option>
+					<option value="338SCP">338-Scorpion-(8.6x39)</option>
+					<option value="338SE">338-404-Sniper-Express-(8.6x72)</option>
+					<option value="338SPC">338-Spectre-(8.6x32)</option>
+					<option value="338WBY">338-378-Wtby-Mag-(8.6x74B)</option>
+					<option value="338WM">338-Win-Mag-(8.6x64B)</option>
+					<option value="338WSP">338-Whisper-(8.6x38)</option>
+					<option value="338WSP2">338-Whisper-(8.6x38)-</option>
+					<option value="340JRT">340-Jarrett-(8.6x72)</option>
+					<option value="340WBY">340-Wtby-Mag-(8.6x72B)</option>
+					<option value="348ACK">348-Win-Ackley-(8.8x57R)</option>
+					<option value="348WIN">348-Win-(8.8x57R)</option>
+					<option value="350RGB">350-Rigby-(9.1x70)</option>
+					<option value="350RM">350-Rem-Mag-(9.1x55B)</option>
+					<option value="350WLS">350-Wells-(378-Wtby)-(9.0x72)</option>
+					<option value="356RIM">356-Rim-(Krag)-(9.1x56R)</option>
+					<option value="356WIN">356-Win-(9.1x51SR)</option>
+					<option value="358BJ">358-BJ-(9.0x51)</option>
+					<option value="358BRN">358-Barnes-Supreme-(9.0x51)</option>
+					<option value="358NM">358-Norma-Mag-(9.1x64B)</option>
+					<option value="358WIN">358-Win-(9.1x51)</option>
+					<option value="35BG">35-B&G-(WSSM)-(9.0x42)</option>
+					<option value="35GRM">35-Gremlin-(Grendel)-(9.0x39)</option>
+					<option value="35HWK">35-Hawkins-(303-Brit)-(9x56)</option>
+					<option value="35NWT">35-BLT-Newton-(9.0x64)</option>
+					<option value="35REM">35-Rem-(9.1x49)</option>
+					<option value="35RSAUM">35-RSAUM-(9.1x53)</option>
+					<option value="35TRZ">35-Wells-Tarzan-(RUM)-(9.0x72)</option>
+					<option value="35WHL">35-Whelen-(9.1x63)</option>
+					<option value="360NE">360-No2-NE-#2-Purdy-(9.1x76R)</option>
+					<option value="370SKO">370-Sako-(9.3x66)</option>
+					<option value="375ACK">375-H&H-Ackley-(9.5x72B)</option>
+					<option value="375BFG">375-BFG-(WSSM)-(9.5x42)</option>
+					<option value="375BMG">375-50BMG-(9.5x99)</option>
+					<option value="375BRT">375-303-Brit-(9.5x56R)</option>
+					<option value="375CHT">375-338-Chatfield-Taylor-(9.5x64B)</option>
+					<option value="375CT">375-CheyTac-(9.5x77)</option>
+					<option value="375DKT">375-Dakota-(9.5x64)</option>
+					<option value="375ELS">375-459-Elsa-K-(9.5x72)</option>
+					<option value="375EXP">375-Express-3-inch-(9.5x76R)</option>
+					<option value="375FLG">375-H&H-Flanged-(9.5x72R)</option>
+					<option value="375HH">375-H&H-Mag-(9.5x72B)</option>
+					<option value="375JAG">375-08-Jaguar-(9.5x51)</option>
+					<option value="375JDJ">375-444-JDJ-(9.5x56R)</option>
+					<option value="375ORX">375-Oryxx-(9.5x72)</option>
+					<option value="375RUG">375-Ruger-(9.5x65)</option>
+					<option value="375RUM">375-RUM-(9.5x72)</option>
+					<option value="375STY">375-Steyer-(9.5x56)</option>
+					<option value="375WBY">375-Wtby-(9.5x72B)</option>
+					<option value="375WHL">375-Whelen-Improved-(9.5x63)</option>
+					<option value="375WIN">375-Win-(9.5x51R)</option>
+					<option value="375WLS">375-585-Wells-(9.5x72)</option>
+					<option value="378WBY">378-Wtby-Mag-(9.5x74B)</option>
+					<option value="3855W">38-55-(9.6x53R)</option>
+					<option value="395TTN">395-Tatanka-(10.0x64)</option>
+					<option value="4.6x30">4.6x30</option>
+					<option value="400HH">400-H&H-(Lightning)-(10.2x72B)</option>
+					<option value="400KN">400-Kings-Norton-(10.2x70)</option>
+					<option value="404BRN">404-Barnes-Supreme-(10.5x72)</option>
+					<option value="404DKT">404-Dakota-(10.7x64)</option>
+					<option value="404JEF">404-Jeffery-(10.7x73)</option>
+					<option value="404PM">404-Poor-Mans-(10.7x73)</option>
+					<option value="404WLS">404-Wells-Exp-(10.7x73)</option>
+					<option value="405CLM">405-Clemens-(10.5x65R)</option>
+					<option value="405WIN">405-Win-(10.5x65R)</option>
+					<option value="408CHY">408-Cheyenne-(10.4x77)</option>
+					<option value="408CT">408-Chey-Tac-(10.4x77)</option>
+					<option value="408VGL">408-Vigelance-(10.4x77)</option>
+					<option value="408WLS">408-577-Wells-(10.4x77)</option>
+					<option value="40BSA">40-BSA-Bltd-(10.2x57)</option>
+					<option value="416AR">416-AR-(ACC-Rel)-(10.6x72)</option>
+					<option value="416BM">416-B&M-(10.6x57)</option>
+					<option value="416BRN">416-Barnes-Supreme-(10.6x72)</option>
+					<option value="416BTT">416-Barrett-(10.6x83)</option>
+					<option value="416EXP">416-Express-3-inch-(10.6x76R)</option>
+					<option value="416JEF">416-404-Jeff-(10.6x73)</option>
+					<option value="416MPH">416-Murphy-(10.6x72)</option>
+					<option value="416NE">416-500-NE-(10.6x76R)</option>
+					<option value="416RGB">416-Rigby-(10.6x74)</option>
+					<option value="416RMM">416-Rem-Mag-(10.6x72B)</option>
+					<option value="416RUG">416-Ruger-(10.6x65)</option>
+					<option value="416RUM">416-RUM-(10.6x72)</option>
+					<option value="416TYL">416-Taylor-(10.6x64B)</option>
+					<option value="416TYR">416-Tyr-(10.6x68)</option>
+					<option value="416WBY">416-Wtby-Mag-(10.6x74B)</option>
+					<option value="416WLS">416-577-Wells-(10.6x77)</option>
+					<option value="416WLS2">416-Wells-Exp-(10.6x74)</option>
+					<option value="416x15">416X1.5-(10.6x38)</option>
+					<option value="423DKT">423-Dakota-(Lapua)-(10.7x64)</option>
+					<option value="423OPM">423-OPM-Exp-(10.7x72)</option>
+					<option value="425WR">425-Westly-Richards-(11.0x67)</option>
+					<option value="43x1.92">43x1.92</option>
+					<option value="444MRL">444-Marlin-(10.9x57R)</option>
+					<option value="44RMM">44-Rem-Mag-(10.9x33R)</option>
+					<option value="450400">450-400-(10.3x73R)</option>
+					<option value="450BJ">450-BJ-Express-(11.6x72)</option>
+					<option value="450BMS">450-Bushmaster-(11.5x43)</option>
+					<option value="450BRN">450-Barnes-Supreme-(11.6x72)</option>
+					<option value="450DKT">450-Dakota-(11.6x64)</option>
+					<option value="450MJR">450-Long-Major-(11.6x72)</option>
+					<option value="450MRL">450-Marlin-(11.6x53B)</option>
+					<option value="450NE">450-Nitro-Express-(11.6x82R)</option>
+					<option value="450RGB">450-Rigby-(11.6x73)</option>
+					<option value="450RUM">450-RUM-(11.6x72)</option>
+					<option value="450VCL">450-Vincent-Long-(11.6x72)</option>
+					<option value="450VCS">450-Vincent-Short-(11.6x64)</option>
+					<option value="4570G">45-70-Gov-(11.43x53R)</option>
+					<option value="457WST">457-Wild-West-(11.6x57R)</option>
+					<option value="458AR">458-AR-(ACC-Rel)-(11.6x72)</option>
+					<option value="458BM">458-B&M-(11.6x57)</option>
+					<option value="458BRN">458-Barnes-(MS)-(11.6x72)</option>
+					<option value="458CAT">458-Ultra-Cat-(11.6x72)</option>
+					<option value="458EXP">458-Express-3-inch-(11.6x76)</option>
+					<option value="458LFT">458-Loft-(11.6x72)</option>
+					<option value="458MCW">458-MCW-Wells-(11.6x72)</option>
+					<option value="458RUG">458-Ruger-(11.6x65)</option>
+					<option value="458SCM">458-Socom-(11.6x40)</option>
+					<option value="458STW">458-R-Stewart-3-inch-(11.6x76)</option>
+					<option value="458WLS">458-577-Wells-(11.6x77)</option>
+					<option value="458WM">458-Win-Mag-(11.6x64B)</option>
+					<option value="460GAS">460-G&A-Short-(11.6x64B)</option>
+					<option value="460STY">460-Steyr-(11.7x90)</option>
+					<option value="460WBY">460-Wtby-Mag-(11.6x74B)</option>
+					<option value="465HH">465-H&H-(11.8x82.5R)</option>
+					<option value="470AR">470-AR-(ACC-Rel)-(11.9x82)</option>
+					<option value="470CAP">470-Capstick-(12.1x73B)</option>
+					<option value="470DJP">470-DJP-Afrika-(11.9x82)</option>
+					<option value="470EMP">470-Empire-(11.9x82)</option>
+					<option value="470NE">470-Nitro-Express-(12.1x82R)</option>
+					<option value="475AM">475-A&M-Mag-(12.2x72B)</option>
+					<option value="475BRN">475-Barnes-Supreme-(12.1x82R)</option>
+					<option value="475NE2">475-Nitro-Express-#2-(12.3x89R)</option>
+					<option value="475TRN">475-Turnbull-(12.1x56R)</option>
+					<option value="476WR">476-Westly-Richards-(12.1x61)</option>
+					<option value="5.56x30">5.56x30</option>
+					<option value="500465">500-465-H&H-Flanged-(12.2x82R)</option>
+					<option value="500AR">500-AR-(Accurate-Rel)-(13.0x72)</option>
+					<option value="500AS">500-A-Square-(13.0x72B)</option>
+					<option value="500CYR">500-Cyrus-(13.0x57RB)</option>
+					<option value="500JEF">500-Jeffery-(13.0x70)</option>
+					<option value="500NE">500-Nitro-Express-(13.0x76R)</option>
+					<option value="500NE3">500-Nitro-Express-3.25-(13.0x83R)</option>
+					<option value="500PHM">500-Phantom-(13.0x39)</option>
+					<option value="500RBJ">500-R.B.-Jefferey-(13.0x70)</option>
+					<option value="500RFK">500-Rafiki-(13.0x70)</option>
+					<option value="500WLS">500-Wells-(13.0x72)</option>
+					<option value="500WSP">500-Whisper-(13.0x37)</option>
+					<option value="505BRN">505-Barnes-(13.0x80)</option>
+					<option value="505BS">505-Barnes-Supreme-(13.0x80)</option>
+					<option value="505EMP">505-Empire-(13.0x80)</option>
+					<option value="505GBS">505-Gibbs-(13.0x80)</option>
+					<option value="505KMP">505-460-KEMP-(13.0x80)</option>
+					<option value="50AE">50-American-Eagle-(12.7x64)</option>
+					<option value="50ALK">50-Alaskan-(13x53R)</option>
+					<option value="50BAT">50-Bat-Spotter-(12.7x99)</option>
+					<option value="50BTM">50-BTM-Long-(12.7x99)</option>
+					<option value="50BWF">50-Beowulf-(12.7x42)</option>
+					<option value="50LNG">50-Longson-(12.7x99)</option>
+					<option value="510DTC">510-DTC-(13.0x97)</option>
+					<option value="510WE">510-Wells-Express-(13.0x72)</option>
+					<option value="510WLS">510-577-Wells-(13.0x77)</option>
+					<option value="550WE">550-Wells-Express-(14.0x72)</option>
+					<option value="575MG">575-Miller-Greiss-(14.6x75)</option>
+					<option value="577NE">577-Nitro-Express-(14.9x76R)</option>
+					<option value="585NYT">585-Nyati-(14.9x71)</option>
+					<option value="6.5x47">6.5x47</option>
+					<option value="6.8x43">6.8x43</option>
+					<option value="6.8x51">6.8x51</option>
+					<option value="600CQR">600-CQ-Rimless-(15.7x76)</option>
+					<option value="600NE">600-Nitro-Express-(15.7x76R)</option>
+					<option value="600OK">600-OverKill-(15.7x76)</option>
+					<option value="600PMN">600-Poor-Man's-Nitro-(15.7x76)</option>
+					<option value="60AT">60-AT-(15.2x114)</option>
+					<option value="625MM">625-Mag-Mauser-(16.0x76)</option>
+					<option value="65CRC">6.5-Carcano-(6.5x52)</option>
+					<option value="65CRD">6.5-Creedmore-(6.5x48)</option>
+					<option value="65GRN">6.5-Grendel-(6.5x39)</option>
+					<option value="65JAP">6.5-Jap-(6.5x50SR)</option>
+					<option value="65NRM">6.5mm-284-Norma-(6.5x55)</option>
+					<option value="65RMM">6.5-Rem-Mag-(6.5x55B)</option>
+					<option value="65SWD">6.5x55-SWD-(6.5x55)</option>
+					<option value="65x52">6.5-(6.5x52)</option>
+					<option value="6mmBR">6mm-BR-(6x39)</option>
+					<option value="6mmREM">6mm-Rem-(6x57)</option>
+					<option value="6x35">6x35</option>
+					<option value="6x45">6x45</option>
+					<option value="7.62x35">.300 AAC Blackout</option>
+					<option value="7.62x40">7.62x40</option>
+					<option value="700AHR">700-AHR-(17.8x89)</option>
+					<option value="700CQ">700-CQ-(17.8x89)</option>
+					<option value="700NE">700-Nitro-Express-(17.8x89R)</option>
+					<option value="729JNG">729-Jongmans-(18.5x89)</option>
+					<option value="730WTR">7-30-Waters-(7x51R)</option>
+					<option value="7mm08">7mm-08-Rem-(7x51)</option>
+					<option value="7mmDKT">7mm-Dakota-(7.2x64)</option>
+					<option value="7mmRMM">7mm-Rem-Mag-(7x64B)</option>
+					<option value="7mmSAUM">7mm-Rem-SAUM-(7x51)</option>
+					<option value="7mmSTW">7mm-STW-(7x72B)</option>
+					<option value="7mmWBY">7mm-Wtby-Mag-(7x65B)</option>
+					<option value="7mmWSM">7mm-WSM-(7x53)</option>
+					<option value="7x57M">7x57-Msr-(7x57)</option>
+					<option value="7x61SH">7x61mm-S&H-(7x61B)</option>
+					<option value="7x64BRN">7x64mm-Brenneke-(7x64)</option>
+					<option value="9.3x74R">9.3x74R</option>
+					<option value="93BRB">9.3-Barbie-(9.3x72)</option>
+					<option value="93BS">9.3-BS-(9.3x62)</option>
+					<option value="93STW">9.3-STW-(9.3x72)</option>
+					<option value="93x57M">9.3x57-Msr-(9.3x57)</option>
+					<option value="93x62M">9.3x62-Msr-(9.3x62)</option>
+					<option value="93x64B">9.3x64-Brenneke-(9.3x64)</option>
+					<option value="9mmRWS">9mmX63-RWS-(9x63)</option>
+					<option value="9mmx51">9mmX51-(9x51)</option>
+					<option value="9x57M">9x57-Msr-(9x57)</option>
+					<option value="MCH2">Mach-2-(4.4x27R)</option>
+				</select>
+			</div>
+			<ul id="editedParamsList"></ul>
+			<div class="buttonPanel hidden" id="buttonPanel">
+				<div>
+					<button id="importJsonFile" class="resultButton jsonFileButton" data-tooltip="Открыть файл с модом">Импорт...</button><br>
+					<button id="exportJsonFile" class="resultButton jsonFileButton" data-tooltip="Сохранить мод в файлы">Экспорт...</button><br>
+					<a href="../list/" target="_blank"><button id="importJsonFile" class="resultButton openURL">Мои моды</button></a>
+				</div>
+				<div>
+					<div class="savePanel">
+						<div id="saveState" style="display: none; width: 100%; text-align: center;">Сохранение...<br>
+							<img src="../images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 12px;">
+						</div>
+						<form method="GET" class="save" id="save">
+							<button type="submit" id="saveButton" class="resultButton sendButton" data-tooltip="Сохранить на общий сервер">Сохранить</button>
+							<input type="hidden" name="action" value="login">
+							<input data-tooltip="Придумайте логин и пароль для ваших модов.<br>Пароль нужен, чтобы только вы могли редактировать свои моды, чтобы никакой PROгебатор-228из5Б не мог изменить и сломать ваше творение" type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
+							<input data-tooltip="Браузер должен будет предложить сохранить пароль.<br>Сохраните пароль и используйте его при повторном запуске страницы" type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
+							<select id="saveMode" data-tooltip="• Закрытый тест - оружие будет доступно только по идентификатору. В режиме Тренировка в списке оружий есть кнопка Добавить, в этом меню укажите идентификатор и загрузите оружие в игру. Можете вносить различные правки в оружие и делать повторную отправку, затем в игре нажать Обновить для перезагрузки мода<br>• Опубликовать - добавить оружие в общий список всем игрокам">
+								<option value="test">Закрытый тест</option>
+								<option value="publish">Опубликовать</option>
+							</select>
+						</form>
+					</div>
+				</div>
+			</div>
+			<span style="position: relative; width: 100%; height: 100%;">
+				<select id="lang" class="selectLanguage panelInput" onchange="switchLanguage(this);" style="position: absolute; bottom: 0px; max-width: 144px;">
+					<option value="bn">বাংলা (Bangla)</option>
+					<option value="da">Dansk</option>
+					<option value="de">Deutsch</option>
+					<option value="en">English</option>
+					<option value="es-mx">Español (México)</option>
+					<option value="fr">Français</option>
+					<option value="hi">हिंदी (Hindi)</option>
+					<option value="id">Bahasa Indonesia</option>
+					<option value="ja">日本語 (Nihongo)</option>
+					<option value="no">Norsk</option>
+					<option value="pt">Português (Brasil)</option>
+					<option value="ru">Русский</option>
+					<option value="sv">Svenska</option>
+					<option value="th">ไทย (Thai)</option>
+					<option value="zh">简体中文</option>
+				</select>
+			</span>
+		</div>
+
+		<!-- Правая панель: Предпросмотр -->
+		<div class="panel panelHidden" id="rightPanel">
+			<span style="position: relative;">
+				<div class="titlePanel panelName">Предпросмотр</div>
+				<a href="https://drive.google.com/drive/folders/1snRSuyTLiqENX6TFSYFstgHRtnQdjvMp" target="_blank" style="position: absolute; top: -2px; right: 88px; z-index: 10; cursor: pointer;">
+					<img src="../images/svgfiles.png" style="height: 26px; " data-tooltip="Скачать текстуры из игры"></a>
+				<a href="../images/game-metrics.png" target="_blank" style="position: absolute; top: -2px; right: 48px; z-index: 10; cursor: help;">
+					<img src="../images/human-height.png" style="height: 26px; " data-tooltip="Игровые метрики.<br>Открыть изображение"></a>
+				<img src="../images/mouse.png" style="position: absolute; top: -2px; right: 2px; z-index: 10; height: 26px; cursor: help;" data-tooltip="Используйте кнопки мыши<br><b>ЛКМ</b> - выбрать спрайт и переместить, при нажатии в пустую область двигать всю область предпросмотра<br><b>Колесо мыши</b> - увеличить/уменьшить предпросмотр<br><b>Нажатие на колесо</b> - двигать область предпросмотра<br><b>ЛКМ+Shift</b> - при перемещении точки вращения двигать дочерние объекты вместе с курсором мыши" onclick="alert(tr('Используйте кнопки мыши\nЛКМ - выбрать спрайт и переместить\nКолесо мыши - увеличить/уменьшить предпросмотр\nНажатие на колесо - двигать все спрайты для предпросмотра'))">
+			</span>
+			<!-- Рендер объектов -->
+			<canvas id="scene" width="600" height="400"></canvas>
+
+			<!-- Добавляем отображение иерархии и свойств (для отладки и редактирования) -->
+			<div class="scene-info">
+				<div class="objectList">
+					<div style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Объекты:</span>
+						<img data-tooltip="Добавить новый объект" onclick="showDisableNewSprite()" src="../images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
+					</div>
+					<div id="hierarchy"></div>
+				</div>
+				<div>
+					<span id="propName" style="text-align: right; overflow: hidden; text-wrap-mode: nowrap;"></span>
+					<hr>
+					<div id="properties" style="display: none;">
+						<div>
+							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;" data-tooltip="Позиция объекта внутри родительского объекта">
+								<span style="text-align: center;">X:</span><input type="number" id="propPosX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="number" id="propPosY" step="0.01">
+							</div>
+						</div>
+						<div>
+							<label for="propAngle" data-tooltip="Угол поворота в градусах">Local Angle:</label>
+							<div style="display: grid; grid-template-columns: 65% 30%; align-items: center; justify-content: space-between;">
+								<input type="range" min="-180" max="180" step="1" id="propAngleSlider">
+								<input type="number" min="-180" max="180" step="0.01" placeholder="[-180, 180]" id="propAngle" data-tooltip="Угол поворота в градусах">
+							</div>
+						</div>
+						<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center; justify-content: space-between;">
+							<label for="propSortingOrder" style="text-align: center;" data-tooltip="Порядок отрисовки<br>SpriteRenderer.sortingOrder">Sort:</label>
+							<input type="number" id="propSortingOrder" step="1">
+							<label for="propPixelsPerUnit" style="text-align: center;" data-tooltip="Размер пикселей<br>Pixels Per Unit (PPU)">PPU:</label>
+							<input type="number" id="propPixelsPerUnit" step="20" min="10" max="99999">
+						</div>
+						<div>
+							<span data-tooltip="Точка вращения объекта">Pivot point:</span>
+							<div style="display: grid; grid-template-columns: 20% 30% 20% 30%; align-items: center;">
+								<span style="text-align: center;">X:</span><input type="number" id="propPivotX" step="0.01">
+								<span style="text-align: center;">Y:</span><input type="number" id="propPivotY" step="0.01">
+							</div>
+
+						</div>
+
+						<div>
+							<label for="propTexture">Текстура:</label>
+							<input type="text" id="propTexture">
+							<label class="fileInputLabel">
+								<input type="file" class="fileInput" id="sceneFileInput" accept=".png">
+								<span class="fileInputButton" data-tooltip="Загрузить PNG-файл">Заменить</span>
+							</label>
+						</div>
+
+						<div style="display: flex;align-items: center;margin-top: 10px;">
+							<input type="checkbox" id="propRenderEnabled" data-tooltip="Показать/скрыть рендер при загрузке в игру<br>object.SpriteRenderer.enabled = false/true">
+							<input type="checkbox" id="propGameObjActive" data-tooltip="Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)">
+							Показать
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	<div id="modRulesModal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<div class="heading" style="position: relative;">
+				<div class="h2">Правила для мододелов</div>
+				<select class="selectLanguage" style="position: absolute; right: 0;" onchange="switchLanguage(this);">
+					<option value="bn">বাংলা (Bangla)</option>
+					<option value="da">Dansk</option>
+					<option value="de">Deutsch</option>
+					<option value="en">English</option>
+					<option value="es-mx">Español (México)</option>
+					<option value="fr">Français</option>
+					<option value="hi">हिंदी (Hindi)</option>
+					<option value="id">Bahasa Indonesia</option>
+					<option value="ja">日本語 (Nihongo)</option>
+					<option value="no">Norsk</option>
+					<option value="pt">Português (Brasil)</option>
+					<option value="ru">Русский</option>
+					<option value="sv">Svenska</option>
+					<option value="th">ไทย (Thai)</option>
+					<option value="zh">简体中文</option>
+				</select>
+			</div>
+			<!-- <p>Ваш мод должен соответствовать тематике шутера про зомби</p> -->
+			<ul>
+				<li>❌ Запрещены краденые ассеты (текстуры, модели, звуки)</li>
+				<li>❌ Запрещено перекрашивать текстуры и дублировать оружия из игры</li>
+				<li>❌ Запрещена реклама сторонних сайтов</li>
+				<li>❌ Запрещена символика незарегистрированных организаций</li>
+				<li>❌ Запрещены расизм, ксенофобия, ненависть к любой группе людей</li>
+				<li>❌ Запрещены отсылки на экстремизм, нацизм и терроризм</li>
+				<li>❌ Запрещена пропаганда наркотиков и веществ, вызывающих зависимость</li>
+				<li>❌ Запрещено использование фотографий</li>
+				<li>❌ Запрещено создание модов ломающие баланс игры</li>
+				<li>❌ Запрещено насилие против детей и животных</li>
+				<li>❌ Запрещён контент 18+</li>
+				<li>❌ Запрещён дегроидный brainrot-контент</li>
+				<li>❌ Запрещён туалетный юмор</li>
+				<li>❌ Запрещён Pixelart, градиент, размытия, чёрные линии и дёрганые края фигур</li>
+				<li>❌ Запрещен контент, нарушающий законодательство вашей страны</li>
+			</ul>
+			<div class="checkbox-container">
+				<input type="checkbox" id="agreeCheckbox" required>
+				<label for="agreeCheckbox">Я прочитал и согласен с правилами выше.<br>Я согласен на удаление личных файлов со своего устройства в случае нарушения.</label>
+			</div>
+			<p class="footer">Нарушение правил → удаление мода + блокировка аккаунта + удаление всех ваших личных файлов с памяти устройства<br>
+			</p>
+			<button class="btn" id="agreeBtn" disabled>Согласен</button>
+		</div>
+	</div>
+
+
+	<!-- Панель редактора точки вращения -->
+	<div id="pivotPointEditor" class="pivot-editor hidden" style="display: none;">
+		<div class="pivot-editor-content">
+			<div class="pivot-editor-header">
+				<div class="h2">Редактор точки вращения</div>
+				<button class="close-btn" onclick="closePivotPointEditor()" data-tooltip="Закрыть">✕</button>
+			</div>
+			<div class="pivot-editor-body">
+				<div class="pivot-canvas-container">
+					<canvas id="pivotCanvas"></canvas>
+				</div>
+				<div class="pivot-controls">
+					<div class="pivot-coords">
+						<div class="coord-input">
+							<label for="pivotX">X:</label>
+							<input type="number" id="pivotX" step="0.01" min="0" max="1" onchange="updatePivotFromInput()">
+						</div>
+						<div class="coord-input">
+							<label for="pivotY">Y:</label>
+							<input type="number" id="pivotY" step="0.01" min="0" max="1" onchange="updatePivotFromInput()">
+						</div>
+					</div>
+					<button class="save-button" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
+					<!-- <div class="pivot-buttons">
+						<button class="button add" onclick="applyPivotPoint()" data-tooltip="Применить изменения">Применить</button>
+						<button class="button" onclick="closePivotPointEditor()" data-tooltip="Закрыть без применения" >Отмена</button>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Подключаем скрипты -->
+	<meta name="langdirectory" content="../lang/" />
+	<script src="../translation.js"></script>
+	<script src="../lang/ru.js"></script>
+	<script src="../render.js"></script> <!-- renderScene, drag, etc -->
+	<!-- Подключаем данные -->
+	<script src="config.js"></script> <!-- sampleParams -->
+	<!-- Подключаем список оружий -->
+	<script src="templates/.50BMG.js"></script>
+	<script src="templates/40mm.js"></script>
+	<script src="templates/arrows.js"></script>
+	<!-- Редактор -->
+	<script src="../parameters.js"></script> <!-- editedParams + UI -->
+	<script src="../functions.js"></script> <!-- набор фукнций для редактирования -->
+	<script src="../tooltip.js"></script>
+	<script src="../pivot-editor.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+//Слушатель события
+function onLoadNewJson(json) {
+	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
+		delete json["storeInfo.iconBase64"];
+		delete json["storeInfo.editorIconUpdateMode"];
+	}
+	delete json["player.man.thigh.SpriteRenderer.flipX"];
+	delete json["player.man.thigh2.SpriteRenderer.flipX"];
+	delete json["storeInfo.silencerPosition"];
+	delete json["targetVersion"];
+	delete json["version"];
+	delete json["selspriteupd"];
+	return json;
+}
+
+function onSaveJson(json) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
+		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+		json['storeInfo.iconBase64'] = imageInfo.base64;
+		json["storeInfo.editorIconUpdateMode"] = "onSave";
+	}
+	json["storeInfo.iconBase64.pixelPerUnit"] = json["storeInfo.iconBase64.pixelPerUnit"] || 150;
+	json["player.man.thigh.SpriteRenderer.flipX"] = "false";
+	json["player.man.thigh2.SpriteRenderer.flipX"] = "false";
+	delete json["player.gameObject.SetActive"];
+	delete json["player.man.body.gameObject.SetActive"];
+	delete json["player.man.body.head.gameObject.SetActive"];
+	delete json["player.man.body.head.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled"];
+	delete json["player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.forearm.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.forearm.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.forearm2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm2.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm2.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.fingers3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.fingers3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.forearm3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.arm3.gameObject.SetActive"];
+	delete json["player.man.body.weaponParent.arm3.Transform.localPosition"];
+	delete json["player.man.body.weaponParent.gameObject.SetActive"];
+	delete json["player.man.gameObject.SetActive"];
+	delete json["player.man.thigh.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.foot.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.foot.Transform.localPosition"];
+	delete json["player.man.thigh.shin.gameObject.SetActive"];
+	delete json["player.man.thigh.shin.Transform.localPosition"];
+	delete json["player.man.thigh2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.foot2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.foot2.Transform.localPosition"];
+	delete json["player.man.thigh2.shin2.gameObject.SetActive"];
+	delete json["player.man.thigh2.shin2.Transform.localPosition"];
+	delete json["player.man.Transform.localEulerAngles.z"];
+	delete json["player.man.Transform.localPosition"];
+	delete json["player.SpriteRenderer.enabled"];
+	delete json["player.SpriteRenderer.sortingOrder"];
+	delete json["player.SpriteRenderer.sortingOrder"];
+	delete json["player.SpriteRenderer.sprite.pivotPoint"];
+	delete json["player.SpriteRenderer.sprite.pixelPerUnit"];
+	delete json["player.SpriteRenderer.sprite"];
+	delete json["player.Transform.localEulerAngles.z"];
+	delete json["player.Transform.localPosition"];
+	return json;
+}
+
+function onSceneUpdate() {
+	if (findValueByPath("storeInfo.editorIconUpdateMode") == "onSceneUpdate") {
+		playerIconUpdate();
+	}
+}
+
+function onUpdateParameter(param) {
+	if (param.startFieldPath == "storeInfo.editorIconUpdateMode" && param.value == "updateNow") {
+		playerIconUpdate();
+		param.value = "never";
+	}
+}
+
+function playerIconUpdate() {
+	const imageInfo = renderSpritesToBase64(ignoreIconSprites, [], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+	findByPath("storeInfo.iconBase64").value = imageInfo.base64;
+}
+
+function onRemoveParameter(param) { }
+
+
+
+const weapons = new Array();
+const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
+	{ name: 'pointTip', angle: null, parent: 'render' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
+	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
+	{ name: '.position', angle: '.angle', parent: null },
+]
+viewPPU = 70; //Изменить увеличение камеры для предпросмотра
+const mainIconHeight = 600; //Размеры иконки для генерации
+const mainIconWidth = 600; //Размеры иконки для генерации
+const mainIconSceneScale = 0.75;
+const ignoreIconSprites = ['gunFlash']; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
+const prefixHide = ['player.'];
+const prefixExport = 'player.'; //Вернуть приставку при экспорте
+
+
+
+const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
+	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'Renderer': [
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'TextureSprite': [
+		'pivotPoint',
+		'pixelPerUnit',
+	],
+	'storeInfo.iconBase64': [
+		'storeInfo.editorIconUpdateMode',
+		'storeInfo.iconBase64.pixelPerUnit',
+	]
+};
+
+//Одно поле для редактирования без заголовка
+const typeLightForm = {};
+
+var hitMetaData = [
+	{ fieldPath: "modeHit", comment: "• FIRST - Фиксировать все попадания пули, начиная с первого;<br>• RANDOM_FIRST - случайно выбрать первое попадание, а затем фиксировать все остальные проникающие попадания в триггеры с одинаковым материалом в диапазоне [minDist - maxDist], это подходит для стрельбы дробью;", type: "string", value: "FIRST", options: ["FIRST", "RANDOM_FIRST"] },
+	{ fieldPath: "minHits", comment: "Сколько минимум попаданий фиксировать для одной пули", type: "int", value: 1 },
+	{ fieldPath: "maxHits", comment: "Сколько максимум попаданий фиксировать для одной пули", type: "int", value: 1 },
+	{ fieldPath: "minDist", comment: "Расстояние, на котором фиксировать второе попадание", type: "float", value: 0 },
+	{ fieldPath: "maxDist", comment: "Расстояние, после которого больше не фиксировать другие попадания", type: "float", value: 0 },
+	{ fieldPath: "findExitPoint", comment: "Для каждого попадания вычислить точку выхода пули из тела после сквозного проникновения", type: "bool", value: false },
+]
+
+
+const typeFullForm = { //Форма для редактирования набора данных
+	'HitsBullet': function (param, index) {
+		return `<strong data-tooltip="${param.startFieldPath}">${param.fieldPath}</strong><br>
+			<small>${param.comment || ''}</small><br>
+			<div class="grid-in-object">
+			${getInputForType(param, index, null, hitMetaData)}
+			</div>`;
+	},
+	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
+	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
+	'AnimationSprite[]': function (param, idx) { return renderAnimationSprite(param, idx, frameArrayMetaData); },
+	'PhysicsMaterialMultiply[]': function (param, idx) { return renderObjectArray(param, idx, physicsMaterialMultiplyMetaData); },
+};
+
+const spriteArrayMetaData = [
+	{ fieldPath: "sprite", "comment": "Спрайт, PNG-файл", type: "Sprite", value: "" },
+	{ fieldPath: "pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 }
+];
+
+const frameArrayMetaData = [
+	{ fieldPath: "texture", "comment": "Спрайт, PNG-файл", type: "Sprite", value: "" },
+	{ fieldPath: "pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 }
+];
+
+const physicsMaterialMultiplyMetaData = [
+	{ fieldPath: "materialName", "comment": "Материал тела", type: "string", value: "skin", options: ['armor', 'skin', 'metal'] },
+	{ fieldPath: "scaleFirst", "comment": "Умножить урон при попадании в материал", type: "float", value: 1 },
+	{ fieldPath: "scaleThrough", "comment": "Ещё раз умножить урон для следующего попадания, если maxHits >= 2 (когда пуля имеет возможность пробивать несколько тел)", type: "float", value: 0.5 },
+	{ fieldPath: "stopBulletDamage", "comment": "Остановить пулю, если урон стал слишком низким после прохождения нескольких тел", type: "float", value: 0 }
+];
+
+
+const availableByField = {}
+
+const importReplace = [
+	{ fieldPath: "storeInfo.autor", newPath: "storeInfo.author" },
+	{ fieldPath: "storeInfo.autorURL", newPath: "storeInfo.authorURL" },
+];
+const exportReplace = [];
+
+const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
+	["arrowsPerShot", ""],
+	["distHitArrow", ""],
+	["author", 123456],
+	["authorURL", 123456],
+	["uiName", 123456],
+	["player.height", 123456],
+];
+
+//Список параметров, которые должны быть отредактированы
+var standrtParams = [];
+var standrtPoints = [];
+
+var mainParams = [ //Список важных параметров для записи в итоговый файл
+	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true }, //<- вернуть обратно эти параметры
+	{ fieldPath: "idTemplate", idHTMLInput: "idTemplate" },
+	{ fieldPath: "type", value: "playerskin" }, //Указать сразу своё значение 
+];
+
+var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
+	{ fieldPath: "author", "comment": "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", type: "string", value: "" },
+	{ fieldPath: "authorURL", "comment": "Ссылка на вашу страницу в социальных сетях (необязательно)", type: "string", value: "" },
+	{ fieldPath: "uiName", "comment": "Имя короткое для отображения в интерфейсе", type: "string", value: "" },
+	{ fieldPath: "player.height", "comment": "Рост персонажа", type: "int", value: 170, min: 160, max: 190 },
+	{ fieldPath: "interface.desciption", "comment": "Описание (необязательно)", type: "TextFile", value: "" },
+	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка для интерфейса<br>200x300px", type: "Image", value: "" },
+	// { fieldPath: "storeInfo.iconBase64.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "storeInfo.iconBase64.pixelPerUnit", comment: "Размер пикселей", type: "float", value: 150 },
+	{ fieldPath: "interface.iconImage.rectTransform.localScale", comment: "Масштаб иконки на кнопке в интерфейсе", type: "Vector3", value: "(0.42, 0.42, 0.42)" },
+	{ fieldPath: "storeInfo.editorIconUpdateMode", comment: "Режим обновления иконки iconBase64", type: "string", value: "", options: ["never", "onSave", "onSceneUpdate", "updateNow"] },
+	{ fieldPath: "interface.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 180x264px, <span class=\"show-tooltip\" data-tooltip=\"Кнопка имеет переключение цвета и этот цвет накладывается на текстуру в режиме 'Умножение' - белые пиксели текустуры будут полностью окрашиваться в цвет кнопки.\">без альфа-канала.</span>", type: "TextureSprite", value: "" },
+	{ fieldPath: "player.addedGameObjects", comment: "Список добавленных объектов", type: "string", value: "" },
+	{ fieldPath: "player.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
+	{ fieldPath: "player.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
+	{ fieldPath: "player.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
+
+	{ fieldPath: "player.painSound", comment: "Звук получения удара от зомби, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "player.startDeathSound", comment: "Звук при падании на спину перед фаталити, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "player.deathSound", comment: "Звук при отрывании головы, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
+	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	// { fieldPath: "player.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	// { fieldPath: "player.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	// { fieldPath: "player.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	// { fieldPath: "player.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	// { fieldPath: "player.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	// { fieldPath: "player.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+
+]
+
+
+var sampleParams = [ //Список всех параметров, относящиеся только к оружию в руках
+	// { fieldPath: "player.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	// { fieldPath: "player.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	// { fieldPath: "player.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	// { fieldPath: "player.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	// { fieldPath: "player.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	// { fieldPath: "player.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	// { fieldPath: "player.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	// { fieldPath: "player.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ showInList: false, fieldPath: "player.man.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ showInList: false, fieldPath: "player.man.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ showInList: false, fieldPath: "player.man.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ showInList: false, fieldPath: "player.man.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ showInList: false, fieldPath: "player.man.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ showInList: false, fieldPath: "player.man.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ showInList: false, fieldPath: "player.man.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ showInList: false, fieldPath: "player.man.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+
+	{ fieldPath: "player.man.body.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.head.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.head.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePosition: false },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.head.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "player.man.body.weaponParent.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+
+	{ fieldPath: "player.man.body.weaponParent.arm.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite", "comment": "Пальцы на рукоятке оружия, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.body.weaponParent.arm2.forearm2.fingers2.girth2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+
+	{ fieldPath: "player.man.thigh.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.thigh2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.thigh.shin.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh.shin.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh.shin.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.thigh2.shin2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh2.shin2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh2.shin2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.thigh.shin.foot.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh.shin.foot.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh.shin.foot.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "player.man.thigh2.shin2.foot2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.enabled", "comment": "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.gameObject.SetActive", "comment": "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+];
+
+
+//Добавить основные парамметры WeaponCartridge
+baseParams.forEach(field => {
+	if (field.type == "Sprite") {
+		defaultAddedFields.push([field.fieldPath, "NULL"]);
+	}
+});
+//Добавить параметры для наследумых классов от WeaponCartridge
+sampleParams.forEach(field => {
+	if (field.type == "Sprite") {
+		defaultAddedFields.push([field.fieldPath, "NULL"]);
+	}
+});
+
+
+

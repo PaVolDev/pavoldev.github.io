@@ -1,0 +1,1647 @@
+//Слушатели событий
+function onLoadNewJson(json) {
+	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
+		delete json["storeInfo.iconBase64"];
+		delete json["storeInfo.editorIconUpdateMode"];
+		delete json["storeInfo.silencerPosition"];
+	}
+	delete json["storeInfo.magazineSize"];
+	delete json["targetVersion"];
+	delete json["version"];
+	delete json["selspriteupd"];
+
+	if (json["weapon.LineRenderer.startColor"]) {
+		json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
+		delete json["weapon.LineRenderer.startColor"];
+		delete json["weapon.LineRenderer.endColor"];
+	}
+	return json;
+}
+
+function onSaveJson(json) {
+	if (!editedParams.find(field => field.fieldPath == 'storeInfo.iconBase64') || findValueByPath('storeInfo.editorIconUpdateMode') == "onSave") {
+		const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+		json['storeInfo.iconBase64'] = imageInfo.base64;
+		json["storeInfo.editorIconUpdateMode"] = "onSave";
+		const point = imageInfo.points['WeaponSilencerMod.localPoint'];
+		if (point) { json['storeInfo.silencerPosition'] = '(' + point.x + ', ' + point.y + ')'; }
+	}
+	Object.keys(json).forEach(key => {
+		if (key.startsWith("weapon.player") && (key.endsWith("Position") || key.endsWith(".z") || key.endsWith("sortingOrder") || key.endsWith("SetActive") || key.endsWith("enabled"))) { //Защита персонажа, удаление строки типа weapon.player.man.body.weaponParent.arm.Transform.localPosition
+			delete json[key];
+		} else if (key.startsWith("weapon.gunFlash.SpriteRenderer.") || key.endsWith("weapon.gunFlash2.SpriteRenderer.")) {
+			delete json[key];
+		}
+	});
+	delete json["weapon.gameObject.SetActive"];
+	delete json["weapon.WeaponHandPoints.WeaponAnimation"];
+	delete json["weapon.Transform.localEulerAngles.z"];
+	if (json["weapon.laserColor"]) {
+		json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
+		json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
+		delete json["weapon.laserColor"];
+	}
+	return json;
+}
+
+function onSceneUpdate() {
+	if (findValueByPath("storeInfo.editorIconUpdateMode") == "onSceneUpdate") {
+		weaponIconUpdate();
+	}
+}
+
+function onUpdateParameter(param) {
+	if (param.startFieldPath == "storeInfo.editorIconUpdateMode" && param.value == "updateNow") {
+		weaponIconUpdate();
+		param.value = "never";
+	}
+}
+
+function weaponIconUpdate() {
+	const imageInfo = renderSpritesToBase64(ignoreIconSprites, ['WeaponSilencerMod.localPoint'], 1, mainIconHeight, mainIconWidth, mainIconSceneScale);
+	findByPath("storeInfo.iconBase64").value = imageInfo.base64;
+	const point = imageInfo.points['WeaponSilencerMod.localPoint'];
+	if (point) { findByPath("storeInfo.silencerPosition").value = '(' + point.x + ', ' + point.y + ')'; }
+}
+
+//Слушатель события
+function onRemoveParameter(param) {
+	if (param.startFieldPath == "weapon.WeaponHandPoints.clip") {
+		updateParam("weapon.WeaponHandPoints.weaponType", "rifleAK");
+	}
+}
+
+
+//Функции для работы с точками в окне предпросмотра
+class SpriteScreenListener {
+	onSelect(spriteRender) { }
+	onRender(spriteRender) { }
+	onInactive(spriteRender) { }
+	onStartDrag(event, spriteRender) { }
+	onDrag(event, spriteRender) { }
+	onEndDrag(event, spriteRender) { }
+	onSyncSceneToParams(spriteRender) { }
+	onSyncParamsToScene(spriteRender) { }
+
+	onSceneStartDrag(event, selectedObject) { }
+	onSceneEndDrag(event, selectedObject) { }
+	onScenePivotPointEndDrag(event, selectedObject) { }
+	onScenePivotPointStartDrag(event, selectedObject) { }
+}
+
+//Обновлять fingerPoint при вращении объекта, который используется как точка с рендером пальцев от игрового персонажа
+//Внутрь объекта с пальцами помещаем дочерний объект riflePoint, который будет использоваться для преобразования координат
+//При вращении пальцев получаем глобальную точку от riflePoint и вычисляем разницу между точкой вращения кисти
+class HandRenderListener extends SpriteScreenListener {
+	rifleX; rifleY; //Записать координаты смещения оружия от точки вращения кисти
+	riflePoint;
+	shiftKey;
+	constructor(rifleX, rifleY) {
+		super(); // Необходимо вызвать конструктор родительского класса
+		this.rifleX = rifleX; this.rifleY = rifleY;
+		this.shiftKey = false;
+	}
+
+	onScenePivotPointEndDrag(selectedObject) {
+		const hand = sceneObjects.find(s => s.name == 'fingerRender');
+		hand.localPosition.x = 0;
+		hand.localPosition.y = 0;
+	}
+
+	onEndDrag(event, dragObject) {
+		const imageInfo = images["sprite"];
+		if (!imageInfo) return;
+		const pixelPerUnit = findValueByPath("weapon.SpriteRenderer.sprite.pixelPerUnit");
+		if (!pixelPerUnit) return;
+		const pivotPointParam = findByPath("weapon.SpriteRenderer.sprite.pivotPoint");
+		if (!pivotPointParam) return;
+		const pivotPoint = parseVector(pivotPointParam.value);
+		const distanceX = (dragObject.localPosition.x * pixelPerUnit) / imageInfo.naturalWidth;
+		const distanceY = (dragObject.localPosition.y * pixelPerUnit) / imageInfo.naturalHeight;
+		pivotPointParam.value = '(' + mathRound(pivotPoint[0] + distanceX) + ', ' + mathRound(pivotPoint[1] - distanceY) + ')';
+		//Двигать дочерние объекты в обратную сторону
+		if (!event.shiftKey) {
+			sceneObjects.forEach(child => {
+				if (child.parent == "sprite") { //Таким образом объекты на экране остаются на месте, когда мы двигаем опорную точку
+					child.localPosition.x = Math.round((child.localPosition.x - dragObject.localPosition.x) / 0.01) * 0.01;
+					child.localPosition.y = Math.round((child.localPosition.y - dragObject.localPosition.y) / 0.01) * 0.01;
+					syncSceneObjectToParams(child);
+				}
+			});
+		}
+		syncParamsToScene();
+		renderEditedParams();
+	}
+
+	onRender(spriteRender) { this.onSyncSceneToParams(spriteRender); }
+
+	//Копирование параметров ИЗ сцены
+	onSyncSceneToParams(spriteRender) {
+		const sceneParent = sceneObjects.find(s => s.parent == '');
+		const point = getWorldPosition('riflePoint');
+		const x = -(this.rifleX - (point.x - sceneParent.localPosition.x));
+		const y = (this.rifleY - (point.y - sceneParent.localPosition.y));
+		const paramId = editedParams.findIndex(p => p.startFieldPath == spriteRender.parameter);
+		if (paramId == -1) { console.warn('HandRenderListener: paramId == -1 - ' + spriteRender.parameter); return; } //Параметр должен быть найден
+		editedParams[paramId].value = '(' + mathRound(x) + ', ' + mathRound(y) + ')'; //Меняем координаты в парамтерах. Для обновления угла используются настройки из массива editedPoint
+		//sceneObjects.find(s => s.name == 'bolt').localPosition = { x: point.x, y: point.y }; //Тестирование
+	}
+	//Копирование параметров В сцену
+	onSyncParamsToScene(spriteRender) {
+		spriteRender.localPosition.x = 0;
+		spriteRender.localPosition.y = 0;
+		sceneObjects.push({
+			name: 'riflePoint',
+			parent: spriteRender.name,
+			texture: '',
+			localPosition: { x: this.rifleX, y: this.rifleY }, localAngle: 0,
+			sortingOrder: 1000,
+			pixelPerUnit: 100,
+			pivotPoint: { x: 0.5, y: 0.5 },
+			enabled: true, isActive: true,
+			canChangePivot: false, canChangeLocalAngle: false,
+			parameter: ''
+		});
+	}
+	onInactive(spriteRender) {
+		spriteRender.localPosition.x = 0;
+		spriteRender.localPosition.y = 0;
+		renderEditedParams();
+	}
+}
+
+//Объекты для анимации. Меняем и возвращаем координаты спрайтов для предпросмотра
+class MagazineInsertListener extends SpriteScreenListener {
+	magazineName;
+	returnLastPosition;
+	constructor(sceneObjName, returnLastPosition) {
+		super(); // Необходимо вызвать конструктор родительского класса
+		this.lastMagazPoint = { x: 0, y: 0, angle: 0 };
+		this.magazineName = sceneObjName;
+		this.returnLastPosition = returnLastPosition;
+	}
+	onSelect(spriteRender) {
+		const magazine = sceneObjects.find(s => s.name == this.magazineName) || sceneObjects.find(s => s.name == editedParams.find(f => f.fieldPath == this.magazineName)?.value);
+		if (!magazine) return;
+		if (this.lastMagazPoint.x == 0 && this.lastMagazPoint.y == 0) { this.lastMagazPoint.x = magazine.localPosition.x; this.lastMagazPoint.y = magazine.localPosition.y; this.lastMagazPoint.angle = magazine.localAngle; }
+		magazine.localPosition.x = spriteRender.localPosition.x;
+		magazine.localPosition.y = spriteRender.localPosition.y;
+		magazine.localAngle = spriteRender.localAngle;
+	}
+	onRender(spriteRender) { this.onSelect(spriteRender); }
+	onInactive(spriteRender) {
+		if (!this.returnLastPosition) return;
+		const magazine = sceneObjects.find(s => s.name == this.magazineName) || sceneObjects.find(s => s.name == editedParams.find(f => f.fieldPath == this.magazineName)?.value);
+		if (!magazine) return;
+		magazine.localPosition.x = this.lastMagazPoint.x; magazine.localPosition.y = this.lastMagazPoint.y; magazine.localAngle = this.lastMagazPoint.angle;
+		this.lastMagazPoint = { x: 0, y: 0, angle: 0 };
+	}
+}
+
+
+
+
+const weapons = new Array();
+
+const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
+	{ name: 'flashlight', angle: null, parentByParam: 'WeaponSilencerMod.bolt', parent: null }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
+	{ name: 'WeaponSilencerMod.localPoint', angle: null, parentByParam: 'WeaponSilencerMod.bolt', parent: null },
+	{ name: 'laserPosition', angle: null, parentByParam: null, parent: null },
+	{ name: 'magazineDrop.position', angle: 'magazineDrop.angleRotation', parentByParam: null, parent: null },
+	{ name: '.magazineInsert', angle: '.magazineInsertAngle', parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.fingerPoint', angle: 'WeaponHandPoints.fingerAngle', parentByParam: null, parent: null },
+	{ name: 'coverMove.movePosition', angle: 'WeaponHandPoints.coverMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'coverMove.startPosition', angle: 'WeaponHandPoints.coverMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'boltMove.movePosition', angle: 'WeaponHandPoints.boltMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'boltMove.startPosition', angle: 'WeaponHandPoints.boltMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parentByParam: null, parent: null },
+	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.openCoverPoint', angle: null, parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.closedCoverPoint', angle: null, parentByParam: null, parent: null },
+	{ name: 'WeaponHandPoints.bulletPoint', angle: null, parentByParam: null, parent: null },
+	{ name: 'position', angle: 'angle', parentByParam: null, parent: null },
+]
+
+const mainIconHeight = 120; //Размеры иконки для генерации
+const mainIconWidth = 600; //Размеры иконки для генерации
+const mainIconSceneScale = 1;
+const ignoreIconSprites = ['gunFlash', ".player", ".player.man"]; //Имена спрайтов, которые следует убрать при генерации иконки оружия для интрфейса
+
+const prefixHide = ['weapon.RifleWithMagazine.', 'weapon.Musket.', 'weapon.Shotgun.', 'weapon.MeleeWeapon.', 'weapon.WeaponArrowBow.', 'weapon.'];
+const prefixExport = 'weapon.'; //Вернуть приставку при экспорте
+
+const typeDependencies = { //Для параметров указаного типа добавить остальные связаные параметры в общий список отредактрованных
+	'Sprite': [ //При импорте нужно, чтобы в json имел параметр с указаным типом
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'TextureSprite': [
+		'pivotPoint',
+		'pixelPerUnit',
+	],
+	'Renderer': [
+		'SpriteRenderer.sprite.pivotPoint',
+		'SpriteRenderer.sprite.pixelPerUnit',
+		'SpriteRenderer.sortingOrder',
+		'Transform.localEulerAngles.z',
+		'SpriteRenderer.enabled',
+		'gameObject.SetActive',
+		'Transform.localPosition'
+	],
+	'WeaponHandPoints': [
+		'weaponType',
+		"buttstockPoint",
+		"buttstockReload",
+		"handguardPoint",
+		"magazinePoint",
+		"magazineInsert",
+		"magazineInsertAngle",
+		"handInsertPoint",
+		"boltPoint",
+		"boltMovePoint",
+		"bulletPoint",
+		"closedCoverPoint",
+		"openCoverPoint",
+		"boltMove.render",
+		"boltMove.startPosition",
+		"boltMove.movePosition",
+		"coverMove.render",
+		"coverMove.startPosition",
+		"coverMove.movePosition",
+		"handleMove.render",
+		"handleMove.startPosition",
+		"handleMove.movePosition",
+	],
+	'WeaponHandPoints.fingerPoint': [
+		'WeaponHandPoints.fingerAngle'
+	],
+	'storeInfo.iconBase64': [
+		'storeInfo.editorIconUpdateMode',
+		'storeInfo.silencerPosition',
+	]
+
+	//'weapon.caliber': ['cartridgeList',]
+};
+
+
+const availableByField = {
+	'WeaponHandPoints.coverMove.render': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun'] },
+	'WeaponHandPoints.coverMove.startPosition': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun'] },
+	'WeaponHandPoints.coverMove.movePosition': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun'] },
+	'WeaponHandPoints.openCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun'] },
+	'WeaponHandPoints.closedCoverPoint': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun'] },
+	'WeaponHandPoints.bulletPoint': { parent: 'WeaponHandPoints.weaponType', value: ['', 'machinegun', 'shotgun', 'shotgun+leftBolt', 'barrettM99', 'dp12', 'grizzly85', 'ksg', 'mossberg590', 'mr27'] },
+}
+
+//Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
+spriteScreenListeners = {
+	'magazineDrop.position': new MagazineInsertListener('magazine', true),
+	'magazineInsert': new MagazineInsertListener('magazine', true),
+	'boltMove.movePosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', true),
+	'boltMove.startPosition': new MagazineInsertListener('WeaponHandPoints.boltMove.render', false),
+	'coverMove.movePosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', true),
+	'coverMove.startPosition': new MagazineInsertListener('WeaponHandPoints.coverMove.render', false),
+	'handleMove.movePosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', true),
+	'handleMove.startPosition': new MagazineInsertListener('WeaponHandPoints.handleMove.render', false),
+	'fingerRender': new HandRenderListener(-0.35, 0.13),
+};
+
+const defaultAddedFields = [ //Добавить некоторые параметры сразу в список, если их значений НЕ равно defaultAddedFields[x][1]
+	["nameFull", 123456],
+	["author", 123456],
+	["authorURL", 123456],
+	["SpriteRenderer.sprite", ""],
+	["luaScriptBase64", ""],
+	["bolt", ""],
+	["flashlight", "(0, 0, 0)"],
+	["laserPosition", "(0, 0)"],
+	["shellDrop.position", "(0, 0)"],
+	["magazineDrop.position", "(0, 0)"],
+	["WeaponSilencerMod.localPoint", "(0, 0)"],
+	["silencerGroup", ""],
+	["recoilSteps", ""],
+	["recoilMax", ""],
+	["recoilDecrease", ""],
+	["audioShot", 123456],
+	["shotAudioList", ""],
+	["fireRateInMinute", ""],
+	["Musket.chamberSize", 0],
+	["weapon.chamberSize", 1],
+	["weapon.chamberSize", 0],
+	["shellDrop.quantity", 1],
+	["shellDrop.quantity", 0],
+	["ammoListLimit", ""],
+	["ammoListStep", ""],
+	["addBulletsReload", ""],
+	["magazineMax", ""],
+	["delayBullet", 0],
+	["automat", 123456],
+	["caliber", 123456],
+	["magazineStep", 0], //Добавить magazineStep сразу в список, если он НЕ равен нулю
+	["magazineStep", 1], //Добавить magazineStep сразу в список, если он НЕ равен еденице
+	["chamberAnimationStep", 0],
+	["chamberAnimationStep", 1],
+	["AnimationSpriteRenderer.sprites", ""],
+	["magazine.AnimationSpriteRenderer.sprites", ""],
+	["gameObject.SetActive", true],
+	["WeaponHandPoints.coverMove.sprites", ""],
+	["WeaponHandPoints.fingerPoint", ""], //(0, 0, 0)
+	["WeaponHandPoints.fingerAngle", ""],
+	//["shotAnimations", ""], v209
+	["shotAnimations[0].animation", ""],
+	["WeaponHandPoints.weaponType", "123", "weapon.WeaponHandPoints.WeaponAnimation"],
+	["WeaponHandPoints.clip", ""]
+];
+
+//Список параметров, которые должны быть отредактированы
+var standrtParams = ["weapon.SpriteRenderer.sprite"];
+var standrtPoints = [[".magazinePoint", ".handInsertPoint", ".magazineInsert"], [".boltMovePoint", ".boltPoint"]];
+
+//idHTMLInput - взять значение из HTML-элемента по его id
+//sourceFieldPath - взять значение из другого параметра по его fieldPath
+//value - указать сразу своё значение
+var mainParams = [ //Список важных параметров для записи в итоговый файл. Показать ошибку, если параметр не указан
+	{ fieldPath: "id", idHTMLInput: "idWeapon", lowerCase: true },
+	{ fieldPath: "idTemplate", idHTMLInput: "idTemplate" },
+	{ fieldPath: "type", value: "weapon" }, //Указать сразу своё значение 
+	{ fieldPath: "weapon.caliber", sourceFieldPath: "caliber" }, //Патрон/калибр оружия
+	{ fieldPath: "storeInfo.nameFull", idHTMLInput: "idWeapon" }, //Название оружия в интерфейсе
+	{ fieldPath: "storeInfo.magazineSize", sourceFieldPath: "magazineMax" },
+	{ fieldPath: "storeInfo.magazineSize", sourceFieldPath: "chamberSize" },
+];
+
+const importReplace = [
+	{ fieldPath: "storeInfo.autor", newPath: "storeInfo.author" },
+	{ fieldPath: "storeInfo.autorURL", newPath: "storeInfo.authorURL" },
+	{ fieldPath: "patronOrderSize", newPath: "ammoListLimit" },
+	{ fieldPath: "patronListSpaceStep", newPath: "ammoListStep" },
+];
+const exportReplace = [
+	{ fieldPath: "ammoListLimit", newPath: "patronOrderSize" },
+	{ fieldPath: "ammoListStep", newPath: "patronListSpaceStep" },
+];
+
+
+const audioClipMetaData = [
+	{ fieldPath: "audio", comment: "Звук", type: "string", value: "" },
+];
+const typeFullForm = { //Полная форма для редактирования набора данных с заголовком и комментарием
+	'WeaponCartridge[]': function (param, idx) { return renderJsonArray(param, idx); },
+	'AudioClip[]': function (param, idx) { return renderFileArray(param, idx, ".wav"); },
+	'Sprite[]': function (param, idx) { return renderSpriteArray(param, idx, spriteArrayMetaData); }, //renderObjectArray(param, idx, spriteArrayMetaData);
+	'AnimationSprite[]': function (param, idx) { return renderAnimationSprite(param, idx, frameArrayMetaData); },
+	'NameAnimationFire[]': function (param, idx) { return renderObjectArray(param, idx, shotAnimationMetaData); },
+	'AnimationSounds[]': function (param, idx) { param.value = getSoundsByClip(param.value); return renderObjectArray(param, idx, animationSoundsMetaData); },
+}
+const typeLightForm = { //Одно поле для редактирования без заголовка
+	'WeaponCartridge': function (param, idx) { return renderWeaponCartridge(param, idx); },
+	'weapon.WeaponHandPoints.clip': function (param, idx) { return renderWeaponClip(param, idx, "weapon.WeaponHandPoints.weaponType", ""); },
+	'MainIcon': function (param, idx) { return getInputForType(param, idx); },
+}
+
+function renderWeaponClip(param, index, changeParam, newValue) {
+	const otherParam = findByPath(changeParam);
+	if (otherParam.value != newValue) {
+		otherParam.value = newValue;
+		renderEditedParams();
+		syncParamsToScene();
+	}
+	return getInputHTML(param, index);
+}
+
+
+const spriteArrayMetaData = [
+	{ fieldPath: "sprite", comment: "Спрайт, PNG-файл", type: "Sprite", value: "" },
+	{ fieldPath: "pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 }
+];
+const frameArrayMetaData = [
+	{ fieldPath: "texture", comment: "Спрайт, PNG-файл", type: "Sprite", value: "" },
+	{ fieldPath: "pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 }
+];
+
+//{ fieldPath: "имяПоля", comment: "Текст из [Tooltip]", type: "типПоля", value: "значениПоУмолчанию" },
+const shotAnimationMetaData = [
+	{ fieldPath: "animation", comment: "Имя анимации", type: "string", value: "", options: ["fire", "LabelShotFire"] },
+	{ fieldPath: "fire", comment: "Анимация огня/дыма", type: "Transform", value: "gunFlash" },
+	{ fieldPath: "audioTimeRandom", comment: "Сдвигать звук для следующего выстрела", type: "float", value: 0.05 },
+	{ fieldPath: "chamberStep", comment: "Число выстрелов для анимации", type: "int", value: 0 },
+	{ fieldPath: "magazineStep", comment: "Число выстрелов для анимации", type: "int", value: 0 },
+	{ fieldPath: "timeFreeze", comment: "Задержка/заморозка оружия при работе анимации", type: "float", value: 0 },
+	{ fieldPath: "playWhenEmpty", comment: "Показать анимацию после последнего выстрела перед запуском перезарядки. Например для помповых дробовиков следует отключить параметр", type: "bool", value: false }
+];
+
+const animationSoundsMetaData = [
+	{ fieldPath: "source", comment: "Звук у выбранной анимации<br>PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "replace", comment: "Новый звук для замены<br>PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+];
+
+
+
+
+
+var baseParams = [  //Список параметров, доступные для редактирования у всех оружий
+	{ fieldPath: "storeInfo.nameFull", comment: "Название оружия в интерфейсе", type: "string", value: "" },
+	{ fieldPath: "storeInfo.author", comment: "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", type: "string", value: "", placeholder: "pavoldev" },
+	{ fieldPath: "storeInfo.authorURL", comment: "Ссылка на вашу страницу в социальных сетях (необязательно)", type: "string", value: "https://", placeholder: "https://youtube.com/@pavoldev" },
+	{ fieldPath: "storeInfo.donateURL", comment: "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", type: "string", value: "https://", placeholder: "https://" },
+	{ fieldPath: "luaScriptBase64", comment: 'Дополнительный скрипт на языке LUA.<br><a href="info/flat-zombies-ai-doc.txt" target="_blank" data-tooltip="Текстовый файл с описанием проекта для нейросети.<br>Дайте этот файл вашему ИИ и попросите его написать код">Документация для ИИ</a>', type: "LuaScript", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", comment: "Настройка анимации оружия", type: "WeaponHandPoints", value: "", displayName: "WeaponAnimation", isCover: true },
+	{ fieldPath: "weapon.SpriteRenderer.sprite", comment: "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.caliber", comment: "Калибр оружия. Основной тип патрона<br>Все настройки для урона находятся в патроне", type: "WeaponCartridge", value: "", options: ["9x19", "11.43x23", "9x39", "10.3x77", "10x22", "12.7x99", "12.7x99P", "12.7x55", "12x70", "40x46", ".44Mag", "5.56x45", "5.45x39", "5.7x28", "7.62x39", "7.62x51", "7.62x51Sniper", "7.62x54", "7.62x67", "8.6x70", "arrows", "4.6x30", "5.56x30", "6.5x47", "6.8x43", "6.8x51", "6mmBR", "6mmREM", "6x35", "6x45", "7.62x35", "7.62x40", "7mm08", "7mmDKT", "7mmRMM", "7mmSAUM", "7mmSTW", "7mmWBY", "7mmWSM", "7x57M", "7x61SH", "7x64BRN", "9.3x74R", "9mmRWS", "9mmx51", "9x57M", "11.2x60", "11.2x72", "12.7x81B", "12.7x81V", "12.7x108", "12GPDX", "17HMR", "17HRN", "17REM", "22HRN", "22LNG", "22LR", "22MAG", "22SRT", "25REM", "25WSSM", "35BG", "35GRM", "35HWK", "35NWT", "35REM", "35RSAUM", "35TRZ", "35WHL", "40BSA", "43x1.92", "44RMM", "50AE", "50ALK", "50BAT", "50BTM", "50BWF", "50LNG", "60AT", "65CRC", "65CRD", "65GRN", "65JAP", "65NRM", "65RMM", "65SWD", "65x52", "93BRB", "93BS", "93STW", "93x57M", "93x62M", "93x64B", "103MCH", "145x114", "204RUG", "218BEE", "220SWF", "221FB", "222REM", "223REM", "223WSSM", "224WBY", "225WIN", "240WBY", "243HVY", "243WIN", "243WSSM", "250SVG", "254NF", "257RBT", "257WBY", "260REM", "264WM", "267B", "270WBY", "270WIN", "270WSM", "280REM", "284WIN", "300NM", "303BRT", "330DKT", "338ACE", "338EDG", "338EXT", "338FED", "338HH", "338JRT", "338LM", "338LMM", "338MLE", "338NM", "338NMM", "338NTH", "338RCM", "338RUM", "338SCP", "338SE", "338SPC", "338WBY", "338WM", "338WSP", "338WSP2", "340JRT", "340WBY", "348ACK", "348WIN", "350RGB", "350RM", "350WLS", "356RIM", "356WIN", "358BJ", "358BRN", "358NM", "358WIN", "360NE", "370SKO", "375ACK", "375BFG", "375BMG", "375BRT", "375CHT", "375CT", "375DKT", "375ELS", "375EXP", "375FLG", "375HH", "375JAG", "375JDJ", "375ORX", "375RUG", "375RUM", "375STY", "375WBY", "375WHL", "375WIN", "375WLS", "378WBY", "395TTN", "400HH", "400KN", "404BRN", "404DKT", "404JEF", "404PM", "404WLS", "405CLM", "405WIN", "408CHY", "408CT", "408VGL", "408WLS", "416AR", "416BM", "416BRN", "416BTT", "416EXP", "416JEF", "416MPH", "416NE", "416RGB", "416RMM", "416RUG", "416RUM", "416TYL", "416TYR", "416WBY", "416WLS", "416WLS2", "416x15", "423DKT", "423OPM", "425WR", "444MRL", "450BJ", "450BMS", "450BRN", "450DKT", "450MJR", "450MRL", "450NE", "450RGB", "450RUM", "450VCL", "450VCS", "457WST", "458AR", "458BM", "458BRN", "458CAT", "458EXP", "458LFT", "458MCW", "458RUG", "458SCM", "458STW", "458WLS", "458WM", "460GAS", "460STY", "460WBY", "465HH", "470AR", "470CAP", "470DJP", "470EMP", "470NE", "475AM", "475BRN", "475NE2", "475TRN", "476WR", "500AR", "500AS", "500CYR", "500JEF", "500NE", "500NE3", "500PHM", "500RBJ", "500RFK", "500WLS", "500WSP", "505BRN", "505BS", "505EMP", "505GBS", "505KMP", "510DTC", "510WE", "510WLS", "550WE", "575MG", "577NE", "585NYT", "600CQR", "600NE", "600OK", "600PMN", "625MM", "700AHR", "700CQ", "700NE", "729JNG", "730WTR", "10.2x70R", "1015JRM", "1075M", "1075M2", "2506R", "2520W", "2535W", "3855W", "4570G", "22250", "33806", "450400", "500465", "MCH2"] },
+	//{ fieldPath: "cartridgeList", comment: "Список разных видов патронов.<br>Создайте патрон в отдельном <a href='ammo/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a><br>В редакторе нажмите Экспорт файла и загрузите его в список:", type: "WeaponCartridge[]", value: "" },
+	{ fieldPath: "storeInfo.silencerGroup", comment: "Из какой категории брать глушители", type: "string", value: "", options: ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
+	{ fieldPath: "storeInfo.ammoListStep", comment: "Отступ в интерфейсе на экране со списком патронов", type: "int", value: 0 },
+	{ fieldPath: "storeInfo.ammoListLimit", comment: "Размер списка с патронами для двуствольного ружья", type: "int", value: 0 },
+	{ fieldPath: "storeInfo.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 316x128px<br><span class=\"show-tooltip\" data-tooltip=\"Кнопка имеет переключение цвета и этот цвет накладывается на текстуру в режиме 'Умножение' - белые пиксели текустуры будут полностью окрашиваться в цвет кнопки.\">без альфа-канала.</span>", type: "TextureSprite", value: "" },
+	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка оружия для интерфейса<br>320x120px", type: "Image", value: "" },
+	{ fieldPath: "storeInfo.silencerPosition", comment: "Координаты глушителя от верхнего угла.", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "storeInfo.editorIconUpdateMode", comment: "Режим обновления иконки iconBase64", type: "string", value: "", options: ["never", "onSave", "onSceneUpdate", "updateNow"] },
+	//209 - { fieldPath: "weapon.animationSounds", comment: "Звуки анимации при перезарядке", type: "AnimationSounds[]", value: "" },
+	{ fieldPath: "weapon.addedGameObjects", comment: "Список добавленных объектов", type: "string", value: "" },
+	{ fieldPath: "weapon.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
+	{ fieldPath: "weapon.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
+	{ fieldPath: "weapon.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
+	{ fieldPath: "weapon.laserEnabled", comment: "Оружие имеет лазерный прицел?", type: "bool", value: true },
+	{ fieldPath: "weapon.laserColor", comment: "Цвет лазера", type: "Color", value: "#FF0000" },
+]
+
+
+var sampleParams = [ //Список всех параметров, относящиеся только к оружию в руках
+	{ fieldPath: "weapon.laserSight.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.laserSight.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.laserSight.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.laserSight.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.laserSight.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.laserSight.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.laserSight.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.laserSight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.magazine.SpriteRenderer.sprite", comment: "Магазин оружия, спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.magazine.bullet.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltRender.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltRender.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltHandle.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltHandle.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltHandle.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltHandle.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltHandle.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltHandle.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.sight.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.sight.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.sight.SpriteRenderer.sprite", comment: "Прицел на оружии, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.sight.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.sight.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.sight.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.sight.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.sight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.SpriteRenderer.sprite", comment: "Рукоятка, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.handgrip.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.handgrip.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.handgrip.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.handgrip.SpriteRenderer.sprite", comment: "Рукоятка. Может использоваться для дополнительного отображения пальцев.", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.handgrip.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.handgrip.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.handgrip.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.handgrip.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.handgrip.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.cover.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.cover.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.cover.SpriteRenderer.sprite", comment: "Крышка пулемёта, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.cover.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.cover.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.cover.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.cover.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.cover.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.cover.sight.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.cover.sight.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.cover.sight.SpriteRenderer.sprite", comment: "Прицел на оружии, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.cover.sight.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.cover.sight.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.cover.sight.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.cover.sight.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.cover.sight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.lasersight.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.lasersight.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.lasersight.SpriteRenderer.sprite", comment: "Лазер на оружии, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.lasersight.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.lasersight.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.lasersight.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.lasersight.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.lasersight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.bolt.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltHandle.bolt.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltHandle.boltRender.SpriteRenderer.sprite", comment: "Рукоятка затвора, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltHandle.boltRender.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltHandle.boltRender.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltHandle.boltRender.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltHandle.boltRender.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.boltRender.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.sight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.audioShot", comment: "Звук выстрела, PCM 16-bit 44100Hz", type: "AudioClip", value: "" },
+	{ fieldPath: "weapon.WeaponSilencerMod.localPoint", comment: "Координаты глушителя на стволе", type: "Vector3", value: "(0, 0, 0)", spritePreview: "images/silencer.png", spritePivotPoint: { x: 0, y: 0.5 }, spritePixelPerUnit: 100 },
+	{ fieldPath: "weapon.laserPosition", comment: "Позиция лазера от точки вращения оружия", type: "Vector2", value: "(0, 0)", spritePreview: "images/laser.png", spritePivotPoint: { x: 0, y: 0.5 }, spritePixelPerUnit: 100, sortingOrder: 1 },
+	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite", comment: "Огонь от выстрела", type: "Renderer", value: "", suffix: ".SpriteRenderer.sprite" },
+	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.gunFlash.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.gunFlash.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.Transform.localPosition", comment: "Координаты огня от выстрела", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.gunFlash.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	//{ fieldPath: "weapon.shotAnimations", comment: "Анимация выстрела", type: "NameAnimationFire[]", value: "" },
+	{ fieldPath: "weapon.shotAnimations[0].animation", comment: "Анимация выстрела", type: "string", value: "fire", options: ["fire", "LabelShotFire"] },
+	{ fieldPath: "weapon.strikeAnimations[0]", comment: "Анимация выстрела", type: "string", value: "fire", options: ["fire", "LabelShotFire"] },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.animations", comment: "Список анимаций", type: "AnimationSprite[]", value: "" },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.timeScale", comment: "Множитель скорости анимаций", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.reverse", comment: "Воспроизвести в обратном порядке", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.AnimatorSprite.loop", comment: "Проигрывать повторно", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.randomRotate", comment: "Случайный поворот", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.flipX", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.flipY", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.direction", comment: "Направление движения", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.directionRange", comment: "Отклонение по обе стороны от направления ", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMin", comment: "Скорость, метр/секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.speedMax", comment: "Макс скорость, метр/секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.gunFlash.WeaponShotEffect.nextEffectShot", comment: "Передать событие следующему эффекту ", type: "WeaponShotEffect", value: "" },
+	// { fieldPath: "weapon.gunFlash2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	// { fieldPath: "weapon.gunFlash2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.animations", comment: "Список анимаций", type: "AnimationSprite[]", value: "" },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.timeScale", comment: "Множитель скорости анимаций", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.reverse", comment: "Воспроизвести в обратном порядке", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.AnimatorSprite.loop", comment: "Проигрывать повторно", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.randomRotate", comment: "Случайный поворот", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.flipX", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.flipY", comment: "Отражать случайно по горизонтали/вертикали", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.direction", comment: "Направление движения", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.directionRange", comment: "Отклонение по обе стороны от направления ", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.speedMin", comment: "Скорость, метр/секунду", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.speedMax", comment: "Макс скорость, метр/секунду", type: "float", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.WeaponShotEffect.nextEffectShot", comment: "Передать событие следующему эффекту ", type: "WeaponShotEffect", value: "" },
+	// { fieldPath: "weapon.gunFlash2.SpriteRenderer.sprite", comment: "Спрайт/текстура выстрела, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	// { fieldPath: "weapon.gunFlash2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	// { fieldPath: "weapon.gunFlash2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	// { fieldPath: "weapon.gunFlash2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	// { fieldPath: "weapon.gunFlash2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	// { fieldPath: "weapon.gunFlash2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.fingers.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltRender.fingers.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltRender.fingers.SpriteRenderer.sprite", comment: "Спрайт/текстура пальцев, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltRender.fingers.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltRender.fingers.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltRender.fingers.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltRender.fingers.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.fingers.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltBox.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltBox.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltBox.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltBox.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltBox.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltBox.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltBox.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltBox.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.fingers.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltHandle.fingers.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltHandle.fingers.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.fingers.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltHandle.fingers.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltHandle.fingers.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltHandle.fingers.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltHandle.fingers.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltHandle.fingers.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.barrel.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.barrel.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.barrel.SpriteRenderer.sprite", comment: "Спрайт/текстура ствола, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.barrel.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.barrel.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.barrel.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.barrel.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.barrel.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.handgrip.SpriteRenderer.sprite", comment: "Рукоятка. Может использоваться для дополнительного отображения пальцев.", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.boltRender.handgrip.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.boltRender.handgrip.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.boltRender.handgrip.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.boltRender.handgrip.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.handgrip.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.lasersight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.laserSight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.barrel.lasersight.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.barrel.lasersight.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.barrel.lasersight.SpriteRenderer.sprite", comment: "Лазер на оружии, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.barrel.lasersight.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.barrel.lasersight.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.barrel.lasersight.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.barrel.lasersight.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.barrel.lasersight.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.boltRender.fingers.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.strikeAnimations", comment: "Случайная анимация выстрела", type: "String[]", value: "" },
+	{ fieldPath: "weapon.delayBullet", comment: "Задержка перед запуском пули после нажатия на курок, в скндх.", type: "float", value: 0 },
+	{ fieldPath: "weapon.boltParentName", comment: "Родительский объект для запуска пули", type: "string", value: "" },
+	{ fieldPath: "weapon.bloodySkinManager", comment: "Следы крови на оружии после удачных попаданий", type: "ListDamagesSprites", value: "" },
+	{ fieldPath: "weapon.boltRender.handgrip.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.boltRender.handgrip.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.id", comment: "Идентификатор патрона, чтобы отличать его от всех остальных", type: "string", value: "" },
+	{ fieldPath: "weapon.cartridge.damage", comment: "Наносимый урон от всех пуль.<br>Будет распределен между всеми пулями", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.stopPower", comment: "Останавливающий эффект [0-1]<br>Зомби сам решает как реагировать на этот параметр", type: "float", value: 0, min: 0, max: 1 },
+	//{ fieldPath: "weapon.cartridge.noiseVolume", comment: "Громкость шума/выстрела от патрона", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.impulse", comment: "Импульс ForceMode2D.Impulse.<br>Будет распределен между всеми пулями", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.arrowsPerShot", comment: "Кол-в во стрел/снарядов при одном выстреле", type: "int", value: 0 },
+	{ fieldPath: "weapon.cartridge.angleScatter", comment: "Максмлн отклонение пули в градусах, для создания разброса", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.evenlySpread", comment: "Равномерное распределение пуль", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.timeTriggers", comment: "Время активности триггеров для снаряда. За это время снаряд должен успеть попасть в цель и затем объекты будут отключены для оптимизации", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.distHitArrow", comment: "Дистанция, в пределах которой снаряд будет фиксировать попадание", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.shellSkin", comment: "Гильза для оружия", type: "Image", value: "" },
+	{ fieldPath: "weapon.cartridge.caliberName", comment: "Калибр патрона. Разные типы патрона одного калибра должны иметь одинаковое название", type: "string", value: "" },
+	{ fieldPath: "weapon.cartridge.iconButtonSprite", comment: "Иконка патрона для кнопки в интрфейсе", type: "Image", value: "" },
+	{ fieldPath: "weapon.cartridge.iconListSprite", comment: "Иконка патрона для отображения в списке с магазином из автоматической винтовки", type: "Image", value: "" },
+	{ fieldPath: "weapon.cartridge.bullets", comment: "Кол-в во пуль при одном выстреле", type: "int", value: 0 },
+	{ fieldPath: "weapon.cartridge.angleRandom", comment: "Максмлн отклонение пули в градусах, для создания разброса", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.angleSpread", comment: "Равномерное распределение пуль", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.velocityMax", comment: "Ограничение скорости тела после импульса, чтобы тело не улетало далёко", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.angularMax", comment: "Ограничение скорости вращения тела после импульса, чтобы тело не улетало далёко", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.distance", comment: "Дистанция пули для поиска столкновений", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.penetration.modeHit", comment: "• FIRST - Фиксировать все попадания пули, начиная с первого;<br>• RANDOM_ONCE - выбрать только одно попадание в диапазоне [minDist - maxDist], например для взрыва;<br>• RANDOM_FIRST - режим пули с дробью, выбрать любое попадание в диапазоне [minDist - maxDist], а затем фиксировать все остальные проникающие попадания в остальные объекты", type: "ModeHit", value: "" },
+	{ fieldPath: "weapon.cartridge.penetration.minHits", comment: "Сколько минимум попаданий фиксировать для одной пули", type: "int", value: 0 },
+	{ fieldPath: "weapon.cartridge.penetration.maxHits", comment: "Сколько максимум попаданий фиксировать для одной пули", type: "int", value: 0 },
+	{ fieldPath: "weapon.cartridge.penetration.minDist", comment: "Расстояние, на котором фиксировать второе попадание", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.penetration.maxDist", comment: "Расстояние, после которого больше не фиксировать другие попадания", type: "float", value: 0 },
+	{ fieldPath: "weapon.cartridge.penetration.findExitPoint", comment: "Для каждого попадания вычислить точку выхода пули из тела после скозного проникновения", type: "bool", value: true },
+	{ fieldPath: "weapon.cartridge.penetration", comment: "Параметры проникновения для одной пули. Запись попадания пули, если оно проиcходит в разные игровые объекты, которые находятся в разных родительских объектах", type: "HitsBullet", value: "" },
+	{ fieldPath: "weapon.cartridge.penetrationDamage", comment: "Снижение урона после прохождения пули сквозь тела. Для первого попадания сохраняем урон, если оно будет проходить сквозь тела без остановки", type: "PhysicsMaterialMultiply[]", value: "" },
+	{ fieldPath: "weapon.cartridge.hitEffects", comment: "Эффекты попадания", type: "WeaponEffectsHits", value: "" },
+	{ fieldPath: "weapon.reloadBoltStop", comment: "Винтовка имеет затворную задержку. При перезарядке использовать две анимации reloadEmpty и reload", type: "bool", value: true },
+	{ fieldPath: "weapon.beltFeeder", comment: "Оружие устроено как пулемёт с лентой патронов.<br>Сбрасывать патронник при перезарядке и использовать только одну анимацию reloadEmpty", type: "bool", value: true },
+
+	{ fieldPath: "weapon.addBulletsReload", comment: "Добавление патронов в магазин после анимации перезарядки", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazinePlayStep", comment: "Кол-во патронов из магазина для запуска анимации", type: "int", value: 0 },
+	{ fieldPath: "storeInfo.magazineSize", comment: "Кол-во патронов в магазине", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineMax", comment: "Кол-во патронов в одном магазине", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineStep", comment: "Кол-во патронов из магазина для запуска анимации", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineEmptyStep", comment: "Запустить анимацию после полного опустошения одного отсека магазина", type: "bool", value: true },
+	{ fieldPath: "weapon.magazineDrop.position", comment: "Выкидывать магазин при перезарядке. Локальные координаты", type: "Vector2", value: "(0, 0)", spritePreview: "images/point.png" },
+	{ fieldPath: "weapon.magazineDrop.angleRotation", comment: "Наклон объекта в локальных координатах", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.angle", comment: "Направление выброса в локальных координатах", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.angleScatter", comment: "Случаное отклонение от основного направления", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.impulse.min", comment: "Скорость выбрасывания", type: "float", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.impulse.max", comment: "Скорость выбрасывания", type: "float", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.angleSpeed.min", comment: "Скорость вращения в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.angleSpeed.max", comment: "Скорость вращения в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.magazineDrop.quantity", comment: "Сколько гильз выбросить одновеременно", type: "int", value: 0 },
+	{ fieldPath: "weapon.chamberAnimationStep", comment: "Число выстрелов для анимации", type: "int", value: 0 },
+	{ fieldPath: "weapon.timeFreezeShot", comment: "Дополнительная задержка/заморозка оружия после выстрела на основе magazinePlayStep или chamberAnimationStep", type: "float", value: 0 },
+	{ fieldPath: "weapon.playEmptyBoltAnimation", comment: "Показать анимацию затвора перед запуском перезарядки. Например для помповых дробовиков лучше отключить параметр", type: "bool", value: true },
+	{ fieldPath: "weapon.shotAudioList", comment: "Случайный звук выстрела, PCM 16-bit 44100Hz", type: "AudioClip[]", value: "" },
+	{ fieldPath: "weapon.shellDrop.position", comment: "Гильза. Локальные координаты", type: "Vector2", value: "(0, 0)", spritePreview: "images/shell.png", spritePivotPoint: { x: 0.08, y: 0.5 }, spritePixelPerUnit: 100 },
+	{ fieldPath: "weapon.shellDrop.angleRotation", comment: "Наклон объекта в локальных координатах", type: "int", value: 0 },
+	{ fieldPath: "weapon.shellDrop.angle", comment: "Направление выброса в локальных координатах", type: "int", value: 0 },
+	{ fieldPath: "weapon.shellDrop.angleScatter", comment: "Случаное отклонение от основного направления для гильзы", type: "int", value: 0 },
+	{ fieldPath: "weapon.shellDrop.impulse.min", comment: "Скорость выбрасывания гильзы", type: "float", value: 0 },
+	{ fieldPath: "weapon.shellDrop.impulse.max", comment: "Скорость выбрасывания гильзы", type: "float", value: 0 },
+	{ fieldPath: "weapon.shellDrop.angleSpeed.min", comment: "Скорость вращения в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.shellDrop.angleSpeed.max", comment: "Скорость вращения в секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.shellDrop.quantity", comment: "Сколько гильз выбросить одновеременно", type: "int", value: 0 },
+
+	{ fieldPath: "weapon.recoilSteps", comment: "Скорость увеличения отдачи. Количесво шагов для достижения угла, указанного в recoilMax", type: "int", value: 0 },
+	{ fieldPath: "weapon.recoilMax", comment: "Максимальный угол отдачи, в градусах", type: "float", value: 0 },
+	{ fieldPath: "weapon.recoilDecrease", comment: "Скорость снижения отдачи до нуля, в градусы/секунду", type: "float", value: 0 },
+	{ fieldPath: "weapon.shotDirection", comment: "Угол отклонения после выстрела", type: "float", value: 0 },
+
+	{ fieldPath: "weapon.bolt", comment: "Ствол. Точка где начинается ствол оружия.<br>Точка, где будет появляться пуля и откуда начинается поиск столкновений", type: "Vector3", value: "(0, 0, 0)", spritePreview: "images/point.png" },
+	{ fieldPath: "weapon.flashlight", comment: "Локальные координаты фонарика", type: "Vector3", value: "(0, 0, 0)", spritePreview: "images/flashlight.png", spritePivotPoint: { x: 0, y: 0.5 }, spritePixelPerUnit: 100 },
+	{ fieldPath: "weapon.flashlightParent", comment: "Родительский объект для фонарика<br>Для холодного оружия использовать плечо для фонарика, т.к. возникает баг, когда оружие вращается и движется во время анимации, фонарик будет вертеться вместе с оружием", type: "string", value: "", options: ["head", "weaponParent"] },
+	{ fieldPath: "weapon.scaleAngleScatter", comment: "Множитель угола для разброса пуль, если ствол оружия длинный, то разброс должен быть меньше", type: "float", value: 0 },
+	//{ fieldPath: "weapon.damageScale", comment: "Множитель урона", type: "float", value: 0, min: 0.8, max: 3 },
+	{ fieldPath: "weapon.animationClip", comment: "Анимация оружия", type: "AnimationClip", value: "" },
+	{ fieldPath: "weapon.reloadScaleTime", comment: "Множитель для скорости перезарядки<br>Скорость анимации и время для перезарядки [0.5-2]", type: "float", value: 0, min: 0.5, max: 2 },
+	{ fieldPath: "weapon.cameraSnake", comment: "Дистанция для смещения камеры в одну сторону во время тряски при стрельбе", type: "Vector3", value: "(0, 0, 0)" },
+	{ fieldPath: "weapon.cameraShakeTime", comment: "Длительность тряски (в секундах)", type: "float", value: 0 },
+	{ fieldPath: "weapon.cameraSizeScale", comment: "Размер камеры", type: "float", value: 0 },
+	{ fieldPath: "weapon.playerScaleMove", comment: "Множитель для скорости перемещения у игрока [0-1]", type: "float", value: 0, min: 0, max: 1 },
+	{ fieldPath: "weapon.automat", comment: "Автоматическое оружие", type: "bool", value: true },
+	{ fieldPath: "weapon.fireRateInMinute", comment: "Скорострельность<br>Кол-во выстрелов в минуту", type: "int", value: 0 },
+	{ fieldPath: "weapon.chamberSize", comment: "Кол-во патронов в патроннике внутри оружия", type: "int", value: 0 },
+	{ fieldPath: "weapon.Musket.chamberSize", comment: "Кол-во патронов в патроннике внутри оружия", type: "int", value: 0 },
+
+	{ fieldPath: "weapon.WeaponSilencerMod.bolt", comment: "Родительский объект для глушителя<br>Глушитель будет размещён в этом объекте", type: "Transform", value: "" },
+	{ fieldPath: "weapon.WeaponSilencerMod.smoke", comment: "Дым от выстрела", type: "WeaponShotEffect", value: "" },
+	{ fieldPath: "weapon.WeaponSilencerMod.doublePistol", comment: "Второй пистолет", type: "Transform", value: "" },
+
+	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite", comment: "Укороченный глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAWCAYAAABDhYU9AAAA20lEQVR4AeySMQrCQBBFhyUeIBBSBhtr2/TpvYGdVe4gBLxFwMYb2Nt4AwOp7EyRMnWaBOcLu5h2qx9Y2AczAwuPP2NEZGNpmqZgwPoYLX6vbdtDkiQPBuACKScXx/EZAwasi5NTqX0URcIAXBT5l5M0TSmAGDB1XR+VNxo2jK7xqmzZxOCzWCsGTAQ5322E5EJyvgn4/lvPzY3jKAzYpE3XdTsVumEwDIMwABdgqqr6lGV5QsPGOm5umqY7S3LWxSXX9/1Fh08G4IKgIDdrMed5/sqyrGAALnD6AgAA//86okXkAAAABklEQVQDAHJ/B8D83HhjAAAAAElFTkSuQmCC" },
+	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
+	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "storeInfo.silencerSmall.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
+	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite", comment: "Базовый средний глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAATCAYAAAAwE0VbAAABD0lEQVR4AezSP2qEQBTH8ecIKwgKlla5wGJnu1gmIOYY24k5RiqrrT1EirCNVS6x7VbWiv9A2bzfg80d3hDwCzNW85k3hohc2wLKVFUVtG17QV3XXbTWNE3AAzJAUVEUJ9/3z8gYc9ZamqYnRpGgHMd5w0Z7QRCIQ1CHw+FVOwjnfzoE5brui+d5pD04gDN1XX/wwomiiFAYhqQ1ODgyPLJPLGxKnp9NIFj+UbgFDf1Nqu97QuM4ktaeF272ff/GZpom0h4cyJRl+Y6FTcnzW9d1sAHFr04cgmLQD2fDJw5Bbdv2ZYNoWRZxCGqe5yv/uCEe4U1rwzBcMRygHnme37MsO6I4jo9aS5LkzqjHLwAAAP//n0b8ywAAAAZJREFUAwBAFtsZM3pYhQAAAABJRU5ErkJggg==" },
+	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
+	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "storeInfo.silencerMedium.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
+	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite", comment: "Удлиненный глушитель.<br>Черно-белая текстура для умножения на RGB-цвет.", type: "TextureSprite", value: "", ignoreValue: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAUCAYAAAA9djs/AAABJUlEQVR4AeyUoW6EQBCGNwsNOBqSYhpS0UPXkBSNgKQSUdOkL1BbxQOgautQlSdKSJM+A7ZBXkNyor4IBALa+TfhcnePsHNkP5jdUd+/E6QQ4myfoigu6rpe6c7iLKlQqyzLKxBF0UcYhhvdadv2BuIqgKqqHoMg2ADDMG7R0B3btjM4SpK/dF33BRtOWJZ1D1/pOM4rFecEq0WTfg1hScUdCq6of4DneYIby4WrAEzTFNw4CGDZcPyqCeAovjifAkASwzAIbsAbqAno+15wA/JABYCCK6cApml643T7x66yaZpnCuHnuKH7npy/4CjzPP+l54kOtgCHHBjH8R2eEq8syz7jOA4ANdbzPG91p+u6NdwRwB8VO5IkefB9f6U7aZp+w/sfAAD//+yP3r4AAAAGSURBVAMADgd8VlJwyOMAAAAASUVORK5CYII=" },
+	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0, 0.5)" },
+	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "storeInfo.silencerLarge.SpriteRenderer.color", comment: "Цвет глушителя. Цвет используется в режиме 'Умножения'", type: "Color", value: "#434343" },
+
+
+	{ fieldPath: "weapon.WeaponHandPoints.clip", comment: "Базовая анимация для использования в качестве шаблона", type: "JsonFile", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.weaponType", comment: "Тип анимации<br><br>Список точек для создания анимации перезарядки оружия:", type: "string", value: "", options: ['rifleAK', 'rifleLeftBolt', 'rifleAR15', 'shotgun', 'shotgunBullpupDP12', 'sniper', 'shotgun+magazine', 'shotgun+leftBolt', 'heavyRightBoltRifle', 'machinegun', 'aa12', 'ak12', 'ak74u', 'ak308', 'amb17', 'aug', 'axe', 'barretM107a', 'barrettM99', 'barrettMRAD', 'benelli-m4', 'bow', 'cougarms', 'czbren2', 'czEvo3A1', 'deagle', 'dp12', 'f2000', 'fd12', 'forigin12', 'g36c', 'galilace21', 'gm94', 'grizzly85', 'hk69', 'imbelai2', 'ksg', 'lr300', 'm110', 'm200', 'mossberg590', 'mp5', 'mr27', 'p90', 'pp19bizon', 'pp90m1', 'rem870dm', 'remR11rsass', 'rpk16', 'saiga12', 'scarh', 'scarlcqc', 'scarssr', 'shak12', 'sigmpx', 'six12', 'sr2veresk', 'sr3m', 'srm1212', 'sw686', 'ump45', 'vepr12', 'xtr12'] },
+	{ fieldPath: "weapon.WeaponHandPoints.parentName", comment: "Куда поместить оружие. Имя дочернего объекта, рядом с которым будет размещено новое оружие. Если оружие имеет свой готовый клип, то следует вручную указать куда поместить оружие", type: "string", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.weaponClipName", comment: "Сменить имя объекта для работы анимации, если она была заранее указана в weapon.animationClip", type: "string", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.buttstockPoint", comment: "Приклад винтовки.<br>По этим координатам оружие будет прижато к плечам персонажа и таким образом размещаем объект в руках.<br>Локальные координаты относительно точки вращения", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "buttstockPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.buttstockReload", comment: "Приклад винтовки при перезарядке", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "buttstockReload" },
+	{ fieldPath: "weapon.WeaponHandPoints.handguardPoint", comment: "Цевьё. Локальные координаты относительно точки вращения", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "handguardPoint" },
+	{ showInList: false, fieldPath: "weapon.WeaponHandPoints.fingerPoint", comment: "Сдвинуть оружие от указательного пальца<br>Координаты оружия относительно пальца", type: "Vector2", value: "(0, 0)", zeroHide: false, spritePreview: "images/fingers.png", spritePivotPoint: { x: 0.85, y: 0.75 }, spritePixelPerUnit: 100, sortingOrder: 100, spriteName: "fingerRender" },
+	{ showInList: false, fieldPath: "weapon.WeaponHandPoints.fingerAngle", comment: "Угол наклона для ладони. Если это ружьё, то оно имеет рукоять под наклоном", type: "float", value: 0 },
+	{ fieldPath: "weapon.WeaponHandPoints.magazinePoint", comment: "В каком месте хватать магазин при извлечении<br>Если не указано, взять координаты рендера магазина<br>Локальные координаты относительно точки вращения", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "magazinePoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.magazineInsert", comment: "Магазин при вставке. Локальные координаты магазина.", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 2500, spriteName: "magazineInsert" },
+	{ fieldPath: "weapon.WeaponHandPoints.magazineInsertAngle", comment: "Магазин. Угол наклона при вставке", type: "float", value: 0 },
+	{ fieldPath: "weapon.WeaponHandPoints.handInsertPoint", comment: "Координаты левой ладони при вставке магазина. Координаты указывают в каком месте хватать магазин, в какой части корпуса будет находиться рука<br>По умолчанию для левой руки используется точка вращения магазина", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "handInsertPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.bulletPoint", comment: "Вставка патрона или другое движение рук<br>Локальные координаты относительно точки вращения", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "bulletPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.closedCoverPoint", comment: "Закрытая крышка пулемёта - в каком месте хватать крышку, когда она ещё находится закрытой", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "closedCoverPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.openCoverPoint", comment: "Открытая крышка пулемёта - в каком месте хватать крышку, когда она открыта", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "openCoverPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltPoint", comment: "Затвор для задёргивания<br>Локальные координаты относительно точки вращения", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "boltPoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMovePoint", comment: "Заднее положение затвора при взведении", type: "Vector2", value: "(0, 0)", zeroHide: true, spritePreview: "images/handpoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 200, sortingOrder: 1500, spriteName: "boltMovePoint" },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove", comment: "Затвор при стрельбе", type: "WeaponAnimationDetail", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove.move", comment: "Движение для предпросмотра [0-1]<br>Vector2.Lerp(startPosition, movePosition, move)", type: "float", value: 0, zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000 },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove.render", comment: "Рукоятка затвора. Имя объекта для использования в качестве рендера", type: "SpriteRenderer", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove.startPosition", comment: "Рукоятка затвора в готовом положении.<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "handleMove.startPosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove.movePosition", comment: "Рукоятка затвора в крайнем заднем положении.<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "handleMove.movePosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.handleMove.sprites", comment: "Покадровая анимация с помощью спрайтов", type: "Sprite[]", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove", comment: "Крышка пулемёта", type: "WeaponAnimationDetail", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove.move", comment: "Движение для предпросмотра [0-1]<br>Vector2.Lerp(startPosition, movePosition, move)", type: "float", value: 0, zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000 },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove.render", comment: "Крышка пулемёта. Имя объекта для использования в качестве рендера", type: "SpriteRenderer", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove.startPosition", comment: "Крышка пулемёта<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "coverMove.startPosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove.movePosition", comment: "Крышка пулемёта в открытом состоянии<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "coverMove.movePosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.coverMove.sprites", comment: "Покадровая анимация с помощью спрайтов", type: "Sprite[]", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove", comment: "Затворная рама при перезарядке", type: "WeaponAnimationDetail", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove.move", comment: "Движение для предпросмотра [0-1]<br>Vector2.Lerp(startPosition, movePosition, move)", type: "float", value: 0, zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000 },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove.render", comment: "Затворная рама. Имя объекта для использования в качестве рендера", type: "SpriteRenderer", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove.startPosition", comment: "Затворная рама.<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "boltMove.startPosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove.movePosition", comment: "Затворная рама в заднем положении.<br>Локальные координаты. Z - угол наклона", type: "Vector3", value: "(0, 0, 0)", zeroHide: true, spritePreview: "images/detailmovepoint.png", spritePivotPoint: { x: 0.5, y: 0.5 }, spritePixelPerUnit: 250, sortingOrder: 3000, spriteName: "boltMove.movePosition" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltMove.sprites", comment: "Покадровая анимация с помощью спрайтов", type: "Sprite[]", value: "" },
+	{ fieldPath: "weapon.WeaponHandPoints.boltStop", comment: "Остановить затвор в заднем положении для пустого оружия<br>Затвор будет возвращён, когда coverMove будет равен 1 в процессе перезарядки", type: "bool", value: true },
+	{ fieldPath: "weapon.WeaponHandPoints.clipFrameMove", comment: "Сдвинуть кадры между двуми событиями. Сдвинуть ключевой кадр, находящийся под вторым событием", type: "WeaponAnimationRange[]", value: "" },
+
+	{ fieldPath: "weapon.magazine.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.magazine.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.magazine.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.magazine.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.magazine.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.magazine.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+	{ fieldPath: "weapon.AnimationSpriteRenderer.frame", comment: "Текущий кадр [0-1]", type: "float", value: 0, min: 0, max: 1 },
+	{ fieldPath: "weapon.AnimationSpriteRenderer.sprites", comment: "Покадровая анимация с использованием спрайтов.", type: "Sprite[]", value: "" },
+	{ fieldPath: "weapon.magazine.AnimationSpriteRenderer.frame", comment: "Анимация магазина. Текущий кадр [0-1]", type: "float", value: 0, min: 0, max: 1 },
+	{ fieldPath: "weapon.magazine.AnimationSpriteRenderer.sprites", comment: "Анимация магазина. Покадровая анимация с использованием спрайтов.", type: "Sprite[]", value: "" },
+
+	{ fieldPath: "weapon.cartridge.arrowSample.angleTipSpeed", comment: "Скорость вращения стрелы внутри тела, когда кончик упирает в землю.<br>Скорость за 1 секунду", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.damage", comment: "Урон один раз в процессе горения", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.distLivedEntity", comment: "Радиус/Дистанция для попадания в живых существ.<br>Если в пределах этого расстояния нет живых, то фиксируем попадние в трупы", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.floor", comment: "Уровень земли, что бы воткнуть стрелу поглубже в тело", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.floorWall", comment: "Радиус/Дистанция для попадания в живых существ.<br>Если в пределах этого расстояния нет живых, то фиксируем попадние в трупы", type: "PhysicsMaterial2D", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.objectExplode.AnimatorSprite.animations[0].frames", comment: "Эффект взрыва. Покадровая анимация с помощью спрайтов.", type: "Sprite[]", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointFrontTip", comment: "Кончик стрелы, который будет упираться о землю", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointSpriteCheck", comment: "Координаты для проверки спрайта. Отбрасываем стрелу, если в спрайте образуется дыра. Локальные координаты у стрелы", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointTip", comment: "Кончик стрелы, который будет упираться о землю<br>А так же используем для поиска попадания", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.sprite", comment: "Спрайт со стрелой", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+
+	{ fieldPath: "weapon.cartridge.arrowSample.renderMaterialHit", comment: "Радиус/Дистанция для попадания в живых существ.<br>Если в пределах этого расстояния нет живых, то фиксируем попадние в трупы", type: "Material", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.scaleGravity", comment: "Действие гравитации во время полёта", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.scaleImpulse", comment: "Множитель импульса, когда стрела ударяется об землю при падении тела", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.slideExplode", comment: "Сдвиг объекта назад, относительно точки, в котором прозишло попадние", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.soundHit", comment: "Звук взрыва при попадании", type: "AudioClip", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.speed", comment: "Скорость полёта", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.speedMoveRotate", comment: "Дистанция/Скорость для наклона на все 90 градусов", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.speedRotateFire", comment: "Скорость вращения огня для достижения необходимого угла", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.spriteHit", comment: "Показать спрайт при успешном попадании", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.timerLive", comment: "Время жизни снаряда во время полёта. Удалить снаряд, если время закончится - стрела улетела далеко за экран", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.timeSnake", comment: "Тряска камеры. Длительность тряски", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.periodSnake", comment: "Тряска камеры. Количество колебаний", type: "int", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.distanceSnake", comment: "Тряска камеры. Дистанция тряски в одну сторону", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render", comment: "Спрайт со стрелой", type: "SpriteRenderer", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.materialBody", comment: "Материал для пробивания", type: "PhysicsMaterial2D", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.speed", comment: "Скорость полёта", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.timerLive", comment: "Время жизни во время полёта. Удалить стрелу, если время закончится - стрела улетела далеко за экран", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.scaleGravity", comment: "Действие гравитации во время полёта", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.floor", comment: "Уровень земли, что бы воткнуть стрелу поглубже в тело", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointTip", comment: "Кончик стрелы, который будет упираться о землю<br>А так же используем для поиска попадания", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointFrontTip", comment: "Кончик стрелы, который будет упираться о землю", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.pointSpriteCheck", comment: "Координаты для проверки спрайта. Отбрасываем стрелу, если в спрайте образуется дыра. Локальные координаты у стрелы", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.angleTipSpeed", comment: "Скорость вращения стрелы внутри тела, когда кончик упирает в землю.<br>Скорость за 1 секунду", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.spriteHit", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.spriteHit.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.spriteHit.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: "100" },
+	{ fieldPath: "weapon.cartridge.arrowSample.scaleImpulse", comment: "Множитель импульса, когда стрела ударяется об землю при падении тела", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: "true" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.sprite", comment: "Спрайт со стрелой, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: "100" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: "0" },
+	{ fieldPath: "weapon.cartridge.arrowSample.render.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: "true" },
+
+	{ fieldPath: "weapon.player.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+
+	{ fieldPath: "weapon.player.man.body.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.head.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.head.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.head.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.head.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.head.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.head.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.head.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.head.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.body.weaponParent.arm2.forearm2.fingers2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh.shin.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh.shin.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.shin.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh.shin.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh.shin.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh.shin.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.shin.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh.shin.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh2.shin2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh.shin.foot.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: true },
+	{ fieldPath: "weapon.player.man.thigh2.shin2.foot2.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
+
+];
+
+const sounds = [
+	{
+		clip: "rifleAK", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "shotgunBullpupDP12", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "shotgun", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "rifleLeftBolt", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "pistol", sounds:
+			[
+				{ source: "pistol_clipout", replace: "pistol_clipout" },
+				{ source: "pistol_clipin_p250", replace: "pistol_clipin_p250" },
+				{ source: "boltforward_922", replace: "boltforward_922" }
+			]
+	},
+	{
+		clip: "rsh12", sounds:
+			[
+				{ source: "clipout-p90", replace: "clipout-p90" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
+			]
+	},
+	{
+		clip: "rifleAN94", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "machinegun", sounds:
+			[
+				{ source: "m249_boxout", replace: "m249_boxout" },
+				{ source: "galil_clipout", replace: "galil_clipout" },
+				{ source: "galil_clipin", replace: "galil_clipin" },
+				{ source: "m249_chain2", replace: "m249_chain2" },
+				{ source: "cliphit-432", replace: "cliphit-432" },
+				{ source: "boltback-08", replace: "boltback-08" },
+				{ source: "boltforward-210", replace: "boltforward-210" }
+			]
+	},
+	{
+		clip: "shotgun+magazine", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "bow", sounds:
+			[
+			]
+	},
+	{
+		clip: "gm94", sounds:
+			[
+				{ source: "clipout-51", replace: "clipout-51" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "cliphit-247", replace: "cliphit-247" },
+				{ source: "boltforward-90", replace: "boltforward-90" },
+				{ source: "boltback-41", replace: "boltback-41" }
+			]
+	},
+	{
+		clip: "hk69", sounds:
+			[
+				{ source: "boltforward-151", replace: "boltforward-151" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "cliphit-432", replace: "cliphit-432" }
+			]
+	},
+	{
+		clip: "barrettM99", sounds:
+			[
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "sniper", sounds:
+			[
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
+			]
+	},
+	{
+		clip: "shotgun+leftBolt", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "axe", sounds:
+			[
+			]
+	},
+	{
+		clip: "sw686", sounds:
+			[
+				{ source: "clipout-p90", replace: "clipout-p90" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
+			]
+	},
+	{
+		clip: "srm1212", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "mr27", sounds:
+			[
+				{ source: "clipout-51", replace: "clipout-51" },
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "clipin_tmp", replace: "clipin_tmp" }
+			]
+	},
+	{
+		clip: "heavyRightBoltRifle", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "p90", sounds:
+			[
+				{ source: "ump45_clipout", replace: "ump45_clipout" },
+				{ source: "ump45_boltforward", replace: "ump45_boltforward" },
+				{ source: "cliphit-267", replace: "cliphit-267" },
+				{ source: "boltback-254", replace: "boltback-254" },
+				{ source: "boltforward-90", replace: "boltforward-90" }
+			]
+	},
+	{
+		clip: "aa12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "grizzly85123", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "benelli-m4", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "ak308", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "rifleAR15", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "ksg", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "ak12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "ak74u", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "aug", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "barrettMRAD", sounds:
+			[
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
+			]
+	},
+	{
+		clip: "amb17", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "cougarms", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "czbren2", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "czEvo3A1", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "dp12", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "f2000", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "fd12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "forigin12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "rem870dm", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "imbelai2", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "g36c", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "galilace21", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "lr300", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "m110", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "m200", sounds:
+			[
+				{ source: "clipout-271", replace: "clipout-271" },
+				{ source: "clipin_154", replace: "clipin_154" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltback-22", replace: "boltback-22" }
+			]
+	},
+	{
+		clip: "mossberg590", sounds:
+			[
+				{ source: "shell_insert-144", replace: "shell_insert-144" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	},
+	{
+		clip: "mp5", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "pp19bizon", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "pp90m1", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "remR11rsass", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "rpk16", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "saiga12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "scarh", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "scarlcqc", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "scarssr", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "shak12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "sigmpx", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "six12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "sr2veresk", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "sr3m", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "ump45", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "vepr12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltpull-215", replace: "boltpull-215" }
+			]
+	},
+	{
+		clip: "xtr12", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-845", replace: "boltback-845" },
+				{ source: "boltforward-20", replace: "boltforward-20" }
+			]
+	},
+	{
+		clip: "grizzly85", sounds:
+			[
+				{ source: "clipout-ak47", replace: "clipout-ak47" },
+				{ source: "clipin_ak74", replace: "clipin_ak74" },
+				{ source: "boltback-252", replace: "boltback-252" },
+				{ source: "boltback-45", replace: "boltback-45" }
+			]
+	}
+];
+
+let lastSoundAnimationName = "";
+function getSoundsByClip(defaultValue) {
+	const clipName = findValueByPath("weapon.WeaponHandPoints.weaponType");
+	if (clipName != lastSoundAnimationName) {
+		lastSoundAnimationName = clipName;
+		const list = sounds.find(s => s.clip == clipName);
+		if (list) return structuredClone(list.sounds);
+		return defaultValue;
+	}
+	return defaultValue;
+}
+
+
+
+
+
+for (let i = 0; i < window.sourceTextIds.length; i++) { // Перебираем все ключи из sourceText
+	console.log(window.sourceTextIds[i]);
+}

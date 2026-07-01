@@ -1,0 +1,993 @@
+let sceneObjects = [
+	// {
+	// 	name: "body",
+	// 	parent: "",
+	// 	texture: "images/test.png",
+	// 	localPosition: { x: 0.4, y: 0.2 },
+	// 	localAngle: 0,
+	// 	pixelPerUnit: 100,
+	// 	pivotPoint: { x: 0.5, y: 0.5 },
+	// 	enabled: true, isActive: true
+	// }
+];
+
+//Перемещение спрайтов за точкой, когда она находится в выбранном состоянии
+let spriteScreenListeners = {};
+
+
+const images = {};
+let selectedObject = null;
+let lastParentPosition = { x: 0, y: 0 };
+let isDragging = false;
+let isDraggingPivot = false;
+let dragObject = null;
+let dragStartMouseWorld = { x: 0, y: 0 };
+let dragStartWorldPos = { x: 0, y: 0 };
+let dragStartTopLeft = { x: 0, y: 0 };
+let dragStartWorldAngle = 0;
+let dragStartSize = { w: 0, h: 0 };
+let dragStartLocalPos = { x: 0, y: 0 }; // Исходная локальная позицияpivot-drag для canChangePosition===false
+let lastMouseClickPoint = { x: 0, y: 0 };
+
+const canvas = document.getElementById('scene');
+const ctx = canvas?.getContext('2d') || null;
+let viewPPU = 146.41; // Pixels per world unit for view
+
+const hierarchyDiv = document.getElementById('hierarchy');
+const propertiesDiv = document.getElementById('properties');
+
+
+function rotateVec(vec, deg) {
+	const rad = deg * Math.PI / 180;
+	const c = Math.cos(rad);
+	const s = Math.sin(rad);
+	return {
+		x: vec.x * c + vec.y * s,
+		y: -vec.x * s + vec.y * c
+	};
+}
+
+
+const lastImageCache = {};
+function updateImageCache() {
+	sceneObjects.forEach(({ name, texture }) => {
+		if (lastImageCache[name] != texture) {
+			const img = new Image();
+			img.src = texture; // Используем путь из свойства texture
+			images[name] = img; // Записываем в объект под ключом name
+			lastImageCache[name] = texture;
+			img.onload = () => renderScene();
+		}
+	});
+}
+
+
+function getByName() {
+	return sceneObjects.reduce((acc, o) => ({ ...acc, [o.name]: o }), {});
+}
+
+
+function getWorldPosition(objName) {
+	if (!objName) return { x: 0, y: 0 };
+	const byName = getByName();
+	let chain = [];// Собираем цепочку от objName до корня
+	let currentName = objName;
+	while (currentName) {
+		const current = byName[currentName];
+		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL у объекта " + objName); break; }
+		chain.push(current);
+		currentName = current.parent;
+	}
+	// Теперь идём от корня к objName (в обратном порядке)
+	let pos = { x: 0, y: 0 };
+	let totalAngle = 0; // накопленный угол
+	for (let i = chain.length - 1; i >= 0; i--) {// Цепочка сейчас [obj, parent, grandparent, ..., root] — перевернём
+		const obj = chain[i];
+		const rotated = rotateVec(obj.localPosition, totalAngle);// Вращаем локальную позицию на накопленный угол
+		pos.x += rotated.x;
+		pos.y += rotated.y;
+		totalAngle += obj.localAngle || 0;// Добавляем локальный угол объекта к общему углу для следующих детей
+	}
+	return pos;
+}
+// function getWorldPosition(objName) {
+// 	if (!objName) return { x: 0, y: 0 };
+// 	const byName = getByName();
+// 	let pos = { x: 0, y: 0 };
+// 	let currentName = objName;
+// 	while (currentName) {
+// 		const current = byName[currentName];
+// 		if (!current) { console.log("getWorldPosition: byName[" + currentName + "] == NULL"); break; }
+// 		const parentAngle = getWorldAngle(current.parent);
+// 		const rotated = rotateVec(current.localPosition, parentAngle);
+// 		pos.x += rotated.x;
+// 		pos.y += rotated.y;
+// 		currentName = current.parent;
+// 	}
+// 	return pos;
+// }
+
+function getWorldAngle(objName) {
+	if (!objName) return 0;
+	const byName = getByName();
+	let angle = 0;
+	let currentName = objName;
+	while (currentName) {
+		const current = byName[currentName];
+		if (!current) { console.log("getWorldAngle: byName[" + currentName + "] == NULL у объекта " + objName); break; }
+		angle += current.localAngle || 0;
+		currentName = current.parent;
+	}
+	return angle;
+}
+
+function renderScene() {
+	if (ctx == null) return;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.save();
+	ctx.translate(canvas.width / 2, canvas.height / 2);
+	ctx.scale(viewPPU, viewPPU); // y positive down
+	//Удалить объекты без родителя
+	//sceneObjects = sceneObjects.filter(obj => !obj.parent || sceneObjects.some(p => p.name === obj.parent));
+	if (selectedObject != null && !sceneObjects.find(obj => obj.name == selectedObject.name)) selectedObject = null;
+	//Соритровка для рендера
+	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
+	sortedObjects.forEach(o => {
+		if (!o.texture || o.enabled === false || o.isActive === false || o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false) return;
+		const img = images[o.name];
+		if (!img || !img.complete || img.naturalWidth == 0) return;
+		const ppu = o.pixelPerUnit;
+		const worldSize = { w: img.width / ppu, h: img.height / ppu };
+		const worldPos = getWorldPosition(o.name);
+		const worldAngle = getWorldAngle(o.name);
+
+		ctx.save();
+		ctx.translate(worldPos.x, worldPos.y);
+		ctx.rotate(-worldAngle * Math.PI / 180);
+		ctx.drawImage(img, -o.pivotPoint.x * worldSize.w, -(1 - o.pivotPoint.y) * worldSize.h, worldSize.w, worldSize.h);
+		ctx.restore();
+	});
+
+	// 2. Рисуем обводку выбранного объекта ПОСЛЕ всех спрайтов → она будет сверху
+	if (selectedObject && selectedObject.parent) {
+		const img = images[selectedObject.name];
+		if (img && img.complete) {
+			const ppu = selectedObject.pixelPerUnit;
+			const worldSize = { w: img.width / ppu, h: img.height / ppu };
+			const worldPos = getWorldPosition(selectedObject.name);
+			const worldAngle = getWorldAngle(selectedObject.name);
+			ctx.save();
+			ctx.translate(worldPos.x, worldPos.y);
+			ctx.rotate(-worldAngle * Math.PI / 180);
+			ctx.strokeStyle = '#00FF23';
+			ctx.lineWidth = 4 / viewPPU; // обводка в 2 пикселя экрана
+			ctx.setLineDash([]);
+			ctx.strokeRect(-selectedObject.pivotPoint.x * worldSize.w, -(1 - selectedObject.pivotPoint.y) * worldSize.h, worldSize.w, worldSize.h);
+			ctx.restore();
+		}
+	}
+
+	if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onRender(selectedObject);
+
+	// Рисуем точки привязки (pivot) 
+	sceneObjects.forEach(o => {
+		if (o.canChangePivot === false) return;
+		const wp = getWorldPosition(o.name);
+		const sx = wp.x;
+		const sy = wp.y;
+		ctx.fillStyle = (o === selectedObject) ? 'red' : 'DodgerBlue';
+		ctx.beginPath();
+		ctx.arc(sx, sy, ((o === selectedObject) ? 6 : 3) / viewPPU, 0, Math.PI * 2);
+		ctx.fill();
+	});
+	// ctx.fillStyle = 'green';
+	// ctx.beginPath();
+	// ctx.arc(lastMouseClickPoint.x, lastMouseClickPoint.y, 4 / viewPPU, 0, Math.PI * 2);
+	// ctx.fill();
+	ctx.restore(); // ← ВЫХОД из мировых координат (если вы делали save/translate/scale)
+	// --- Линейка "1 метр" — UI-элемент в пикселях экрана ---
+	const rulerLength = viewPPU * 3; // 1 метр = столько пикселей на экране при текущем зуме
+	const rulerX = (canvas.width - rulerLength) / 2; // центрируем по горизонтали
+	const rulerY = canvas.height - 10; // отступ снизу
+	// Линия
+	ctx.strokeStyle = '#000';
+	ctx.lineWidth = 1;
+	ctx.setLineDash([]);
+	ctx.beginPath();
+	ctx.moveTo(rulerX, rulerY);
+	ctx.lineTo(rulerX + rulerLength, rulerY);
+	ctx.stroke();
+	// Засечки на концах
+	ctx.beginPath();
+	ctx.moveTo(rulerX, rulerY - 7);
+	ctx.lineTo(rulerX, rulerY + 7);
+	ctx.moveTo(rulerX + rulerLength, rulerY - 7);
+	ctx.lineTo(rulerX + rulerLength, rulerY + 7);
+	ctx.stroke();
+	// Засечки по 10% от длины (внутри, между концами)
+	const step = rulerLength * 0.1; // 10% от длины
+	ctx.beginPath(); // начинаем новый путь для всех внутренних засечек
+	for (let i = 1; i < 10; i++) { // от 1 до 9 (всего 9 засечек: 10%, 20%, ..., 90%)
+		const x = rulerX + i * step;
+		ctx.moveTo(x, rulerY - 5); // начало засечки
+		ctx.lineTo(x, rulerY + 5); // конец засечки
+	}
+	ctx.stroke(); // рисуем все засечки разом
+	// Подпись
+	ctx.fillStyle = '#000';
+	ctx.font = 'bold 14px Arial';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'bottom';
+	ctx.fillText('1 метр', rulerX + rulerLength, rulerY - 8);
+
+	ctx.restore();
+}
+
+//Показать только спрайты без точек
+function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1, maxHeight = 1024, maxWidth = 1024, sceneScale = 1) {
+	convertedPoint = new Array(); // Сбросим/инициализируем
+	const w = canvas.width * 2;
+	const h = canvas.height * 2;
+	const parentSprite = sceneObjects.find(sprite => sprite.parent == "");
+	const lastParentPosition = { x: parentSprite?.localPosition.x, y: parentSprite?.localPosition.y };
+	if (parentSprite) { parentSprite.localPosition.x = 0; parentSprite.localPosition.y = 0; }// Сбросить сдвиг родительского спрайта
+	const viewPPU = 100 * sceneScale; // Сбросить масштаб просмотра
+	const off = document.createElement('canvas');
+	off.width = w; off.height = h;
+	const c = off.getContext('2d');
+	c.clearRect(0, 0, w, h); c.save(); c.translate(w / 2, h / 2); // Центр канваса — центр мира (как в Unity)
+	c.scale(viewPPU, viewPPU); // Размер пикселей на юнит
+
+	// 1. Создаем карту для быстрого доступа к объектам по имени
+	// 2. Функция для рекурсивного или итеративного получения пути
+	const map = new Map(sceneObjects.map(obj => [obj.name, obj]));
+	sceneObjects.forEach(obj => {
+		const pathParts = [];
+		let current = obj;
+		while (current) {
+			pathParts.unshift(current.name); // Добавляем имя в начало массива
+			current = map.get(current.parent); // Переходим к родителю
+		}
+		obj.path = pathParts.join('.');// 3. Записываем результат в свойство path через точку
+	});
+	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
+	sortedObjects.forEach(o => {
+		const worldPos = getWorldPosition(o.name);
+		if (convertToPixel.includes(o.name)) {
+			let screenX = (w / 2) + worldPos.x * viewPPU;
+			let screenY = (h / 2) + worldPos.y * viewPPU;
+			convertedPoint.push({ name: o.name, rawX: screenX, rawY: screenY }); // Сохраняем "сырые" координаты до обрезки — позже скорректируем
+		}
+		console.log("renderSpritesToBase64: " + o.path);
+		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || (o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false)) return;
+		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore) || o.path.includes(ignore)) != -1) return;
+		const img = images[o.name];
+		if (!img || !img.complete) return;
+		const ppu = o.pixelPerUnit || 100;
+		const worldSize = { w: img.width / ppu, h: img.height / ppu };
+		const worldAngle = getWorldAngle(o.name);
+		c.save();
+		c.translate(worldPos.x, worldPos.y);
+		c.rotate(-worldAngle * Math.PI / 180);
+		c.drawImage(img, -o.pivotPoint.x * worldSize.w, -(1 - o.pivotPoint.y) * worldSize.h, worldSize.w, worldSize.h);
+		c.restore();
+	}); // Отрисовка спрайта
+	c.restore();
+	const imgData = c.getImageData(0, 0, w, h);
+	const data = imgData.data;
+	let minX = w, minY = h, maxX = -1, maxY = -1;
+	for (let y = 0; y < h; y++) {
+		const row = y * w * 4;
+		for (let x = 0; x < w; x++) {
+			const a = data[row + x * 4 + 3];
+			if (a >= alphaThreshold) { // альфа
+				if (x < minX) minX = x;
+				if (y < minY) minY = y;
+				if (x > maxX) maxX = x;
+				if (y > maxY) maxY = y;
+			}
+		}
+	}
+	if (maxX < minX || maxY < minY) {// Поиск границ непустых пикселей по альфа-каналу
+		const empty = document.createElement('canvas');
+		empty.width = empty.height = 1;
+		return { base64: empty.toDataURL('image/png').split(',')[1], points: convertedPoint };// Если всё прозрачно — вернуть 1x1 прозрачный PNG
+	}
+	const cropW = Math.min(maxX - minX + 1, maxWidth);
+	const cropH = Math.min(maxY - minY + 1, maxHeight);
+	const out = document.createElement('canvas');
+	out.width = cropW;
+	out.height = cropH;
+	const outCtx = out.getContext('2d');
+	outCtx.drawImage(off, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+	convertedPoint = convertedPoint.map(p => ({ name: p.name, x: Math.round(p.rawX - minX), y: Math.round(p.rawY - minY) }));
+	const pointsAsObject = {};// --- ВАЖНО: Скорректировать сохранённые точки под обрезку ---
+	convertedPoint.forEach(p => { pointsAsObject[p.name] = { x: p.x, y: p.y }; });// --- Преобразуем в объект с ключами по имени ---
+	if (parentSprite) { parentSprite.localPosition.x = lastParentPosition.x; parentSprite.localPosition.y = lastParentPosition.y; }// Сбросить сдвиг родительского спрайта
+	return { base64: out.toDataURL('image/png'), points: pointsAsObject };
+}
+
+//ignoreNameList - имена объектов, которые убрать из рендера
+/* function renderSpritesToBase64(ignoreNameList = [], convertToPixel = [], alphaThreshold = 1) {
+	convertedPoint = new Array();
+	// Подготовка offscreen-canvas
+	const w = canvas.width * 2;
+	const h = canvas.height * 2;
+	const parentSprite = sceneObjects.find(sprite => sprite.parent == "");
+	parentSprite.localPosition.x = 0; parentSprite.localPosition.y = 0; //Сбросить сдвиг родительского спрайта
+	const viewPPU = 100; //Сбросить масштаб просмотра
+	const off = document.createElement('canvas');
+	off.width = w;
+	off.height = h;
+	const c = off.getContext('2d');
+	// Прозрачный фон
+	c.clearRect(0, 0, w, h);
+	c.save();
+	c.translate(w / 2, h / 2);
+	c.scale(viewPPU, viewPPU); // y positive down
+	const sortedObjects = [...sceneObjects].sort((a, b) => a.sortingOrder - b.sortingOrder);
+	sortedObjects.forEach(o => {
+		if (!o?.texture || o.enabled === false || o.isActive === false || !o.texture.startsWith('data:') || o.parent && sortedObjects.find(obj => obj.name === o.parent)?.isActive === false) return;
+		if (ignoreNameList && ignoreNameList.findIndex(ignore => ignore == o.name || o.name.endsWith(ignore)) != -1) return;
+		const img = images[o.name];
+		if (!img || !img.complete) return;
+		const ppu = o.pixelPerUnit;
+		const worldSize = { w: img.width / ppu, h: img.height / ppu };
+		const worldPos = getWorldPosition(o.name);
+		const worldAngle = getWorldAngle(o.name);
+		c.save();
+		c.translate(worldPos.x, worldPos.y);
+		c.rotate(-worldAngle * Math.PI / 180);
+		c.drawImage(
+			img,
+			-o.pivotPoint.x * worldSize.w,
+			-(1 - o.pivotPoint.y) * worldSize.h,
+			worldSize.w,
+			worldSize.h
+		);
+		c.restore();
+	});
+	c.restore();
+	// Поиск границ непустых пикселей по альфа-каналу
+	const imgData = c.getImageData(0, 0, w, h);
+	const data = imgData.data;
+	let minX = w, minY = h, maxX = -1, maxY = -1;
+	for (let y = 0; y < h; y++) {
+		const row = y * w * 4;
+		for (let x = 0; x < w; x++) {
+			const a = data[row + x * 4 + 3]; // альфа
+			if (a >= alphaThreshold) {
+				if (x < minX) minX = x;
+				if (y < minY) minY = y;
+				if (x > maxX) maxX = x;
+				if (y > maxY) maxY = y;
+			}
+		}
+	}
+	// Если всё прозрачно — вернуть 1x1 прозрачный PNG
+	if (maxX < minX || maxY < minY) {
+		const empty = document.createElement('canvas');
+		empty.width = empty.height = 1;
+		return empty.toDataURL('image/png').split(',')[1];
+	}
+	const cropW = maxX - minX + 1;
+	const cropH = maxY - minY + 1;
+	const out = document.createElement('canvas'); // Обрезка в новый canvas
+	out.width = cropW;
+	out.height = cropH;
+	const outCtx = out.getContext('2d');
+	outCtx.drawImage(off, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+	return {base64: out.toDataURL('image/png'), points: convertedPoint};  // Превращаем PNG в BASE64  // "data:image/png;base64,XXXX"
+} */
+
+
+function getObjectAtPoint(wx, wy) {
+	lastMouseClickPoint.x = wx; lastMouseClickPoint.y = wy;
+	const sortedForHit = [...sceneObjects].sort((a, b) => (a.parent === "" ? 1 : 0) - (b.parent === "" ? 1 : 0) || b.sortingOrder - a.sortingOrder);
+	for (const o of sortedForHit) {
+		const img = images[o.name];
+		if (!img || !img.complete) continue;
+		const ppu = o.pixelPerUnit;
+		const worldSize = { w: img.width / ppu, h: img.height / ppu };
+		const wp = getWorldPosition(o.name);
+		const wa = getWorldAngle(o.name);
+		const delta = { x: wx - wp.x, y: wy - wp.y };
+		const local = rotateVec(delta, -wa);
+		const offsetX = -o.pivotPoint.x * worldSize.w;
+		const offsetY = -(1 - o.pivotPoint.y) * worldSize.h;
+		if (local.x >= offsetX && local.x <= offsetX + worldSize.w &&
+			local.y >= offsetY && local.y <= offsetY + worldSize.h) {
+			return o;
+		}
+	}
+	return sceneObjects.find(o => o.parent == "");
+}
+
+function buildHierarchyUL(nodes) {
+	const ul = document.createElement('ul');
+	nodes.forEach(node => {
+		const li = document.createElement('li');
+		const span = document.createElement('span');// Создаем span для текста (кликабельный)
+		span.className = "listObjectName";
+		span.textContent = node.name;
+		span.addEventListener('click', () => selectObject(node));// Вешаем обработчик на span, а не на li
+		// Добавляем span в li
+		li.appendChild(span);
+		if (selectedObject && node.name === selectedObject.name) {
+			li.classList.add('selected');
+		}
+		ul.appendChild(li);
+		if (node.children.length > 0) {
+			li.appendChild(buildHierarchyUL(node.children));
+		}
+	});
+	return ul;
+}
+
+function refreshHierarchy() {
+	hierarchyDiv.innerHTML = '';
+	const tree = buildTree();
+	const rootUL = buildHierarchyUL(tree);
+	hierarchyDiv.appendChild(rootUL);
+	if (sceneObjects.length != 0) {//Указать позицию родителя, если список объектов был очищен и заново сделан
+		const parent = sceneObjects.find(obj => obj.parent == "");
+		if (parent) {
+			parent.localPosition.x = lastParentPosition.x;
+			parent.localPosition.y = lastParentPosition.y;
+		}
+	}
+}
+
+function buildTree() {
+	const byName = {};
+	const tree = [];
+	sceneObjects.forEach(o => {
+		byName[o.name] = { ...o, children: [] };
+	});
+	sceneObjects.forEach(o => {
+		if (o.parent && byName[o.parent]) {
+			byName[o.parent].children.push(byName[o.name]);
+		} else {
+			tree.push(byName[o.name]);
+		}
+	});
+	return tree;
+}
+
+
+
+// === ВНЕ ФУНКЦИИ: создаём шаблон и кэшируем элементы ===
+// Глобальные переменные для кэширования
+// Кэшируем ссылки на элементы один раз
+const propertyInputs = {
+	name: document.getElementById('propName'),
+	posX: document.getElementById('propPosX'),
+	posY: document.getElementById('propPosY'),
+	angle: document.getElementById('propAngle'),
+	angleSlider: document.getElementById('propAngleSlider'),
+	sortingOrder: document.getElementById('propSortingOrder'),
+	pixelsPerUnit: document.getElementById('propPixelsPerUnit'),
+	pivotX: document.getElementById('propPivotX'),
+	pivotY: document.getElementById('propPivotY'),
+	texture: document.getElementById('propTexture'),
+	enabled: document.getElementById('propRenderEnabled'),
+	isActive: document.getElementById('propGameObjActive'),
+};
+// Настройка обработчиков событий один раз
+let objectId = -1;
+propertyInputs.posX.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localPosition.x = parseFloat(propertyInputs.posX.value); renderScene(); } });
+propertyInputs.posY.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localPosition.y = -parseFloat(propertyInputs.posY.value); renderScene(); } });
+propertyInputs.angle.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localAngle = parseFloat(propertyInputs.angle.value); propertyInputs.angleSlider.value = sceneObjects[objectId].localAngle; renderScene(); } });
+propertyInputs.angleSlider.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].localAngle = Math.round(parseFloat(propertyInputs.angleSlider.value)); propertyInputs.angle.value = sceneObjects[objectId].localAngle; renderScene(); } });
+propertyInputs.sortingOrder.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].sortingOrder = parseInt(propertyInputs.sortingOrder.value); renderScene(); } });
+propertyInputs.pixelsPerUnit.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pixelPerUnit = Math.max(50, Math.min(99999, parseFloat(propertyInputs.pixelsPerUnit.value))); renderScene(); } });
+propertyInputs.pivotX.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pivotPoint.x = parseFloat(propertyInputs.pivotX.value); renderScene(); } });
+propertyInputs.pivotY.addEventListener('input', (event) => { if (selectedObject && event.target.value != "") { sceneObjects[objectId].pivotPoint.y = parseFloat(propertyInputs.pivotY.value); renderScene(); } });
+propertyInputs.texture.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].texture = propertyInputs.texture.value; renderScene(); } });
+propertyInputs.enabled.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].enabled = propertyInputs.enabled.checked; renderScene(); } });
+propertyInputs.isActive.addEventListener('input', (event) => { if (selectedObject) { sceneObjects[objectId].isActive = propertyInputs.isActive.checked; renderScene(); } });
+
+document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) => {
+	const file = fileEvent.target.files[0];
+	if (!file) return;
+	const reader = new FileReader();
+	reader.onload = event => {
+		const base64 = event.target.result;
+		sceneObjects[objectId].texture = base64;
+		// Обрезаем прозрачные края
+		trimTransparentEdges(base64, 512, 1, 1, trimmedBase64 => {
+			propertyInputs.texture.value = trimmedBase64;
+			propertyInputs.texture.dispatchEvent(fileEvent);
+			updateImageCache(); //Перезагрузка кэша с изображениями
+			renderScene();
+		});
+	};
+	reader.onerror = () => { alert('Failed to read file.'); };
+	reader.readAsDataURL(file);
+	fileEvent.target.value = null; // Сбрасываем значение input, чтобы можно было загрузить тот же файл снова
+});
+
+
+function trimTransparentEdges(base64, maxSize, step, padding, callback) {
+	const img = new Image();
+	img.src = base64;
+	img.onload = () => {
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		// Проверка на слишком большое изображение
+		if (img.width > maxSize * 2 || img.height > maxSize * 2) { // Рисуем уменьшенное изображение
+			const scale = Math.min(maxSize / img.width, maxSize / img.height);
+			canvas.width = Math.round(img.width * scale);
+			canvas.height = Math.round(img.height * scale);
+			ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; // Улучшаем качество масштабирования
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);// Рисуем в canvas
+		} else {
+			// Если уменьшение не нужно — рисуем оригинал
+			canvas.width = img.width;
+			canvas.height = img.height;
+			ctx.drawImage(img, 0, 0);
+		}
+		const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		const a = (x, y) => data[(y * width + x) * 4 + 3]; // alpha в точке (x,y)
+		const findEdge = (start, end, step, getCoord) => {
+			for (let i = start; i !== end; i += step) {
+				for (let j = 0; j < (getCoord === 'x' ? height : width); j++) {
+					if (a(getCoord === 'x' ? i : j, getCoord === 'x' ? j : i) > 10) return i;
+				}
+			}
+			return getCoord === 'x' ? width : height;
+		};
+		let top = findEdge(0, height, step, 'y');
+		let bottom = findEdge(height - 1, -1, -step, 'y') + 1;
+		let left = findEdge(0, width, step, 'x');
+		let right = findEdge(width - 1, -1, -step, 'x') + 1;
+		console.log("findEdge: top: " + top + "; bottom: " + bottom + "; left: " + left + "; right: " + right);
+		if (left >= right || top >= bottom) return callback(base64);
+		//ДОБАВЛЯЕМ PADDING
+		top = Math.max(0, top - padding);
+		bottom = Math.min(height, bottom + padding);
+		left = Math.max(0, left - padding);
+		right = Math.min(width, right + padding);
+		// Создаём canvas с учётом padding
+		const trimmed = document.createElement('canvas');
+		const tctx = trimmed.getContext('2d');
+		trimmed.width = right - left;
+		trimmed.height = bottom - top;
+		// Рисуем с отступом: исходное изображение вставляется внутрь нового canvas
+		tctx.drawImage(canvas, left, top, right - left, bottom - top, 0, 0, trimmed.width, trimmed.height);
+		// Убираем чёрную кайму у прозрачных пикселей
+		const srcImageData = tctx.getImageData(0, 0, trimmed.width, trimmed.height);
+		const fixedImageData = bleedTransparentPixels(srcImageData, 20);
+		tctx.putImageData(fixedImageData, 0, 0);
+		callback(trimmed.toDataURL('image/png'));
+	};
+	img.onerror = () => callback(base64);
+}
+
+
+//ищет ближайший непрозрачный пиксель по +.
+function findClosestOpaquePixel(data, x, y, width, height, alphaThreshold = 20) {
+	const maxDist = Math.max(Math.max(x, width - 1 - x), Math.max(y, height - 1 - y));
+	for (let dist = 1; dist <= maxDist; dist++) {
+		// Влево
+		let nx = x - dist;
+		if (nx >= 0) {
+			let i = (y * width + nx) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вправо
+		nx = x + dist;
+		if (nx < width) {
+			let i = (y * width + nx) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вверх
+		let ny = y - dist;
+		if (ny >= 0) {
+			let i = (ny * width + x) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+		// Вниз
+		ny = y + dist;
+		if (ny < height) {
+			let i = (ny * width + x) * 4;
+			if (data[i + 3] > alphaThreshold) {
+				return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+			}
+		}
+	}
+	return [0, 0, 0, 0];
+}
+//у прозрачных пикселей копирует RGB ближайшего непрозрачного, но alpha не меняет.
+function bleedTransparentPixels(imageData, alphaThreshold = 20) {
+	const { data, width, height } = imageData;
+	const result = new Uint8ClampedArray(data);
+	for (let y = 0; y < height; y++) {
+		for (let x = 0; x < width; x++) {
+			const i = (y * width + x) * 4;
+			const a = data[i + 3];
+			if (a <= alphaThreshold) {
+				const [r, g, b] = findClosestOpaquePixel(data, x, y, width, height, alphaThreshold);
+				result[i] = r;
+				result[i + 1] = g;
+				result[i + 2] = b;
+				result[i + 3] = data[i + 3];// Альфу оставляем как есть, чтобы пиксель остался прозрачным
+			}
+		}
+	}
+	return new ImageData(result, width, height);
+}
+
+
+
+
+//ВЫБРАТЬ ОБЪЕКТ 
+function selectObject(obj) {
+	if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onInactive(selectedObject);
+	if (!obj) { propertiesDiv.style.display = 'none'; return; }
+	objectId = sceneObjects.indexOf(obj);
+	if (objectId == -1) objectId = sceneObjects.findIndex(item => item.name == obj.name);
+	if (objectId == -1) console.warn("selectObject: NULL - объект не найден");
+	selectedObject = sceneObjects[objectId];
+	if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onSelect(selectedObject);
+	propertiesDiv.style.display = 'block';
+	// Обновляем значения полей
+	propertyInputs.name.innerHTML = obj.name || '';
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = "canChangePosition" in obj && !obj.canChangePosition;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = "canChangePosition" in obj && !obj.canChangePosition
+	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
+	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
+	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
+	propertyInputs.pixelsPerUnit.value = obj.pixelPerUnit || 100;
+	propertyInputs.pivotX.value = obj.pivotPoint?.x || 0; propertyInputs.pivotX.disabled = "canChangePivot" in obj && !obj.canChangePivot;
+	propertyInputs.pivotY.value = obj.pivotPoint?.y || 0; propertyInputs.pivotY.disabled = "canChangePivot" in obj && !obj.canChangePivot;
+	propertyInputs.texture.value = obj.texture || '';
+	propertyInputs.enabled.checked = obj.enabled
+	propertyInputs.isActive.checked = obj.isActive;
+	refreshHierarchy();
+	renderScene();
+}
+
+function selectObjectByName(path) {
+	selectedObject = null;
+	objectId = sceneObjects.findIndex(obj => path.endsWith(obj.name));
+	if (objectId != -1) { selectObject(sceneObjects[objectId]); } else { renderScene(); }
+}
+
+//const addButton = document.getElementById('add-object');
+//addButton.addEventListener('click', addObject); <button id="add-object" style="margin-top: 10px;">Добавить Объект</button>
+function addObject() {
+	const name = prompt('Enter object name:');
+	if (!name || sceneObjects.find(o => o.name === name)) {
+		alert('Invalid or duplicate name.');
+		return;
+	}
+	const parent = prompt('Enter parent name (or empty for root):');
+	sceneObjects.push({
+		name,
+		parent: parent || '',
+		texture: '',
+		localPosition: { x: 0, y: 0 },
+		localAngle: 0,
+		sortingOrder: 0,
+		pixelPerUnit: 100,
+		pivotPoint: { x: 0.5, y: 0.5 },
+		enabled: true
+	});
+	updateImageCache();
+	refreshHierarchy();
+	renderScene();
+}
+
+
+canvas.addEventListener('mousedown', (event) => {
+	startMove(event, event.button == 1);
+});
+canvas.addEventListener('touchstart', (event) => {
+	event.preventDefault();
+	const touch = event.touches[0];
+	startMove(touch, 2 <= event.touches.length);
+}, { passive: false });
+
+function startMove(event, parentMove) {
+	const mouseX = event.clientX;
+	const mouseY = event.clientY;
+	const rect = canvas.getBoundingClientRect();
+	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
+	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
+	const wx = (mouseSx - canvas.width / 2) / viewPPU;
+	const wy = (mouseSy - canvas.height / 2) / viewPPU;
+	let pivotHitObject = null;// Check for pivot hit on any object
+	// const sortedForHit = [...sceneObjects].sort((a, b) => (a.parent === "" ? 1 : 0) - (b.parent === "" ? 1 : 0) || b.sortingOrder - a.sortingOrder);
+	// for (const o of sortedForHit) {
+	// 	if (o.canChangePivot) {
+	// 		const pivot = getWorldPosition(o.name);
+	// 		const dist = Math.sqrt((wx - pivot.x) ** 2 + (wy - pivot.y) ** 2);
+	// 		if (dist < 10 / viewPPU) {
+	// 			pivotHitObject = o;
+	// 			break;
+	// 		}
+	// 	}
+	// }
+	if (selectedObject && selectedObject.canChangePivot) {
+		const pivot = getWorldPosition(selectedObject.name);
+		const dist = Math.sqrt((wx - pivot.x) ** 2 + (wy - pivot.y) ** 2);
+		if (dist < 10 / viewPPU) {
+			pivotHitObject = selectedObject;
+		}
+	}
+	if (pivotHitObject) {
+		if (pivotHitObject !== selectedObject) selectObject(pivotHitObject);
+		isDraggingPivot = true;
+		dragObject = pivotHitObject;
+		dragStartMouseWorld = { x: wx, y: wy };
+		dragStartWorldPos = getWorldPosition(pivotHitObject.name);
+		dragStartWorldAngle = getWorldAngle(pivotHitObject.name);
+		const o = dragObject;
+		const img = images[o.name];
+		if (!img || !img.complete) {
+			isDraggingPivot = false;
+			return;
+		}
+		const ppu = o.pixelPerUnit;
+		const worldSize = { w: img.width / ppu, h: img.height / ppu };
+		dragStartSize = worldSize;
+		const offset = { x: -o.pivotPoint.x * worldSize.w, y: -(1 - o.pivotPoint.y) * worldSize.h };
+		const rotatedOffset = rotateVec(offset, dragStartWorldAngle); // Локальное смещение текстуры преобразуем в мировое с учетом угла объекта
+		dragStartTopLeft = { x: dragStartWorldPos.x + rotatedOffset.x, y: dragStartWorldPos.y + rotatedOffset.y };
+		dragStartLocalPos = { x: o.localPosition.x, y: o.localPosition.y }; // Сохраняем исходную локальную позицию для canChangePosition===false
+		sceneObjects.forEach(child => {
+			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointStartDrag(event, selectedObject); }
+		});
+		return;
+	}
+
+	// If no pivot hit, check for object body hit
+	const hit = (parentMove) ? getObjectAtPoint(999, 999) : getObjectAtPoint(wx, wy); //При нажатии на колесо мыши выбрать родительский объект
+	if (hit) {
+		if (hit !== selectedObject) {
+			selectObject(hit);
+		}
+		isDragging = true;
+		dragObject = hit;
+		dragStartMouseWorld = { x: wx, y: wy };
+		dragStartWorldPos = getWorldPosition(hit.name);
+		dragStartLocalPos = { x: hit.localPosition.x, y: hit.localPosition.y }; // Сохраняем исходную локальную позицию перед drag для объектов с canChangePosition===false
+		const dragImg = images[hit.name]; // Изображение объекта для вычисления стартового top-left текстуры при обычном drag
+		if (dragImg && dragImg.complete) {
+			const dragWorldSize = { w: dragImg.width / hit.pixelPerUnit, h: dragImg.height / hit.pixelPerUnit }; // Размер спрайта в мировых координатах на старте обычного drag
+			dragStartSize = dragWorldSize;
+			const dragOffset = { x: -hit.pivotPoint.x * dragWorldSize.w, y: -(1 - hit.pivotPoint.y) * dragWorldSize.h }; // Смещение top-left от pivot в локальных координатах
+			const dragAngle = getWorldAngle(hit.name); // Мировой угол объекта для преобразования локального смещения в мировое
+			const dragRotatedOffset = rotateVec(dragOffset, dragAngle); // Мировое смещение top-left на старте обычного drag
+			dragStartTopLeft = { x: dragStartWorldPos.x + dragRotatedOffset.x, y: dragStartWorldPos.y + dragRotatedOffset.y };
+		}
+		if (selectedObject) {
+			if (spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onStartDrag(event, selectedObject);
+			sceneObjects.forEach(child => {
+				if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onSceneStartDrag(event, selectedObject); }
+			});
+		}
+	}
+}
+
+canvas.addEventListener('mousemove', (event) => {
+	mouseMove(event, event.shiftKey);
+});
+canvas.addEventListener('touchmove', (event) => {
+	event.preventDefault();
+	const touch = event.touches[0];
+	mouseMove(touch);
+}, { passive: false });
+
+function mouseMove(event, shiftKey = false) {
+	const mouseX = event.clientX;
+	const mouseY = event.clientY;
+	const rect = canvas.getBoundingClientRect();
+	const mouseSx = (mouseX - rect.left) * (canvas.width / rect.width);
+	const mouseSy = (mouseY - rect.top) * (canvas.height / rect.height);
+	const wx = (mouseSx - canvas.width / 2) / viewPPU;
+	const wy = (mouseSy - canvas.height / 2) / viewPPU;
+
+	if (isDragging) {
+		const mouseDeltaX = wx - dragStartMouseWorld.x;
+		const mouseDeltaY = wy - dragStartMouseWorld.y;
+		const newWorldPos = {
+			x: dragStartWorldPos.x + mouseDeltaX,
+			y: dragStartWorldPos.y + mouseDeltaY
+		};
+
+		const parentPos = getWorldPosition(dragObject.parent);
+		const parentAngle = getWorldAngle(dragObject.parent);
+		const deltaLocal = {
+			x: newWorldPos.x - parentPos.x,
+			y: newWorldPos.y - parentPos.y
+		};
+		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
+		dragObject.localPosition.x = Math.round(newLocalPos.x * 100) / 100;
+		dragObject.localPosition.y = Math.round(newLocalPos.y * 100) / 100;
+		renderScene();
+	} else if (isDraggingPivot) {
+		const mouseDeltaX = wx - dragStartMouseWorld.x;
+		const mouseDeltaY = wy - dragStartMouseWorld.y;
+		const newWorldPos = {
+			x: dragStartWorldPos.x + mouseDeltaX,
+			y: dragStartWorldPos.y + mouseDeltaY
+		};
+
+		const deltaToTopLeft = {
+			x: dragStartTopLeft.x - newWorldPos.x,
+			y: dragStartTopLeft.y - newWorldPos.y
+		};
+		const newOffset = rotateVec(deltaToTopLeft, -dragStartWorldAngle);
+
+		let newPivotX = -newOffset.x / dragStartSize.w;
+		let newPivotY = 1 + newOffset.y / dragStartSize.h;
+
+		const o = dragObject;
+		o.pivotPoint.x = newPivotX;
+		o.pivotPoint.y = newPivotY;
+
+		// Update localPosition to match newWorldPos
+		const parentPos = getWorldPosition(o.parent);
+		const parentAngle = getWorldAngle(o.parent);
+		const deltaLocal = {
+			x: newWorldPos.x - parentPos.x,
+			y: newWorldPos.y - parentPos.y
+		};
+		const newLocalPos = rotateVec(deltaLocal, -parentAngle);
+		if (!shiftKey) { // Оставлять дочерние объекты на месте при переносе pivotPoint, даже если родитель повернут
+			const fixedChildWorldPositions = sceneObjects
+				.filter(child => child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name)
+				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) })); // Запоминаем мировые координаты дочерних объектов до переноса pivotPoint
+			o.localPosition.x = newLocalPos.x;
+			o.localPosition.y = newLocalPos.y;
+			const newParentWorldPos = getWorldPosition(o.name); // Новая мировая позиция pivotPoint родителя после пересчета localPosition
+			const newParentWorldAngle = getWorldAngle(o.name); // Новый мировой угол родителя нужен для перевода мирового смещения ребенка в локальное
+			fixedChildWorldPositions.forEach(item => { // Двигаем дочерние объекты в обратную сторону через мировые и локальные координаты
+				const childDeltaWorld = {
+					x: item.worldPosition.x - newParentWorldPos.x,
+					y: item.worldPosition.y - newParentWorldPos.y
+				}; // Мировое смещение ребенка относительно нового pivotPoint родителя
+				const childLocalPosition = rotateVec(childDeltaWorld, -newParentWorldAngle); // Переводим мировое смещение в локальные координаты повернутого родителя
+				item.child.localPosition.x = Math.round(childLocalPosition.x / 0.0001) * 0.0001;
+				item.child.localPosition.y = Math.round(childLocalPosition.y / 0.0001) * 0.0001;
+			});
+		} else {
+			o.localPosition.x = newLocalPos.x;
+			o.localPosition.y = newLocalPos.y;
+		}
+
+		renderScene();
+		if (selectedObject && spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onDrag(event, selectedObject);
+	}
+
+};
+
+
+canvas.addEventListener('mouseup', mouseUp);
+canvas.addEventListener('touchcancel', mouseUp, { passive: false });
+canvas.addEventListener('touchend', mouseUp, { passive: false });
+function mouseUp(event) {
+	if (isDragging) {
+		const dragEndObj = dragObject; // Сохраняем объект перетаскивания до сброса состояния drag
+		if (dragEndObj && dragEndObj.canChangePosition === false) {
+			const currentWorldPos = getWorldPosition(dragEndObj.name); // Текущая мировая позиция pivot после временного перемещения мышью
+			const dragDeltaWorld = { x: currentWorldPos.x - dragStartWorldPos.x, y: currentWorldPos.y - dragStartWorldPos.y }; // Мировое смещение объекта за время drag
+			const desiredTopLeftWorld = { x: dragStartTopLeft.x + dragDeltaWorld.x, y: dragStartTopLeft.y + dragDeltaWorld.y }; // Новый top-left, где должна остаться текстура после отпускания
+			//const pivotWorldAfterReset = getWorldPosition(dragEndObj.parent); // База для пересчета pivot в мировых координатах после восстановления localPosition
+			//const parentWorldAngleAfterReset = getWorldAngle(dragEndObj.parent); // Базовый мировой угол родителя после восстановления localPosition
+			dragEndObj.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию, чтобы pivot вернулся в стартовую точку
+			dragEndObj.localPosition.y = dragStartLocalPos.y;
+			const restoredWorldPos = getWorldPosition(dragEndObj.name); // Подтвержденная мировая позиция pivot после восстановления localPosition
+			const restoredWorldAngle = getWorldAngle(dragEndObj.name); // Мировой угол объекта для перевода мирового смещения top-left в локальное
+			const deltaToDesiredTopLeft = { x: desiredTopLeftWorld.x - restoredWorldPos.x, y: desiredTopLeftWorld.y - restoredWorldPos.y }; // Мировое смещение от восстановленного pivot до желаемого top-left
+			const newLocalOffset = rotateVec(deltaToDesiredTopLeft, -restoredWorldAngle); // Локальное смещение top-left относительно pivot после отпускания
+			const sizeW = dragStartSize.w || 0.000001; // Безопасная ширина для преобразования offset->pivotX
+			const sizeH = dragStartSize.h || 0.000001; // Безопасная высота для преобразования offset->pivotY
+			dragEndObj.pivotPoint.x = -newLocalOffset.x / sizeW; // Новый нормализованный pivotX из локального смещения
+			dragEndObj.pivotPoint.y = 1 + newLocalOffset.y / sizeH; // Новый нормализованный pivotY из локального смещения
+		}
+		isDragging = false;
+		dragObject = null;
+		if (selectedObject) {
+			if (spriteScreenListeners[selectedObject.name]) spriteScreenListeners[selectedObject.name].onEndDrag(event, selectedObject);
+			sceneObjects.forEach(child => {
+				if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onSceneEndDrag(event, selectedObject); }
+			});
+		}
+	} else if (isDraggingPivot) {
+		const pivotDragObj = dragObject; // Сохраняем ссылку на объект до сброса dragObject
+		isDraggingPivot = false;
+		dragObject = null;
+		// Восстановление localPosition для объектов, которым запрещено менять позицию
+		if (pivotDragObj && pivotDragObj.canChangePosition === false) {
+			const fixedChildWorldPositions = sceneObjects // Мировые позиции дочерних объектов до восстановления позиции родителя
+				.filter(child => child.parent != "" && child.parent == pivotDragObj.name && child.name != pivotDragObj.name)
+				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) }));
+			pivotDragObj.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию
+			pivotDragObj.localPosition.y = dragStartLocalPos.y;
+			const restoredParentWorldPos = getWorldPosition(pivotDragObj.name); // Мировая позиция после восстановления
+			const restoredParentWorldAngle = getWorldAngle(pivotDragObj.name); // Мировой угол после восстановления
+			fixedChildWorldPositions.forEach(item => { // Пересчитываем дочерние объекты, чтобы их мировые позиции не изменились
+				const childDeltaWorld = {
+					x: item.worldPosition.x - restoredParentWorldPos.x,
+					y: item.worldPosition.y - restoredParentWorldPos.y
+				};
+				const childLocalPosition = rotateVec(childDeltaWorld, -restoredParentWorldAngle);
+				item.child.localPosition.x = Math.round(childLocalPosition.x / 0.0001) * 0.0001;
+				item.child.localPosition.y = Math.round(childLocalPosition.y / 0.0001) * 0.0001;
+			});
+		}
+		sceneObjects.forEach(child => {
+			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointEndDrag(event, selectedObject); }
+		});
+	}
+	if (selectedObject) {
+		if (selectedObject.parent == "") {
+			lastParentPosition.x = selectedObject.localPosition.x;
+			lastParentPosition.y = selectedObject.localPosition.y;
+		}
+		selectObject(selectedObject); // Refresh properties
+	}
+}
+//Увеличение колесом мыши
+canvas.addEventListener('wheel', cameraZoom);
+function cameraZoom(event) {
+	event.preventDefault();
+	const zoomFactor = 1.1;
+	viewPPU = (event.deltaY < 0) ? viewPPU * zoomFactor : viewPPU / zoomFactor;
+	viewPPU = Math.max(10, Math.min(500, viewPPU)); // Clamp to reasonable range
+	renderScene();
+};
+
+//Увеличение пальцами
+let initialPinchDistance = null;
+let isPinching = false;
+canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+canvas.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+function getPinchDistance(touches) {
+	if (touches.length < 2) return null;
+	const dx = touches[0].clientX - touches[1].clientX;
+	const dy = touches[0].clientY - touches[1].clientY;
+	return Math.sqrt(dx * dx + dy * dy);
+}
+function handleTouchStart(event) {
+	if (event.touches.length === 2) {
+		isPinching = true;
+		initialPinchDistance = getPinchDistance(event.touches);
+		event.preventDefault();
+	}
+}
+function handleTouchMove(event) {
+	if (isPinching && event.touches.length === 2) {
+		event.preventDefault();
+		const currentDistance = getPinchDistance(event.touches);
+		if (initialPinchDistance && currentDistance) {
+			const scale = currentDistance / initialPinchDistance;// Вычисляем коэффициент масштабирования
+			const newViewPPU = viewPPU * scale;// Применяем как мультипликативный zoom (аналог wheel)
+			viewPPU = Math.max(10, Math.min(500, newViewPPU));// Ограничиваем диапазон
+			initialPinchDistance = currentDistance;// Обновляем начальное расстояние для плавного следования
+			renderScene();
+		}
+	}
+}
+function handleTouchEnd(event) {
+	if (isPinching) {
+		isPinching = false;
+		initialPinchDistance = null;
+	}
+}
+
+// Initialize
+updateImageCache();
+refreshHierarchy();
+renderScene();
