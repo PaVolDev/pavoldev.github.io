@@ -8,6 +8,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	1006: "Animation",
 	1007: "Sprite List",
 	1008: "Sound List",
+	1009: "Undo last change",
 	1011: "যোগ করুন",
 	9011: "সম্পাদনা করুন",
 	9013: "সাধারণ স্ট্রিং/সংখ্যা",
@@ -47,7 +48,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	1108: "Local Angle:",
 	1109: "render order<br>SpriteRenderer.sortingOrder",
 	1110: "Sort:",
-	1111: "প্রতি ইউনিটে পিক্সেল<br>Pixels Per Unit",
+	
 	1112: "PPU:",
 	1113: "অবজেক্টের pivot point",
 	1114: "Pivot point:",
@@ -156,7 +157,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	2005: "Pivot:",
 	2006: "গেমটিতে লোড করার সময় render দেখান/লুকান\nobject.SpriteRenderer.enabled = false/true",
 	2007: "child sprite গুলি সহ অবজেক্টটি দেখান/লুকান\nobject.gameObject.SetActive(false/true)",
-	2008: "প্রতি ইউনিটে পিক্সেল (Pixels Per Unit)",
+	
 	2009: "render order - SpriteRenderer.sortingOrder",
 	2010: "ডিগ্রীতে ঘূর্ণন কোণ",
 	2011: "Angle:",
@@ -185,7 +186,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 
 	3000: "Sprite, PNG ফাইল",
 	3001: "Sprite এর জন্য Pivot Point",
-	3002: "Pixel Scale",
+	3002: "Pixel Scale<br>Pixels Per Unit (PPU)",
 	3003: "অস্ত্র Animation Setups",
 	3004: "ইন্টারফেসে অস্ত্রের নাম",
 	3005: "অস্ত্রের জন্য প্রধান Sprite/Texture, PNG ফাইল",
@@ -376,7 +377,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	4001: "Cartridge Caliber। একই Caliber এর বিভিন্ন Cartridge Type এর একই নাম থাকা উচিত।<br>string টি অস্ত্রের সাথে সংযোগ করার জন্য দ্বিতীয় ID হিসাবে ব্যবহৃত হয়",
 	4002: "ফায়ারিংয়ের সময় Casing",
 	4003: "Sprite এর জন্য Pivot Point",
-	4004: "Pixel Scale",
+	
 	4005: "ইন্টারফেসের বোতামের জন্য Image<br>100x100 square image বা একটি দীর্ঘ cartridge যার বড় প্রস্থ রয়েছে",
 	4006: "অস্ত্রের Magazine এ লোড করা cartridge গুলির তালিকায় ইন্টারফেসের জন্য Cartridge Image",
 	4007: "এক Shot এ গুলির সংখ্যা",
@@ -402,14 +403,14 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	4027: "শরীরের ভিতরে Arrow ঘুরানোর Speed, যখন টিপ মাটিতে আঘাত করে।\n1 সেকেন্ডে Speed",
 	4028: "Sprite/Texture, PNG ফাইল",
 	4029: "Sprite এর জন্য Pivot Point",
-	4030: "Pixel Scale",
+	
 	4031: "Impulse এর Multiplier, যখন Arrow শরীর পড়ে যাওয়ার সময় মাটিতে আঘাত করে",
 	4032: "অবস্থান করার জন্য অবজেক্টের Coordinates",
 	4033: "Tilt Angle",
 	4034: "child sprite গুলি সহ অবজেক্টটি দেখান/লুকান",
 	4035: "Arrow এর সাথে Sprite, PNG ফাইল",
 	4036: "Sprite এর জন্য Pivot Point",
-	4037: "Pixel Scale",
+	
 	4038: "render এর জন্য Drawing Order",
 	4039: "render করার সময় Sprite দেখান/লুকান",
 	4040: "বর্তমান Animation এর নাম",
