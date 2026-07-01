@@ -11,8 +11,8 @@ window.translate = {
 	//index.txt (1000–1999)
 	//1000: "Add new parameter",
 	//1007: "Sprite list",
-	//1008: "Audio clip list",
-	//1011: "Add",
+	//1009: "Undo last change",
+	1011: "Add",
 };
 //Атрибуты для перевода
 window.attrsToTranslate = ['data-tooltip', 'placeholder', 'title'];
