@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @media (max-width:800px) {
 	.container {
 		width: 100%;
@@ -35,4 +36,43 @@
 	.onlyPC {
 		display: none;
 	}
+=======
+@media (max-width:800px) {
+	.container {
+		width: 100%;
+		display: flex;
+		flex-direction: column-reverse;
+		height: auto;
+		padding: 0.2em;
+	}
+
+	.panelHidden {
+		display: none;
+	}
+
+	.titlePanel {
+		text-align: center;
+	}
+
+	.panel {
+		padding: 1em 0.1em;
+	}
+
+	.modal-content {
+		padding: 30px 4px;
+		width: 97%;
+	}
+
+	.window {
+		max-width: 100%;
+	}
+
+	.onlyMobile {
+		display: block;
+	}
+
+	.onlyPC {
+		display: none;
+	}
+>>>>>>> 2cd31fb08da52cea1abd08d63e5f87a569b278be
 }

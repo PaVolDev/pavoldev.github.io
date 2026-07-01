@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -84,4 +85,92 @@
 
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>My mods</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="../stylemobile.css">
+	<link rel="stylesheet" href="list.css">
+</head>
+
+<body>
+	<!-- Центральная панель -->
+	<div class="panel window" id="centerPanel">
+		<div class="titlePanel panelName " id="startCenterTitle" style="text-align: center;">Список модов</div>
+		<div class="list-toolbar hidden" id="listToolbar">
+			<div class="list-toolbar-left">
+				<select id="recentModsSelect" class="panelInput">
+					<option value="">Список модов</option>
+				</select>
+				<select id="modsTypeSelect" class="panelInput">
+					<option value="">Все моды</option>
+				</select>
+				<select id="sort" class="panelInput">
+					<option value="update" selected="">По дате обновления</option>
+					<option value="time">По дате добавления</option>
+					<option value="raiting">По этажам</option>
+					<option value="likes">По лайкам</option>
+					<option value="dislikes">По дизлайкам</option>
+					<option value="id">По ID</option>
+				</select>
+			</div>
+		</div>
+		<div id="selectedRecentMod"></div>
+		<img src="images/loading.png" width="48px" height="48px" style="margin: auto; margin-top: 40px; margin-bottom: 40px;" id="loading">
+		<div style="width: 40%; margin: auto;" id="loginpanel">
+			<div id="authError" class="hidden" style="color: rgb(231, 76, 60); text-align: center; margin-bottom: 10px; font-size: 14px;">⚠ Ошибка соединения с сервером</div>
+			<form method="POST" class="save" id="loginblock">
+				<input type="hidden" name="action" value="login">
+				<input type="text" name="login" id="login" placeholder="Логин" required="" autocomplete="username">
+				<input type="password" name="password" id="password" placeholder="Пароль" required="" autocomplete="current-password">
+				<button type="submit" id="submit" class="resultButton sendButton">Войти</button>
+			</form>
+		</div>
+
+		<div id="list"></div>
+
+		<div style="margin-top: 70px; text-align: center;">
+			<p id="loginActions" class="hidden" style="padding: 18px;"><a href="#" id="logout">Выйти</a></p>
+			<select id="lang" class="selectLanguage panelInput" onchange="switchLanguage(this);" style="max-width: 144px;margin: auto;">
+				<option value="bn">বাংলা (Bangla)</option>
+				<option value="da">Dansk</option>
+				<option value="de">Deutsch</option>
+				<option value="en">English</option>
+				<option value="es-mx">Español (México)</option>
+				<option value="fr">Français</option>
+				<option value="hi">हिंदी (Hindi)</option>
+				<option value="id">Bahasa Indonesia</option>
+				<option value="ja">日本語 (Nihongo)</option>
+				<option value="no">Norsk</option>
+				<option value="pt">Português (Brasil)</option>
+				<option value="ru">Русский</option>
+				<option value="sv">Svenska</option>
+				<option value="th">ไทย (Thai)</option>
+				<option value="zh">简体中文</option>
+			</select>
+		</div>
+
+	</div>
+
+	<!-- Подключаем скрипты -->
+	<meta name="langdirectory" content="lang/" />
+	<script src="../translation.js"></script>
+	<script src="../tooltip.js"></script>
+	<script src="lang/ru.js"></script>
+	<script src="list.js"></script>
+	<!-- Подключаем данные -->
+
+	<!-- Редактор -->
+
+</body>
+
+>>>>>>> 2cd31fb08da52cea1abd08d63e5f87a569b278be
 </html>
