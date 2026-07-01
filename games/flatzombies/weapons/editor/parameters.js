@@ -839,7 +839,7 @@ function forceRenderEditedParams(filter = '') {
 						${objectActive ? getInputForType(objectActive) : ''}
 						</div>
 
-							<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
+							<div data-tooltip="Размер пикселей<br>Pixels Per Unit (PPU)" class="propertyBlock">
                         ${ppu ? `<span class="title">PPU:</span>
                                 <input type="number" step="10" class="num" value="${ppu.value}" id="${ppu.startFieldPath}" min="10" max="99999" onfocusout="inputMinMax(this); updateParam('${ppu.startFieldPath}', this.value); updateInputSpriteMillimetersByPPU('${param.startFieldPath}', '${ppu.startFieldPath}', 'mainlength')">` : ''}
 							</div>
@@ -925,7 +925,7 @@ function forceRenderEditedParams(filter = '') {
 					</div>
 					<div>
 						<div style="display: grid; grid-template-columns: 1fr 2fr; margin-bottom: 2px;">
-							${ppu ? `<div data-tooltip="Пикселей на единицу расстояния (Pixels Per Unit)" class="propertyBlock">
+							${ppu ? `<div data-tooltip="Размер пикселей<br>Pixels Per Unit (PPU)" class="propertyBlock">
 							<span class="title">PPU:</span>
 							<input type="number" step="10" style="width:100%" value="${ppu.value}" min="10" max="99999" oninput="updateParam('${ppu.startFieldPath}', this.value)" onfocusout="inputMinMax(this)">
 							</div>` : ''}
