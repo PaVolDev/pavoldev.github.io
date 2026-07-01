@@ -8,6 +8,7 @@ window.translate = { //French, français
 	1006: "Animation",
 	1007: "Liste de sprites",
 	1008: "AudioClip[]",
+	1009: "Undo last change",
 	1011: "Ajouter",
 	9011: "Modifier",
 	9013: "Chaîne/Nombre",
@@ -47,7 +48,7 @@ window.translate = { //French, français
 	1108: "Local Angle :",
 	1109: "Ordre d'affichage<br>SpriteRenderer.sortingOrder",
 	1110: "Sort :",
-	1111: "Pixels par unité (Pixels Per Unit)",
+	
 	1112: "PPU :",
 	1113: "Point de pivot de l'objet",
 	1114: "Pivot point :",
@@ -154,7 +155,7 @@ window.translate = { //French, français
 	2005: "Pivot :",
 	2006: "Afficher/masquer le rendu au chargement du jeu\nobject.SpriteRenderer.enabled = false/true",
 	2007: "Afficher/masquer l'objet avec tous ses sprites enfants\nobject.gameObject.SetActive(false/true)",
-	2008: "Pixels par unité (Pixels Per Unit)",
+	
 	2009: "Ordre d'affichage - SpriteRenderer.sortingOrder",
 	2010: "Angle de rotation en degrés",
 	2011: "Angle :",
@@ -183,7 +184,7 @@ window.translate = { //French, français
 
 	3000: "Sprite, fichier PNG",
 	3001: "Point de pivot pour le sprite",
-	3002: "Pixels par unité",
+	3002: "Pixels par unité<br>Pixels Per Unit (PPU)",
 	3003: "Paramètres d'animation de l'arme",
 	3004: "Nom de l'arme dans l'interface",
 	3005: "Sprite/texture principale pour l'arme, fichier PNG",
@@ -365,7 +366,7 @@ window.translate = { //French, français
 	4001: "Nom du calibre. Différents types de cartouches de même calibre doivent porter le même nom.<br>Cette chaîne est utilisée comme identifiant secondaire pour l'association avec les armes",
 	4002: "Douille lors du tir",
 	4003: "Point de pivot pour le sprite",
-	4004: "Échelle de pixels",
+	
 	4005: "Image pour bouton de l'interface<br>Image carrée 100x100 ou longue cartouche de grande largeur",
 	4006: "Image de cartouche pour l'interface dans la liste des munitions chargées dans le magasin de l'arme",
 	4007: "Nombre de balles par tir",
@@ -391,14 +392,14 @@ window.translate = { //French, français
 	4027: "Vitesse de rotation de la flèche à l'intérieur du corps lorsque la pointe s'appuie contre le sol.\nRotation pour 1 seconde",
 	4028: "Sprite/texture, fichier PNG",
 	4029: "Point de pivot pour le sprite",
-	4030: "Échelle de pixels",
+	
 	4031: "Multiplicateur d'impulsion lorsque la flèche frappe le sol lors de la chute du corps",
 	4032: "Coordonnées de l'objet pour l'emplacement",
 	4033: "Angle d'inclinaison",
 	4034: "Afficher/masquer l'objet avec tous ses sprites enfants",
 	4035: "Sprite avec la flèche, fichier PNG",
 	4036: "Point de pivot pour le sprite",
-	4037: "Échelle de pixels",
+	
 	4038: "Ordre d'affichage pour le rendu",
 	4039: "Afficher/masquer le sprite pendant le rendu",
 	4040: "Nom de l'animation actuelle",
