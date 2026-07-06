@@ -455,7 +455,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "storeInfo.donateURL", comment: "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", type: "string", value: "https://", placeholder: "https://" },
 	{ fieldPath: "luaScriptBase64", comment: 'Дополнительный скрипт на языке LUA.<br><a href="info/flat-zombies-ai-doc.txt" target="_blank" data-tooltip="Текстовый файл с описанием проекта для нейросети.<br>Дайте этот файл вашему ИИ и попросите его написать код">Документация для ИИ</a>', type: "LuaScript", value: "" },
 	{ fieldPath: "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", comment: "Настройка анимации оружия", type: "WeaponHandPoints", value: "", displayName: "WeaponAnimation", isCover: true },
-	{ fieldPath: "weapon.SpriteRenderer.sprite", comment: "Основной спрайт/текстура для оружия, PNG-файл", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "weapon.SpriteRenderer.sprite", comment: "Основной спрайт/текстура для оружия, PNG-файл<br>1px = 0.3mm (1mm ≈ 3.333px)", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
 	{ fieldPath: "weapon.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "weapon.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "weapon.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
