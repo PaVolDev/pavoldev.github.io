@@ -90,13 +90,13 @@ const typeFullForm = { //Форма для редактирования набо
 const spriteArrayMetaData = [
 	{ fieldPath: "sprite", comment: "Спрайт, PNG-файл", type: "Sprite", value: "" },
 	{ fieldPath: "pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "pixelPerUnit", comment: "Размер пикселей", type: "float", value: 100 }
+	{ fieldPath: "pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 }
 ];
 
 const frameArrayMetaData = [
 	{ fieldPath: "texture", comment: "Спрайт, PNG-файл", type: "Sprite", value: "" },
 	{ fieldPath: "pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "pixelPerUnit", comment: "Размер пикселей", type: "float", value: 100 }
+	{ fieldPath: "pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 }
 ];
 
 const physicsMaterialMultiplyMetaData = [
@@ -142,13 +142,13 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "caliberName", comment: "Калибр патрона. Разные типы патрона одного калибра должны иметь одинаковое название.<br>Строка используется как второй идентификатор для связи с оружием", type: "string", value: "", placeholder: "7.62x54R" },
 	{ fieldPath: "shellSkin", comment: "Гильза при стрельбе", type: "TextureSprite", value: "" },
 	{ fieldPath: "shellSkin.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "shellSkin.pixelPerUnit", comment: "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "shellSkin.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "iconButtonSprite", comment: "Изображение для кнопки в интерфейсе<br>Квадратное изображение 100x100 или длинный патрон с большой шириной<br>1mm = 2px", type: "TextureSprite", value: "" },
 	{ fieldPath: "iconButtonSprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "iconButtonSprite.pixelPerUnit", comment: "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "iconButtonSprite.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "iconListSprite", comment: "Изображение патрона для интерфейса в списке заряженных патронов в магазин оружия<br>1mm = 2px", type: "TextureSprite", value: "" },
 	{ fieldPath: "iconListSprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "iconListSprite.pixelPerUnit", comment: "Размер пикселей", type: "float", value: 100 },
+	{ fieldPath: "iconListSprite.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "bullets", comment: "Кол-в во пуль при одном выстреле", type: "int", value: 0, max: 500 },
 	{ fieldPath: "angleRandom", comment: "Максимальное отклонение пули в градусах, для создания разброса", type: "float", value: 0, min: 0, max: 180 },
 	{ fieldPath: "angleSpread", comment: "Равномерное распределение пуль", type: "float", value: 0, min: 0, max: 1 },
@@ -186,14 +186,14 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "arrowSample.WeaponArrow.angleTipSpeed", comment: "Скорость вращения стрелы внутри тела, когда кончик упирает в землю.\nСкорость за 1 секунду", type: "float", value: 0, displayName: "arrowSample.angleTipSpeed" },
 	{ fieldPath: "arrowSample.WeaponArrow.spriteHit", comment: "Спрайт/текстура, PNG-файл", type: "TextureSprite", value: "", displayName: "arrowSample.spriteHit" },
 	{ fieldPath: "arrowSample.WeaponArrow.spriteHit.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)", displayName: "arrowSample.spriteHit.pivotPoint" },
-	{ fieldPath: "arrowSample.WeaponArrow.spriteHit.pixelPerUnit", comment: "Размер пикселей", type: "float", value: "100", displayName: "arrowSample.spriteHit.pixelPerUnit" },
+	{ fieldPath: "arrowSample.WeaponArrow.spriteHit.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: "100", displayName: "arrowSample.spriteHit.pixelPerUnit" },
 	{ fieldPath: "arrowSample.WeaponArrow.scaleImpulse", comment: "Множитель импульса, когда стрела ударяется об землю при падении тела", type: "float", value: 0, displayName: "arrowSample.scaleImpulse" },
 	{ fieldPath: "arrowSample.arrowRender.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "arrowSample.arrowRender.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
 	{ fieldPath: "arrowSample.arrowRender.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: "true" },
-	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sprite", comment: "Спрайт со стрелой, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
+	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sprite", comment: "Спрайт со стрелой, PNG-файл<br>1px = 0.3mm (1mm ≈ 3.333px; PPU=100)", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
 	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей", type: "float", value: "100" },
+	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sprite.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: "100" },
 	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
 	{ fieldPath: "arrowSample.arrowRender.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: "true" },
 	{ fieldPath: "arrowSample.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "" },
@@ -223,18 +223,18 @@ var sampleParams = [ //Список всех параметров, относя�
 	{ fieldPath: "arrowSample.WeaponRocket.slideExplode", comment: "Сдвиг объекта назад, относительно точки, в котором произошло попадание", type: "Vector2", value: "(0, 0)", displayName: "arrowSample.slideExplode" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "", displayName: "arrowSample.objectExplode.initialAnimation" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: "true", displayName: "arrowSample.objectExplode.playStart" },
-	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.animations", comment: "Анимация взрыва", type: "AnimationSprite[]", value: "", },
+	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.animations", comment: "Анимация взрыва<br>1px = 0.3mm (1mm ≈ 3.333px; PPU=100)", type: "AnimationSprite[]", value: "", },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.timeScale", comment: "Множитель скорости анимаций", type: "float", value: 0, displayName: "arrowSample.objectExplode.timeScale" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0, displayName: "arrowSample.objectExplode.speed" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.reverse", comment: "Воспроизвести в обратном порядке", type: "bool", value: "true", displayName: "arrowSample.objectExplode.reverse" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.AnimatorSprite.loop", comment: "Проигрывать повторно", type: "bool", value: "true", displayName: "arrowSample.objectExplode.loop" },
-	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.animations", comment: "Анимация дыма", type: "AnimationSprite[]", value: "", },
+	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.animations", comment: "Анимация дыма<br>1px = 0.3mm (1mm ≈ 3.333px; PPU=100)", type: "AnimationSprite[]", value: "", },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.initialAnimation", comment: "Имя текущей анимации", type: "string", value: "", displayName: "smoke.AnimatorSprite.animations.initialAnimation" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.playStart", comment: "Воспроизвести при старте", type: "bool", value: "true", displayName: "smoke.AnimatorSprite.animations.playStart" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.smoke.AnimatorSprite.speed", comment: "Скорость/Частота кадров в секунду", type: "float", value: 0, displayName: "smoke.AnimatorSprite.animations.speed" },
-	{ fieldPath: "arrowSample.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл", type: "Sprite", value: "", suffix: ".SpriteRenderer.sprite" },
+	{ fieldPath: "arrowSample.SpriteRenderer.sprite", comment: "Спрайт/текстура, PNG-файл<br>1px = 0.3mm (1mm ≈ 3.333px; PPU=100)", type: "Sprite", value: "", suffix: ".SpriteRenderer.sprite" },
 	{ fieldPath: "arrowSample.SpriteRenderer.sprite.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
-	{ fieldPath: "arrowSample.SpriteRenderer.sprite.pixelPerUnit", comment: "Размер пикселей", type: "float", value: "100" },
+	{ fieldPath: "arrowSample.SpriteRenderer.sprite.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: "100" },
 	{ fieldPath: "arrowSample.SpriteRenderer.sortingOrder", comment: "Порядок прорисовки для рендера", type: "int", value: 0 },
 	{ fieldPath: "arrowSample.SpriteRenderer.enabled", comment: "Показать/скрыть спрайт при рендеринге", type: "bool", value: "true" },
 	{ fieldPath: "arrowSample.WeaponRocket.objectExplode.Transform.localScale", comment: "Масштабировать размер взрыва", type: "Vector3", value: "(1, 1, 1)" }
