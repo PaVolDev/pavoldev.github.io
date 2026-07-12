@@ -930,9 +930,12 @@ async function handleSelectChange(select) {
 					currentPage = totalPages;
 				}
 				if (image) image.src = 'images/removed.png';
-				document.getElementById("status" + modName).innerHTML = '❌';
-				document.getElementById("actions" + modName).style.display = 'none';
-				document.getElementById("info" + modName).style.display = 'none';
+				const displayStatus = document.getElementById("status" + modName);
+				if (displayStatus) {
+					displayStatus.innerHTML = '❌';
+					document.getElementById("actions" + modName).style.display = 'none';
+					document.getElementById("info" + modName).style.display = 'none';
+				}
 				//loadPage(currentPage, true);
 			} else {
 				if (image && lastImage) {
@@ -944,6 +947,7 @@ async function handleSelectChange(select) {
 			if (image && lastImage) {
 				image.src = lastImage;
 			}
+			console.error(error);
 			alert('Ошибка браузера:\n' + error.message);
 		});
 	}
