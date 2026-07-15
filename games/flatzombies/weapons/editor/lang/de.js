@@ -198,7 +198,7 @@ window.translate = { //German, Deutsch
 	3014: "Kategorie für Schalldämpfer auswählen",
 	3015: "Abstand im Interface auf dem Bildschirm mit der Patronenliste",
 	3016: "Größe der Patronenliste für die doppelläufige Schrotflinte",
-	3017: "Spendenlink.<br>Bei Auswahl der Waffe erscheint ein Spenden-Button neben dem Gefällt-mir-Button",
+	3017: "Spendenlink.<br>Ein Spenden-Button erscheint neben dem Gefällt-mir-Button",
 	3018: "Waffenmagazin, Sprite/Textur, PNG-Datei",
 	3019: "Griff, PNG-Datei",
 	3020: "Griff. Kann für die zusätzliche Anzeige von Fingern verwendet werden.",
