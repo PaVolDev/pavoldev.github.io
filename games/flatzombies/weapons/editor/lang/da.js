@@ -198,7 +198,7 @@ window.translate = { //Danish, Dansk
 	3014: "Fra hvilken kategori skal lyddæmpere tages",
 	3015: "Afstand i grænsefladen på skærmen med patronliste",
 	3016: "Størrelse på liste med patroner til dobbeltløbet haglgevær",
-	3017: "Donationslink.<br>Når der vælges et våben, vil der ud for 'like'-knappen vises en donationsknap",
+	3017: "Donationslink.<br>Ud for 'like'-knappen vises en donationsknap",
 	3018: "Våbenmagasin, sprite/tekstur, PNG-fil",
 	3019: "Håndtag, PNG-fil",
 	3020: "Håndtag. Kan bruges til yderligere visning af fingre.",
