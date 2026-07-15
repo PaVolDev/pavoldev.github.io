@@ -1,4 +1,4 @@
-window.translate = { //Индонезийский, Bahasa Indonesia
+window.translate = { //Indonesian, Bahasa Indonesia
 	1000: "Tambahkan parameter baru",
 	1001: "Tutup",
 	1002: "Path ke properti objek",
@@ -199,7 +199,7 @@ window.translate = { //Индонезийский, Bahasa Indonesia
 	3014: "Dari kategori mana suppressor diambil",
 	3015: "Indent pada interface di layar daftar peluru",
 	3016: "Ukuran daftar peluru untuk shotgun laras ganda",
-	3017: "Link donasi.<br>Saat memilih senjata, tombol donasi akan muncul di samping tombol 'like'",
+	3017: "Link donasi.<br>Tombol donasi akan muncul di samping tombol 'like'",
 	3018: "Magazine senjata, sprite/tekstur, file PNG",
 	3019: "Grip, file PNG",
 	3020: "Grip. Dapat digunakan untuk tampilan tambahan jari.",
