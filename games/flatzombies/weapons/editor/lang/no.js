@@ -198,7 +198,7 @@ window.translate = { //Norwegian, Norsk
 	3014: "Hvilken kategori å ta lyddempere fra",
 	3015: "Avstand i grensesnittet på skjermen med patronliste",
 	3016: "Størrelse på listen med patroner for dobbelthagle",
-	3017: "Donasjonslenke.<br>Når du velger våpen, vil en donasjonsknapp vises ved siden av 'liker'-knappen",
+	3017: "Donasjonslenke.<br>En donasjonsknapp vil vises ved siden av 'liker'-knappen",
 	3018: "Våpenmagasin, sprite/tekstur, PNG-fil",
 	3019: "Håndtak, PNG-fil",
 	3020: "Håndtak. Kan brukes for ekstra visning av fingre.",
