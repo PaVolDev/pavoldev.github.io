@@ -200,7 +200,7 @@ window.translate = { //Бенгальский, বাংলা, Bangla
 	3014: "কোন ক্যাটাগরি থেকে Muffler গুলি নিতে হবে",
 	3015: "Cartridge তালিকার সাথে পর্দায় ইন্টারফেসের Indentation",
 	3016: "Double-barreled shotgun এর জন্য Cartridge তালিকার Size",
-	3017: "Donate এর জন্য Link।<br>'Like' বোতামের পাশে Donate বোতাম প্রদর্শিত হবে যখন একটি অস্ত্র নির্বাচন করা হবে",
+	3017: "Donate এর জন্য Link।<br>'Like' বোতামের পাশে Donate বোতাম প্রদর্শিত হবে",
 	3018: "অস্ত্র Magazine, Sprite/Texture, PNG ফাইল",
 	3019: "Handle, PNG ফাইল",
 	3020: "Handle। আঙ্গুলগুলি অতিরিক্ত প্রদর্শনের জন্য ব্যবহার করা যেতে পারে।",
