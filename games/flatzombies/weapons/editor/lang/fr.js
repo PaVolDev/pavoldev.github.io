@@ -201,7 +201,7 @@ window.translate = { //French, français
 	3014: "Dans quelle catégorie prendre les silencieux",
 	3015: "Espacement dans l'interface sur l'écran avec la liste des munitions",
 	3016: "Taille de la liste de munitions pour fusil à double canon",
-	3017: "Lien de don.<br>Lors de la sélection d'une arme, un bouton de don apparaîtra à côté du bouton 'j'aime'",
+	3017: "Lien de don.<br>Un bouton de don apparaîtra à côté du bouton 'j'aime'",
 	3018: "Magasin de l'arme, sprite/texture, fichier PNG",
 	3019: "Poignée, fichier PNG",
 	3020: "Poignée. Peut être utilisée pour l'affichage supplémentaire des doigts.",
