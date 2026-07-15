@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", onLoaded);
 //Подготовка данных
 let templateInput = null; let lastTemplateIndex = 0;
+let idWeaponInput = null;
 let selectedWeapon = null; //Выбранный шаблон для нового оружия
 sampleParams = baseParams.concat(sampleParams);
 let availableParams = new Array();
@@ -24,6 +25,8 @@ function onLoaded() {
 	document.getElementById("loading").classList.add('hidden');
 	document.getElementById("startFields").classList.remove('hidden');
 	document.getElementById("buttonPanel").classList.remove('hidden');
+	idWeaponInput = document.getElementById("idWeapon");
+	idWeaponInput.addEventListener('focusout', () => { forceRenderEditedParams(); });
 	templateInput = document.getElementById("idTemplate"); //Удаляем все существующие <option>
 	templateInput.addEventListener('change', onSelectWeapon);
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
@@ -1078,7 +1081,7 @@ function getInputHTML(param, index = -1, objKey = null, objMetaData = null) {
 		</label>
 		${textFileType.includes(ext) ?
 				`<div class="fileInputButton add" data-tooltip="Открыть панель для редактирования" id="${param.startFieldPath}Rplc" onclick="openTextEditor('${param.startFieldPath}')">Изменить</div>` :
-				`<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${templateInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>`}
+				`<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr("Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + param.value + `'>` : ''}</div>" onclick="base64ToFile('${param.value}', '${idWeaponInput.value + "-" + param.fieldPath + ext}')"><img src="images/download.png" ></div>`}
 		</div>`;
 	}
 
@@ -1208,7 +1211,7 @@ function getInput(param, path) {
 		<div style="display: flex; gap: 0.2em;">
 			<input type="text" class="text-input drop-target" value="${currentValue || ''}" onchange="updateValueByPath(this.value, ${pathString});" placeholder="${accept}" style="margin-bottom: 2px;" id="${idElement}" data-file-input-id="${idElement}-file" data-tooltip="Поместите сюда файл из другого окна">
 			<div style="flex-shrink: 0;">
-				<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${templateInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
+				<div class="iconButton" data-tooltip="<div style='text-align: center;'>${tr(" Сохранить в файл")}<br>${ext == '.png' ? `<img src='` + currentValue + `'>` : ''}</div>" onclick = "base64ToFile('${currentValue}', '${idWeaponInput.value + " - " + param.fieldPath + ext}')" > <img src="images/download.png" ></div>
 			</div>
 			<label class="fileInputLabel" style="flex-shrink: 0;">
 				<input type="file" class="fileInput" ${accept ? `accept="${accept}"` : ''} oninput="updateSprite('${idElement}', this)" id="${idElement}-file" >
