@@ -452,7 +452,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "storeInfo.nameFull", comment: "Название оружия в интерфейсе", type: "string", value: "" },
 	{ fieldPath: "storeInfo.author", comment: "Автор модификации. Никнейм для отображения в интерфейсе (необязательно)", type: "string", value: "", placeholder: "pavoldev" },
 	{ fieldPath: "storeInfo.authorURL", comment: "Ссылка на вашу страницу в социальных сетях (необязательно)", type: "string", value: "https://", placeholder: "https://youtube.com/@pavoldev" },
-	{ fieldPath: "storeInfo.donateURL", comment: "Ссылка для доната.<br>При выборе оружия рядом с кнопкой 'лайк' появится кнопка для доната", type: "string", value: "https://", placeholder: "https://" },
+	{ fieldPath: "storeInfo.donateURL", comment: "Ссылка для доната.<br>Рядом с кнопкой 'лайк' появится кнопка для доната", type: "string", value: "https://", placeholder: "https://" },
 	{ fieldPath: "luaScriptBase64", comment: 'Дополнительный скрипт на языке LUA.<br><a href="info/flat-zombies-ai-doc.txt" target="_blank" data-tooltip="Текстовый файл с описанием проекта для нейросети.<br>Дайте этот файл вашему ИИ и попросите его написать код">Документация для ИИ</a>', type: "LuaScript", value: "" },
 	{ fieldPath: "weapon.WeaponHandPoints.WeaponAnimation", suffix: ".WeaponAnimation", comment: "Настройка анимации оружия", type: "WeaponHandPoints", value: "", displayName: "WeaponAnimation", isCover: true },
 	{ fieldPath: "weapon.SpriteRenderer.sprite", comment: "Основной спрайт/текстура для оружия, PNG-файл<br>1px = 0.3mm (1mm ≈ 3.333px; PPU=100)", type: "Sprite", suffix: "SpriteRenderer.sprite", value: "" },
