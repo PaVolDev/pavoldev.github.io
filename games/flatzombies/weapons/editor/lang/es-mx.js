@@ -200,7 +200,7 @@ window.translate = { //Español mexicano
 	3014: "De qué categoría tomar los silenciadores",
 	3015: "Espaciado en la interfaz en la pantalla con la lista de cartuchos",
 	3016: "Tamaño de la lista de cartuchos para una escopeta de dos cañones",
-	3017: "Enlace para donaciones.<br>Al seleccionar el arma, aparecerá un botón de donación junto al botón 'like'",
+	3017: "Enlace para donaciones.<br>Aparecerá un botón de donación junto al botón 'like'",
 	3018: "Cargador del arma, sprite/textura, archivo PNG",
 	3019: "Empuñadura, archivo PNG",
 	3020: "Empuñadura. Puede usarse para mostrar dedos adicionales.",
