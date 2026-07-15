@@ -198,7 +198,7 @@ window.translate = { //Swedish, Svenska
 	3014: "Vilken ljuddämpar-kategori som ska användas",
 	3015: "UI-mellanrum på skärmen med patronlistan",
 	3016: "Storlek på patronlistan för dubbelpipigt hagelgevär",
-	3017: "Donationslänk.<br>När ett vapen väljs visas en donationsknapp bredvid 'gilla'-knappen",
+	3017: "Donationslänk.<br>En donationsknapp visas bredvid 'gilla'-knappen",
 	3018: "Vapenmagasin, sprite/textur, PNG-fil",
 	3019: "Grepp, PNG-fil",
 	3020: "Grepp. Kan användas för extra visning av fingrar.",
