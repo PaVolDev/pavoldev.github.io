@@ -199,7 +199,7 @@ window.translate = { //Хинди, हिंदी
 	3014: "किस Category से Silencer लेनी है",
 	3015: "Cartridge सूची वाली स्क्रीन पर इंटरफ़ेस में Indentation",
 	3016: "Double-barreled shotgun के लिए Cartridge सूची का Size",
-	3017: "Donate के लिए Link।<br>जब एक हथियार चुना जाता है तो 'Like' बटन के बगल में Donate बटन दिखाई देगा",
+	3017: "Donate के लिए Link।<br>'Like' बटन के बगल में Donate बटन दिखाई देगा",
 	3018: "हथियार Magazine, Sprite/Texture, PNG फ़ाइल",
 	3019: "Handle, PNG फ़ाइल",
 	3020: "Handle। उंगलियों को अतिरिक्त रूप से प्रदर्शित करने के लिए उपयोग किया जा सकता है।",
