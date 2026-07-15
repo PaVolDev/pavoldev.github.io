@@ -198,7 +198,7 @@ window.translate = { //English (USA)
 	3014: "Which silencer category to use",
 	3015: "UI spacing for cartridge list screen",
 	3016: "Cartridge list size for double-barrel shotgun",
-	3017: "Donation link.<br>When weapon is selected, a donation button will appear next to the 'like' button",
+	3017: "Donation link.<br>A donation button will appear next to the 'like' button",
 	3018: "Weapon magazine sprite/texture, PNG file",
 	3019: "Grip, PNG file",
 	3020: "Grip. Can be used to show additional fingers.",
