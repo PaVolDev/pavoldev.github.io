@@ -201,7 +201,7 @@ window.translate = { //Brazilian Portuguese
 	3014: "De qual categoria pegar silenciadores",
 	3015: "Recuo/indentação na interface na tela com a lista de cartuchos",
 	3016: "Tamanho da lista de cartuchos para espingarda de dois canos",
-	3017: "Link para doação.<br>Ao selecionar a arma, ao lado do botão 'like' aparecerá um botão de doação",
+	3017: "Link para doação.<br>Ao lado do botão 'like' aparecerá um botão de doação",
 	3018: "Loja da arma, sprite/textura, arquivo PNG",
 	3019: "Empunhadura, arquivo PNG",
 	3020: "Empunhadura. Pode ser usada para exibição adicional dos dedos.",
