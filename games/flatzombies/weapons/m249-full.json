@@ -28,7 +28,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 0,
     "weapon.WeaponHandPoints.magazineInsert": "(0.32, -0.17, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.36, 0.01, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.75, -0.1, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.72, 0.03, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.63, 0.44, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.9, 0, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
@@ -94,7 +94,7 @@
     "storeInfo.silencerPosition": "(260, 31)",
     "weapon.LineRenderer.startColor": "#FF0000",
     "weapon.LineRenderer.endColor": "#FF0000",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
