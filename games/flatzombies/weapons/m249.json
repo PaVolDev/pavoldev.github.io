@@ -4,8 +4,7 @@
     "type": "weapon",
     "weapon.caliber": "7.62x51",
     "storeInfo.nameFull": "M249",
-    "storeInfo.magazineSize": 1,
-    "weapon.magazineMax": 1,
+    "storeInfo.magazineSize": 150,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -89,6 +88,7 @@
     "storeInfo.silencerPosition": "(260, 31)",
     "weapon.LineRenderer.startColor": "#FF0000",
     "weapon.LineRenderer.endColor": "#FF0000",
-    "version": 2,
-    "targetVersion": 209
+    "version": 3,
+    "targetVersion": 209,
+    "weapon.magazineMax": null
 }
