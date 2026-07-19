@@ -70,10 +70,10 @@
     "weapon.bolt": "(0.42, 0.13, 0)",
     "weapon.flashlight": "(0.29, 0.18, 0)",
     "weapon.automat": false,
-    "weapon.fireRateInMinute": 120,
+    "weapon.fireRateInMinute": 180,
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.02, 0.16)",
     "weapon.WeaponHandPoints.fingerAngle": -25,
-    "version": 12,
+    "version": 14,
     "targetVersion": 209
 }
