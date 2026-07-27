@@ -68,7 +68,7 @@ export default {
 "weapon.RifleWithMagazine.id": "m110",
 "weapon.RifleWithMagazine.chamberList": [],
 "weapon.RifleWithMagazine.boltParent":"m110",
-"weapon.RifleWithMagazine.caliber": "7.62x51Sniper",
+"weapon.RifleWithMagazine.caliber": "7.62x51S",
 "weapon.RifleWithMagazine.useGUILayout": true,
 "weapon.RifleWithMagazine.runInEditMode": false,
 "weapon.RifleWithMagazine.enabled": true,
