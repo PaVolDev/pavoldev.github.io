@@ -498,4 +498,7 @@ window.translate = { //French, français
 	4137: "Vitesse, mètre/seconde",
 	4138: "Vitesse max, mètre/seconde",
 	4139: "Transmettre l'événement à l'effet suivant",
+	4140: "Pistolets :",
+	4141: "Fusils d'assaut :",
+	4142: "Fusils lourds :"
 };
