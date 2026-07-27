@@ -507,5 +507,7 @@ window.translate = { //Brazilian Portuguese
 	4137: "Velocidade, metro/segundo",
 	4138: "Velocidade máxima, metro/segundo",
 	4139: "Passar evento para o próximo efeito",
-
+	4140: "Pistolas:",
+	4141: "Fuzis de assalto:",
+	4142: "Fuzis pesados:"
 };
