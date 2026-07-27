@@ -507,4 +507,7 @@ window.translate = { //Danish, Dansk
 	4137: "Hastighed, meter/sekund",
 	4138: "Maks. hastighed, meter/sekund",
 	4139: "Send hændelse til næste effekt",
+	4140: "Pistoler:",
+	4141: "Stormgeværer:",
+	4142: "Tunge rifler:"
 };
