@@ -506,5 +506,7 @@ window.translate = { //English (USA)
 	4137: "Speed, meter/second",
 	4138: "Max speed, meter/second",
 	4139: "Pass event to next effect",
-
+	4140: "Pistols:",
+	4141: "Assault rifles:",
+	4142: "Heavy rifles:"
 };
