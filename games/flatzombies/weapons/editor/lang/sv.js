@@ -507,4 +507,7 @@ window.translate = { //Swedish, Svenska
 	4137: "Hastighet, meter/sekund",
 	4138: "Max hastighet, meter/sekund",
 	4139: "Skicka händelse till nästa effekt",
+	4140: "Pistoler:",
+	4141: "Automatkarbiner:",
+	4142: "Tunga gevär:"
 };
