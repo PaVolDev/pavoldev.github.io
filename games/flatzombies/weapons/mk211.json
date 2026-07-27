@@ -1,10 +1,10 @@
 {
     "id": "mk211",
-    "idTemplate": "12.7x99P-.50BMG",
+    "idTemplate": ".50BMG",
     "type": "cartridge",
     "iconButtonSprite": "data:image/png;base64,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",
     "iconListSprite": "data:image/png;base64,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",
-    "caliberName": "12.7x99p",
+    "caliberName": "12.7x99",
     "uiName": "Mk211 Raufoss",
     "author": "Heavy Common",
     "authorURL": "",
@@ -16,9 +16,9 @@
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
-    "angleRandom": 0.4,
+    "angleRandom": 0.5,
     "angleSpread": 1,
-    "damage": 30,
+    "damage": 26,
     "distance": 24,
     "impulse": 150,
     "stopPower": "1",
@@ -30,6 +30,26 @@
         "maxDist": "200",
         "findExitPoint": true
     },
-    "version": 2,
+    "penetrationDamage": [
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0.8,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 3,
     "targetVersion": 209
 }
