@@ -508,4 +508,7 @@ window.translate = { //Indonesian, Bahasa Indonesia
 	4137: "Kecepatan, meter/detik",
 	4138: "Kecepatan maks, meter/detik",
 	4139: "Teruskan event ke efek berikutnya",
+	4140: "Pistol:",
+	4141: "Senapan serbu:",
+	4142: "Senapan berat:"
 };
