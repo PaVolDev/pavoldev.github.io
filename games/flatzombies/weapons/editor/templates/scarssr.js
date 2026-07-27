@@ -68,7 +68,7 @@ export default {
 "weapon.RifleWithMagazine.id": "scarssr",
 "weapon.RifleWithMagazine.chamberList": [],
 "weapon.RifleWithMagazine.boltParent":"scarssr",
-"weapon.RifleWithMagazine.caliber": "7.62x51Sniper",
+"weapon.RifleWithMagazine.caliber": "7.62x51S",
 "weapon.RifleWithMagazine.useGUILayout": true,
 "weapon.RifleWithMagazine.runInEditMode": false,
 "weapon.RifleWithMagazine.enabled": true,
