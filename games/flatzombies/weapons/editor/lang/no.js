@@ -507,4 +507,7 @@ window.translate = { //Norwegian, Norsk
 	4137: "Hastighet, meter/sekund",
 	4138: "Maks hastighet, meter/sekund",
 	4139: "Sende hendelse til neste effekt",
+	4140: "Pistoler:",
+	4141: "Automatrifler:",
+	4142: "Tunge rifler:"
 };
