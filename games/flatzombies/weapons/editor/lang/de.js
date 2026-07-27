@@ -507,4 +507,7 @@ window.translate = { //German, Deutsch
 	4137: "Geschwindigkeit, Meter/Sekunde",
 	4138: "Höchstgeschwindigkeit, Meter/Sekunde",
 	4139: "Ereignis an nächsten Effekt weitergeben",
+	4140: "Pistolen:",
+	4141: "Sturmgewehre:",
+	4142: "Schwere Gewehre:"
 };
