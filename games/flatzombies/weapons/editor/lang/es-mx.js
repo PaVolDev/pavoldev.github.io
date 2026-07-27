@@ -509,5 +509,7 @@ window.translate = { //Español mexicano
 	4137: "Velocidad, metro/segundo",
 	4138: "Velocidad máxima, metro/segundo",
 	4139: "Pasar evento al siguiente efecto",
-
+	4140: "Pistolas:",
+	4141: "Rifles de asalto:",
+	4142: "Rifles pesados:"
 };
