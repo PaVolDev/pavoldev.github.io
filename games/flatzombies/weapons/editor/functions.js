@@ -818,7 +818,7 @@ function findValueByPath(path, defaultValue = undefined) {
 		} else {
 			return defaultValue;
 		}
-	} 
+	}
 	let index = null;
 	if ((index = editedParams.findIndex(p => p.fieldPath === path[0] || p.startFieldPath === path[0])) != -1) {
 		param = editedParams[index];
@@ -1113,11 +1113,20 @@ function renderStringList(param, path, objKey = null, placeholder = "", tooltip 
 		let selectHTML = `<select onchange="updateOptionParam('${fullPath}', this.value, '${objKey || ''}');" class="field-input" id="${fullPath}">`;
 		if (!param.options.includes(setOwnValueText)) { param.options.unshift(""); param.options.unshift(setOwnValueText); }
 		param.options.forEach(opt => {
-			const isSelected = opt == param.value ? ' selected' : '';
-			selectHTML += `<option value="${opt}"${isSelected}>${htmlspecialchars(opt == setOwnValueText ? tr(opt) : opt)}</option>`; //Показать перевод для setOwnValueText
+			let optionName; let optionValue;
+			if (Array.isArray(opt)) {
+				optionValue = opt[0];
+				optionName = opt[1];
+			} else {
+				optionValue = opt;
+				optionName = opt;
+			}
+			optionName = htmlspecialchars(opt == setOwnValueText ? tr(optionName) : optionName);
+			const isSelected = optionValue == param.value ? ' selected' : '';
+			selectHTML += `<option value="${optionValue}"${isSelected}>${optionName}</option>`; //Показать перевод для setOwnValueText
 		});
 		selectHTML += '</select>';
-		if (param.optionsValue == setOwnValueText || param.value == setOwnValueText || (param.value != "" && param.options.includes(param.value) == false)) {
+		if (param.optionsValue == setOwnValueText || param.value == setOwnValueText || ((param.value != "" && param.options.includes(param.value) == false) && (param.value != "" && param.options.findIndex(a => Array.isArray(a) && a[0] == param.value) == -1))) {
 			param.value = param.value.replace(setOwnValueText, '');
 			param.optionsValue = setOwnValueText;
 			placeholder = placeholder || param.placeholder || param.type;
