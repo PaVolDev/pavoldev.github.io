@@ -31,11 +31,12 @@ function onLoaded() {
 	templateInput.addEventListener('change', onSelectWeapon);
 	templateInput.addEventListener('mousedown', () => { lastTemplateIndex = templateInput.selectedIndex; }); //Записать предудщее значение для отмены
 	//Сразу открыть оружие для редактирования
-	const editedWeapon = localStorage.getItem('editedWeapon');
+	const editedWeapon = localStorage.getItem('editedWeapon'); //Сохранённый JSON оружия для автозагрузки.
 	if (editedWeapon) {
 		importFromJSON(JSON.parse(editedWeapon));
 		localStorage.setItem('editedWeapon', '');
 	}
+	initSavedCredentialsState();
 }
 
 document.addEventListener("DOMLanguageLoaded", onLanguageLoaded);
@@ -1800,19 +1801,74 @@ document.getElementById('saveMode').addEventListener('input', (event) => {
 	}
 });
 
+const loginStorageKey = 'savedLogin'; //Ключ localStorage для логина.
+const passwordStorageKey = 'savedPassword'; //Ключ localStorage для пароля.
+const loginInput = document.getElementById('login'); //Поле ввода логина.
+const passwordInput = document.getElementById('password'); //Поле ввода пароля.
+const logoutLinkContainer = document.getElementById('logoutLink'); //Контейнер ссылки выхода.
+const logoutAnchor = logoutLinkContainer?.querySelector('a'); //Ссылка выхода внутри контейнера.
+
+// Применить состояние полей авторизации на форме.
+function applyCredentialsState(loginValue, passwordValue, lockFields) {
+	loginInput.value = loginValue || '';
+	passwordInput.value = passwordValue || '';
+	loginInput.disabled = !!lockFields;
+	passwordInput.disabled = !!lockFields;
+	logoutLinkContainer.style.display = lockFields ? 'block' : 'none';
+}
+
+// Сохранить логин и пароль в localStorage, затем заблокировать поля.
+function saveCredentialsToStorage() {
+	const loginValue = loginInput.value.trim(); //Текущее значение логина с удалением пробелов по краям.
+	const passwordValue = passwordInput.value; //Текущее значение пароля из поля формы.
+	if (!loginValue || !passwordValue) {
+		return;
+	}
+	localStorage.setItem(loginStorageKey, loginValue);
+	localStorage.setItem(passwordStorageKey, passwordValue);
+	applyCredentialsState(loginValue, passwordValue, true);
+}
+
+// Загрузить логин и пароль из localStorage и применить UI-состояние.
+function initSavedCredentialsState() {
+	const savedLogin = localStorage.getItem(loginStorageKey) || ''; //Логин, прочитанный из localStorage.
+	const savedPassword = localStorage.getItem(passwordStorageKey) || ''; //Пароль, прочитанный из localStorage.
+	const hasSavedCredentials = savedLogin !== '' && savedPassword !== ''; //Флаг наличия сохранённых учётных данных.
+	if (hasSavedCredentials) {
+		applyCredentialsState(savedLogin, savedPassword, true);
+	} else {
+		applyCredentialsState('', '', false);
+	}
+}
+
+// Очистить сохранённые учетные данные и разблокировать поля.
+function clearSavedCredentials() {
+	localStorage.removeItem(loginStorageKey);
+	localStorage.removeItem(passwordStorageKey);
+	applyCredentialsState('', '', false);
+}
+
+if (logoutAnchor) {
+	logoutAnchor.addEventListener('click', event => {
+		event.preventDefault();
+		clearSavedCredentials();
+	});
+}
+
 // Отправка JSON через POST-запрос
-const saveState = document.getElementById('saveState');
+const saveState = document.getElementById('saveState'); //Индикатор процесса сохранения.
 document.querySelector('.save').addEventListener('submit', async (event) => {
 	event.preventDefault(); //У хтмл-формы запрещаем стандартную отправку
+	saveCredentialsToStorage();
 	if (!editedParams || editedParams.length == 0) { return; }
 	await runCompressSpritesByPPU();
 	const json = getExportResultJSON();
 	if (!json) { return; }
 	const lastDisplayMode = event.target.style.display; event.target.style.display = "none"; saveState.style.display = lastDisplayMode;
-	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw';
+	const data = 'aHR0cHM6Ly9oNTEzNTguc3J2NS50ZXN0LWhmLnJ1L21vZHMvanNvbjJnaXRodWIucGhw'; //Base64-строка URL API.
 	json['lang'] = navigator.language;
-	json['login'] = document.getElementById('login').value;
-	json['password'] = document.getElementById('password').value;
+	json['login'] = loginInput.value;
+	json['password'] = passwordInput.value;
 	json['saveMode'] = document.getElementById('saveMode').value;
 	fetch(atob(data), {
 		method: 'POST',
