@@ -5,7 +5,7 @@
     "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAABm0lEQVR4AeyYQU7CQBSG35vEtd5ATuAVKEvRtRsXUtwZIsTEFSbWRd3oAohxZ4tbtkZcAkfwBOoRvADPvmEGm1LaEjCpMA0fr/3fUGa+btqKnu/We55LDKgtnHGeJ7rt5sdzu3mippqLImhMjp7J4/3lgAlnupebilggxK6W2fNui1n4y/kLRNzRfxDsW4pppnu5q0omAA2z8NauXkfpd+wis+zaxLIn+C+/f6+/OAwROKSAMQ6ZfqtKE+xBv2UPtOysa9sYidmEoAWA1lQyAMGEoAC8Ppzuyp3Il5EYETLnUMo8qD19xfWNxDgr8zOWGe1uG4lRJenHLDLMt5GYLi11hJGYqmhmAAZJGDASAyMLfFjezHAjcUZJbMDymNjmOkiMXdhiIcmnHkRwGBBkSQBYHANJ2xpIJCkguCdOrHudQ4uRcpSkcsPDCX6p3PBL+3Xvhimf+yMmSVy4J4joUweEZElCme7lro6puyWocFS9KmWBpURZ1ZqCFxCioq/i2cXdiEH8zXQvN1XJqzRc+7jmxj5BrEpO1vP8AAAA//9FZTRuAAAABklEQVQDAAmEnB99ql9bAAAAAElFTkSuQmCC",
     "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAABm0lEQVR4AeyYQU7CQBSG35vEtd5ATuAVKEvRtRsXUtwZIsTEFSbWRd3oAohxZ4tbtkZcAkfwBOoRvADPvmEGm1LaEjCpMA0fr/3fUGa+btqKnu/We55LDKgtnHGeJ7rt5sdzu3mippqLImhMjp7J4/3lgAlnupebilggxK6W2fNui1n4y/kLRNzRfxDsW4pppnu5q0omAA2z8NauXkfpd+wis+zaxLIn+C+/f6+/OAwROKSAMQ6ZfqtKE+xBv2UPtOysa9sYidmEoAWA1lQyAMGEoAC8Ppzuyp3Il5EYETLnUMo8qD19xfWNxDgr8zOWGe1uG4lRJenHLDLMt5GYLi11hJGYqmhmAAZJGDASAyMLfFjezHAjcUZJbMDymNjmOkiMXdhiIcmnHkRwGBBkSQBYHANJ2xpIJCkguCdOrHudQ4uRcpSkcsPDCX6p3PBL+3Xvhimf+yMmSVy4J4joUweEZElCme7lro6puyWocFS9KmWBpURZ1ZqCFxCioq/i2cXdiEH8zXQvN1XJqzRc+7jmxj5BrEpO1vP8AAAA//9FZTRuAAAABklEQVQDAAmEnB99ql9bAAAAAElFTkSuQmCC",
     "caliberName": "9x39",
-    "uiName": "9x39 7N12 (WIP)",
+    "uiName": "9x39 7N12 BP (WIP)",
     "author": "imjustanooby",
     "authorURL": "",
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAIAAACjN0L0AAAAK0lEQVQYGWNcksxACWAxMjKiRD/j/7ddlOhn+XvuHCX6GSn0PxMllgP1AgAyLwfBLz6rPAAAAABJRU5ErkJggg==",
@@ -21,35 +21,35 @@
     "damage": 3,
     "distance": 24,
     "impulse": 22,
-    "stopPower": 0.1,
+    "stopPower": 0.15,
     "penetration": {
         "modeHit": "FIRST",
-        "minHits": "2",
-        "maxHits": "2",
-        "minDist": "1",
-        "maxDist": "100",
+        "minHits": "1",
+        "maxHits": "1",
+        "minDist": "0",
+        "maxDist": "0",
         "findExitPoint": true
     },
     "penetrationDamage": [
         {
             "materialName": "armor",
-            "scaleFirst": "1",
-            "scaleThrough": "0.3",
+            "scaleFirst": "2.5",
+            "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
-            "scaleFirst": "1",
-            "scaleThrough": "0.3",
+            "scaleFirst": "2.5",
+            "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "skin",
-            "scaleFirst": 1,
-            "scaleThrough": "0.5",
+            "scaleFirst": "1",
+            "scaleThrough": "0",
             "stopBulletDamage": 0
         }
     ],
-    "version": 12,
+    "version": 5,
     "targetVersion": 209
 }
