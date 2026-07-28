@@ -27,7 +27,7 @@
         "minHits": 1,
         "maxHits": "3",
         "minDist": 0,
-        "maxDist": 0,
+        "maxDist": "135",
         "findExitPoint": true
     },
     "penetrationDamage": [
@@ -44,6 +44,6 @@
             "materialName": "metal"
         }
     ],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
