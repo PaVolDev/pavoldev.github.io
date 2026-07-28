@@ -18,14 +18,14 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 4.5,
+    "damage": 5,
     "distance": 24,
-    "impulse": 20,
-    "stopPower": 0.3,
+    "impulse": 25,
+    "stopPower": 0.25,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
-        "maxHits": 1,
+        "maxHits": "3",
         "minDist": 0,
         "maxDist": 0,
         "findExitPoint": true
@@ -44,6 +44,6 @@
             "materialName": "metal"
         }
     ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
