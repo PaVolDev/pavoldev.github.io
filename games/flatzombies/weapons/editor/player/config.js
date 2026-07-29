@@ -100,7 +100,7 @@ function onRemoveParameter(param) { }
 
 const weapons = new Array();
 const editedPoint = [ //Окно предпросмотра имеет функцию для вращения точки и нужно указать в какой параметр записывать вращение объекта
-	{ name: 'pointTip', angle: null, parent: 'render' }, //Для отображения фонаря и глушителя нужно взять его родительский объект из списка параметров
+	{ name: 'ground', angle: null, parent: "man" }, //Земля для настройки стопы
 	{ name: 'WeaponSilencerMod.localPoint', angle: null, parent: 'WeaponSilencerMod.bolt' },
 	{ name: 'handleMove.movePosition', angle: 'WeaponHandPoints.handleMove.movePosition.z', parent: null },
 	{ name: 'handleMove.startPosition', angle: 'WeaponHandPoints.handleMove.startPosition.z', parent: null },
@@ -207,6 +207,7 @@ const defaultAddedFields = [ //Добавить некоторые параме�
 	["authorURL", 123456],
 	["uiName", 123456],
 	["player.height", 123456],
+	["ground", 123456]
 ];
 
 //Список параметров, которые должны быть отредактированы
@@ -227,6 +228,7 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "player.height", "comment": "Рост персонажа", type: "int", value: 170, min: 160, max: 190 },
 	{ fieldPath: "interface.desciption", "comment": "Описание (необязательно)", type: "TextFile", value: "" },
 	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка для интерфейса<br>200x300px", type: "Image", value: "" },
+	{ showInList: false, fieldPath: "ground", comment: "Земля", type: "Vector3", value: "(0, 0, 0)", spritePreview: "images/ground.png", spritePivotPoint: { x: 0.5, y: 1 }, spritePixelPerUnit: 25, sortingOrder: -999 },
 	// { fieldPath: "storeInfo.iconBase64.pivotPoint", comment: "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "storeInfo.iconBase64.pixelPerUnit", comment: "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 150 },
 	{ fieldPath: "interface.iconImage.rectTransform.localScale", comment: "Масштаб иконки на кнопке в интерфейсе", type: "Vector3", value: "(0.42, 0.42, 0.42)" },
