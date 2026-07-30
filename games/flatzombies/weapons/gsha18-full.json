@@ -34,7 +34,7 @@
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.5, -0.11, 0)",
     "weapon.WeaponHandPoints.weaponType": "",
     "storeInfo.author": "Kafdolka",
-    "storeInfo.authorURL": "https://",
+    "storeInfo.authorURL": "https://youtube.com/channel/UClnabSn9AaGjubvGdSsiMIw?si=BJUSsNEvMrNC7rYb",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
     "weapon.SpriteRenderer.sortingOrder": 17,
@@ -81,6 +81,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
-    "version": 25,
+    "version": 26,
     "targetVersion": 209
 }
