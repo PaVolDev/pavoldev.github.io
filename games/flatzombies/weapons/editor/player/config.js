@@ -1,5 +1,10 @@
 //Слушатель события
 function onLoadNewJson(json) {
+	if (parseFloat(json["player.man.body.Transform.localEulerAngles.z"]) >= 0) {
+		json["player.man.body.Transform.localEulerAngles.z"] = parseFloat(json["player.man.body.Transform.localEulerAngles.z"]) - 15;
+		json["player.man.thigh.Transform.localEulerAngles.z"] = parseFloat(json["player.man.thigh.Transform.localEulerAngles.z"]) - 15;
+		json["player.man.thigh2.Transform.localEulerAngles.z"] = parseFloat(json["player.man.thigh2.Transform.localEulerAngles.z"]) - 15;
+	}
 	if (json["storeInfo.editorIconUpdateMode"] == "onSave") {
 		delete json["storeInfo.iconBase64"];
 		delete json["storeInfo.editorIconUpdateMode"];
