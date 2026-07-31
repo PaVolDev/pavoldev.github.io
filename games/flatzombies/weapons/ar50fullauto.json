@@ -39,7 +39,7 @@
     "weapon.SpriteRenderer.sortingOrder": 18,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 118,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.36, 0.36)",
-    "storeInfo.silencerGroup": "sniper",
+    "storeInfo.silencerGroup": "rifle",
     "weapon.magazine.Transform.localPosition": "(0.22, -0.02, 0)",
     "weapon.magazine.gameObject.SetActive": true,
     "weapon.magazine.SpriteRenderer.enabled": true,
@@ -95,6 +95,6 @@
     "storeInfo.silencerPosition": "(262, 26)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
