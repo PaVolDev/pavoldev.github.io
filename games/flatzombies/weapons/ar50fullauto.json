@@ -5,11 +5,11 @@
     "weapon.caliber": "50bwf",
     "storeInfo.nameFull": "Full-Auto 50 Beowulf",
     "storeInfo.magazineSize": 32,
-    "weapon.playerScaleMove": 0.85,
-    "weapon.reloadScaleTime": 0.95,
-    "weapon.addedGameObjects": "fon",
-    "weapon.addedComponents": "fon.SpriteRenderer",
     "weapon.cameraSnake": "(0.09, 0.09, -0.7)",
+    "weapon.addedComponents": "fon.SpriteRenderer",
+    "weapon.addedGameObjects": "fon",
+    "weapon.reloadScaleTime": 0.95,
+    "weapon.playerScaleMove": 0.85,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(-0.15, 0.28, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0.03, 0.28, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "boltHandle",
@@ -95,6 +95,6 @@
     "storeInfo.silencerPosition": "(262, 26)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 17,
+    "version": 18,
     "targetVersion": 209
 }
