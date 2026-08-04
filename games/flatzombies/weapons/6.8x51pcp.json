@@ -13,7 +13,7 @@
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": 150,
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
-    "iconListSprite.pixelPerUnit": 100,
+    "iconListSprite.pixelPerUnit": 150,
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
     "angleRandom": 0.2,
@@ -61,6 +61,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
