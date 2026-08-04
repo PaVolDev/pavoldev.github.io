@@ -8,7 +8,7 @@
     "uiName": "6.8x51 PCP",
     "author": "Dafyich",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAYAAAAsVdWjAAAAAXNSR0IArs4c6QAAAFlJREFUKFOtzjsKgEAMBNDMyfcDKt5BTSNikzK3c4lkK8FuycCU8xgc+2atPTQvK0UF93WaY9MHNTPyjgaqagAopTRq/HYQkX4p5xyHMnN/WkqJRV2rtYahLwPZI9GHz1L9AAAAAElFTkSuQmCC",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAYAAAAsVdWjAAAAAXNSR0IArs4c6QAAAEJJREFUKFNjnD9//n8GJNDU1ITMJYvNuGLZEhRDm1vbyTIIWRPjtm3bUAytq6uj3NC1a9eiGNrY2Ei5oTQJU1oYCgBq/hrRJ+HkEwAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": 100,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": 150,
@@ -61,6 +61,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 17,
+    "version": 18,
     "targetVersion": 209
 }
