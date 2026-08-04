@@ -24,7 +24,7 @@
     "stopPower": 0.1,
     "penetration": {
         "modeHit": "FIRST",
-        "minHits": 2,
+        "minHits": "1",
         "maxHits": 2,
         "minDist": 2,
         "maxDist": 100,
@@ -52,6 +52,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 20,
+    "version": 21,
     "targetVersion": 209
 }
