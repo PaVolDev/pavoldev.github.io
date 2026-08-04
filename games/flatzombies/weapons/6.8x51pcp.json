@@ -16,7 +16,7 @@
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
-    "angleRandom": 0.2,
+    "angleRandom": 0.1,
     "angleSpread": 0,
     "damage": 5,
     "distance": 24,
@@ -33,14 +33,14 @@
     "penetrationDamage": [
         {
             "scaleFirst": "0.5",
-            "scaleThrough": "1",
+            "scaleThrough": "1.2",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "armor"
         },
         {
             "scaleFirst": "0.5",
-            "scaleThrough": "1",
+            "scaleThrough": "1.2",
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "metal"
@@ -52,6 +52,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 32,
+    "version": 33,
     "targetVersion": 209
 }
