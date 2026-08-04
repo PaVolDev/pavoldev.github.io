@@ -46,21 +46,12 @@
             "materialName": "metal"
         },
         {
-            "material": {
-                "bounciness": 0.2,
-                "friction": 1,
-                "frictionCombine": "Mean",
-                "bounceCombine": "Maximum",
-                "name": "skin",
-                "hideFlags": "None"
-            },
+            "materialName": "skin",
             "scaleFirst": "1",
             "scaleThrough": 0.01,
-            "stopBulletDamage": 0,
-            "editorDamage": 0,
-            "materialName": "skin"
+            "stopBulletDamage": 0
         }
     ],
-    "version": 19,
+    "version": 20,
     "targetVersion": 209
 }
