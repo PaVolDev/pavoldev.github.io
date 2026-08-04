@@ -25,7 +25,7 @@
     "penetration": {
         "modeHit": "FIRST",
         "minHits": "1",
-        "maxHits": "2",
+        "maxHits": "1",
         "minDist": 2,
         "maxDist": 100,
         "findExitPoint": true
@@ -48,10 +48,10 @@
         {
             "materialName": "skin",
             "scaleFirst": "1",
-            "scaleThrough": 0.01,
+            "scaleThrough": "0",
             "stopBulletDamage": 0
         }
     ],
-    "version": 22,
+    "version": 23,
     "targetVersion": 209
 }
