@@ -12,7 +12,7 @@
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "150",
-    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5, 0)",
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
@@ -33,26 +33,26 @@
     "penetrationDamage": [
         {
             "scaleFirst": 0.4,
-            "scaleThrough": 0,
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "armor"
         },
         {
             "scaleFirst": 0.4,
-            "scaleThrough": 0,
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "metal"
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": "0",
+            "scaleThrough": 0.01,
             "stopBulletDamage": 0,
             "editorDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 3,
-    "targetVersion": 208
+    "version": 4,
+    "targetVersion": 209
 }
