@@ -47,11 +47,11 @@
         },
         {
             "materialName": "skin",
-            "scaleFirst": "0.8",
-            "scaleThrough": "0.4",
+            "scaleFirst": "1",
+            "scaleThrough": "0.2",
             "stopBulletDamage": 0
         }
     ],
-    "version": 31,
+    "version": 32,
     "targetVersion": 209
 }
