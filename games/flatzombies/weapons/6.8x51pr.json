@@ -34,22 +34,22 @@
         {
             "materialName": "armor",
             "scaleFirst": "0.6",
-            "scaleThrough": "0.3",
+            "scaleThrough": "0.5",
             "stopBulletDamage": 0
         },
         {
             "materialName": "skin",
-            "scaleFirst": "0.9",
-            "scaleThrough": 0.01,
+            "scaleFirst": "0.8",
+            "scaleThrough": "0.25",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
             "scaleFirst": "0.6",
-            "scaleThrough": "0.3",
+            "scaleThrough": "0.5",
             "stopBulletDamage": 0
         }
     ],
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
