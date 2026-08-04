@@ -16,12 +16,12 @@
     "iconListSprite.pixelPerUnit": "150",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": "1",
-    "angleRandom": 2,
+    "angleRandom": 0.1,
     "angleSpread": 0.9,
     "damage": 5,
     "distance": 24,
     "impulse": 30,
-    "stopPower": "0.7",
+    "stopPower": 0.1,
     "penetration": {
         "modeHit": "RANDOM_FIRST",
         "minHits": 2,
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
