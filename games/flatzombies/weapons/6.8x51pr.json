@@ -27,7 +27,7 @@
         "minHits": 2,
         "maxHits": 2,
         "minDist": 0.5,
-        "maxDist": 4,
+        "maxDist": "7",
         "findExitPoint": true
     },
     "penetrationDamage": [
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
