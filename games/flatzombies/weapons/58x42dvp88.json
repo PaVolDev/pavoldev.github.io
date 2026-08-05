@@ -1,0 +1,55 @@
+{
+    "id": "58x42dvp88",
+    "idTemplate": "5.7x28A",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAAASCAYAAACD3FoaAAAAAXNSR0IArs4c6QAAAodJREFUaEPtmc9rE0EUx79vJ5s2YOhB4g/8D4rgj5P/hKAHBfFUBP8FEQoWT+JZEcGD9CDC3hRERDFQLFbQWGqprRXF0lbXpKZtNpvd2ZknK8SGmiZ7MCax8/ay7Mzuvn2f+b4d3qOT508wAKQrmLEZo+V1dW4oZ5+pDmgRX99tZtsp2CW6s+aG12Um8ymfz0e9HAOqAwyDLT/ttAAR9bLfHfMtBlj/dsvlx7VQjQtE7vdiNPeiUFhp9WIG4qj9EsS/MgNwW6RjgHWLQTIDfrWWiMfpo8fBShe1Ui6AdYBczapEQMhKvyWCB6If64vFySDt+cNeTp51HJXo4TtMMgBbAKwP+dUgUYxjgEktqgUuK13mSC1r0HtZ8R7pwJv1fFEaDvd4ScEagF0C2Ay0CmXASlUjqZY4kNO1zY0HrPUHIXnVE+HGlbv5YHuKbgowPbCVRpKuqP9lXmMK7aQCk8YrqgUyCsIyh2pVKfk6qPj3Fau5qDL0bcxxQgOwhxSYHGpYZaW/MtSEAdiHABtdNgANwKTC7495vfYPbBc1o0CjwHZrpL/Ge12BDBQIWAZjlix6YhTY0wrkGYBKAM9bllUgovyFS7fmzSamRVLopgIJeAamSRZ4J4imt8Nq5rZRYENU4tpnKvVnE6YTpTQAUwx8tpgWmfDSPnjg6cjIWLKia6PPzboRu7USsxNAeBI1YsRHKzt1+IgDYVkAikS0QsRMEKuaeCm+j7UoX7x841V8TkR/pWthFNhCgSlpfRGabi4sVG5nfV9tZjJBNpvlXC7HjuPUAehubtN+A9z8KKf27bVHi2vy2v5Dg8e8QW1x3EvZRVZXYCYSb4S2ro7fe/4QQFcBtQv/T57yhRHl9+VyAAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAAASCAYAAACD3FoaAAAAAXNSR0IArs4c6QAAAodJREFUaEPtmc9rE0EUx79vJ5s2YOhB4g/8D4rgj5P/hKAHBfFUBP8FEQoWT+JZEcGD9CDC3hRERDFQLFbQWGqprRXF0lbXpKZtNpvd2ZknK8SGmiZ7MCax8/ay7Mzuvn2f+b4d3qOT508wAKQrmLEZo+V1dW4oZ5+pDmgRX99tZtsp2CW6s+aG12Um8ymfz0e9HAOqAwyDLT/ttAAR9bLfHfMtBlj/dsvlx7VQjQtE7vdiNPeiUFhp9WIG4qj9EsS/MgNwW6RjgHWLQTIDfrWWiMfpo8fBShe1Ui6AdYBczapEQMhKvyWCB6If64vFySDt+cNeTp51HJXo4TtMMgBbAKwP+dUgUYxjgEktqgUuK13mSC1r0HtZ8R7pwJv1fFEaDvd4ScEagF0C2Ay0CmXASlUjqZY4kNO1zY0HrPUHIXnVE+HGlbv5YHuKbgowPbCVRpKuqP9lXmMK7aQCk8YrqgUyCsIyh2pVKfk6qPj3Fau5qDL0bcxxQgOwhxSYHGpYZaW/MtSEAdiHABtdNgANwKTC7495vfYPbBc1o0CjwHZrpL/Ge12BDBQIWAZjlix6YhTY0wrkGYBKAM9bllUgovyFS7fmzSamRVLopgIJeAamSRZ4J4imt8Nq5rZRYENU4tpnKvVnE6YTpTQAUwx8tpgWmfDSPnjg6cjIWLKia6PPzboRu7USsxNAeBI1YsRHKzt1+IgDYVkAikS0QsRMEKuaeCm+j7UoX7x841V8TkR/pWthFNhCgSlpfRGabi4sVG5nfV9tZjJBNpvlXC7HjuPUAehubtN+A9z8KKf27bVHi2vy2v5Dg8e8QW1x3EvZRVZXYCYSb4S2ro7fe/4QQFcBtQv/T57yhRHl9+VyAAAAAElFTkSuQmCC",
+    "caliberName": "5.8x42",
+    "uiName": "5.8x42 dvp88",
+    "author": "Dafyich",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAICAYAAACPp21mAAAAAXNSR0IArs4c6QAAAOZJREFUOE/tlDtOA0EQRKurBwfgnDNwgkUiJ4ID4MMRIjgCIkCcYMURiEgJ7P3M0N1oba2FIxOs7ISJSzNvqqtabheVe+9v4nLBU54HDn+UNBof0PnTMvIHElcjRWjpXx7rT7lZVPFdDEJBSnp4SgBUQdKE8Cht22cEfAsi8v4Ver0GLcXAY4JSoLoxqW36XbMC9RzpagOaDUzDr47k6D/oxEkeYven0Q9lGgI9iifm2HsdyXWRw8O6JjeBX7tnW6a7ysrSXxPlUud6tiPa+8Q0ApIxgz4H4j53Vq+s+MksuZvLuJ5+AFx2gVvkP4qjAAAAAElFTkSuQmCC",
+    "shellSkin.pixelPerUnit": 200,
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "100",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 4,
+    "distance": 24,
+    "impulse": 20,
+    "stopPower": 0.05,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "scaleFirst": "0.375",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": "0.375",
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": "1",
+            "scaleThrough": "0.2",
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 7,
+    "targetVersion": 209
+}
