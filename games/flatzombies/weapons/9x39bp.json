@@ -21,7 +21,7 @@
     "damage": 3,
     "distance": 24,
     "impulse": 22,
-    "stopPower": 0.15,
+    "stopPower": 0.125,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": "1",
@@ -33,13 +33,13 @@
     "penetrationDamage": [
         {
             "materialName": "armor",
-            "scaleFirst": "2.5",
+            "scaleFirst": "2",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
-            "scaleFirst": "2.5",
+            "scaleFirst": "2",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 13,
+    "version": 2,
     "targetVersion": 209
 }
