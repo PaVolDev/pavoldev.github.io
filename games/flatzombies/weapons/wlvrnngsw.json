@@ -5,9 +5,9 @@
     "weapon.caliber": "6.8x51",
     "storeInfo.nameFull": "WLWRN NGSW",
     "storeInfo.magazineSize": 25,
-    "weapon.reloadScaleTime": 1.2,
-    "weapon.addedComponents": "scope.SpriteRenderer,fon.SpriteRenderer,boltrender.SpriteRenderer",
     "weapon.addedGameObjects": "scope,fon,boltrender",
+    "weapon.addedComponents": "scope.SpriteRenderer,fon.SpriteRenderer,boltrender.SpriteRenderer",
+    "weapon.reloadScaleTime": 1.2,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, -0.01, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, -0.01, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -100,6 +100,6 @@
     "storeInfo.silencerPosition": "(196, 34)",
     "weapon.LineRenderer.startColor": "#5e5eff",
     "weapon.LineRenderer.endColor": "#5e5eff",
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
