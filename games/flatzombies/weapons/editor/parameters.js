@@ -278,8 +278,10 @@ function syncParamsToScene() {
 			const p = findByPath(fp);
 			return (p) ? p.value : defaultValue;
 		};
-		const localPosStr = getValue('Transform.localPosition', '(0,0,0)');
-		const pivotStr = getValue('SpriteRenderer.sprite.pivotPoint', '(0.50123,0.50123)');
+		const defaultLocalPoint = '(-0,-0,-0)';
+		const defaultPivot = '(0.50123,0.50123)';
+		const localPosStr = getValue('Transform.localPosition', defaultLocalPoint);
+		const pivotStr = getValue('SpriteRenderer.sprite.pivotPoint', defaultPivot);
 		const ppuStr = getValue('SpriteRenderer.sprite.pixelPerUnit', '100');
 		const angleStr = getValue('Transform.localEulerAngles.z', '0');
 		const sortingOrderStr = getValue('SpriteRenderer.sortingOrder', 0);
@@ -300,9 +302,9 @@ function syncParamsToScene() {
 			pivotPoint: { x: px, y: py },
 			enabled: enabledStr,
 			isActive: gameObjectIsActive,
-			canChangePivot: "canChangePivot" in param ? param.canChangePivot : true,
+			canChangePivot: "canChangePivot" in param ? param.canChangePivot : param.type != "Sprite" || pivotStr != defaultPivot,
 			canChangeLocalAngle: "canChangeAngle" in param ? param.canChangeAngle : true,
-			canChangePosition: "canChangePosition" in param ? param.canChangePosition : true,
+			canChangePosition: "canChangePosition" in param ? param.canChangePosition : param.type != "Sprite" || localPosStr != defaultLocalPoint,
 			parameter: param.startFieldPath
 		});
 	});
@@ -762,7 +764,7 @@ function forceRenderEditedParams(filter = '') {
 			const matchesSearch = param.value == filter || param.fieldPath.toLowerCase().includes(filter) || (param.comment || '').toLowerCase().includes(filter) || param.type.toLowerCase().includes(filter);
 			if (!matchesSearch) { return; }
 		}
-		if ("showInList" in param && param.showInList === false) return;
+		if ("showInList" in param && param.showInList === false) return; //Скрыть параметр из списка и не показывать на экране
 		if (processed.has(param.fieldPath)) return;
 		const lightFormByType = typeLightForm[param.startFieldPath] || typeLightForm[param.type];
 		const fullFormByType = typeFullForm[param.startFieldPath] || typeFullForm[param.type];
