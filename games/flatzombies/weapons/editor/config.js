@@ -9,11 +9,13 @@ function onLoadNewJson(json) {
 	delete json["targetVersion"];
 	delete json["version"];
 	delete json["selspriteupd"];
-
 	if (json["weapon.LineRenderer.startColor"]) {
 		json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
 		delete json["weapon.LineRenderer.startColor"];
 		delete json["weapon.LineRenderer.endColor"];
+	}
+	if (json["idTemplate"] == "sv98") {
+		delete json["weapon.boltHandle.Transform.localScale"];
 	}
 	return json;
 }
@@ -40,6 +42,9 @@ function onSaveJson(json) {
 		json["weapon.LineRenderer.startColor"] = json["weapon.laserColor"];
 		json["weapon.LineRenderer.endColor"] = json["weapon.laserColor"];
 		delete json["weapon.laserColor"];
+	}
+	if (json["idTemplate"] == "sv98") {
+		json["weapon.boltHandle.Transform.localScale"] = "(1, 1, 1)";
 	}
 	return json;
 }
@@ -463,6 +468,21 @@ var baseParams = [  //Список параметров, доступные дл
 	{ fieldPath: "weapon.gameObject.SetActive", comment: "Показать/скрыть объект вместе с дочерними спрайтами<br>object.gameObject.SetActive(false/true)", type: "bool", value: true },
 	{ fieldPath: "weapon.Transform.localPosition", comment: "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "weapon.Transform.localEulerAngles.z", comment: "Угол наклона", type: "float", value: 0 },
+	//{ fieldPath: "cartridgeList", comment: "Список разных видов патронов.<br>Создайте патрон в отдельном <a href='ammo/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a><br>В редакторе нажмите Экспорт файла и загрузите его в список:", type: "WeaponCartridge[]", value: "" },
+	{ fieldPath: "storeInfo.silencerGroup", comment: "Из какой категории брать глушители", type: "string", value: "", options: ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
+	{ fieldPath: "storeInfo.ammoListStep", comment: "Отступ в интерфейсе на экране со списком патронов", type: "int", value: 0 },
+	{ fieldPath: "storeInfo.ammoListLimit", comment: "Размер списка с патронами для двуствольного ружья", type: "int", value: 0 },
+	{ fieldPath: "storeInfo.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 316x128px<br><span class=\"show-tooltip\" data-tooltip=\"Кнопка имеет переключение цвета и этот цвет накладывается на текстуру в режиме 'Умножение' - белые пиксели текустуры будут полностью окрашиваться в цвет кнопки.\">без альфа-канала.</span>", type: "TextureSprite", value: "" },
+	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка оружия для интерфейса<br>320x120px", type: "Image", value: "" },
+	{ fieldPath: "storeInfo.silencerPosition", comment: "Координаты глушителя от верхнего угла.", type: "Vector2", value: "(0, 0)" },
+	{ fieldPath: "storeInfo.editorIconUpdateMode", comment: "Режим обновления иконки iconBase64", type: "string", value: "", options: ["never", "onSave", "onSceneUpdate", "updateNow"] },
+	//209 - { fieldPath: "weapon.animationSounds", comment: "Звуки анимации при перезарядке", type: "AnimationSounds[]", value: "" },
+	{ fieldPath: "weapon.addedGameObjects", comment: "Список добавленных объектов", type: "string", value: "" },
+	{ fieldPath: "weapon.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
+	{ fieldPath: "weapon.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
+	{ fieldPath: "weapon.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
+	{ fieldPath: "weapon.laserEnabled", comment: "Оружие имеет лазерный прицел?", type: "bool", value: true },
+	{ fieldPath: "weapon.laserColor", comment: "Цвет лазера", type: "Color", value: "#FF0000" },
 	{
 		fieldPath: "weapon.caliber", comment: "Калибр оружия. Основной тип патрона<br>Все настройки для урона находятся в патроне", type: "WeaponCartridge", value: "", options:
 			[
@@ -478,7 +498,7 @@ var baseParams = [  //Список параметров, доступные дл
 				["44RMM", "44-Rem-Mag (10.9x33R)"],
 				["5.7x28", "5.7x28"],
 				["9x19", "9x19"],
-				
+
 				["", ""],
 				["", "• Штурмовые винтовки:"],
 				["5.45x39", "5.45x39"],
@@ -630,22 +650,7 @@ var baseParams = [  //Список параметров, доступные дл
 				["", ""],
 				["arrows", "arrows"]
 			]
-	},
-	//{ fieldPath: "cartridgeList", comment: "Список разных видов патронов.<br>Создайте патрон в отдельном <a href='ammo/' target='_blank' title='Открыть в новой вкладке'>Редакторе патронов</a><br>В редакторе нажмите Экспорт файла и загрузите его в список:", type: "WeaponCartridge[]", value: "" },
-	{ fieldPath: "storeInfo.silencerGroup", comment: "Из какой категории брать глушители", type: "string", value: "", options: ["pistol", "rifle", "shotgun", "seg12", "mr27", "sniper"] },
-	{ fieldPath: "storeInfo.ammoListStep", comment: "Отступ в интерфейсе на экране со списком патронов", type: "int", value: 0 },
-	{ fieldPath: "storeInfo.ammoListLimit", comment: "Размер списка с патронами для двуствольного ружья", type: "int", value: 0 },
-	{ fieldPath: "storeInfo.Image.sprite", comment: "Фоновое изображение для кнопки в интерфейсе, 316x128px<br><span class=\"show-tooltip\" data-tooltip=\"Кнопка имеет переключение цвета и этот цвет накладывается на текстуру в режиме 'Умножение' - белые пиксели текустуры будут полностью окрашиваться в цвет кнопки.\">без альфа-канала.</span>", type: "TextureSprite", value: "" },
-	{ fieldPath: "storeInfo.iconBase64", comment: "Иконка оружия для интерфейса<br>320x120px", type: "Image", value: "" },
-	{ fieldPath: "storeInfo.silencerPosition", comment: "Координаты глушителя от верхнего угла.", type: "Vector2", value: "(0, 0)" },
-	{ fieldPath: "storeInfo.editorIconUpdateMode", comment: "Режим обновления иконки iconBase64", type: "string", value: "", options: ["never", "onSave", "onSceneUpdate", "updateNow"] },
-	//209 - { fieldPath: "weapon.animationSounds", comment: "Звуки анимации при перезарядке", type: "AnimationSounds[]", value: "" },
-	{ fieldPath: "weapon.addedGameObjects", comment: "Список добавленных объектов", type: "string", value: "" },
-	{ fieldPath: "weapon.addedComponents", comment: "Список добавленных компонентов MonoBehaviour", type: "string", value: "" }, //в формате "child.SpriteRenderer, otherChild.Collider2D"
-	{ fieldPath: "weapon.removedGameObjects", comment: "Список объектов для удаления", type: "string", value: "" },
-	{ fieldPath: "weapon.removedComponents", comment: "Список компонентов MonoBehaviour для удаления", type: "string", value: "" },
-	{ fieldPath: "weapon.laserEnabled", comment: "Оружие имеет лазерный прицел?", type: "bool", value: true },
-	{ fieldPath: "weapon.laserColor", comment: "Цвет лазера", type: "Color", value: "#FF0000" },
+	}
 ]
 
 
