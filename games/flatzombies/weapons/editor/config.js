@@ -9,6 +9,7 @@ function onLoadNewJson(json) {
 	delete json["targetVersion"];
 	delete json["version"];
 	delete json["selspriteupd"];
+	delete json["hash"];
 	if (json["weapon.LineRenderer.startColor"]) {
 		json["weapon.laserColor"] = json["weapon.LineRenderer.startColor"];
 		delete json["weapon.LineRenderer.startColor"];
