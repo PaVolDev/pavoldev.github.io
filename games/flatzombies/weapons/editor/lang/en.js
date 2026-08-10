@@ -88,7 +88,7 @@ window.translate = { //English (USA)
 	1510: "❌ 18+ content is prohibited",
 	1511: "❌ Low-effort brainrot content is prohibited",
 	1512: "❌ Toilet humor is prohibited",
-	1513: "❌ Pixel art, gradient, blur, black lines, and jagged edges of figures are prohibited",
+	1513: "❌ Pixel art, gradient, blur, dark lines and jagged edges of figures are prohibited",
 	1514: "❌ Content violating your local laws is prohibited",
 	1515: "❌ Mods with stats exceeding their real-world counterparts are prohibited",
 
