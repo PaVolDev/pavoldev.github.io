@@ -5,6 +5,7 @@ function onLoadNewJson(json) {
 	delete json["targetVersion"];
 	delete json["version"];
 	delete json["selspriteupd"];
+	delete json["hash"];
 	return json;
 }
 
