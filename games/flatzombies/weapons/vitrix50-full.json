@@ -107,6 +107,6 @@
     "storeInfo.silencerPosition": "(321, 45)",
     "weapon.LineRenderer.startColor": "#5757ff",
     "weapon.LineRenderer.endColor": "#5757ff",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
