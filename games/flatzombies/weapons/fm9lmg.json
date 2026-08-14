@@ -7,7 +7,7 @@
     "storeInfo.magazineSize": 150,
     "weapon.playerScaleMove": 0.3,
     "weapon.reloadScaleTime": 1.4,
-    "weapon.scaleAngleScatter": 1.4,
+    "weapon.scaleAngleScatter": 1.9,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0.02, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0.02, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -91,7 +91,7 @@
     "storeInfo.silencerPosition": "(201, 28)",
     "weapon.LineRenderer.startColor": "#5e5eff",
     "weapon.LineRenderer.endColor": "#5e5eff",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
