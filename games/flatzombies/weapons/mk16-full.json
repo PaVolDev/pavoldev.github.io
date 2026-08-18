@@ -7,7 +7,7 @@
     "storeInfo.magazineSize": 30,
     "storeInfo.silencerMedium.SpriteRenderer.color": "#cfcfcf",
     "storeInfo.silencerMedium.SpriteRenderer.sprite": "data:image/png;base64,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",
-    "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": 120,
     "storeInfo.silencerMedium.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
     "weapon.playerScaleMove": 0.25,
     "weapon.reloadScaleTime": 1.2,
@@ -55,7 +55,7 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 15,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": 161,
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
-    "weapon.handgrip.Transform.localPosition": "(0.95, 0.17, 0)",
+    "weapon.handgrip.Transform.localPosition": "(1.15, 0.19, 0)",
     "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": 5,
@@ -135,6 +135,6 @@
     ],
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
