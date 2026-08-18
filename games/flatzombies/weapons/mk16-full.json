@@ -75,7 +75,7 @@
     "weapon.shellDrop.position": "(0.25, 0.23, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
-    "weapon.recoilSteps": "9",
+    "weapon.recoilSteps": 12,
     "weapon.recoilMax": "3",
     "weapon.recoilDecrease": "18",
     "weapon.bolt": "(-0.25, 0.36, 0)",
@@ -135,6 +135,6 @@
     ],
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
