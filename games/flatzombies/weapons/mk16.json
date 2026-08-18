@@ -6,7 +6,7 @@
     "storeInfo.nameFull": "M4A1-urgi",
     "storeInfo.magazineSize": 30,
     "storeInfo.silencerMedium.SpriteRenderer.color": "#cfcfcf",
-    "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": "100",
+    "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": 120,
     "storeInfo.silencerMedium.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
     "weapon.playerScaleMove": 0.25,
     "weapon.reloadScaleTime": 1.2,
@@ -51,7 +51,7 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 15,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": 161,
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
-    "weapon.handgrip.Transform.localPosition": "(0.95, 0.17, 0)",
+    "weapon.handgrip.Transform.localPosition": "(1.15, 0.19, 0)",
     "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": 5,
@@ -128,6 +128,6 @@
     ],
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
