@@ -78,20 +78,6 @@
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(-0.01, 0.02)",
     "weapon.WeaponHandPoints.fingerAngle": -3,
-    "weapon.boltrender.Transform.localPosition": "(0.04, 0.26, 0)",
-    "weapon.boltrender.gameObject.SetActive": false,
-    "weapon.boltrender.SpriteRenderer.enabled": false,
-    "weapon.boltrender.Transform.localEulerAngles.z": 0,
-    "weapon.boltrender.SpriteRenderer.sortingOrder": 17,
-    "weapon.boltrender.SpriteRenderer.sprite.pixelPerUnit": 170,
-    "weapon.boltrender.SpriteRenderer.sprite.pivotPoint": "(0.33, 0.38)",
-    "weapon.back.Transform.localPosition": "(0.08, 0.25, 0)",
-    "weapon.back.gameObject.SetActive": false,
-    "weapon.back.SpriteRenderer.enabled": false,
-    "weapon.back.Transform.localEulerAngles.z": 0,
-    "weapon.back.SpriteRenderer.sortingOrder": 16,
-    "weapon.back.SpriteRenderer.sprite.pixelPerUnit": 170,
-    "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.33, 0.38)",
     "cartridgeList": [
         {
             "id": "300blk",
@@ -126,6 +112,6 @@
     ],
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
