@@ -117,6 +117,6 @@
     ],
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
