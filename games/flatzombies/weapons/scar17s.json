@@ -5,6 +5,7 @@
     "weapon.caliber": "65crd",
     "storeInfo.nameFull": "SCAR-17S",
     "storeInfo.magazineSize": 40,
+    "weapon.WeaponHandPoints.boltStop": true,
     "weapon.reloadBoltStop": true,
     "weapon.boltRender.zatvor.Transform.localPosition": "(0.31, 0.07, 0)",
     "weapon.boltRender.zatvor.gameObject.SetActive": true,
@@ -110,6 +111,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 15,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": "151",
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.47, 0.44)",
-    "version": 18,
+    "version": 19,
     "targetVersion": 209
 }
