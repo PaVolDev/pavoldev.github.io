@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 3,
+    "damage": 3.25,
     "distance": 24,
     "impulse": 22,
     "stopPower": 0.125,
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
