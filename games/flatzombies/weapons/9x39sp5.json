@@ -1,0 +1,55 @@
+{
+    "id": "9x39sp5",
+    "idTemplate": "9x39",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAAB1ElEQVR4AeyYQU7CQBRA5zeauNMbiBfwCpal4EI3blxIMXFhiG1MXGFiXdSYaCIQ4862bllpDLhwAdxATyCewANI+PaXGSyl2iqYVGyTl1/+n7Yzj58hVKpahlo1DSQYP7w5yscJu1x8vi4XN/lUYxEk7KIuZnJ5tt8gvDlRi00ESCGALWRWzeOlKPzm/CUAmBMPcM5lTj8narGLXCZj2IzCfTl/6KdeUZaIUdcmjXqDv3L9k3qnIzIdPbAuNIl6KY89lEa9pDSEbBJMhK3x30gME9Grg8wYyEI0CSZqJeXVkXxeu9iaZwFHIjFAij8FDGh706CD7V6nKgM/bIlEv7HQz9SpYIvufDjZnk0khkoLHgC8O99mOnYiMdhR5CwAe0wkRtY1NPAGAVeXVfMokTjk5vMEMmw7nafjFKQymrmWVa1bGp1IJAvhuF2X1awF6rxs4erFe8kkSPSu54fn6P7roS4jmIQy4XQbcPpdF/SACZCIrgDGvo6LlRVXDMkRcEGOKCud0aw0dRmR2bVaRJCwoJyEiG1RcDZK2cWTE7XYxS7a0xKm1vMH6SiQFD/jWpPzAkLKiW9xZ++0RQB85EQtNpHLy2mGslEwBvamcUn57n3eAQAA//9ckXtNAAAABklEQVQDAMHfzR8NGjT2AAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAAB1ElEQVR4AeyYQU7CQBRA5zeauNMbiBfwCpal4EI3blxIMXFhiG1MXGFiXdSYaCIQ4862bllpDLhwAdxATyCewANI+PaXGSyl2iqYVGyTl1/+n7Yzj58hVKpahlo1DSQYP7w5yscJu1x8vi4XN/lUYxEk7KIuZnJ5tt8gvDlRi00ESCGALWRWzeOlKPzm/CUAmBMPcM5lTj8narGLXCZj2IzCfTl/6KdeUZaIUdcmjXqDv3L9k3qnIzIdPbAuNIl6KY89lEa9pDSEbBJMhK3x30gME9Grg8wYyEI0CSZqJeXVkXxeu9iaZwFHIjFAij8FDGh706CD7V6nKgM/bIlEv7HQz9SpYIvufDjZnk0khkoLHgC8O99mOnYiMdhR5CwAe0wkRtY1NPAGAVeXVfMokTjk5vMEMmw7nafjFKQymrmWVa1bGp1IJAvhuF2X1awF6rxs4erFe8kkSPSu54fn6P7roS4jmIQy4XQbcPpdF/SACZCIrgDGvo6LlRVXDMkRcEGOKCud0aw0dRmR2bVaRJCwoJyEiG1RcDZK2cWTE7XYxS7a0xKm1vMH6SiQFD/jWpPzAkLKiW9xZ++0RQB85EQtNpHLy2mGslEwBvamcUn57n3eAQAA//9ckXtNAAAABklEQVQDAMHfzR8NGjT2AAAAAElFTkSuQmCC",
+    "caliberName": "9x39",
+    "uiName": "9x39 SP-5 7N8",
+    "author": "imjustanooby",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAGCAIAAACjN0L0AAAAK0lEQVQYGWNcksxACWAxMjKiRD/j/7ddlOhn+XvuHCX6GSn0PxMllgP1AgAyLwfBLz6rPAAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "100",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "100",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 5.5,
+    "distance": 24,
+    "impulse": 22,
+    "stopPower": 0.2,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "armor",
+            "scaleFirst": "0.2",
+            "scaleThrough": "0",
+            "stopBulletDamage": 0
+        },
+        {
+            "materialName": "metal",
+            "scaleFirst": "0.2",
+            "scaleThrough": "0",
+            "stopBulletDamage": 0
+        },
+        {
+            "materialName": "skin",
+            "scaleFirst": 1,
+            "scaleThrough": "0",
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 3,
+    "targetVersion": 209
+}
