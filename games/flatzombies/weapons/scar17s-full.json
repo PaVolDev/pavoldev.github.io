@@ -5,7 +5,7 @@
     "weapon.caliber": "65crd",
     "storeInfo.nameFull": "SCAR-17S",
     "storeInfo.magazineSize": 40,
-    "weapon.reloadBoltStop": false,
+    "weapon.reloadBoltStop": true,
     "weapon.boltRender.zatvor.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAALCAYAAABGbhwYAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAACqADAAQAAAABAAAACwAAAAAGGJFFAAAA80lEQVQYGZWPQYrCQBBFuxKJEgjJRHAjWbiJCJIzZDkHmL3METzE3EJx7wG8RcSVOwnEbNyECCYydJKe3w1Kg5uxoLp//X5UVTP2zyCNM8Iw9LuuC9q2rTnnWZ7n98e7KUUcxz3TNL86IdaCsSURLVDPPM/bl2V5lYwCYcYANqgnyD7SZkRzjAssy9pVVcUNmEwI8Y1rKLUWBuBPx3Gm0lMgRgXQ+r4PfoAmoycoiI4oMP0lbmhylq7qiGMFnSF1uEGxbZrmJEH1maIoLr7vH7DTGJ6NvADaoMFPmqbq1/peFEWRXdf1B8Bf13XLJEk49HvxB00aSwAQ4YXIAAAAAElFTkSuQmCC",
     "weapon.boltRender.zatvor.Transform.localPosition": "(0.31, 0.07, 0)",
     "weapon.boltRender.zatvor.gameObject.SetActive": true,
@@ -118,6 +118,6 @@
     "weapon.back.SpriteRenderer.sortingOrder": 15,
     "weapon.back.SpriteRenderer.sprite.pixelPerUnit": "151",
     "weapon.back.SpriteRenderer.sprite.pivotPoint": "(0.47, 0.44)",
-    "version": 17,
+    "version": 18,
     "targetVersion": 209
 }
