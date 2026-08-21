@@ -220,11 +220,11 @@
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<span>Объекты:</span>
 						<span>
-							<img onclick="showSelect('addNewObject')" data-tooltip="Добавить новый объект" src="images/add.png" width="24px" height="24px" style="float: right;cursor: pointer;">
-							<select onclick="addNewComponent(this)" id="addNewObject" style="opacity: 0;pointer-events: none;width: 0;height: 0;" value="">
-								<option value="SpriteRenderer">SpriteRenderer</option>
-								<option value="Transform">Transform</option>
-								<option value="AnimatorSprite" param-path="AnimatorSprite.animations; AnimatorSprite.playStart" param-type="AnimationSprite[]; bool" param-value=";true">AnimatorSprite</option>
+							<select data-tooltip="Добавить новый объект" class="create" onchange="addNewComponent(this)" id="addNewObject" value="">
+								<option value="">Добавить объект:</option>
+								<option value="SpriteRenderer"> • SpriteRenderer</option>
+								<option value="Transform"> • Transform</option>
+								<option value="AnimatorSprite" param-path="AnimatorSprite.animations; AnimatorSprite.playStart" param-type="AnimationSprite[]; bool" param-value=";true"> • AnimatorSprite</option>
 							</select>
 						</span>
 					</div>
