@@ -61,14 +61,14 @@ function onSaveJson(json) {
 	delete json["player.man.gameObject.SetActive"];
 	delete json["player.man.thigh.gameObject.SetActive"];
 	delete json["player.man.thigh.shin.foot.gameObject.SetActive"];
-	delete json["player.man.thigh.shin.foot.Transform.localPosition"];
+	//delete json["player.man.thigh.shin.foot.Transform.localPosition"];
 	delete json["player.man.thigh.shin.gameObject.SetActive"];
-	delete json["player.man.thigh.shin.Transform.localPosition"];
+	//delete json["player.man.thigh.shin.Transform.localPosition"];
 	delete json["player.man.thigh2.gameObject.SetActive"];
 	delete json["player.man.thigh2.shin2.foot2.gameObject.SetActive"];
-	delete json["player.man.thigh2.shin2.foot2.Transform.localPosition"];
+	//delete json["player.man.thigh2.shin2.foot2.Transform.localPosition"];
 	delete json["player.man.thigh2.shin2.gameObject.SetActive"];
-	delete json["player.man.thigh2.shin2.Transform.localPosition"];
+	//delete json["player.man.thigh2.shin2.Transform.localPosition"];
 	delete json["player.man.Transform.localEulerAngles.z"];
 	delete json["player.man.Transform.localPosition"];
 	delete json["player.SpriteRenderer.enabled"];
@@ -400,7 +400,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh.shin.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh.shin.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh.shin.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -409,7 +409,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh2.shin2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh2.shin2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh2.shin2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -418,7 +418,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh.shin.foot.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh.shin.foot.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh.shin.foot.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -427,7 +427,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh2.shin2.foot2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh2.shin2.foot2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh2.shin2.foot2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
