@@ -500,9 +500,10 @@ document.getElementById('sceneFileInput').addEventListener('input', (fileEvent) 
 			propertyInputs.texture.dispatchEvent(fileEvent);
 			updateImageCache(); //Перезагрузка кэша с изображениями
 			renderScene();
+			fileEvent.target.value = ''; //Сбрасываем значение инпута, чтобы этот же файл можно было выбрать снова
 		});
 	};
-	reader.onerror = () => { alert('Failed to read file.'); };
+	reader.onerror = () => { alert('Failed to read file.'); fileEvent.target.value = ''; };
 	reader.readAsDataURL(file);
 	fileEvent.target.value = null; // Сбрасываем значение input, чтобы можно было загрузить тот же файл снова
 });
@@ -692,7 +693,7 @@ canvas.addEventListener('mousedown', (event) => {
 canvas.addEventListener('touchstart', (event) => {
 	event.preventDefault();
 	const touch = event.touches[0];
-	startMove(touch, 2 <= event.touches.length);
+	startMove(touch, 2 <= event.touches?.length);
 }, { passive: false });
 
 function startMove(event, parentMove) {
@@ -877,7 +878,7 @@ canvas.addEventListener('touchend', mouseUp, { passive: false });
 function mouseUp(event) {
 	if (isDragging) {
 		const dragEndObj = dragObject; // Сохраняем объект перетаскивания до сброса состояния drag
-		if (dragEndObj && dragEndObj.canChangePosition === false) {
+		if (dragEndObj && ((dragEndObj.canChangePosition === false && !event.ctrlKey) || dragEndObj.canChangePosition && event.ctrlKey)) {
 			const currentWorldPos = getWorldPosition(dragEndObj.name); // Текущая мировая позиция pivot после временного перемещения мышью
 			const dragDeltaWorld = { x: currentWorldPos.x - dragStartWorldPos.x, y: currentWorldPos.y - dragStartWorldPos.y }; // Мировое смещение объекта за время drag
 			const desiredTopLeftWorld = { x: dragStartTopLeft.x + dragDeltaWorld.x, y: dragStartTopLeft.y + dragDeltaWorld.y }; // Новый top-left, где должна остаться текстура после отпускания
@@ -907,7 +908,7 @@ function mouseUp(event) {
 		isDraggingPivot = false;
 		dragObject = null;
 		// Восстановление localPosition для объектов, которым запрещено менять позицию
-		if (pivotDragObj && pivotDragObj.canChangePosition === false) {
+		if (pivotDragObj && (pivotDragObj.canChangePosition === false && !event.ctrlKey || pivotDragObj.canChangePosition && event.ctrlKey)) { //
 			const fixedChildWorldPositions = sceneObjects // Мировые позиции дочерних объектов до восстановления позиции родителя
 				.filter(child => child.parent != "" && child.parent == pivotDragObj.name && child.name != pivotDragObj.name)
 				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) }));
@@ -961,14 +962,14 @@ function getPinchDistance(touches) {
 	return Math.sqrt(dx * dx + dy * dy);
 }
 function handleTouchStart(event) {
-	if (event.touches.length === 2) {
+	if (event.touches?.length === 2) {
 		isPinching = true;
 		initialPinchDistance = getPinchDistance(event.touches);
 		event.preventDefault();
 	}
 }
 function handleTouchMove(event) {
-	if (isPinching && event.touches.length === 2) {
+	if (isPinching && event.touches?.length === 2) {
 		event.preventDefault();
 		const currentDistance = getPinchDistance(event.touches);
 		if (initialPinchDistance && currentDistance) {
