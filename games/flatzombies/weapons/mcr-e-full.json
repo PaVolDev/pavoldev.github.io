@@ -27,7 +27,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(0.25, -0.1, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.36, -0.11, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.89, 0.2, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.91, 0.14, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.01, 0.18, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.01, 0.18, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAR15",
@@ -81,6 +81,6 @@
     "storeInfo.silencerPosition": "(205, 39)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
