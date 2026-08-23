@@ -83,6 +83,6 @@
     "weapon.WeaponHandPoints.fingerAngle": 0,
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
