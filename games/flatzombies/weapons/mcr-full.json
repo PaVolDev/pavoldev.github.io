@@ -72,7 +72,7 @@
     "weapon.bolt": "(0.01, 0.24, 0)",
     "weapon.flashlight": "(1.56, 0.23, 0)",
     "weapon.automat": true,
-    "weapon.fireRateInMinute": 650,
+    "weapon.fireRateInMinute": 750,
     "weapon.chamberSize": 1,
     "weapon.WeaponHandPoints.fingerPoint": "(0, 0)",
     "weapon.WeaponHandPoints.fingerAngle": 0,
@@ -81,6 +81,6 @@
     "storeInfo.silencerPosition": "(255, 35)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 21,
+    "version": 22,
     "targetVersion": 209
 }
