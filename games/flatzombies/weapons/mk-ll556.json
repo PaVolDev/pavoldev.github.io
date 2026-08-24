@@ -66,7 +66,7 @@
     "weapon.SpriteRenderer.sortingOrder": 17,
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 150,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.52, 0.33)",
-    "storeInfo.silencerGroup": "rifle",
+    "storeInfo.silencerGroup": "",
     "storeInfo.patronListSpaceStep": "2",
     "storeInfo.patronOrderSize": "8",
     "weapon.magazine.Transform.localPosition": "(-0.57, -0.08, 0)",
@@ -110,6 +110,6 @@
     "storeInfo.silencerPosition": "(245, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 38,
+    "version": 39,
     "targetVersion": 209
 }
