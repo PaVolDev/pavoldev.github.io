@@ -5,7 +5,8 @@
     "weapon.caliber": "5.56x45",
     "storeInfo.nameFull": "MK-LL Bullpup Kit (5.56)",
     "storeInfo.magazineSize": 30,
-    "weapon.reloadScaleTime": "1.28",
+    "storeInfo.patronOrderSize": "8",
+    "storeInfo.patronListSpaceStep": "2",
     "weapon.gunFlash.AnimatorSprite.animations": [
         {
             "name": "asd",
@@ -38,8 +39,7 @@
             ]
         }
     ],
-    "storeInfo.patronListSpaceStep": "2",
-    "storeInfo.patronOrderSize": "8",
+    "weapon.reloadScaleTime": "1.28",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -111,6 +111,6 @@
     "storeInfo.silencerPosition": "(245, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 41,
+    "version": 42,
     "targetVersion": 209
 }
