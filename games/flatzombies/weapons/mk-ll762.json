@@ -5,8 +5,8 @@
     "weapon.caliber": "7.62x51",
     "storeInfo.nameFull": "MK-LL Bullpup Kit (7.62)",
     "storeInfo.magazineSize": 20,
-    "storeInfo.patronOrderSize": "8",
     "storeInfo.patronListSpaceStep": "2",
+    "storeInfo.patronOrderSize": "8",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-1.12, -0.01, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.09, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
-    "storeInfo.author": "MK-LL 7.62",
+    "storeInfo.author": "Just Another Evan",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
@@ -78,6 +78,6 @@
     "storeInfo.silencerPosition": "(238, 46)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 28,
+    "version": 29,
     "targetVersion": 209
 }
