@@ -5,6 +5,8 @@
     "weapon.caliber": "5.56x45",
     "storeInfo.nameFull": "MK-LL Bullpup Kit (5.56)",
     "storeInfo.magazineSize": 30,
+    "storeInfo.patronOrderSize": "8",
+    "storeInfo.patronListSpaceStep": "2",
     "weapon.gunFlash.AnimatorSprite.animations": [
         {
             "name": "asd",
@@ -59,7 +61,7 @@
     "weapon.WeaponHandPoints.buttstockReload": "(-1.12, -0.01, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.09, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
-    "storeInfo.author": "MK-LL 5.56",
+    "storeInfo.author": "Just Another Evan",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
     "weapon.SpriteRenderer.enabled": true,
@@ -67,8 +69,6 @@
     "weapon.SpriteRenderer.sprite.pixelPerUnit": 150,
     "weapon.SpriteRenderer.sprite.pivotPoint": "(0.52, 0.33)",
     "storeInfo.silencerGroup": "",
-    "storeInfo.patronListSpaceStep": "2",
-    "storeInfo.patronOrderSize": "8",
     "weapon.magazine.Transform.localPosition": "(-0.57, -0.08, 0)",
     "weapon.magazine.gameObject.SetActive": true,
     "weapon.magazine.SpriteRenderer.enabled": true,
@@ -110,6 +110,6 @@
     "storeInfo.silencerPosition": "(245, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 39,
+    "version": 40,
     "targetVersion": 209
 }
