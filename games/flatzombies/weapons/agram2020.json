@@ -4,7 +4,7 @@
     "type": "weapon",
     "weapon.caliber": "9x19",
     "storeInfo.nameFull": "Agram 2020",
-    "storeInfo.magazineSize": 30,
+    "storeInfo.magazineSize": 35,
     "weapon.reloadScaleTime": "1.4",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
@@ -54,7 +54,7 @@
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
-    "weapon.magazineMax": 30,
+    "weapon.magazineMax": 35,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
     "weapon.shellDrop.position": "(0.19, 0.21, 0)",
@@ -74,6 +74,6 @@
     "storeInfo.editorIconUpdateMode": "onSave",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
