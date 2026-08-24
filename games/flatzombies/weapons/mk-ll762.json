@@ -5,7 +5,7 @@
     "weapon.caliber": "7.62x51",
     "storeInfo.nameFull": "MK-LL Bullpup Kit (7.62)",
     "storeInfo.magazineSize": 20,
-    "weapon.reloadScaleTime": "1.62",
+    "weapon.reloadScaleTime": "1.43",
     "storeInfo.patronOrderSize": "8",
     "storeInfo.patronListSpaceStep": "2",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
@@ -79,6 +79,6 @@
     "storeInfo.silencerPosition": "(238, 46)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 34,
+    "version": 35,
     "targetVersion": 209
 }
