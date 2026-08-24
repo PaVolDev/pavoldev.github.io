@@ -5,7 +5,7 @@
     "weapon.caliber": "7.62x35",
     "storeInfo.nameFull": "MCR-E Lancer",
     "storeInfo.magazineSize": 30,
-    "weapon.reloadScaleTime": "1.4",
+    "weapon.WeaponSilencerMod.bolt": "sprite",
     "weapon.gunFlash.AnimatorSprite.animations": [
         {
             "name": "asd",
@@ -43,7 +43,7 @@
             ]
         }
     ],
-    "weapon.WeaponSilencerMod.bolt": "sprite",
+    "weapon.reloadScaleTime": "1.4",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -115,6 +115,6 @@
     "storeInfo.silencerPosition": "(268, 40)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 29,
+    "version": 30,
     "targetVersion": 209
 }
