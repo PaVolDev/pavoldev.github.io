@@ -5,7 +5,7 @@
     "weapon.caliber": "7.62x35",
     "storeInfo.nameFull": "MCR Dagger 6.75",
     "storeInfo.magazineSize": 30,
-    "weapon.reloadScaleTime": "1.45",
+    "weapon.reloadScaleTime": "1.4",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -77,6 +77,6 @@
     "storeInfo.silencerPosition": "(205, 34)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 25,
+    "version": 26,
     "targetVersion": 209
 }
