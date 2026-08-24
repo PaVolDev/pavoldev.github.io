@@ -21,7 +21,7 @@
     "damage": 2.5,
     "distance": 24,
     "impulse": 27.5,
-    "stopPower": 0.13,
+    "stopPower": 0.25,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 2,
@@ -30,26 +30,7 @@
         "maxDist": 100,
         "findExitPoint": true
     },
-    "penetrationDamage": [
-        {
-            "materialName": "armor",
-            "scaleFirst": "0.35",
-            "scaleThrough": 0.01,
-            "stopBulletDamage": 0
-        },
-        {
-            "materialName": "metal",
-            "scaleFirst": "0.05",
-            "scaleThrough": 0.01,
-            "stopBulletDamage": 0
-        },
-        {
-            "materialName": "skin",
-            "scaleFirst": 1,
-            "scaleThrough": "0.35",
-            "stopBulletDamage": 0
-        }
-    ],
-    "version": 7,
+    "penetrationDamage": [],
+    "version": 8,
     "targetVersion": 209
 }
