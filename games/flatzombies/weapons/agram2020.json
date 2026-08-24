@@ -73,6 +73,6 @@
     "storeInfo.editorIconUpdateMode": "onSave",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
