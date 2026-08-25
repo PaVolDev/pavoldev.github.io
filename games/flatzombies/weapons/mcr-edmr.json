@@ -37,7 +37,7 @@
             ]
         }
     ],
-    "weapon.reloadScaleTime": "1.4",
+    "weapon.reloadScaleTime": "1.6",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -109,6 +109,6 @@
     "storeInfo.silencerPosition": "(337, 49)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
