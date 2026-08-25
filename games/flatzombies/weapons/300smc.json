@@ -30,6 +30,7 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 5,
+    "penetrationDamage": [],
+    "version": 6,
     "targetVersion": 209
 }
