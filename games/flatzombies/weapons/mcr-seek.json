@@ -3,7 +3,7 @@
     "idTemplate": "mk18",
     "type": "weapon",
     "weapon.caliber": "5.56x45",
-    "storeInfo.nameFull": "S.E.E.K. x HK416D",
+    "storeInfo.nameFull": "Service Extension & Enhancement Kit",
     "storeInfo.magazineSize": 35,
     "weapon.reloadScaleTime": "1.4",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
@@ -77,6 +77,6 @@
     "storeInfo.silencerPosition": "(268, 46)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 4,
+    "version": 5,
     "targetVersion": 209
 }
