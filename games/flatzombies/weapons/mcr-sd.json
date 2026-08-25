@@ -56,7 +56,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(0.25, -0.1, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.36, -0.11, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.95, 0.24, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.94, 0.24, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.99, 0.05, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.93, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAR15",
@@ -84,7 +84,7 @@
     "weapon.handgrip.SpriteRenderer.sprite.pivotPoint": "(0.59, 0.98)",
     "weapon.WeaponSilencerMod.localPoint": "(0.56, -0.35, 0)",
     "weapon.laserPosition": "(0.8, 0.38, 0)",
-    "weapon.gunFlash.Transform.localPosition": "(1.66, 0.21, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(1.77, 0.21, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
@@ -109,6 +109,6 @@
     "storeInfo.silencerPosition": "(172, 91)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
