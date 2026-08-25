@@ -95,7 +95,7 @@
     "weapon.magazineMax": 30,
     "weapon.magazineStep": 0,
     "weapon.chamberAnimationStep": 1,
-    "weapon.shellDrop.position": "(0.22, 0.26, 0)",
+    "weapon.shellDrop.position": "(0.18, 0.26, 0)",
     "weapon.shellDrop.angle": 100,
     "weapon.shellDrop.quantity": 1,
     "weapon.recoilSteps": 12,
@@ -113,6 +113,6 @@
     "storeInfo.silencerPosition": "(266, 39)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
