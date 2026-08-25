@@ -98,7 +98,7 @@
     "weapon.handgrip.SpriteRenderer.sprite.pivotPoint": "(0.35, 0.93)",
     "weapon.WeaponSilencerMod.localPoint": "(1.17, 0.22, 0)",
     "weapon.laserPosition": "(0.61, 0.46, 0)",
-    "weapon.gunFlash.Transform.localPosition": "(1.2, 0.22, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(1.4, 0.22, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
@@ -123,6 +123,6 @@
     "storeInfo.silencerPosition": "(246, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 11,
+    "version": 12,
     "targetVersion": 209
 }
