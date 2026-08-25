@@ -32,7 +32,7 @@
                 {
                     "texture": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAXCAYAAAB50g0VAAAFiklEQVR4AayWy05jRxCGfc7xBV+wY/BlBsEkc0mUTbLLo8xyNiAQICHBG/AASCwQFyEhsectsso+E4VolAkaMHcwNtjGxvbJ93c4RwYMDJmxutzdVdVVf1VXdx878BV/b9++dcbHx3Ojo6M/jI2N/QT9ODEx8fPk5OQv6pm/mJqaijzF5VMAWhgW0XVtViaTSbbb7Ze2bb+xLOuV4zgvXdd9AW+QeX8wGIy3Wq0cgYS7WujC/GyAGA0Rfe/s7KzWWGQjBWXgJZGFIRswMUD1AiYCad6DzxAUAFiy2WxGoXA2m/1fAC05x5GDQT9TmkPhVCqVvrq66js5OQlNT0+nyEYWQH3wXpC5l8gzZKrN2jrgXPobDZ4N+DzkxmIxyX0fNxRvTZQNsazh4eHE4eFhLp1O58hMP3WTUHaINtvf3z8QDodfo5ir1+v5i4sLgWUn7SB/WfGRP6ePAbIGtRh3ayGAJqvV6nP566Zwm2cAkiGbjCTIRpKsaIvSbEUeMNlrXoaFCWQpMvAtYJxQKFRm28rwavTKSBobefSqgNgRH1JGYfnNRneAAPKsHyIBjx4YA3BjY4M1bd8YEwvjjghDYHJ65YJsuThoMK4TwEmpVNqjP0XvEP4B40uUpVOBt8V4lzUaG9vwLOZh+l76ZK1WG8DWg80ARMNNJBJ1wBhDzP0G2B4MCmybvoygBJieSCTyDeVge2vQayK/IONmexm3GZfIZgEwB1CFMWxXtRdh4DA3Bwib9zYPYKBQKJzLyW1NeGEIW1YVJ+cYZtq2AJlCN4bgiv7e1mg0JC+iv4PSPvoN6BxbDSg4MjLSJ5qZmYnqkKJzo/kA2WZFXu2UYki16WDoEn6RjEiHYSDAWGszAmwYD/yx9S5R0TVPAfo3a/bpBbCF7YyIgzO4s7MzwAFNcSZ0kxiLcmIG+sNpU71H1BC23AuMnyDzwXlyhA6OdNd5rEd71mCu3eSvBmIdLrOGOfmwYhy0rK4sshmUoBOgBaDOeUAGoEsW3wCuhR4hU0150xs9zuQ0zV+uG1G/KbIXpXekq8UEbFHfPRxAU58+oHfv3sVQUF3RfXmTQ8D3EnQvY2XmDuEljTyP3nMymwKoDmKxUqkczM/Pq6wCBqD2PBqN6g70957FX9zITpDMGR8PGQOc75cdq6+vrwuc2X6zmNciSpTxh4w8VYYjObjC+Z2ry7PFdraQn0A63SXqXIcyx24Kiykdm2IkUDspobfwa/UAaOD8XoDyQ4YFUhe/Agqg73An5znNUcltPf7UgOpP888ism3x3OldjVA3/vbcXoyeDpcPED+VWzp6+sxp7eSTffHMdWPzIUCgLZPOTiVvjBNLIBSpeub6KHiFs9fwXhHx92zBG2TfiRgPUfhxZAl08sz9Tyt4egz0VHrmA/Ba0Dlry50EqLqUVINtBH5kjNuAaEICplOdA4SuiTQLhhj3Qeb5w7C++fRkRQATF8FLQkMAy0I+ONbqm9CFd4Zzc6cSSJP53urq6t7S0tJ+J62trZ3q8VANCmARZb2Vl3zB6LY3lyiptnGqD4cyTu9sBzxFr6fLI+OYAPR29wCEoetvsUBi8xJQ3geE/BbFv4+UwQB3Tm1lZWWXSLZBXqTfp1C3MfQPTv4C5HvmfzA/wJDeVpE+Gg6Q+YSswHwX4KcEXEb/lLH0zAGAp2AFuAhfXzt/LiwsmK1kbddmAF5LZMSna9CHg4ODRwBuzs3NVePx+CZOfke/AMmJaqoMKEPiJZPJ98vLy7/yGvzG/CO0DRXIXAnALUpHXz3Fo6OjT4+BY91/F7UG9xHXkCI2wAFZWVxc/MSlvomzD5TDx7Ozs62zazo+Pt4h0zVsuQoQoMVcLnfIPn+At8m6Lb4Bd589e3ZMfd04LMi7tn8BAAD//5lAU1kAAAAGSURBVAMAKKlpzCOg1CUAAAAASUVORK5CYII=",
                     "pivotPoint": "(0.5, 0.5)",
-                    "pixelPerUnit": 100
+                    "pixelPerUnit": "20"
                 }
             ]
         },
@@ -119,6 +119,6 @@
     "storeInfo.silencerPosition": "(246, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 5,
+    "version": 6,
     "targetVersion": 209
 }
