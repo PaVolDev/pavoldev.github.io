@@ -30,6 +30,6 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
