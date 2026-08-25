@@ -73,7 +73,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(-0.55, -0.14, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(-0.59, -0.14, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.58, 0.16, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.55, 0.14, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.12, -0.01, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.09, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAK",
@@ -127,6 +127,6 @@
     "storeInfo.silencerPosition": "(246, 43)",
     "weapon.LineRenderer.startColor": "#66ff78",
     "weapon.LineRenderer.endColor": "#66ff78",
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
