@@ -29,7 +29,7 @@
     "weapon.WeaponHandPoints.magazinePoint": "(0.36, -0.11, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(0.83, 0.15, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.86, 0.05, 0)",
-    "weapon.WeaponHandPoints.buttstockPoint": "(-0.86, 0.15, 0)",
+    "weapon.WeaponHandPoints.buttstockPoint": "(-0.86, 0.21, 0)",
     "weapon.WeaponHandPoints.weaponType": "rifleAR15",
     "storeInfo.author": "Just Another Evan",
     "storeInfo.authorURL": "https://",
@@ -81,6 +81,6 @@
     "storeInfo.silencerPosition": "(255, 35)",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
