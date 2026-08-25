@@ -5,9 +5,6 @@
     "weapon.caliber": "5.56x45",
     "storeInfo.nameFull": "MK-LL Bullpup Kit (5.56)",
     "storeInfo.magazineSize": 35,
-    "storeInfo.patronListSpaceStep": "2",
-    "storeInfo.patronOrderSize": "8",
-    "weapon.reloadScaleTime": "1.6",
     "weapon.gunFlash.AnimatorSprite.animations": [
         {
             "name": "asd",
@@ -52,6 +49,9 @@
             "frames": []
         }
     ],
+    "weapon.reloadScaleTime": "1.6",
+    "storeInfo.patronOrderSize": "8",
+    "storeInfo.patronListSpaceStep": "2",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -98,7 +98,7 @@
     "weapon.handgrip.SpriteRenderer.sprite.pivotPoint": "(0.35, 0.93)",
     "weapon.WeaponSilencerMod.localPoint": "(1.17, 0.22, 0)",
     "weapon.laserPosition": "(0.61, 0.46, 0)",
-    "weapon.gunFlash.Transform.localPosition": "(1.4, 0.22, 0)",
+    "weapon.gunFlash.Transform.localPosition": "(1.75, 0.21, 0)",
     "weapon.gunFlash.gameObject.SetActive": true,
     "weapon.gunFlash.Transform.localEulerAngles.z": 0,
     "weapon.shotAnimations[0].animation": "fire",
@@ -123,6 +123,6 @@
     "storeInfo.silencerPosition": "(246, 43)",
     "weapon.LineRenderer.startColor": "#8dff99",
     "weapon.LineRenderer.endColor": "#8dff99",
-    "version": 15,
+    "version": 16,
     "targetVersion": 209
 }
