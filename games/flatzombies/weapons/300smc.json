@@ -21,7 +21,7 @@
     "damage": 10,
     "distance": 24,
     "impulse": 25,
-    "stopPower": "0.05",
+    "stopPower": "0.5",
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 7,
+    "version": 8,
     "targetVersion": 209
 }
