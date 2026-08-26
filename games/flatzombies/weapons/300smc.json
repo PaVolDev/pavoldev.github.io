@@ -1,6 +1,6 @@
 {
     "id": "300smc",
-    "idTemplate": "7.62x51",
+    "idTemplate": "5.7x28A",
     "type": "cartridge",
     "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAAAUCAYAAACDIGNiAAABeUlEQVR4AeyWQaqDMBCGY27gzhN4IEHe3hO4eSC4FoS38QTuH4IH8gTuPEIef2FKXhqshrRN2il8TJyOk5n5k1Ip+BPtBOQ0TQroHXRdd/HBHyvjOCqg9/Vua5llmQBorK5rBbCGL2bQA4CArgewKApFIFdoXH820WRoxfmqx/UQ5nkuiKZp1Bl81b6XR6ZpKoAZBF/MmP08+3lPaF+1XG+er4Sc5/4EbMLef+s2gsW7nclLPKagR4qQ27YJYAbDFzNmP7E962L+/E7KVj/fPNtUAvRBQILKe6B4tAVb3xOAiMjJ4mEKkcLiRSjc91eZoGwWD1OIAAhGULksHk0iMNv3fUJANFt5LJ5tKi/wkVBkj5TA4h2ZkucYEki3Llt8hHjrugoXlmURrujCmGsXoWzvSGqqqqrLPxgKIn+slvrwZed5Ts7ga9+9PP9u3jAMCdh7IYjvThSBQ1mWZeKCLtaJLZ8WKqkpfce2bZ2apVwhWIgG9L7ebf0HAAD//09WCm0AAAAGSURBVAMADts7Vmnb3XUAAAAASUVORK5CYII=",
     "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAAAUCAYAAACDIGNiAAABeUlEQVR4AeyWQaqDMBCGY27gzhN4IEHe3hO4eSC4FoS38QTuH4IH8gTuPEIef2FKXhqshrRN2il8TJyOk5n5k1Ip+BPtBOQ0TQroHXRdd/HBHyvjOCqg9/Vua5llmQBorK5rBbCGL2bQA4CArgewKApFIFdoXH820WRoxfmqx/UQ5nkuiKZp1Bl81b6XR6ZpKoAZBF/MmP08+3lPaF+1XG+er4Sc5/4EbMLef+s2gsW7nclLPKagR4qQ27YJYAbDFzNmP7E962L+/E7KVj/fPNtUAvRBQILKe6B4tAVb3xOAiMjJ4mEKkcLiRSjc91eZoGwWD1OIAAhGULksHk0iMNv3fUJANFt5LJ5tKi/wkVBkj5TA4h2ZkucYEki3Llt8hHjrugoXlmURrujCmGsXoWzvSGqqqqrLPxgKIn+slvrwZed5Ts7ga9+9PP9u3jAMCdh7IYjvThSBQ1mWZeKCLtaJLZ8WKqkpfce2bZ2apVwhWIgG9L7ebf0HAAD//09WCm0AAAAGSURBVAMADts7Vmnb3XUAAAAASUVORK5CYII=",
@@ -12,7 +12,7 @@
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "120",
-    "iconButtonSprite.pivotPoint": "(0.7, 0.5)",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": "120",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
     "bullets": 1,
@@ -20,8 +20,8 @@
     "angleSpread": 0,
     "damage": 10,
     "distance": 24,
-    "impulse": 25,
-    "stopPower": "0.8",
+    "impulse": 20,
+    "stopPower": 0.05,
     "penetration": {
         "modeHit": "FIRST",
         "minHits": 1,
@@ -30,6 +30,26 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 14,
+    "penetrationDamage": [
+        {
+            "scaleFirst": 2,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "armor"
+        },
+        {
+            "scaleFirst": 2,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "metal"
+        },
+        {
+            "scaleFirst": 1,
+            "scaleThrough": 0,
+            "stopBulletDamage": 0,
+            "materialName": "skin"
+        }
+    ],
+    "version": 15,
     "targetVersion": 209
 }
