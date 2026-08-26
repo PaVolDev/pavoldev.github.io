@@ -69,7 +69,7 @@
     "weapon.WeaponHandPoints.handInsertPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(-0.59, -0.22, 0)",
-    "weapon.WeaponHandPoints.magazinePoint": "(-0.68, -0.28, 0)",
+    "weapon.WeaponHandPoints.magazinePoint": "(-0.6, -0.25, 0)",
     "weapon.WeaponHandPoints.handguardPoint": "(1.1, 0.01, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.06, 0, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.01, 0.21, 0)",
@@ -123,6 +123,6 @@
     "storeInfo.silencerPosition": "(383, 57)",
     "weapon.LineRenderer.startColor": "#8dff99",
     "weapon.LineRenderer.endColor": "#8dff99",
-    "version": 16,
+    "version": 17,
     "targetVersion": 209
 }
