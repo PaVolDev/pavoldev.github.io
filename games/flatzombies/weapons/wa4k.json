@@ -49,7 +49,7 @@
             "frames": []
         }
     ],
-    "weapon.reloadScaleTime": "1.6",
+    "weapon.reloadScaleTime": "1.55",
     "storeInfo.patronOrderSize": "8",
     "storeInfo.patronListSpaceStep": "2",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
@@ -123,6 +123,6 @@
     "storeInfo.silencerPosition": "(383, 57)",
     "weapon.LineRenderer.startColor": "#8dff99",
     "weapon.LineRenderer.endColor": "#8dff99",
-    "version": 17,
+    "version": 18,
     "targetVersion": 209
 }
