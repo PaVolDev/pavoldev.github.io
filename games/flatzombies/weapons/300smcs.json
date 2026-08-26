@@ -40,16 +40,16 @@
         {
             "materialName": "armor",
             "scaleFirst": "0.2",
-            "scaleThrough": "1",
+            "scaleThrough": "2",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
             "scaleFirst": "0.2",
-            "scaleThrough": "1",
+            "scaleThrough": "2",
             "stopBulletDamage": 0
         }
     ],
-    "version": 17,
+    "version": 18,
     "targetVersion": 209
 }
