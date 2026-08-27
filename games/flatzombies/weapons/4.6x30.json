@@ -54,6 +54,6 @@
     "noiseVolume": 1.5,
     "velocityMax": 10,
     "angularMax": 2000,
-    "version": 1,
+    "version": 2,
     "targetVersion": 209
 }
