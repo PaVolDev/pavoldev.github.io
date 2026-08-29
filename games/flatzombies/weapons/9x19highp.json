@@ -8,7 +8,7 @@
     "uiName": "9x19+P",
     "author": "3497856733",
     "authorURL": "",
-    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAANCAYAAACzbK7QAAACB0lEQVR4AWyTPXLbMBCFl8s/ECTVp0qZu6jMTJpYOkBGllOlcJ975Ci5BK+RSUWQIxKC9y0MifZYM9+8tz9YgQDJT0/HIPw+HL5+Op0enh8fH8Lp9F2BB4ihYOvP50MAsl4VHhyP38J+v1e4KArKc/5ZFP5vWRbPiBN5nkstJ8RbjxikHDNr3zYuy5KQZ2MM1XXdVVX1RejFE3IA/iOkj96DPuQwGGvhoWytpbbtKGorPoK467pb3LbtrQc1xKBpGgIYBkXO2paw1sps7vteAyjoup6giU7+BD4pBiCGAuS3YOhu19Nut9O53DRGd4ACFljbaJx8VKu7v/dYfbIUoycR/6zXeiNPx0QZZVmmF0Lyy7JMPTPyfKvhAvXSmF/r/OZiUQe4/KLICXcBz5fLhZZloctlUfV+pXVdNYZ67zX2kvfiP+J6vdIdv/FX4nEcCTg30jRN5Bxw6hHP86zeOWgk5aIihzWT9MGDSWeiztsh8Hdio3OO0DhNTgbAYxCYZTMxh55Uhx9HpzVsnEMI5P01yCMKPtyPYNWjwTEB5KHLsupRruvyph5r8ZjnGRuYdGNcVWUoy+K/XMwf5vyfaMhzVpg5MGdB7l2BZybNseTRt9XUj83KvWKzQT60drDW/Or7zz/ktTobY4e6jsjHI94oVVWLJrY5M8Saea0biauhLMtB3qLhBQAA///IcKNWAAAABklEQVQDANjqkyJ++zdTAAAAAElFTkSuQmCC",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAICAYAAAAm06XyAAABGElEQVR4AVzQQW6DMBAF0LGDASM1semqZ+hRss6qVF1lmTT36JV6hi56Bx8Am8YYAdOxEW0UiSf/+YxAwC+XN3M8Ht5Pp+ab4L3z+RXvNc0B9/s9cinlkxDZh5TVc1VVEFEHq7IsYRW7oihpR5IKeF3XTGst6lrHDDT/oR5WSinY7XYQT63r1PPt9iGV8Uak1LKwZJWWb7PWih7+mHo+jhNM0wTzHM2UZ8ozACAgLmhIF2MMGGPAecSBt20LkbUOrLXgnIOu6yh3lLuU4+xcR51LnXOWsgU+DMM8DMGHEMYQeux7j957DMFjn/KV5iv2/cL7H6SXJPS3qy8py5eiyD/zvDCREMJsNpkRIsrp/JdluQHghj7J/AIAAP//7LrvmwAAAAZJREFUAwBUW7ZZMszSpAAAAABJRU5ErkJggg==",
     "shellSkin.pixelPerUnit": 200,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
     "iconButtonSprite.pixelPerUnit": "120",
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
