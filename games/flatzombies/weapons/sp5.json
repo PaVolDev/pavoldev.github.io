@@ -4,7 +4,7 @@
     "type": "cartridge",
     "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAAB6ElEQVR4AeyXMUvDQBSA3wuKLqL/wPpLTHEyRdFBFxFNBQcRGwQHUbAOVUHBVgQnk7h2UsQ6CNZOrv4D6y8QBSdLnnlprqQlxZRWiG0OPl7y7nLcfXlciJQ3Mqm8niEG3ObNcT5MmLmd16vczpK71FAECYjSYiUXJ1tFxpsTfaGJiDFCNIXMvH4wHoS/XL8EgCMgGqIMjDcn+sIWXZkA9BSE+8PFg5u5icf7XHJPUDhTx5l2t2ZLbHeK//G8NdC3bZU/4kSQJhew8IkpZJNURS0WsmqxVck9IxElDPC2UQZAuVHyXVZ9tyWf3p2vjIJP6xmJPnsPnMLq8aZhhcrVSlXrPmyRxMAqxUCuVDRFdT4crQ5HEoWbFqOozu/BihlJbFFe43BEeIkkNloJfn9NSDOTKX0/khhcmj2SynblpakPY4qmzyZSxo2dhEgiW/gdp+oUzRjjykusX755H+kGid79NL0mi5r2AZDz18NVxoBEMqNoOrrUqs5vki6QSI4AIaJZtD6/EjDUf8tyBK4gW5QRVzQjzlXGKBtGifET5peTCKAMbrMPStnBk3O7QhjI7JcoNp/cjQdhKp0vzD4+T7McQac2Zf8M4bJ4e2ubxyUGAWs50Rei6Mhb3sioC+uZurOpU1JanecHAAD//4JZbfYAAAAGSURBVAMAaN3IIYLrX/kAAAAASUVORK5CYII=",
     "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAAB6ElEQVR4AeyXMUvDQBSA3wuKLqL/wPpLTHEyRdFBFxFNBQcRGwQHUbAOVUHBVgQnk7h2UsQ6CNZOrv4D6y8QBSdLnnlprqQlxZRWiG0OPl7y7nLcfXlciJQ3Mqm8niEG3ObNcT5MmLmd16vczpK71FAECYjSYiUXJ1tFxpsTfaGJiDFCNIXMvH4wHoS/XL8EgCMgGqIMjDcn+sIWXZkA9BSE+8PFg5u5icf7XHJPUDhTx5l2t2ZLbHeK//G8NdC3bZU/4kSQJhew8IkpZJNURS0WsmqxVck9IxElDPC2UQZAuVHyXVZ9tyWf3p2vjIJP6xmJPnsPnMLq8aZhhcrVSlXrPmyRxMAqxUCuVDRFdT4crQ5HEoWbFqOozu/BihlJbFFe43BEeIkkNloJfn9NSDOTKX0/khhcmj2SynblpakPY4qmzyZSxo2dhEgiW/gdp+oUzRjjykusX755H+kGid79NL0mi5r2AZDz18NVxoBEMqNoOrrUqs5vki6QSI4AIaJZtD6/EjDUf8tyBK4gW5QRVzQjzlXGKBtGifET5peTCKAMbrMPStnBk3O7QhjI7JcoNp/cjQdhKp0vzD4+T7McQac2Zf8M4bJ4e2ubxyUGAWs50Rei6Mhb3sioC+uZurOpU1JanecHAAD//4JZbfYAAAAGSURBVAMAaN3IIYLrX/kAAAAASUVORK5CYII=",
-    "caliberName": "9x39sp",
+    "caliberName": "9x39",
     "uiName": "9x39 SP-5",
     "author": "Heavy Onee-San",
     "authorURL": "",
@@ -31,6 +31,6 @@
         "findExitPoint": true
     },
     "penetrationDamage": [],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
