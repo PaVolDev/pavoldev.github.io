@@ -9,19 +9,19 @@
     "penetrationDamage": [
         {
             "materialName": "armor",
-            "scaleFirst": "1.5",
+            "scaleFirst": "0.95",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
-            "scaleFirst": "1.5",
+            "scaleFirst": "0.95",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "skin",
-            "scaleFirst": "0.75",
+            "scaleFirst": "0.9",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         }
@@ -50,6 +50,6 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
