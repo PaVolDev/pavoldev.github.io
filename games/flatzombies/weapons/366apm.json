@@ -9,13 +9,13 @@
     "penetrationDamage": [
         {
             "materialName": "armor",
-            "scaleFirst": "1",
+            "scaleFirst": "1.25",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
         {
             "materialName": "metal",
-            "scaleFirst": "1",
+            "scaleFirst": "1.25",
             "scaleThrough": "0",
             "stopBulletDamage": 0
         },
@@ -38,7 +38,7 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 7.3,
+    "damage": 7.6,
     "distance": 24,
     "impulse": 25,
     "stopPower": "0.74",
@@ -50,6 +50,6 @@
         "maxDist": 0,
         "findExitPoint": true
     },
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
