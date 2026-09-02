@@ -2,8 +2,8 @@
     "id": "9x39bp",
     "idTemplate": "9x39",
     "type": "cartridge",
-    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAABm0lEQVR4AeyYQU7CQBSG35vEtd5ATuAVKEvRtRsXUtwZIsTEFSbWRd3oAohxZ4tbtkZcAkfwBOoRvADPvmEGm1LaEjCpMA0fr/3fUGa+btqKnu/We55LDKgtnHGeJ7rt5sdzu3mippqLImhMjp7J4/3lgAlnupebilggxK6W2fNui1n4y/kLRNzRfxDsW4pppnu5q0omAA2z8NauXkfpd+wis+zaxLIn+C+/f6+/OAwROKSAMQ6ZfqtKE+xBv2UPtOysa9sYidmEoAWA1lQyAMGEoAC8Ppzuyp3Il5EYETLnUMo8qD19xfWNxDgr8zOWGe1uG4lRJenHLDLMt5GYLi11hJGYqmhmAAZJGDASAyMLfFjezHAjcUZJbMDymNjmOkiMXdhiIcmnHkRwGBBkSQBYHANJ2xpIJCkguCdOrHudQ4uRcpSkcsPDCX6p3PBL+3Xvhimf+yMmSVy4J4joUweEZElCme7lro6puyWocFS9KmWBpURZ1ZqCFxCioq/i2cXdiEH8zXQvN1XJqzRc+7jmxj5BrEpO1vP8AAAA//9FZTRuAAAABklEQVQDAAmEnB99ql9bAAAAAElFTkSuQmCC",
-    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAABm0lEQVR4AeyYQU7CQBSG35vEtd5ATuAVKEvRtRsXUtwZIsTEFSbWRd3oAohxZ4tbtkZcAkfwBOoRvADPvmEGm1LaEjCpMA0fr/3fUGa+btqKnu/We55LDKgtnHGeJ7rt5sdzu3mippqLImhMjp7J4/3lgAlnupebilggxK6W2fNui1n4y/kLRNzRfxDsW4pppnu5q0omAA2z8NauXkfpd+wis+zaxLIn+C+/f6+/OAwROKSAMQ6ZfqtKE+xBv2UPtOysa9sYidmEoAWA1lQyAMGEoAC8Ppzuyp3Il5EYETLnUMo8qD19xfWNxDgr8zOWGe1uG4lRJenHLDLMt5GYLi11hJGYqmhmAAZJGDASAyMLfFjezHAjcUZJbMDymNjmOkiMXdhiIcmnHkRwGBBkSQBYHANJ2xpIJCkguCdOrHudQ4uRcpSkcsPDCX6p3PBL+3Xvhimf+yMmSVy4J4joUweEZElCme7lro6puyWocFS9KmWBpURZ1ZqCFxCioq/i2cXdiEH8zXQvN1XJqzRc+7jmxj5BrEpO1vP8AAAA//9FZTRuAAAABklEQVQDAAmEnB99ql9bAAAAAElFTkSuQmCC",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAAAQCAYAAAC4LkmaAAABjElEQVR4AeyXsU6DYBCA7/7E3TewT+ArlI5WZxcHS91MYxsTp5qIAy46tI1xE+ra1VhH2kfwCdQHkZP74QfCgH+piZj+pB9H7+4H7mMBMfPd/sxziYFky+c4Xyem4+H703h4nNzqnwURfpGjrv5wdxEw+Zyq1SYiNghxqgTOvJumDr99/0II3FYnRUSLyedUrXYxEQhACx1ex92rIvOJ3WSqzCaqLPqPa976zw5DBA4lQIgLZj7qUowdzEd2oASXzbkx4sokZDW0ANBKxQIQxEQB4OX+ZEceRDsjLpKg8ZMC93uPn6rXiFMm9CILlJ1GnNSw0k7KM+JWcpY1G3GZC90j5EYjji3oI6VxuxHHFn6GhTFppxEnVZD8+kAEhwFBlgSAZTFQ3ErEFVvr+p/k0NF7amncnRxYjBSSiGkPPIzxW+2B39rre9dM+8xfMmUTCwrpQzUQkiXJ5VStdjGk6ZagxmH3sqUDiyiyzkwCheiop3V6frtk8jlVq01MhHUGrn3Uc9M3+XUkVFn7DQAA//8ybtChAAAABklEQVQDAKcImB9cXRaNAAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAQCAYAAABui5P/AAABk0lEQVR4AeyXQU7CQBSG35vEtd5ATuAVKEvRtRsXUtwZIsTEFSbWRd3oAohxZ4tbtkZcAkfwBOoRPIB98koHx5Y2Y4pJxWn48tr/zZSZDxatGPhuc+C5xEB0qBnnRaLfbb/cd9sH0VILUUTwQY5cye316YhRM9krTEUsEWJfyhx4l2UdfnP9QgjckF+AiBajZrJXuBrJBKCxDk/d+nmcYc8uM3n3JvLe4K/Mf24+OAwROBQBAY6ZYadOM+zRsGOPpGzdvf0biXpC0AJAay4ZgOALeLw53JxeJz5GYkJJakA7jbvXRV0jcZGV7Iz/neqIdSNR1aF/rop8NxL1xaWONBJT1WQ2UO0aiaoNvfNvAnmKkcgW9GB5TGL0KkhMbOrnAYVvPYjgMCDICgFgaRJIO1ZAIoUCps/EmXWrt2sxoZxIUrXl4Qy/Um35le2md8FUj/0JkyYtngsKaP4ASUhWiJLFJxTmOqD+mqDSXv2sogNLibOsvQgUoiZ/xaOTqwmjZrJXmBrJq7Vce7/hvi1LRJ77fAIAAP//CsS7OAAAAAZJREFUAwCnmpkfu9FLUgAAAABJRU5ErkJggg==",
     "caliberName": "9x39",
     "uiName": "9x39 7N12 BP",
     "author": "imjustanooby",
@@ -18,7 +18,7 @@
     "bullets": 1,
     "angleRandom": 0,
     "angleSpread": 0,
-    "damage": 3.25,
+    "damage": 3.35,
     "distance": 24,
     "impulse": 22,
     "stopPower": 0.125,
@@ -50,6 +50,6 @@
             "stopBulletDamage": 0
         }
     ],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
