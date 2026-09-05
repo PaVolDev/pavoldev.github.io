@@ -1,0 +1,49 @@
+{
+    "id": "7n25",
+    "idTemplate": "9x19",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAUCAYAAAA3KpVtAAAAAXNSR0IArs4c6QAAAa9JREFUWEfdmDFLw0AUx/8vSaWDg5t+C/sR7CBo0mqdRAoiLi5S42ad/AjBUbBFoYiT1SLtoHh+g/oN6uCue9MnF9tSz1iSEmnMTcdx9x6/+98L/xdqFMEAwDoKa5e4lfO7bayTi7qcT2PMviGVFehGlZsGkADaeg22DOwW4QDIRJUkbBzrcQHEjGbZcphYzKRTYnnv7CNsnMH+UUgYta/lbnHScNGcyz3Me4GaZWsYkMFtAolJoGMLyURoHZm+t8bgd43IMdKGE0Th2EKqSvrRBoWNLeQ4JVXgvF3B/eluZqVUefG7jMRAykvpMbsADBU0iZCS8Rto4iCJSGdF0cRB+tSkkQjI3GHVY+vXpMqZaMhhXSZOyX5N0qicsYSU3lWO3xyP+h7lc5VdhvrBibV3DQtpSUjmOQC+Jj6WSkqDHsTxeKZdg22Wqs/jWoN/CskdIpysHlQvgvQ9KqTot1pLQQ7/1Z6fSnKHQUIjFj1dE9b++WuY3ENIt4d64Qob8nB9Cze6hkKYQFHuHfSTrWNzZxIoP+/65C12Yeev4bn4xiYWYXh/B6Yy8jVko0z8CYh3FSRtOX+0AAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAUCAYAAAA3KpVtAAAAAXNSR0IArs4c6QAAAa9JREFUWEfdmDFLw0AUx/8vSaWDg5t+C/sR7CBo0mqdRAoiLi5S42ad/AjBUbBFoYiT1SLtoHh+g/oN6uCue9MnF9tSz1iSEmnMTcdx9x6/+98L/xdqFMEAwDoKa5e4lfO7bayTi7qcT2PMviGVFehGlZsGkADaeg22DOwW4QDIRJUkbBzrcQHEjGbZcphYzKRTYnnv7CNsnMH+UUgYta/lbnHScNGcyz3Me4GaZWsYkMFtAolJoGMLyURoHZm+t8bgd43IMdKGE0Th2EKqSvrRBoWNLeQ4JVXgvF3B/eluZqVUefG7jMRAykvpMbsADBU0iZCS8Rto4iCJSGdF0cRB+tSkkQjI3GHVY+vXpMqZaMhhXSZOyX5N0qicsYSU3lWO3xyP+h7lc5VdhvrBibV3DQtpSUjmOQC+Jj6WSkqDHsTxeKZdg22Wqs/jWoN/CskdIpysHlQvgvQ9KqTot1pLQQ7/1Z6fSnKHQUIjFj1dE9b++WuY3ENIt4d64Qob8nB9Cze6hkKYQFHuHfSTrWNzZxIoP+/65C12Yeev4bn4xiYWYXh/B6Yy8jVko0z8CYh3FSRtOX+0AAAAAElFTkSuQmCC",
+    "caliberName": "09x18",
+    "uiName": "7N25",
+    "author": "",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAAXNSR0IArs4c6QAAAEhJREFUKFNjvGLl85+BCKBzbAsj44cWD6IUC9TsYGT8sNCMOMXxpxgZj9qzEqXY+uBvRsZDlsQptjv+m5FxFoMQUSanMbxjBADoUxcHXiPZqAAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "120",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "120",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 1,
+    "distance": 24,
+    "impulse": 15,
+    "stopPower": 0.12,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "armor",
+            "scaleFirst": "0.8",
+            "scaleThrough": "0",
+            "stopBulletDamage": 0
+        },
+        {
+            "materialName": "skin",
+            "scaleFirst": "1.8",
+            "scaleThrough": "0",
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 2,
+    "targetVersion": 209
+}
