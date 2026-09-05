@@ -11,7 +11,7 @@
     "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAHCAIAAACz0DtzAAAAMElEQVQYGWP8P5GXgRBg/P/fmJAaBhaGOx+IUHToLUFFTARVABUw7gwirI6wCqBJABV/CGa1dmiQAAAAAElFTkSuQmCC",
     "shellSkin.pixelPerUnit": "100",
     "shellSkin.pivotPoint": "(0.5, 0.5)",
-    "iconButtonSprite.pixelPerUnit": "120",
+    "iconButtonSprite.pixelPerUnit": 120,
     "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
     "iconListSprite.pixelPerUnit": "50",
     "iconListSprite.pivotPoint": "(0.5, 0.5)",
@@ -50,6 +50,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 6,
+    "version": 2,
     "targetVersion": 209
 }
