@@ -33,23 +33,23 @@
     "penetrationDamage": [
         {
             "scaleFirst": "1",
-            "scaleThrough": "1",
+            "scaleThrough": "0.15",
             "stopBulletDamage": 0,
             "materialName": "armor"
         },
         {
             "scaleFirst": "1",
-            "scaleThrough": "1",
+            "scaleThrough": "0.15",
             "stopBulletDamage": 0,
             "materialName": "metal"
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": "1",
+            "scaleThrough": "0.35",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
