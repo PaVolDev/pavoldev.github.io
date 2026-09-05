@@ -1,0 +1,43 @@
+{
+    "id": "09x18",
+    "idTemplate": "9x19",
+    "type": "cartridge",
+    "iconButtonSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAUCAYAAADGIc7gAAAAAXNSR0IArs4c6QAAAaZJREFUWEftl89LAkEUx98bd0W69A8YdC/IsjzrQSiF0v6COlQeQheC6ui1ILCbGKn9A2n9A03Xytr+g/XSuW4isi9mZcPy18oqskvvNMzMe48Pb+Y7b7BQDREAADI9sbf5cifGV/erW6SzqhhPwz5mZ+RshLfs5EYTDABU6eJVEcFaRys5AAjYCWzH168t8LY/qoTEvT6ZRw8KX6PE7AQD73nN8G0eB0eJMfa9fm2xKyYBqQjIrYI6BqyTlIA+GWJO8km5fpV0JJgJOQjQ0WAdgKqH4c56uvhuzrkCrA1DmtyQA9HTtsi4CMyA4zGlFHEhGABjEBBH0mUVAyDUlXimfPkPNvZXeEDAXg+01fwk4Xz88LruqooRQDmuFHddJR6i5fI25LDL5J643JATJpTjK2Y0xgyUWLr0+PcOOvSOkYYI2Y1M6aafqPwGO6sZ/6DmSTBsVYUmsa9bFUkjQM6QuO5hXKjesLw/YDpBNZV8SgqHfCVUYQiJYc6TWp+rL2bN/s8qSI+juPYgJnW9paS234zuOH+7vMSYJH7RU7H9xLPR79mxbznU+xUcpeVRAAAAAElFTkSuQmCC",
+    "iconListSprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAUCAYAAADGIc7gAAAAAXNSR0IArs4c6QAAAaZJREFUWEftl89LAkEUx98bd0W69A8YdC/IsjzrQSiF0v6COlQeQheC6ui1ILCbGKn9A2n9A03Xytr+g/XSuW4isi9mZcPy18oqskvvNMzMe48Pb+Y7b7BQDREAADI9sbf5cifGV/erW6SzqhhPwz5mZ+RshLfs5EYTDABU6eJVEcFaRys5AAjYCWzH168t8LY/qoTEvT6ZRw8KX6PE7AQD73nN8G0eB0eJMfa9fm2xKyYBqQjIrYI6BqyTlIA+GWJO8km5fpV0JJgJOQjQ0WAdgKqH4c56uvhuzrkCrA1DmtyQA9HTtsi4CMyA4zGlFHEhGABjEBBH0mUVAyDUlXimfPkPNvZXeEDAXg+01fwk4Xz88LruqooRQDmuFHddJR6i5fI25LDL5J643JATJpTjK2Y0xgyUWLr0+PcOOvSOkYYI2Y1M6aafqPwGO6sZ/6DmSTBsVYUmsa9bFUkjQM6QuO5hXKjesLw/YDpBNZV8SgqHfCVUYQiJYc6TWp+rL2bN/s8qSI+juPYgJnW9paS234zuOH+7vMSYJH7RU7H9xLPR79mxbznU+xUcpeVRAAAAAElFTkSuQmCC",
+    "caliberName": "09x18",
+    "uiName": "PM",
+    "author": "",
+    "authorURL": "",
+    "shellSkin": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAAXNSR0IArs4c6QAAAEhJREFUKFNjnLDU6z8DEaAgehsj47U7kUQp1lJZzsh47b4bcYoVdzEy5k/gJkrxxIKvjIyZ3cQpnl76lZFROYyBKJPvrmJgBAD7mxcHtBEpRAAAAABJRU5ErkJggg==",
+    "shellSkin.pixelPerUnit": "100",
+    "shellSkin.pivotPoint": "(0.5, 0.5)",
+    "iconButtonSprite.pixelPerUnit": "120",
+    "iconButtonSprite.pivotPoint": "(0.5, 0.5)",
+    "iconListSprite.pixelPerUnit": "120",
+    "iconListSprite.pivotPoint": "(0.5, 0.5)",
+    "bullets": 1,
+    "angleRandom": 0,
+    "angleSpread": 0,
+    "damage": 1,
+    "distance": 24,
+    "impulse": 15,
+    "stopPower": 0.05,
+    "penetration": {
+        "modeHit": "FIRST",
+        "minHits": 1,
+        "maxHits": 1,
+        "minDist": 0,
+        "maxDist": 0,
+        "findExitPoint": true
+    },
+    "penetrationDamage": [
+        {
+            "materialName": "skin",
+            "scaleFirst": "0.8",
+            "scaleThrough": "0.1",
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 6,
+    "targetVersion": 209
+}
