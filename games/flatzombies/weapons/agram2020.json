@@ -27,7 +27,7 @@
     "weapon.WeaponHandPoints.handguardPoint": "(0.53, 0, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-1.11, -0.03, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-1.08, 0.18, 0)",
-    "weapon.WeaponHandPoints.weaponType": "rifleAK",
+    "weapon.WeaponHandPoints.weaponType": "rifleLeftBolt",
     "storeInfo.author": "Just Another Evan",
     "storeInfo.authorURL": "https://",
     "weapon.Transform.localPosition": "(1.1, 0.2, 0)",
@@ -74,6 +74,6 @@
     "storeInfo.editorIconUpdateMode": "onSave",
     "weapon.LineRenderer.startColor": "#8dff85",
     "weapon.LineRenderer.endColor": "#8dff85",
-    "version": 2,
+    "version": 3,
     "targetVersion": 209
 }
