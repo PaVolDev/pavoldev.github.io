@@ -69,6 +69,6 @@
     "weapon.WeaponHandPoints.fingerPoint": "(-0.02, 0.17)",
     "weapon.WeaponHandPoints.fingerAngle": -26,
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit": 150,
-    "version": 10,
+    "version": 11,
     "targetVersion": 209
 }
