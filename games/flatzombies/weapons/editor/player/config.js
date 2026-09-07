@@ -31,7 +31,7 @@ function onSaveJson(json) {
 	delete json["player.gameObject.SetActive"];
 	delete json["player.man.body.gameObject.SetActive"];
 	delete json["player.man.body.head.gameObject.SetActive"];
-	delete json["player.man.body.head.Transform.localPosition"];
+	//delete json["player.man.body.head.Transform.localPosition"];
 	delete json["player.man.body.weaponParent.arm.forearm.fingers.gameObject.SetActive"];
 	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.gameObject.SetActive"];
 	delete json["player.man.body.weaponParent.arm.forearm.fingers.render.Transform.localEulerAngles.z"];
@@ -281,7 +281,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.body.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.body.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.body.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.body.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
 	{ fieldPath: "player.man.body.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.body.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.body.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -290,7 +290,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.body.head.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.body.head.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePosition: false },
+	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "" },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.body.head.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -382,7 +382,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
@@ -391,7 +391,7 @@ var sampleParams = [ //Список всех параметров, относя�
 
 	{ fieldPath: "player.man.thigh2.Transform.localPosition", "comment": "Координаты объекта для расположения", type: "Vector3", value: "(1.1, 0.2, 0)" },
 	{ fieldPath: "player.man.thigh2.Transform.localEulerAngles.z", "comment": "Угол наклона", type: "float", value: 0 },
-	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: false },
+	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite", "comment": "Спрайт/текстура, PNG-файл", type: "Sprite", suffix: ".SpriteRenderer.sprite", value: "", canChangePivot: true, canChangePosition: true },
 	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite.pivotPoint", "comment": "Точка вращения для спрайта", type: "Vector2", value: "(0.5, 0.5)" },
 	{ fieldPath: "player.man.thigh2.SpriteRenderer.sprite.pixelPerUnit", "comment": "Масштаб текстуры в игре<br>Pixels Per Unit (PPU)", type: "float", value: 100 },
 	{ fieldPath: "player.man.thigh2.SpriteRenderer.sortingOrder", "comment": "Порядок прорисовки для рендера", type: "int", value: 0 },
