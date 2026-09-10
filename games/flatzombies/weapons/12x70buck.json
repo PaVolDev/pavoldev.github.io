@@ -18,7 +18,7 @@
     "bullets": 5,
     "angleRandom": 2,
     "angleSpread": 0.9,
-    "damage": 13.5,
+    "damage": 12.5,
     "distance": 24,
     "impulse": 35,
     "stopPower": 0.5,
@@ -30,7 +30,14 @@
         "maxDist": "3.5",
         "findExitPoint": true
     },
-    "penetrationDamage": [],
-    "version": 4,
+    "penetrationDamage": [
+        {
+            "materialName": "skin",
+            "scaleFirst": 1,
+            "scaleThrough": 0.5,
+            "stopBulletDamage": 0
+        }
+    ],
+    "version": 5,
     "targetVersion": 209
 }
