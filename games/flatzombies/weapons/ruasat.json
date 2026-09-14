@@ -7,7 +7,7 @@
     "caliberName": "rua",
     "uiName": "Rựa sắt",
     "author": "Siiuuuuuk2 gaming",
-    "authorURL": "",
+    "authorURL": "https://www.youtube.com/channel/UC0UC1HHQY9P-MQlNIE6uI1w/",
     "shellSkin": "data:image/png;base64,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",
     "shellSkin.pixelPerUnit": 100,
     "shellSkin.pivotPoint": "(0.5, 0.5)",
@@ -19,8 +19,8 @@
     "angleRandom": 2,
     "angleSpread": 0.8,
     "damage": 8,
-    "distance": 4,
-    "impulse": 40,
+    "distance": 3,
+    "impulse": 30,
     "stopPower": 0.5,
     "penetration": {
         "modeHit": "FIRST",
@@ -33,7 +33,7 @@
     "penetrationDamage": [
         {
             "scaleFirst": 1,
-            "scaleThrough": 0.5,
+            "scaleThrough": "1.5",
             "stopBulletDamage": 0,
             "materialName": "armor"
         },
@@ -44,12 +44,12 @@
             "materialName": "metal"
         },
         {
-            "scaleFirst": 1,
-            "scaleThrough": 0.25,
+            "scaleFirst": "1",
+            "scaleThrough": "1.25",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 3,
+    "version": 4,
     "targetVersion": 209
 }
