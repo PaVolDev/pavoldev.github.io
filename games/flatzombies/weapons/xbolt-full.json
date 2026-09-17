@@ -95,6 +95,6 @@
     "storeInfo.editorIconUpdateMode": "onSave",
     "storeInfo.silencerPosition": "(302, 24)",
     "weapon.boltHandle.Transform.localScale": "(1, 1, 1)",
-    "version": 19,
+    "version": 20,
     "targetVersion": 209
 }
