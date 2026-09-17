@@ -2,7 +2,7 @@
     "id": "xbolt",
     "idTemplate": "sv98",
     "type": "weapon",
-    "weapon.caliber": "65cme",
+    "weapon.caliber": "65crd",
     "storeInfo.nameFull": "X-Bolt Speed SPR",
     "storeInfo.magazineSize": 4,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(-0.13, 0.14, 0)",
@@ -89,6 +89,6 @@
     "storeInfo.editorIconUpdateMode": "onSave",
     "storeInfo.silencerPosition": "(302, 24)",
     "weapon.boltHandle.Transform.localScale": "(1, 1, 1)",
-    "version": 18,
+    "version": 19,
     "targetVersion": 209
 }
