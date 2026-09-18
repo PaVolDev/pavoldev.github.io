@@ -39,17 +39,17 @@
         },
         {
             "scaleFirst": "1",
-            "scaleThrough": "0.15",
+            "scaleThrough": "0.25",
             "stopBulletDamage": 0,
             "materialName": "metal"
         },
         {
             "scaleFirst": 1,
-            "scaleThrough": "0.35",
+            "scaleThrough": "0.5",
             "stopBulletDamage": 0,
             "materialName": "skin"
         }
     ],
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
