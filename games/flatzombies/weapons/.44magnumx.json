@@ -24,10 +24,10 @@
     "stopPower": 0.35,
     "penetration": {
         "modeHit": "FIRST",
-        "minHits": "1",
+        "minHits": "2",
         "maxHits": "2",
-        "minDist": "0",
-        "maxDist": "0",
+        "minDist": "1",
+        "maxDist": "100",
         "findExitPoint": true
     },
     "penetrationDamage": [
@@ -50,6 +50,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
