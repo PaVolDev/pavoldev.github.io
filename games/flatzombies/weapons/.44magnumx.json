@@ -26,7 +26,7 @@
         "modeHit": "FIRST",
         "minHits": "2",
         "maxHits": "2",
-        "minDist": "1",
+        "minDist": "2",
         "maxDist": "100",
         "findExitPoint": true
     },
@@ -50,6 +50,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 12,
+    "version": 13,
     "targetVersion": 209
 }
