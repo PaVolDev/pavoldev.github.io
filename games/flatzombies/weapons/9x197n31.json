@@ -26,8 +26,8 @@
         "modeHit": "FIRST",
         "minHits": "2",
         "maxHits": "2",
-        "minDist": 0,
-        "maxDist": 0,
+        "minDist": "1",
+        "maxDist": "100",
         "findExitPoint": true
     },
     "penetrationDamage": [
@@ -50,6 +50,6 @@
             "materialName": "skin"
         }
     ],
-    "version": 13,
+    "version": 14,
     "targetVersion": 209
 }
