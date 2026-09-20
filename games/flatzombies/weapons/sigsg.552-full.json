@@ -23,7 +23,7 @@
     "weapon.WeaponHandPoints.openCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.closedCoverPoint": "(0, 0)",
     "weapon.WeaponHandPoints.bulletPoint": "(0, 0)",
-    "weapon.WeaponHandPoints.boltMovePoint": "(0.05, 0.23, 0)",
+    "weapon.WeaponHandPoints.boltMovePoint": "(-0.03, 0.23, 0)",
     "weapon.WeaponHandPoints.boltPoint": "(0.17, 0.23, 0)",
     "weapon.WeaponHandPoints.handInsertPoint": "(0, 0, 0)",
     "weapon.WeaponHandPoints.magazineInsertAngle": 19,
@@ -104,6 +104,6 @@
     "storeInfo.silencerPosition": "(222, 34)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 9,
+    "version": 10,
     "targetVersion": 209
 }
