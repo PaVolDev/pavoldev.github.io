@@ -5,9 +5,10 @@
     "weapon.caliber": "12x70",
     "storeInfo.nameFull": "Balikli Blue Label",
     "storeInfo.magazineSize": 2,
-    "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
-    "weapon.playerScaleMove": 0.45,
+    "weapon.magazineMax": null,
     "weapon.reloadScaleTime": 0.95,
+    "weapon.playerScaleMove": 0.45,
+    "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
     "storeInfo.silencerSmall.SpriteRenderer.sprite": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAWCAYAAABDhYU9AAAA20lEQVR4AeySMQrCQBBFhyUeIBBSBhtr2/TpvYGdVe4gBLxFwMYb2Nt4AwOp7EyRMnWaBOcLu5h2qx9Y2AczAwuPP2NEZGNpmqZgwPoYLX6vbdtDkiQPBuACKScXx/EZAwasi5NTqX0URcIAXBT5l5M0TSmAGDB1XR+VNxo2jK7xqmzZxOCzWCsGTAQ5322E5EJyvgn4/lvPzY3jKAzYpE3XdTsVumEwDIMwABdgqqr6lGV5QsPGOm5umqY7S3LWxSXX9/1Fh08G4IKgIDdrMed5/sqyrGAALnD6AgAA//86okXkAAAABklEQVQDAHJ/B8D83HhjAAAAAElFTkSuQmCC",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit": "100",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
@@ -89,7 +90,6 @@
     "storeInfo.silencerPosition": "(326, 9)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 7,
-    "targetVersion": 209,
-    "weapon.magazineMax": null
+    "version": 8,
+    "targetVersion": 209
 }
