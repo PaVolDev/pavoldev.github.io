@@ -5,9 +5,10 @@
     "weapon.caliber": "12x70",
     "storeInfo.nameFull": "Balikli Blue Label",
     "storeInfo.magazineSize": 2,
-    "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
-    "weapon.playerScaleMove": 0.45,
+    "weapon.magazineMax": null,
     "weapon.reloadScaleTime": 0.95,
+    "weapon.playerScaleMove": 0.45,
+    "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pixelPerUnit": "100",
     "storeInfo.silencerSmall.SpriteRenderer.sprite.pivotPoint": "(0, 0.5, 0)",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
@@ -84,7 +85,6 @@
     "storeInfo.silencerPosition": "(326, 9)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 7,
-    "targetVersion": 209,
-    "weapon.magazineMax": null
+    "version": 8,
+    "targetVersion": 209
 }
