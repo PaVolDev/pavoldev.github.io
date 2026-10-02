@@ -87,7 +87,7 @@
     "storeInfo.silencerMedium.SpriteRenderer.sprite.pixelPerUnit": 150,
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 9,
+    "version": 10,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
