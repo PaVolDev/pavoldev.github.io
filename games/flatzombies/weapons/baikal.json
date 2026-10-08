@@ -5,8 +5,8 @@
     "weapon.caliber": "12x70",
     "storeInfo.nameFull": "Baikal Mp-18Em-M",
     "storeInfo.magazineSize": 1,
-    "weapon.magazineMax": null,
     "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
+    "weapon.magazineMax": null,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -82,6 +82,6 @@
     "storeInfo.silencerPosition": "(345, 5)",
     "weapon.LineRenderer.startColor": "#59ff00",
     "weapon.LineRenderer.endColor": "#59ff00",
-    "version": 6,
+    "version": 7,
     "targetVersion": 209
 }
