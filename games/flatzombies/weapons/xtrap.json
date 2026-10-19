@@ -6,7 +6,6 @@
     "storeInfo.nameFull": "Beretta 688 Performance ",
     "storeInfo.magazineSize": 2,
     "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
-    "weapon.magazineMax": 0,
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -80,6 +79,7 @@
     "storeInfo.silencerPosition": "(374, 12)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 2,
-    "targetVersion": 209
+    "version": 3,
+    "targetVersion": 209,
+    "weapon.magazineMax": null
 }
