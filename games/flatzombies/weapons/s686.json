@@ -5,10 +5,12 @@
     "weapon.caliber": "12x70",
     "storeInfo.nameFull": "S686 Hoshino",
     "storeInfo.magazineSize": 2,
-    "storeInfo.silencerSmall.SpriteRenderer.color": "#ffd6ff",
-    "storeInfo.silencerMedium.SpriteRenderer.color": "#ffccff",
-    "storeInfo.silencerLarge.SpriteRenderer.color": "#fdd1ff",
+    "weapon.playerScaleMove": 0.5,
+    "weapon.magazineMax": 0,
     "storeInfo.donateURL": "https://youtube.com/@siiuuuuuk2gamingfz?si=tgYaHcxyuj_KbedF",
+    "storeInfo.silencerLarge.SpriteRenderer.color": "#fdd1ff",
+    "storeInfo.silencerMedium.SpriteRenderer.color": "#ffccff",
+    "storeInfo.silencerSmall.SpriteRenderer.color": "#ffd6ff",
     "weapon.WeaponHandPoints.handleMove.movePosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.startPosition": "(0, 0, 0)",
     "weapon.WeaponHandPoints.handleMove.render": "",
@@ -82,7 +84,6 @@
     "storeInfo.silencerPosition": "(328, 9)",
     "weapon.LineRenderer.startColor": "#ffc9f6",
     "weapon.LineRenderer.endColor": "#ffc9f6",
-    "version": 3,
-    "targetVersion": 209,
-    "weapon.magazineMax": null
+    "version": 4,
+    "targetVersion": 209
 }
