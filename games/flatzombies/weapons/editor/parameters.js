@@ -144,7 +144,8 @@ async function onSelectWeapon(event) {
 		//Обновить список
 		availableParams.forEach(field => {	//Добавить спрайты сразу в список //SpriteRenderer.sprite
 			const filter = defaultAddedFields.filter(data => field.startFieldPath.endsWith(data[0]));
-			let filterIndex = (filter.length != 0) ? filter.findIndex(data => field.value != data[1]) : -1;
+			const fieldValue = field.value ?? ""; //null/undefined считаем пустым значением, чтобы параметр не добавлялся в список с null
+			let filterIndex = (filter.length != 0) ? filter.findIndex(data => fieldValue != data[1]) : -1;
 			if (filterIndex != -1) { //console.log(field.fieldPath + ": " + filter[filterIndex]);
 				if (sampleParams.find(s => s.startFieldPath == field.startFieldPath && s?.ignoreValue == field.value)) return;
 				if (filter[filterIndex].length == 3) {
@@ -304,7 +305,7 @@ function syncParamsToScene() {
 			isActive: gameObjectIsActive,
 			canChangePivot: "canChangePivot" in param ? param.canChangePivot : param.type != "Sprite" || pivotStr != defaultPivot,
 			canChangeLocalAngle: "canChangeAngle" in param ? param.canChangeAngle : true,
-			canChangePosition: "canChangePosition" in param ? param.canChangePosition : param.type != "Sprite" || localPosStr != defaultLocalPoint,
+			canMove: "canMove" in param ? param.canMove : param.type != "Sprite" || localPosStr != defaultLocalPoint,
 			parameter: param.startFieldPath
 		});
 	});
@@ -340,7 +341,7 @@ function syncParamsToScene() {
 			isActive: param.hasOwnProperty('isActive') ? param.isActive : true,
 			canChangePivot: false,
 			canChangeLocalAngle: renderPoint && renderPoint.angle,
-			canChangePosition: true,
+			canMove: true,
 			parameter: param.startFieldPath
 		});
 		const newObj = sceneObjects[sceneObjects.length - 1];
@@ -1701,7 +1702,7 @@ function getExportResultJSON() {
 		} else {
 			console.warn("Не удалось найти значение для параметра [" + param.fieldPath + "] - параметр пропущен и не записан в json");
 		}
-		if (value != "" && !json[fullKeyPath]) json[fullKeyPath] = value;
+		if (value !== null && value !== undefined && value != "" && !json[fullKeyPath]) json[fullKeyPath] = value; //null/undefined не записываем, чтобы сработал запасной параметр (например chamberSize)
 	});
 	mainParams.forEach(param => {
 		if (!json[param.fieldPath]) {
@@ -1742,6 +1743,7 @@ function getExportResultJSON() {
 		}
 	} */
 	editedParams.forEach(param => {
+		if (param.value === null || param.value === undefined) return; //не записывать null/undefined в итоговый JSON
 		if (param.fieldPath != param.type) {
 			let fullKeyPath = param.startFieldPath || param.fieldPath;
 			exportReplace.forEach(field => { if (fullKeyPath.includes(field.fieldPath)) { fullKeyPath = fullKeyPath.replace(field.fieldPath, field.newPath); } });   //Заменить имена параметров
