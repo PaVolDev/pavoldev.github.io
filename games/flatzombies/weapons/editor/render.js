@@ -26,7 +26,7 @@ let dragStartWorldPos = { x: 0, y: 0 };
 let dragStartTopLeft = { x: 0, y: 0 };
 let dragStartWorldAngle = 0;
 let dragStartSize = { w: 0, h: 0 };
-let dragStartLocalPos = { x: 0, y: 0 }; // Исходная локальная позицияpivot-drag для canChangePosition===false
+let dragStartLocalPos = { x: 0, y: 0 }; // Исходная локальная позицияpivot-drag для canMove===false
 let lastMouseClickPoint = { x: 0, y: 0 };
 
 const canvas = document.getElementById('scene');
@@ -640,8 +640,8 @@ function selectObject(obj) {
 	propertiesDiv.style.display = 'block';
 	// Обновляем значения полей
 	propertyInputs.name.innerHTML = obj.name || '';
-	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = "canChangePosition" in obj && !obj.canChangePosition;
-	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = "canChangePosition" in obj && !obj.canChangePosition
+	propertyInputs.posX.value = Math.round((parseFloat(obj.localPosition?.x) || 0) * 100) / 100; propertyInputs.posX.disabled = "canMove" in obj && !obj.canMove;
+	propertyInputs.posY.value = -Math.round((parseFloat(obj.localPosition?.y) || 0) * 100) / 100; propertyInputs.posY.disabled = "canMove" in obj && !obj.canMove
 	propertyInputs.angle.value = obj.localAngle || 0; propertyInputs.angle.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
 	propertyInputs.angleSlider.value = obj.localAngle || 0; propertyInputs.angleSlider.disabled = "canChangeLocalAngle" in obj && !obj.canChangeLocalAngle;
 	propertyInputs.sortingOrder.value = obj.sortingOrder || 0;
@@ -742,7 +742,7 @@ function startMove(event, parentMove) {
 		const offset = { x: -o.pivotPoint.x * worldSize.w, y: -(1 - o.pivotPoint.y) * worldSize.h };
 		const rotatedOffset = rotateVec(offset, dragStartWorldAngle); // Локальное смещение текстуры преобразуем в мировое с учетом угла объекта
 		dragStartTopLeft = { x: dragStartWorldPos.x + rotatedOffset.x, y: dragStartWorldPos.y + rotatedOffset.y };
-		dragStartLocalPos = { x: o.localPosition.x, y: o.localPosition.y }; // Сохраняем исходную локальную позицию для canChangePosition===false
+		dragStartLocalPos = { x: o.localPosition.x, y: o.localPosition.y }; // Сохраняем исходную локальную позицию для canMove===false
 		sceneObjects.forEach(child => {
 			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointStartDrag(event, selectedObject); }
 		});
@@ -759,7 +759,7 @@ function startMove(event, parentMove) {
 		dragObject = hit;
 		dragStartMouseWorld = { x: wx, y: wy };
 		dragStartWorldPos = getWorldPosition(hit.name);
-		dragStartLocalPos = { x: hit.localPosition.x, y: hit.localPosition.y }; // Сохраняем исходную локальную позицию перед drag для объектов с canChangePosition===false
+		dragStartLocalPos = { x: hit.localPosition.x, y: hit.localPosition.y }; // Сохраняем исходную локальную позицию перед drag для объектов с canMove===false
 		const dragImg = images[hit.name]; // Изображение объекта для вычисления стартового top-left текстуры при обычном drag
 		if (dragImg && dragImg.complete) {
 			const dragWorldSize = { w: dragImg.width / hit.pixelPerUnit, h: dragImg.height / hit.pixelPerUnit }; // Размер спрайта в мировых координатах на старте обычного drag
@@ -878,7 +878,7 @@ canvas.addEventListener('touchend', mouseUp, { passive: false });
 function mouseUp(event) {
 	if (isDragging) {
 		const dragEndObj = dragObject; // Сохраняем объект перетаскивания до сброса состояния drag
-		if (dragEndObj && ((dragEndObj.canChangePosition === false && !event.ctrlKey) || dragEndObj.canChangePosition && event.ctrlKey)) {
+		if (dragEndObj && ((dragEndObj.canMove === false && !event.ctrlKey) || dragEndObj.canMove && event.ctrlKey)) {
 			const currentWorldPos = getWorldPosition(dragEndObj.name); // Текущая мировая позиция pivot после временного перемещения мышью
 			const dragDeltaWorld = { x: currentWorldPos.x - dragStartWorldPos.x, y: currentWorldPos.y - dragStartWorldPos.y }; // Мировое смещение объекта за время drag
 			const desiredTopLeftWorld = { x: dragStartTopLeft.x + dragDeltaWorld.x, y: dragStartTopLeft.y + dragDeltaWorld.y }; // Новый top-left, где должна остаться текстура после отпускания
@@ -904,18 +904,15 @@ function mouseUp(event) {
 			});
 		}
 	} else if (isDraggingPivot) {
-		const pivotDragObj = dragObject; // Сохраняем ссылку на объект до сброса dragObject
-		isDraggingPivot = false;
-		dragObject = null;
 		// Восстановление localPosition для объектов, которым запрещено менять позицию
-		if (pivotDragObj && (pivotDragObj.canChangePosition === false && !event.ctrlKey || pivotDragObj.canChangePosition && event.ctrlKey)) { //
+		if (dragObject && (dragObject.canMove === false && !event.ctrlKey || dragObject.canMove && event.ctrlKey)) { //
 			const fixedChildWorldPositions = sceneObjects // Мировые позиции дочерних объектов до восстановления позиции родителя
-				.filter(child => child.parent != "" && child.parent == pivotDragObj.name && child.name != pivotDragObj.name)
+				.filter(child => child.parent != "" && child.parent == dragObject.name && child.name != dragObject.name)
 				.map(child => ({ child: child, worldPosition: getWorldPosition(child.name) }));
-			pivotDragObj.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию
-			pivotDragObj.localPosition.y = dragStartLocalPos.y;
-			const restoredParentWorldPos = getWorldPosition(pivotDragObj.name); // Мировая позиция после восстановления
-			const restoredParentWorldAngle = getWorldAngle(pivotDragObj.name); // Мировой угол после восстановления
+			dragObject.localPosition.x = dragStartLocalPos.x; // Возвращаем исходную локальную позицию
+			dragObject.localPosition.y = dragStartLocalPos.y;
+			const restoredParentWorldPos = getWorldPosition(dragObject.name); // Мировая позиция после восстановления
+			const restoredParentWorldAngle = getWorldAngle(dragObject.name); // Мировой угол после восстановления
 			fixedChildWorldPositions.forEach(item => { // Пересчитываем дочерние объекты, чтобы их мировые позиции не изменились
 				const childDeltaWorld = {
 					x: item.worldPosition.x - restoredParentWorldPos.x,
@@ -926,9 +923,12 @@ function mouseUp(event) {
 				item.child.localPosition.y = Math.round(childLocalPosition.y / 0.0001) * 0.0001;
 			});
 		}
+		//Отправка события
 		sceneObjects.forEach(child => {
 			if (spriteScreenListeners[child.name]) { spriteScreenListeners[child.name].onScenePivotPointEndDrag(event, selectedObject); }
 		});
+		isDraggingPivot = false;
+		dragObject = null;
 	}
 	if (selectedObject) {
 		if (selectedObject.parent == "") {
