@@ -23,7 +23,7 @@
     "weapon.WeaponHandPoints.magazineInsertAngle": 5,
     "weapon.WeaponHandPoints.magazineInsert": "(0.34, -0.15, 0)",
     "weapon.WeaponHandPoints.magazinePoint": "(0.3, -0.09, 0)",
-    "weapon.WeaponHandPoints.handguardPoint": "(0.73, -0.07, 0)",
+    "weapon.WeaponHandPoints.handguardPoint": "(0.76, -0.07, 0)",
     "weapon.WeaponHandPoints.buttstockReload": "(-0.61, 0.7, 0)",
     "weapon.WeaponHandPoints.buttstockPoint": "(-0.99, 0.11, 0)",
     "weapon.WeaponHandPoints.weaponType": "machinegun",
@@ -42,7 +42,7 @@
     "weapon.magazine.SpriteRenderer.sortingOrder": 16,
     "weapon.magazine.SpriteRenderer.sprite.pixelPerUnit": 133,
     "weapon.magazine.SpriteRenderer.sprite.pivotPoint": "(0.5, 0.5)",
-    "weapon.handgrip.Transform.localPosition": "(0.75, 0.01, 0)",
+    "weapon.handgrip.Transform.localPosition": "(0.77, 0.01, 0)",
     "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": 0,
@@ -88,7 +88,7 @@
     "storeInfo.silencerPosition": "(289, 31)",
     "weapon.LineRenderer.startColor": "#ff0000",
     "weapon.LineRenderer.endColor": "#ff0000",
-    "version": 10,
+    "version": 11,
     "targetVersion": 209,
     "weapon.magazineMax": null
 }
