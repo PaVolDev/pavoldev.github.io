@@ -62,7 +62,7 @@
     "weapon.sight.SpriteRenderer.sortingOrder": 18,
     "weapon.sight.SpriteRenderer.sprite.pixelPerUnit": "100",
     "weapon.sight.SpriteRenderer.sprite.pivotPoint": "(0, 0)",
-    "weapon.handgrip.Transform.localPosition": "(0.83, 0.07, 0)",
+    "weapon.handgrip.Transform.localPosition": "(0.83, 0.06, 0)",
     "weapon.handgrip.gameObject.SetActive": true,
     "weapon.handgrip.SpriteRenderer.enabled": false,
     "weapon.handgrip.Transform.localEulerAngles.z": 0,
@@ -104,6 +104,6 @@
     "storeInfo.silencerPosition": "(253, 40)",
     "weapon.LineRenderer.startColor": "#00ff00",
     "weapon.LineRenderer.endColor": "#00ff00",
-    "version": 8,
+    "version": 9,
     "targetVersion": 209
 }
